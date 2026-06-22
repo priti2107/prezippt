@@ -181,30 +181,34 @@ export const SCENES: Scene[] = [
   {
     id: 6,
     kicker: "District 06 · Marketing Cloud",
-    title: "Marketing Cloud Solutions",
-    variant: "flow",
+    title: "Drive Personalized Customer Engagement at Scale",
+    subtitle: "Create data-driven customer journeys, automate campaigns, and deliver personalized experiences across every channel.",
+    variant: "grid",
     items: [
       {
-        icon: LineChart,
-        title: "Data-Driven Campaigns",
-        body: "Every send backed by real signals.",
+        icon: RouteIcon,
+        title: "Customer Journey Automation",
       },
       {
-        icon: RouteIcon,
-        title: "Personalized Customer Journeys",
-        body: "Right message, right moment, every channel.",
+        icon: Users,
+        title: "Audience Segmentation & Targeting",
+      },
+      {
+        icon: LineChart,
+        title: "Email & Campaign Management",
+      },
+      {
+        icon: TrendingUp,
+        title: "Real-Time Marketing Analytics",
       },
       {
         icon: BrainCircuit,
-        title: "AI-Powered Insights",
-        body: "An intelligence layer above every journey.",
+        title: "AI-Powered Personalization",
       },
-    ],
-    stats: [
-      { label: "Awareness", value: "→" },
-      { label: "Engagement", value: "→" },
-      { label: "Conversion", value: "→" },
-      { label: "Loyalty", value: "★" },
+      {
+        icon: Megaphone,
+        title: "Multi-Channel Customer Engagement",
+      },
     ],
   },
   {

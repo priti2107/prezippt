@@ -1154,6 +1154,202 @@ function SceneContent({ scene }: { scene: Scene }) {
     );
   }
 
+  if (scene.id === 6) {
+    return (
+      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[86vh] md:h-[80vh] max-w-7xl relative overflow-hidden flex flex-col p-8 md:p-12 justify-between">
+        {/* TOP ROW: Content (55%) + Dashboard (45%) */}
+        <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center justify-between h-[48%] md:h-[50%] w-full">
+          {/* LEFT SIDE: Content (55% width) */}
+          <div className="w-full md:w-[55%] flex flex-col justify-center text-left max-w-[600px]">
+            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-4">
+              <span className="size-2 rounded-full bg-[#0284C7] animate-pulse" />
+              {scene.kicker}
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-[42px] xl:text-[48px] font-[800] leading-[1.08] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-3">
+              {scene.title}
+            </h2>
+            <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-4" />
+
+            <p className="text-sm md:text-base text-[#475569] font-medium leading-relaxed max-w-[550px] mb-6">
+              {scene.subtitle}
+            </p>
+
+            {/* Feature Checklist */}
+            <div className="flex flex-col gap-2">
+              {scene.items?.slice(0, 6).map((item) => (
+                <div key={item.title} className="flex items-start gap-3">
+                  <Check className="size-5 text-[#0284C7] flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-[#475569] font-medium">{item.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT SIDE: Marketing Dashboard Panel (45% width) */}
+          <div className="w-full md:w-[43%] flex flex-col h-full rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-5 relative overflow-visible max-h-[90%] justify-between">
+            {/* Console Header */}
+            <div className="flex items-center justify-between border-b border-slate-200/40 pb-2 mb-3">
+              <div className="flex items-center gap-1">
+                <div className="size-2 rounded-full bg-[#EF4444]/90" />
+                <div className="size-2 rounded-full bg-[#F59E0B]/90" />
+                <div className="size-2 rounded-full bg-[#10B981]/90" />
+              </div>
+              <span className="text-[9px] font-bold text-slate-400 tracking-wider font-mono">
+                cascade.cloud / marketing
+              </span>
+            </div>
+
+            {/* Dashboard Title */}
+            <div className="mb-3">
+              <p className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Marketing Performance</p>
+            </div>
+
+            {/* Dashboard Metrics Grid */}
+            <div className="grid grid-cols-2 gap-2.5 mb-3">
+              {/* Email Campaigns */}
+              <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+                <p className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider mb-1">Email Campaigns</p>
+                <p className="text-lg md:text-xl font-black text-slate-800 font-display leading-none">8,420</p>
+                <p className="text-[7px] text-slate-400 mt-1 font-medium">This month</p>
+              </div>
+
+              {/* Customer Journeys */}
+              <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+                <p className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider mb-1">Active Journeys</p>
+                <p className="text-lg md:text-xl font-black text-slate-800 font-display leading-none">124</p>
+                <p className="text-[7px] text-slate-400 mt-1 font-medium">Real-time</p>
+              </div>
+
+              {/* Engagement Rate */}
+              <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+                <div className="flex items-center justify-between">
+                  <p className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Engagement</p>
+                  <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+8%</span>
+                </div>
+                <p className="text-lg md:text-xl font-black text-slate-800 mt-1 font-display leading-none">68%</p>
+              </div>
+
+              {/* Lead Nurture Score */}
+              <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+                <div className="flex items-center justify-between">
+                  <p className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Nurture Score</p>
+                  <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+5%</span>
+                </div>
+                <p className="text-lg md:text-xl font-black text-slate-800 mt-1 font-display leading-none">91%</p>
+              </div>
+            </div>
+
+            {/* Campaign Performance Visualization */}
+            <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left mb-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[8px] font-extrabold text-slate-700 uppercase tracking-wider">Campaign Performance</span>
+                <span className="text-[7px] font-bold text-slate-400">Last 7 days</span>
+              </div>
+
+              <div className="flex items-end justify-between h-16 px-0.5">
+                {[35, 48, 42, 65, 78, 82, 88].map((h, i) => (
+                  <div
+                    key={i}
+                    className="w-[11%] bg-gradient-to-t from-[#0284C7] to-[#0EA5E9] rounded-t-sm hover:shadow-lg hover:shadow-sky-400/30 transition-all duration-300"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Engagement Trend */}
+            <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[8px] font-extrabold text-slate-700 uppercase tracking-wider">Journey Completion Rate</span>
+                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">↑ 12%</span>
+              </div>
+
+              <div className="flex items-end justify-between h-12 px-0.5 gap-1">
+                {[40, 55, 48, 72, 65, 81, 78, 92].map((h, i) => (
+                  <div key={i} className="w-[10%] bg-[#0EA5E9] rounded-full" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM ROW: 6 Feature Cards (height: ~42%) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[42%] w-full items-stretch mt-12 md:mt-16">
+          {/* KPI Card 1 */}
+          <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-5 md:p-6 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-sky-50 border border-sky-100 flex-shrink-0">
+                  <TrendingUp className="size-5 text-[#0284C7]" />
+                </div>
+                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Engagement</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl md:text-3xl font-black text-emerald-600">+68%</span>
+                <span className="text-xs text-slate-400 font-medium">vs last period</span>
+              </div>
+            </div>
+          </div>
+
+          {/* KPI Card 2 */}
+          <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-5 md:p-6 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-sky-50 border border-sky-100 flex-shrink-0">
+                  <LineChart className="size-5 text-[#0284C7]" />
+                </div>
+                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Lead Conversion</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl md:text-3xl font-black text-emerald-600">+42%</span>
+                <span className="text-xs text-slate-400 font-medium">improvement</span>
+              </div>
+            </div>
+          </div>
+
+          {/* KPI Card 3 */}
+          <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-5 md:p-6 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-sky-50 border border-sky-100 flex-shrink-0">
+                  <Users className="size-5 text-[#0284C7]" />
+                </div>
+                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Touchpoints</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl md:text-3xl font-black text-[#0284C7]">3.4M</span>
+                <span className="text-xs text-slate-400 font-medium">monthly</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary KPI Row */}
+          <div className="bg-gradient-to-br from-[#F0F9FF]/95 via-white/80 to-[#E0F2FE]/50 border border-sky-200/50 rounded-2xl p-5 md:p-6 flex flex-col justify-between text-left shadow-sm hover:shadow-md transition-all duration-300 flex-1 h-full md:col-span-3">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-sky-100 flex-shrink-0">
+                  <Check className="size-5 text-[#0284C7]" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-600 uppercase tracking-wider">Journey Completion</p>
+                  <p className="text-sm text-slate-500 font-medium mt-0.5">Automated customer lifecycle management</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="text-2xl md:text-3xl font-black text-emerald-600">91%</span>
+                <span className="text-xs text-slate-400 font-medium mt-1">completion rate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
+
   return (
     <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-8 lg:p-10 w-full max-w-5xl">
       <Header scene={scene} />
