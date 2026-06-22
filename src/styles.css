@@ -1,0 +1,156 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-grid: var(--grid);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+
+  --background: oklch(0.984 0.005 247.86);
+  --foreground: oklch(0.21 0.04 265.75);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.04 265.75);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.04 265.75);
+
+  --primary: oklch(0.685 0.155 233.1);
+  --primary-foreground: oklch(0.99 0.005 247.86);
+
+  --secondary: oklch(0.79 0.12 226.5);
+  --secondary-foreground: oklch(0.21 0.04 265.75);
+
+  --muted: oklch(0.96 0.01 247.9);
+  --muted-foreground: oklch(0.55 0.04 257.4);
+
+  --accent: oklch(0.93 0.04 230);
+  --accent-foreground: oklch(0.21 0.04 265.75);
+
+  --destructive: oklch(0.62 0.22 27.3);
+  --destructive-foreground: oklch(0.99 0.005 247.86);
+
+  --border: oklch(0.92 0.013 247.9);
+  --input: oklch(0.92 0.013 247.9);
+  --ring: oklch(0.685 0.155 233.1);
+  --grid: oklch(0.93 0.016 244.5);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: linear-gradient(
+      150deg,
+      color-mix(in oklab, white 78%, transparent),
+      color-mix(in oklab, white 55%, transparent)
+    );
+    backdrop-filter: blur(22px) saturate(140%);
+    border: 1px solid color-mix(in oklab, white 70%, transparent);
+    box-shadow:
+      0 24px 60px -28px color-mix(in oklab, var(--primary) 45%, transparent),
+      0 2px 0 0 color-mix(in oklab, white 80%, transparent) inset;
+  }
+
+  .glass-chip {
+    background: color-mix(in oklab, white 60%, transparent);
+    backdrop-filter: blur(14px);
+    border: 1px solid color-mix(in oklab, var(--primary) 22%, white);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--foreground) 0%,
+      var(--primary) 60%,
+      var(--secondary) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ambient-glow {
+    background: radial-gradient(
+        60% 50% at 20% 10%,
+        color-mix(in oklab, var(--secondary) 30%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 50% at 90% 90%,
+        color-mix(in oklab, var(--primary) 25%, transparent),
+        transparent 70%
+      );
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
