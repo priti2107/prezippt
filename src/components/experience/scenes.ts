@@ -112,15 +112,41 @@ export const SCENES: Scene[] = [
   {
     id: 4,
     kicker: "District 04 · Cloud Skyline",
-    title: "Specializations Overview",
+    title: "The Full Salesforce Cloud Stack",
+    subtitle: "Deep, certified expertise across the Salesforce clouds that matter most to enterprise growth and customer experience.",
+    align: "center",
     variant: "grid",
     items: [
-      { icon: Target, title: "Sales Cloud" },
-      { icon: Megaphone, title: "Marketing Cloud" },
-      { icon: Globe, title: "Experience Cloud" },
-      { icon: HeartPulse, title: "Health Cloud" },
-      { icon: GraduationCap, title: "Education Cloud" },
-      { icon: ShoppingCart, title: "Commerce Cloud" },
+      { 
+        icon: Target, 
+        title: "Sales Cloud",
+        body: "Pipeline visibility, forecasting and AI-assisted selling that closes faster."
+      },
+      { 
+        icon: Megaphone, 
+        title: "Marketing Cloud",
+        body: "Personalized journeys, segmentation and analytics across every touchpoint."
+      },
+      { 
+        icon: Globe, 
+        title: "Experience Cloud",
+        body: "Branded portals and communities that scale customer and partner engagement."
+      },
+      { 
+        icon: HeartPulse, 
+        title: "Health Cloud",
+        body: "Patient-360 workflows that connect care teams, records and outcomes."
+      },
+      { 
+        icon: GraduationCap, 
+        title: "Education Cloud",
+        body: "Recruit, engage and retain learners across the full education lifecycle."
+      },
+      { 
+        icon: ShoppingCart, 
+        title: "Commerce Cloud",
+        body: "Unified B2B and B2C commerce experiences powered by data and AI."
+      },
     ],
   },
   {

@@ -32,6 +32,13 @@ import {
   ChevronRight,
   Cloud,
   Layers,
+  HeartHandshake,
+  Award,
+  ShieldCheck,
+  Lightbulb,
+  HeartPulse,
+  GraduationCap,
+  ShoppingCart,
 } from "lucide-react";
 import CityScene from "./CityScene";
 import { SCENES, type Scene } from "./scenes";
@@ -513,6 +520,184 @@ function SceneContent({ scene }: { scene: Scene }) {
       </div>
     );
   }
+  if (scene.id === 3) {
+    return (
+      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-5 px-6 md:px-8 justify-between gap-3 md:gap-4">
+        {/* SECTION HEADER: Centered */}
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-1.5">
+            <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+            District 03 &bull; Principles
+          </div>
+          <h2 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-1.5">
+            What we <span className="bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] bg-clip-text text-transparent">stand for</span>
+          </h2>
+          <p className="text-sm md:text-[17px] text-[#475569] font-medium leading-relaxed max-w-2xl">
+            Our values drive every Salesforce implementation, AI automation initiative, and digital transformation journey we deliver.
+          </p>
+        </div>
+
+        {/* 2x2 Grid of 4 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 h-[71%] md:h-[73%] w-full items-stretch">
+          {/* Card 1: Innovation */}
+          <div className="bg-gradient-to-br from-[#F0F9FF]/95 via-white/80 to-[#E0F2FE]/50 backdrop-blur-md hover:bg-white/90 border border-sky-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full animate-float-soft">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
+                  <Lightbulb className="size-5 text-[#0284C7]" />
+                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
+                </div>
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
+                  Innovation
+                </h3>
+              </div>
+              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
+                We continuously explore AI, automation, and emerging technologies to create smarter business solutions.
+              </p>
+            </div>
+            
+            {/* Bottom Widget */}
+            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/40 shadow-sm h-14">
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="size-4.5 text-[#0284C7]" />
+                <span className="text-[10px] font-bold text-slate-600">AI</span>
+              </div>
+              <div className="h-5 w-[1px] bg-slate-200/80" />
+              <div className="flex items-center gap-1.5">
+                <Workflow className="size-4.5 text-[#0284C7]" />
+                <span className="text-[10px] font-bold text-slate-600">Auto</span>
+              </div>
+              <div className="h-5 w-[1px] bg-slate-200/80" />
+              <div className="flex items-center gap-1.5">
+                <LineChart className="size-4.5 text-[#0284C7]" />
+                <span className="text-[10px] font-bold text-slate-600">Data</span>
+              </div>
+              <div className="h-5 w-[1px] bg-slate-200/80" />
+              <div className="flex items-center gap-1.5">
+                <Cloud className="size-4.5 text-[#0284C7]" />
+                <span className="text-[10px] font-bold text-slate-600">CRM</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Client Commitment */}
+          <div className="bg-gradient-to-br from-[#E0F2FE]/90 via-white/80 to-[#BAE6FD]/40 backdrop-blur-md hover:bg-white/90 border border-blue-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
+                  <HeartHandshake className="size-5 text-[#0284C7]" />
+                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
+                </div>
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
+                  Client Commitment
+                </h3>
+              </div>
+              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
+                We build long-term partnerships focused on measurable outcomes, transparency, and growth.
+              </p>
+            </div>
+            
+            {/* Bottom Widget */}
+            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/40 shadow-sm h-14">
+              <div className="flex items-center gap-1.5">
+                {["A", "B", "C", "D", "E"].map((letter, index) => (
+                  <div key={letter} className="flex items-center">
+                    <div className="size-6.5 rounded-full bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] text-white flex items-center justify-center text-[10px] font-bold border border-white shadow-sm hover:scale-110 transition-transform duration-300 cursor-default">
+                      {letter}
+                    </div>
+                    {index < 4 && <div className="w-2 h-[2px] bg-gradient-to-r from-sky-400 to-sky-300" />}
+                  </div>
+                ))}
+              </div>
+              <div className="bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1 text-[10px] font-bold text-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.1)] animate-pulse">
+                100% Client Focus
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Excellence */}
+          <div className="bg-gradient-to-br from-white/95 via-sky-50/70 to-[#F0F9FF]/90 backdrop-blur-md hover:bg-white/90 border border-sky-100/80 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
+                  <Award className="size-5 text-[#0284C7]" />
+                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
+                </div>
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
+                  Excellence
+                </h3>
+              </div>
+              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
+                We maintain the highest standards in delivery, architecture, implementation, and support.
+              </p>
+            </div>
+            
+            {/* Bottom Widget */}
+            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/50 shadow-sm h-14 gap-4">
+              <div className="flex flex-col flex-1 text-left justify-center">
+                <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 mb-0.5">
+                  <span>Quality Score</span>
+                  <span className="text-[#0284C7] font-black">98%</span>
+                </div>
+                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-gradient-to-r from-sky-400 to-[#0284C7] h-full rounded-full w-[98%]" />
+                </div>
+              </div>
+              <div className="h-6 w-[1px] bg-slate-200 flex-shrink-0" />
+              <div className="flex flex-col flex-1 text-left justify-center">
+                <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 mb-0.5">
+                  <span>Success Rate</span>
+                  <span className="text-emerald-600 font-black">99%</span>
+                </div>
+                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full rounded-full w-[99%]" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 4: Integrity */}
+          <div className="bg-gradient-to-br from-[#F8FAFC]/95 via-[#F1F5F9]/85 to-[#E2E8F0]/40 backdrop-blur-md hover:bg-white/90 border border-slate-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
+                  <ShieldCheck className="size-5 text-[#0284C7]" />
+                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
+                </div>
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
+                  Integrity
+                </h3>
+              </div>
+              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
+                We operate with honesty, accountability, and trust in every engagement and business decision.
+              </p>
+            </div>
+            
+            {/* Bottom Widget */}
+            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-slate-200/50 shadow-sm h-14">
+              <div className="flex items-center gap-2.5">
+                <div className="size-8 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm flex-shrink-0">
+                  <ShieldCheck className="size-4.5 text-[#0284C7]" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] font-bold text-slate-800 leading-tight">Trust & Ethics</span>
+                  <span className="text-[8px] text-[#0284C7] font-black uppercase tracking-wider mt-0.5 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100/40 w-fit">
+                    Compliance Active
+                  </span>
+                </div>
+              </div>
+              <div className="bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1 text-[9.5px] font-bold text-emerald-600 shadow-[0_0_8px_rgba(16,185,129,0.08)] flex items-center gap-1 animate-pulse">
+                <Check className="size-3 stroke-[3] text-emerald-600" />
+                <span>Secure Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
 
   if (scene.variant === "duo") {
     return (
@@ -818,6 +1003,155 @@ function SceneContent({ scene }: { scene: Scene }) {
 
         {/* Bottom Glow reflection element */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
+
+  if (scene.id === 4) {
+    const kpiLabels = [
+      "AI Selling",
+      "Journey Builder",
+      "Customer 360",
+      "Patient 360",
+      "Student Lifecycle",
+      "Unified Commerce",
+    ];
+
+    return (
+      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-6 px-6 md:px-8 justify-between gap-7 md:gap-9">
+        {/* Blueprint Grid Background + Radial Glow */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0284C7" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
+        {/* Radial Glow Behind Title */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10" style={{
+          background: "radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%)"
+        }} />
+
+        {/* SECTION HEADER: Centered */}
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-3">
+            <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+            {scene.kicker}
+          </div>
+          <h2 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-3">
+            {scene.title}
+          </h2>
+          <p className="text-sm md:text-[17px] text-[#475569] font-medium leading-relaxed max-w-2xl">
+            {scene.subtitle}
+          </p>
+        </div>
+
+        {/* 3x2 Grid of 6 Premium Cloud Cards with Connection Lines */}
+        <div className="relative w-full flex-1">
+          {/* Subtle Connection Lines (SVG Layer) */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-5" style={{ zIndex: 1 }}>
+            <line x1="33%" y1="10%" x2="33%" y2="90%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
+            <line x1="67%" y1="10%" x2="67%" y2="90%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
+            <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
+          </svg>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 w-full h-full items-stretch relative z-10">
+            {scene.items?.map((item, idx) => {
+              const isSalesCloud = idx === 0;
+
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.08 }}
+                  viewport={{ once: true }}
+                  className={`group relative bg-white/95 hover:bg-white rounded-[28px] flex flex-col justify-between text-center shadow-[0_10px_30px_rgba(2,132,199,0.06)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] hover:-translate-y-3 transition-all duration-500 flex-1 h-full overflow-hidden ${
+                    isSalesCloud
+                      ? "border-2 border-[#0284C7] md:scale-[1.05] md:row-span-1"
+                      : "border border-[#E2E8F0] hover:border-[#0284C7]/30"
+                  }`}
+                >
+                  {/* Blue Glow on Hover */}
+                  <div className="absolute inset-0 rounded-[28px] bg-gradient-to-b from-[#0284C7]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                  {/* Most Popular Badge - Sales Cloud Only */}
+                  {isSalesCloud && (
+                    <div className="absolute top-4 right-4 bg-[#0284C7] text-white rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-sky-500/20 z-20">
+                      Most Popular
+                    </div>
+                  )}
+
+                  {/* Large Cloud Icon in Blue Circle with Glow */}
+                  <div className="relative flex justify-center mb-4 pt-2">
+                    <div className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 ${
+                      isSalesCloud ? "size-24 bg-gradient-to-br from-[#0284C7] to-[#0164A0]" : "size-20 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]"
+                    }`}>
+                      <item.icon className={isSalesCloud ? "size-12" : "size-10"} />
+                      <span className={`absolute inset-0 rounded-full ${isSalesCloud ? "bg-[#0284C7]/25" : "bg-sky-400/20"} blur-md -z-10 group-hover:blur-lg transition-all duration-500`} />
+                    </div>
+                  </div>
+
+                  {/* Cloud Title */}
+                  <div className="flex-1 flex flex-col justify-start px-3">
+                    <h3 className={`${isSalesCloud ? "text-xl md:text-2xl" : "text-lg md:text-xl"} lg:text-[22px] font-[800] text-[#0F172A] leading-tight mb-2 transition-all duration-300`}>
+                      {item.title}
+                    </h3>
+
+                    {/* Short Description */}
+                    <p className="text-sm md:text-base leading-relaxed text-[#475569] font-medium mb-3">
+                      {item.body}
+                    </p>
+                  </div>
+
+                  {/* KPI Chip */}
+                  <div className="mb-3 px-3">
+                    <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] border border-[#0284C7]/20 rounded-full px-3 py-1.5 text-[9px] md:text-[10px] font-bold text-[#0284C7] shadow-sm">
+                      <span className="size-1.5 rounded-full bg-[#0284C7]" />
+                      {kpiLabels[idx]}
+                    </div>
+                  </div>
+
+                  {/* Bottom Capability Indicator Bars (5 segmented) */}
+                  <div className="mt-auto pt-4 flex items-center justify-center gap-1 px-3 pb-4 border-t border-[#E0F2FE]">
+                    {[1, 2, 3, 4, 5].map((bar) => (
+                      <div
+                        key={bar}
+                        className="h-2 flex-1 rounded-full bg-[#E0F2FE] group-hover:bg-[#0284C7] transition-all duration-500 overflow-hidden relative"
+                        style={{
+                          animation: "slideRight 0.8s ease-out forwards",
+                          animationDelay: `${bar * 0.12}s`,
+                        }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#0284C7]/60 to-[#0EA5E9] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+
+        <style>{`
+          @keyframes slideRight {
+            from {
+              width: 0;
+              opacity: 0;
+            }
+            to {
+              width: 100%;
+              opacity: 1;
+            }
+          }
+        `}</style>
       </div>
     );
   }
