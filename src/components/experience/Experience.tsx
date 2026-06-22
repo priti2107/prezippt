@@ -34,6 +34,7 @@ import {
   Layers,
   HeartHandshake,
   Award,
+  Calendar,
   ShieldCheck,
   Lightbulb,
   HeartPulse,
@@ -737,6 +738,370 @@ function SceneContent({ scene }: { scene: Scene }) {
     );
   }
 
+  if (scene.id === 5) {
+    const funnelSteps = [
+      { label: "Lead", value: "1,240", percent: 100 },
+      { label: "Opportunity", value: "612", percent: 49.3 },
+      { label: "Proposal", value: "284", percent: 22.9 },
+      { label: "Conversion", value: "142", percent: 11.4 },
+    ];
+
+    const kpiCards = [
+      { val: "+68%", label: "Sales Productivity", icon: TrendingUp },
+      { val: "+42%", label: "Pipeline Conversion", icon: Target },
+      { val: "3.8M", label: "Customer Interactions", icon: Users },
+      { val: "91%", label: "Forecast Accuracy", icon: Sparkles },
+    ];
+
+    return (
+      <div 
+        className="pointer-events-auto rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-6 pb-4 md:pt-8 md:pb-6 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-[#0176D3]/20 shadow-[0_30px_100px_rgba(1,118,211,0.2)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
+        style={{
+          background: "rgba(235, 246, 255, 0.92)",
+          backdropFilter: "blur(24px)",
+        }}
+      >
+        {/* Ambient Glow Effects */}
+        <div className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10" style={{
+          background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)"
+        }} />
+        <div className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10" style={{
+          background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)"
+        }} />
+
+        {/* Blueprint Grid Background */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0176D3" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
+        {/* Fractal Noise Overlay for subtle visual grain */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.015] pointer-events-none mix-blend-overlay">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+        </svg>
+
+        {/* TOP ROW: Content (40%) + Dashboard (60%) aligned to start */}
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-start justify-between w-full relative z-10 flex-1">
+          {/* LEFT SIDE: Description and checklist (40% width) */}
+          <div className="w-full md:w-[38%] flex flex-col justify-start text-left max-w-[500px]">
+            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3.5 py-1 text-[10px] font-bold tracking-wider text-[#0176D3] w-fit mb-2 md:mb-[12px]">
+              <span className="size-1.5 rounded-full bg-[#0176D3] animate-pulse" />
+              DISTRICT 05 &bull; SALES CLOUD
+            </div>
+
+            <h2 className="text-xl sm:text-[30px] md:text-[38px] lg:text-[48px] xl:text-[60px] 2xl:text-[72px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2 md:mb-3" style={{ lineHeight: 0.95 }}>
+              Close More Deals <br />
+              with Intelligent <br />
+              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">Sales Cloud</span>
+            </h2>
+
+            <p className="text-sm sm:text-[15px] md:text-[17px] lg:text-[19px] xl:text-[21px] 2xl:text-[25px] text-[#475569] font-medium max-w-[620px] mb-3 md:mb-4" style={{ lineHeight: 1.5 }}>
+              Design Sales Cloud around your real sales process with AI-powered forecasting, opportunity management, lead automation and pipeline visibility.
+            </p>
+
+            {/* Checklist: Vertical Stack */}
+            <div className="flex flex-col gap-2.5 md:gap-3.5 w-full">
+              {[
+                "End-to-end lead-to-cash architecture",
+                "Einstein forecasting & opportunity scoring",
+                "Custom CPQ, quoting and approvals",
+                "Sales engagement and outreach automation",
+              ].map((feat, idx) => (
+                <div key={idx} className="flex items-start gap-3 group/item transition-transform duration-300 hover:translate-x-1 cursor-default">
+                  <div className="flex size-5 md:size-5.5 items-center justify-center rounded-full bg-[#0176D3]/10 border border-[#00A1E0]/20 text-[#0176D3] shadow-sm flex-shrink-0 group-hover/item:bg-[#0176D3] group-hover/item:text-white group-hover/item:shadow-md transition-all duration-300 mt-0.5">
+                    <Check className="size-3 md:size-3.5 stroke-[3.5]" />
+                  </div>
+                  <span className="text-xs md:text-sm lg:text-[14px] xl:text-[15px] 2xl:text-[17px] text-[#475569] font-semibold group-hover/item:text-[#0F172A] transition-colors duration-300 leading-snug">{feat}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT SIDE: CRM Pipeline Dashboard Card (60% width, h-fit, aligned & offset 20px upward relative to heading) */}
+          <div className="w-full md:w-[58%] bg-white/92 backdrop-blur-[24px] border border-sky-100/80 shadow-[0_30px_80px_rgba(1,118,211,0.12)] rounded-[28px] p-5 md:p-6 flex flex-col justify-between h-fit md:mt-[16px] transition-all duration-300 relative">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-2.5">
+              <div className="flex flex-col text-left">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Salesforce Dashboard</span>
+                <span className="text-sm md:text-base lg:text-[18px] font-black text-[#0F172A] leading-tight">CRM Pipeline</span>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="bg-[#0176D3]/10 text-[#0176D3] font-extrabold px-3 py-1 rounded-full text-[10px] border border-[#00A1E0]/20 flex items-center gap-1 shadow-sm">
+                  <span className="size-1.5 rounded-full bg-[#0176D3] animate-pulse" />
+                  Live Syncing
+                </span>
+              </div>
+            </div>
+
+            {/* Premium 2x2 KPI mini cards at the top */}
+            <div className="grid grid-cols-2 gap-2.5 md:gap-3 mb-3 text-left">
+              {[
+                { label: "Total Pipeline Value", val: "$4.8M", color: "text-slate-800" },
+                { label: "Forecast Accuracy", val: "95%", color: "text-[#0176D3]" },
+                { label: "Active Opportunities", val: "612", color: "text-slate-800" },
+                { label: "Revenue Growth", val: "+24%", color: "text-emerald-600 font-extrabold" },
+              ].map((card, idx) => (
+                <div 
+                  key={idx} 
+                  className="bg-white/95 border border-slate-100 hover:border-[#0176D3]/30 rounded-xl p-2.5 md:p-3 shadow-[0_2px_8px_rgba(1,118,211,0.02)] hover:shadow-[0_4px_12px_rgba(1,118,211,0.06)] hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  <span className="block text-[8px] md:text-[9.5px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1 md:mb-1.5">{card.label}</span>
+                  <span className={`text-xs sm:text-sm md:text-[15px] lg:text-base font-black ${card.color}`}>{card.val}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Funnel chart (Salesforce brand blue gradient with thicker bars and hover scaling animations) */}
+            <div className="flex flex-col gap-2 md:gap-2.5 flex-1 justify-center my-1 md:my-1.5">
+              {funnelSteps.map((step) => (
+                <div key={step.label} className="flex flex-col gap-0.5 md:gap-1 w-full group/bar cursor-pointer">
+                  <div className="flex justify-between items-center text-[10px] md:text-xs font-bold text-slate-500 transition-colors duration-200 group-hover/bar:text-slate-800">
+                    <span>{step.label}</span>
+                    <span className="text-[#0F172A] font-extrabold">{step.value}</span>
+                  </div>
+                  <div className="w-full bg-slate-100 h-4.5 md:h-5 rounded-full overflow-hidden relative shadow-inner group-hover/bar:scale-[1.015] transition-transform duration-200">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${step.percent}%` }}
+                      transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] h-full rounded-full shadow-[0_2px_10px_rgba(1,118,211,0.35)] relative overflow-hidden"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Dashboard Metrics Row */}
+            <div className="grid grid-cols-3 gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <div className="size-8 md:size-8.5 rounded-full bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center border border-[#00A1E0]/20 shadow-sm flex-shrink-0">
+                  <TrendingUp className="size-3.5 md:size-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">11.4%</span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Win rate</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <div className="size-8 md:size-8.5 rounded-full bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center border border-[#00A1E0]/20 shadow-sm flex-shrink-0">
+                  <Target className="size-3.5 md:size-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">$32k</span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Avg deal</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <div className="size-8 md:size-8.5 rounded-full bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center border border-[#00A1E0]/20 shadow-sm flex-shrink-0">
+                  <Calendar className="size-3.5 md:size-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">28 days</span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Sales cycle</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM ROW: Consolidated horizontal ribbon with a top accent blue border, positioned higher */}
+        <div className="w-full border-t-[3px] border-t-[#0176D3] bg-white/92 backdrop-blur-md rounded-2xl py-3 px-4 md:py-4 md:px-6 shadow-[0_12px_36px_rgba(1,118,211,0.1)] relative z-10 mt-4 md:mt-5 mb-1 md:mb-2">
+          <div className="grid grid-cols-2 md:flex md:flex-row items-center justify-between gap-3 md:gap-4 w-full">
+            {kpiCards.map((card, idx) => (
+              <div 
+                key={idx} 
+                className="flex items-center gap-2.5 md:gap-3 flex-1 justify-center md:border-r md:last:border-r-0 md:border-slate-100/60 px-2 group/kpi cursor-default"
+              >
+                <div className="size-8 rounded-full bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center border border-[#00A1E0]/20 shadow-sm flex-shrink-0 transition-transform duration-300 group-hover/kpi:scale-110">
+                  <card.icon className="size-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[8px] md:text-[9.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-1">{card.label}</span>
+                  <span className="text-sm md:text-base lg:text-lg font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">{card.val}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
+
+
+
+
+  if (scene.id === 6) {
+    return (
+      <div 
+        className="pointer-events-auto rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-6 pb-6 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-[#0176D3]/20 shadow-[0_30px_100px_rgba(1,118,211,0.2)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
+        style={{
+          background: "rgba(235, 246, 255, 0.92)",
+          backdropFilter: "blur(24px)",
+        }}
+      >
+        {/* Ambient Glow Effects */}
+        <div className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10" style={{
+          background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)"
+        }} />
+        <div className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10" style={{
+          background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)"
+        }} />
+
+        {/* Blueprint Grid Background */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0176D3" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
+        {/* Fractal Noise Overlay for subtle visual grain */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.015] pointer-events-none mix-blend-overlay">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+        </svg>
+
+        {/* TOP ROW: Content (50%) + Dashboard (50%) aligned to start */}
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 lg:gap-6 items-start justify-between w-full relative z-10">
+          {/* LEFT SIDE: Description (50% width) */}
+          <div className="w-full md:w-[48%] flex flex-col justify-start text-left max-w-[580px]">
+            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3.5 py-1 text-[10px] font-bold tracking-wider text-[#0176D3] w-fit mb-1.5 md:mb-2.5">
+              <span className="size-1.5 rounded-full bg-[#0176D3] animate-pulse" />
+              DISTRICT 06 &bull; MARKETING CLOUD
+            </div>
+
+            <h2 className="text-xl sm:text-[26px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[500px] mb-1.5 md:mb-2.5" style={{ lineHeight: 0.95 }}>
+              Create Personalized <br />
+              Customer Journeys <br />
+              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">That Convert</span>
+            </h2>
+
+            <p className="text-xs sm:text-sm md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px] text-[#475569] font-medium max-w-[520px] mb-1" style={{ lineHeight: 1.45 }}>
+              Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.
+            </p>
+          </div>
+
+          {/* RIGHT SIDE: Marketing Dashboard Card (50% width, compact size, shadow & grid) */}
+          <div className="w-full md:w-[48%] bg-white/92 backdrop-blur-[24px] border border-sky-100/80 shadow-[0_30px_80px_rgba(1,118,211,0.12)] rounded-[24px] p-3 md:p-4 flex flex-col justify-between h-fit transition-all duration-300 relative">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2">
+              <div className="flex flex-col text-left">
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Marketing Performance Center</span>
+                <span className="text-xs md:text-sm lg:text-[15px] font-black text-[#0F172A] leading-tight">Campaign Performance</span>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="bg-[#0176D3]/10 text-[#0176D3] font-extrabold px-2.5 py-0.5 rounded-full text-[9px] border border-[#00A1E0]/20 flex items-center gap-1 shadow-sm">
+                  <span className="size-1.2 rounded-full bg-[#0176D3] animate-pulse" />
+                  Live Syncing
+                </span>
+              </div>
+            </div>
+
+            {/* Premium 2x2 KPI mini cards at the top */}
+            <div className="grid grid-cols-2 gap-2 md:gap-2.5 mb-2.5 md:mb-3.5 text-left">
+              {[
+                { label: "Email Campaigns", val: "12,450", color: "text-slate-800" },
+                { label: "Active Journeys", val: "186", color: "text-[#0176D3]" },
+                { label: "Open Rate", val: "68%", color: "text-slate-800" },
+                { label: "Conversion Rate", val: "21%", color: "text-emerald-600 font-extrabold" },
+              ].map((card, idx) => (
+                <div 
+                  key={idx} 
+                  className="bg-white/95 border border-slate-100 hover:border-[#0176D3]/30 rounded-xl p-3 md:p-3 shadow-[0_2px_8px_rgba(1,118,211,0.02)] hover:shadow-[0_4px_12px_rgba(1,118,211,0.06)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
+                >
+                  <span className="block text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">{card.label}</span>
+                  <span className={`text-[11px] sm:text-xs md:text-[13px] lg:text-sm font-black ${card.color} leading-none`}>{card.val}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bar chart performance (Campaign Performance 7-day) */}
+            <div className="pt-2 md:pt-2.5 border-t border-slate-100 mt-0.5">
+              <div className="flex items-end justify-between h-10 md:h-12 lg:h-14 gap-1.5 my-0.5">
+                {[35, 52, 42, 68, 78, 84, 92].map((h, i) => (
+                  <div key={i} className="w-full bg-gradient-to-t from-[#0176D3] to-[#00A1E0] rounded-t-md hover:scale-y-[1.03] transition-all duration-200 cursor-pointer" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+              <p className="text-[7.5px] md:text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 text-center">Campaign Performance (7-day)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* MIDDLE ROW: Full-width Checklist Cards (3 columns, 2 rows) */}
+        <div className="w-full relative z-10">
+          <div className="grid grid-cols-3 gap-2.5 md:gap-3 w-full">
+            {scene.items?.map((it, idx) => {
+              const featureIcons = [Workflow, Users, Megaphone, Sparkles, Globe, LineChart];
+              const IconComp = featureIcons[idx] || Check;
+              return (
+                <div 
+                  key={it.title} 
+                  className="rounded-2xl p-3 flex items-start gap-3 h-[70px] md:h-[78px] lg:h-[84px] transition-all duration-300 hover:shadow-[0_8px_20px_rgba(1,118,211,0.08)] hover:border-[#0176D3]/25 cursor-default bg-white/65 border"
+                  style={{ borderColor: "rgba(0, 150, 255, 0.08)" }}
+                >
+                  <div className="flex size-7 md:size-8 items-center justify-center rounded-full bg-[#0176D3]/10 border border-[#00A1E0]/20 text-[#0176D3] flex-shrink-0 mt-0.5 shadow-sm">
+                    <IconComp className="size-4 stroke-[3.5]" />
+                  </div>
+                  <div className="min-w-0 flex-1 flex flex-col justify-center h-full text-left">
+                    <h4 className="font-bold text-xs md:text-sm lg:text-[14px] text-[#0F172A] leading-tight mb-0.5 truncate">{it.title}</h4>
+                    <p className="text-[10px] md:text-xs lg:text-[12px] text-[#475569] font-medium leading-snug line-clamp-2">{it.body}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* BOTTOM ROW: Consolidated horizontal ribbon with a top accent blue border */}
+        <div className="w-full border-t-[3px] border-t-[#0176D3] bg-white/92 backdrop-blur-md rounded-2xl py-2 px-3 md:py-2.5 md:px-5 shadow-[0_12px_36px_rgba(1,118,211,0.1)] relative z-10">
+          <div className="grid grid-cols-2 md:flex md:flex-row items-center justify-between gap-2.5 md:gap-3 w-full">
+            {[
+              { val: "+68%", label: "Engage", icon: Megaphone },
+              { val: "+42%", label: "Convert", icon: Target },
+              { val: "3.8M", label: "Reach", icon: Users },
+              { val: "91%", label: "Completion", icon: Award },
+            ].map((card, idx) => (
+              <div 
+                key={idx} 
+                className="flex items-center gap-2 md:gap-2.5 flex-1 justify-center md:border-r md:last:border-r-0 md:border-slate-100/60 px-2 group/kpi cursor-default"
+              >
+                <div className="size-7 md:size-8 rounded-full bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center border border-[#00A1E0]/20 shadow-sm flex-shrink-0 transition-transform duration-300 group-hover/kpi:scale-110">
+                  <card.icon className="size-3.5 md:size-4" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[7.5px] md:text-[8.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-0.5">{card.label}</span>
+                  <span className="text-xs sm:text-sm md:text-base font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">{card.val}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
+
   if (scene.variant === "flow") {
     return (
       <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-8 lg:p-10 w-full max-w-5xl">
@@ -771,160 +1136,73 @@ function SceneContent({ scene }: { scene: Scene }) {
     );
   }
 
-  if (scene.id === 6) {
-    return (
-      <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-7 lg:p-9 w-full max-w-5xl flex flex-col">
-        {/* Header Section - Compact */}
-        <div className="mb-4">
-          <Kicker>{scene.kicker}</Kicker>
-          <h2 className="mt-3 text-2xl font-bold text-[#0F172A] md:text-3xl mb-2">
-            {scene.title}
-          </h2>
-          <p className="text-[#475569] font-medium text-xs md:text-sm leading-snug max-w-lg">
-            {scene.subtitle}
-          </p>
-        </div>
 
-        {/* Middle Section: Features + Dashboard */}
-        <div className="flex flex-col md:flex-row md:items-stretch gap-6 mb-4 flex-1">
-          {/* Left: Features Checklist */}
-          <div className="md:w-[45%] flex flex-col">
-            <div className="grid grid-cols-1 gap-2">
-              {scene.items?.map((it) => (
-                <div key={it.title} className="flex items-start gap-2.5">
-                  <Check className="size-4 text-[#0284C7] flex-shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <h4 className="font-semibold text-[#0F172A] text-xs md:text-sm leading-tight">{it.title}</h4>
-                    <p className="text-[11px] text-[#475569] font-medium truncate">{it.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Dashboard Preview - Enhanced */}
-          <div className="md:w-[55%] bg-white/40 border border-slate-200/50 rounded-2xl p-4 backdrop-blur-sm transform scale-100 hover:scale-[1.02] transition-transform duration-300">
-            <p className="text-[9px] uppercase tracking-wider font-semibold text-slate-500 mb-3">Marketing Performance Center</p>
-            <div className="grid grid-cols-2 gap-3 mb-3">
-              <div className="bg-white/60 rounded-lg p-2.5 backdrop-blur-sm">
-                <p className="text-[8px] text-slate-500 font-medium mb-0.5">Email Campaigns</p>
-                <p className="text-base md:text-lg font-black text-[#0284C7]">12,450</p>
-              </div>
-              <div className="bg-white/60 rounded-lg p-2.5 backdrop-blur-sm">
-                <p className="text-[8px] text-slate-500 font-medium mb-0.5">Active Journeys</p>
-                <p className="text-base md:text-lg font-black text-[#0284C7]">186</p>
-              </div>
-              <div className="bg-white/60 rounded-lg p-2.5 backdrop-blur-sm">
-                <p className="text-[8px] text-slate-500 font-medium mb-0.5">Open Rate</p>
-                <p className="text-base md:text-lg font-black text-[#0284C7]">68%</p>
-              </div>
-              <div className="bg-white/60 rounded-lg p-2.5 backdrop-blur-sm">
-                <p className="text-[8px] text-slate-500 font-medium mb-0.5">Conversion Rate</p>
-                <p className="text-base md:text-lg font-black text-[#0284C7]">21%</p>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-slate-200/40">
-              <div className="flex items-end justify-between h-10 gap-0.5">
-                {[35, 52, 42, 68, 78, 84, 92].map((h, i) => (
-                  <div key={i} className="w-full bg-gradient-to-t from-[#0284C7] to-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
-                ))}
-              </div>
-              <p className="text-[7px] text-slate-400 font-medium mt-1.5 text-center">Campaign Performance (7-day)</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom: KPI Strip */}
-        <div className="glass-panel rounded-xl border border-slate-200/50 bg-white/50 px-4 py-3 flex items-center justify-between">
-          <div className="text-center flex-1">
-            <div className="text-lg md:text-xl font-black text-emerald-600">+68%</div>
-            <div className="text-[8px] font-semibold text-[#475569] uppercase tracking-wider mt-0.5">Engage</div>
-          </div>
-          <div className="h-8 w-px bg-slate-200/40" />
-          <div className="text-center flex-1">
-            <div className="text-lg md:text-xl font-black text-emerald-600">+42%</div>
-            <div className="text-[8px] font-semibold text-[#475569] uppercase tracking-wider mt-0.5">Convert</div>
-          </div>
-          <div className="h-8 w-px bg-slate-200/40" />
-          <div className="text-center flex-1">
-            <div className="text-lg md:text-xl font-black text-[#0284C7]">3.8M</div>
-            <div className="text-[8px] font-semibold text-[#475569] uppercase tracking-wider mt-0.5">Reach</div>
-          </div>
-          <div className="h-8 w-px bg-slate-200/40" />
-          <div className="text-center flex-1">
-            <div className="text-lg md:text-xl font-black text-emerald-600">91%</div>
-            <div className="text-[8px] font-semibold text-[#475569] uppercase tracking-wider mt-0.5">Completion</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (scene.id === 2) {
     return (
-      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[86vh] md:h-[80vh] max-w-7xl relative overflow-hidden flex flex-col p-8 md:p-12 justify-between">
+      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]">
         {/* TOP ROW: Content (55%) + Dashboard (45%) */}
-        <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center justify-between h-[48%] md:h-[50%] w-full">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-between w-full h-auto relative z-10">
           {/* LEFT SIDE: Content (55% width) */}
-          <div className="w-full md:w-[55%] flex flex-col justify-center text-left max-w-[600px]">
-            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-4">
+          <div className="w-full md:w-[55%] flex flex-col justify-start text-left max-w-[600px]">
+            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-2.5">
               <span className="size-2 rounded-full bg-[#0284C7] animate-pulse" />
               {scene.kicker}
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-[42px] xl:text-[48px] font-[800] leading-[1.08] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-3">
+            <h2 className="text-xl sm:text-2xl lg:text-[32px] xl:text-[38px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2">
               Built for the Modern Enterprise
             </h2>
-            <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-4" />
+            <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-3" />
 
-            <p className="text-sm md:text-base text-[#475569] font-medium leading-relaxed max-w-[550px]">
+            <p className="text-xs md:text-sm text-[#475569] font-medium leading-relaxed max-w-[550px]">
               Cascade Tech Ventures combines deep Salesforce craftsmanship with cutting-edge AI to help organizations grow, scale, and operate with precision.
             </p>
           </div>
 
           {/* RIGHT SIDE: Floating Dashboard Panel (45% width, reduced height and width) */}
-          <div className="w-full md:w-[43%] flex flex-col h-full rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-4 relative overflow-visible max-h-[90%] justify-between">
+          <div className="w-full md:w-[43%] flex flex-col h-auto rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-3 md:p-3.5 relative overflow-visible justify-between">
             {/* Console Header */}
-            <div className="flex items-center justify-between border-b border-slate-200/40 pb-2 mb-2">
+            <div className="flex items-center justify-between border-b border-slate-200/40 pb-1.5 mb-1.5">
               <div className="flex items-center gap-1">
                 <div className="size-2 rounded-full bg-[#EF4444]/90" />
                 <div className="size-2 rounded-full bg-[#F59E0B]/90" />
                 <div className="size-2 rounded-full bg-[#10B981]/90" />
               </div>
-              <span className="text-[9px] font-bold text-slate-400 tracking-wider font-mono">
+              <span className="text-[8px] font-bold text-slate-400 tracking-wider font-mono">
                 cascade.cloud / performance
               </span>
             </div>
 
             {/* Dashboard Widgets Grid - Compact sizing */}
-            <div className="grid grid-cols-2 gap-2.5 h-[calc(100%-25px)] content-center">
+            <div className="grid grid-cols-2 gap-2 content-center">
               {/* CRM Performance Card */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
                 <div className="flex items-center justify-between">
                   <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">CRM Performance</span>
                   <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+24%</span>
                 </div>
-                <p className="text-base md:text-lg lg:text-xl font-black text-slate-800 mt-0.5 font-display leading-none">99.8% Sync</p>
+                <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">99.8% Sync</p>
                 <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Real-time Health Check</p>
               </div>
 
               {/* Workflow Automation Metrics */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
                 <div className="flex items-center justify-between">
                   <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Workflows Active</span>
                   <span className="text-[8px] font-bold text-sky-600 bg-sky-50 px-1 rounded-full">Active</span>
                 </div>
-                <p className="text-base md:text-lg lg:text-xl font-black text-slate-800 mt-0.5 font-display leading-none">1,420 / hr</p>
+                <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">1,420 / hr</p>
                 <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Auto-routing tasks</p>
               </div>
 
               {/* Customer Growth Analytics */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
                 <div className="flex items-center justify-between">
                   <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Customer Growth</span>
                   <span className="text-[8px] font-bold text-[#10B981] bg-emerald-50 px-1.5 rounded-full">+120%</span>
                 </div>
-                <div className="flex items-end justify-between h-6 mt-1.5 px-0.5">
+                <div className="flex items-end justify-between h-5 mt-1.5 px-0.5">
                   {[20, 45, 30, 55, 60, 40, 80].map((h, i) => (
                     <div key={i} className="w-[8%] bg-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
                   ))}
@@ -932,32 +1210,32 @@ function SceneContent({ scene }: { scene: Scene }) {
               </div>
 
               {/* Salesforce Ecosystem Overview */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
                 <div className="flex items-center justify-between mb-0.5">
                   <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Ecosystem Link</span>
                   <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">Secure</span>
                 </div>
-                <div className="flex items-center justify-center gap-1.5 mt-2 h-6">
-                  <div className="size-5 rounded bg-sky-50 border border-sky-100 flex items-center justify-center">
-                    <Cloud className="size-3 text-[#0284C7]" />
+                <div className="flex items-center justify-center gap-1.5 mt-2 h-5">
+                  <div className="size-4.5 rounded bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0">
+                    <Cloud className="size-2.5 text-[#0284C7]" />
                   </div>
                   <div className="h-[1px] bg-slate-200 flex-grow relative">
                     <div className="absolute top-1/2 -translate-y-1/2 left-[40%] size-1 bg-[#0284C7] rounded-full animate-ping" />
                   </div>
-                  <div className="size-5 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center">
-                    <Sparkles className="size-3 text-emerald-500" />
+                  <div className="size-4.5 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="size-2.5 text-emerald-500" />
                   </div>
                 </div>
               </div>
 
               {/* AI Process Optimization Chart (Col span 2) */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left col-span-2">
+              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left col-span-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">AI Process Optimization</span>
                   <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1.5 rounded-full">-35% Latency</span>
                 </div>
                 <div className="flex items-center gap-2 mt-1.5">
-                  <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
                     <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
                   </div>
                   <span className="text-[10px] font-bold text-slate-700">85%</span>
@@ -967,8 +1245,8 @@ function SceneContent({ scene }: { scene: Scene }) {
           </div>
         </div>
 
-        {/* BOTTOM ROW: 3 Enterprise Feature Cards (height: ~42%) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[42%] w-full items-stretch mt-12 md:mt-16">
+        {/* BOTTOM ROW: 3 Enterprise Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 w-full items-stretch flex-1 relative z-10">
           {scene.items?.map((it, idx) => {
             const titleText = idx === 0 
               ? "Tailored Digital Transformation" 
@@ -985,102 +1263,102 @@ function SceneContent({ scene }: { scene: Scene }) {
             return (
               <div
                 key={it.title}
-                className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-5 md:p-6 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full"
+                className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-3.5 md:p-4 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full"
               >
                 <div>
                   <div className="flex items-center gap-3">
-                    <div className="flex size-9 items-center justify-center rounded-xl bg-sky-50 border border-sky-100 flex-shrink-0">
-                      <it.icon className="size-5 text-[#0284C7]" />
+                    <div className="flex size-8.5 items-center justify-center rounded-xl bg-sky-50 border border-sky-100 flex-shrink-0">
+                      <it.icon className="size-4.5 text-[#0284C7]" />
                     </div>
-                    <h3 className="text-sm md:text-base lg:text-lg font-[800] text-[#0F172A] leading-tight">
+                    <h3 className="text-xs sm:text-sm md:text-base font-[800] text-[#0F172A] leading-tight">
                       {titleText}
                     </h3>
                   </div>
-                  <p className="mt-2 text-xs md:text-sm leading-relaxed text-[#475569] font-medium">
+                  <p className="mt-1.5 text-[11px] md:text-xs leading-normal text-[#475569] font-medium">
                     {descText}
                   </p>
                 </div>
 
                 {/* Mini visual component anchored to card bottom */}
-                <div className="mt-auto pt-4">
+                <div className="mt-auto pt-2.5">
                   {idx === 0 && (
-                    <div className="flex items-center justify-between w-full bg-slate-50/50 px-2.5 py-3 rounded-xl border border-slate-100 text-[10px] md:text-xs font-bold text-[#475569]">
+                    <div className="flex items-center justify-between w-full bg-slate-50/50 px-2 py-2 md:py-2.5 rounded-xl border border-slate-100 text-[10px] md:text-xs font-bold text-[#475569]">
                       <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Search className="size-3.5" />
+                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                          <Search className="size-3" />
                         </div>
-                        <span className="text-[9px] font-bold text-slate-600 mt-1">Discovery</span>
+                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Discovery</span>
                       </div>
-                      <ChevronRight className="size-3 text-slate-400" />
+                      <ChevronRight className="size-2.5 text-slate-400" />
                       <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Layers className="size-3.5" />
+                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                          <Layers className="size-3" />
                         </div>
-                        <span className="text-[9px] font-bold text-slate-600 mt-1">Architecture</span>
+                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Architecture</span>
                       </div>
-                      <ChevronRight className="size-3 text-slate-400" />
+                      <ChevronRight className="size-2.5 text-slate-400" />
                       <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Code className="size-3.5" />
+                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                          <Code className="size-3" />
                         </div>
-                        <span className="text-[9px] font-bold text-slate-600 mt-1">Build</span>
+                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Build</span>
                       </div>
-                      <ChevronRight className="size-3 text-slate-400" />
+                      <ChevronRight className="size-2.5 text-slate-400" />
                       <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm animate-pulse">
-                          <Check className="size-3.5" />
+                        <div className="size-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm animate-pulse">
+                          <Check className="size-3" />
                         </div>
-                        <span className="text-[9px] font-bold text-emerald-600 mt-1">Adopt</span>
+                        <span className="text-[8.5px] font-bold text-emerald-600 mt-0.5">Adopt</span>
                       </div>
                     </div>
                   )}
 
                   {idx === 1 && (
-                    <div className="flex flex-col gap-1 w-full bg-slate-50/50 px-2.5 py-2.5 rounded-xl border border-slate-100">
-                      <div className="flex items-center justify-between text-[10px] md:text-xs font-extrabold text-[#475569]">
+                    <div className="flex flex-col gap-1 w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100">
+                      <div className="flex items-center justify-between text-[9px] md:text-[10px] font-extrabold text-[#475569]">
                         <span>Automation Gains</span>
-                        <span className="text-[#10B981] font-black text-xs">↓ 65% Operations</span>
+                        <span className="text-[#10B981] font-black text-[11px]">↓ 65% Operations</span>
                       </div>
                       <div className="flex flex-col gap-1 mt-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[9px] text-slate-400 font-bold w-20">Manual Hours</span>
-                          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                          <span className="text-[8.5px] text-slate-400 font-bold w-18">Manual Hours</span>
+                          <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
                             <div className="bg-slate-300 h-full rounded-full w-[30%]" />
                           </div>
-                          <span className="text-[9px] text-slate-400 font-bold w-6 text-right">30%</span>
+                          <span className="text-[8.5px] text-slate-400 font-bold w-6 text-right">30%</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-[9px] text-[#0284C7] font-bold w-20">Automated</span>
-                          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                          <span className="text-[8.5px] text-[#0284C7] font-bold w-18">Automated</span>
+                          <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
                             <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
                           </div>
-                          <span className="text-[9px] text-[#0284C7] font-bold w-6 text-right">85%</span>
+                          <span className="text-[8.5px] text-[#0284C7] font-bold w-6 text-right">85%</span>
                         </div>
                       </div>
                     </div>
                   )}
 
                   {idx === 2 && (
-                    <div className="flex items-center justify-around w-full bg-slate-50/50 px-2.5 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase text-[#475569] tracking-wider">
+                    <div className="flex items-center justify-around w-full bg-slate-50/50 px-2 py-2 md:py-2.5 rounded-xl border border-slate-100 text-[10px] font-bold uppercase text-[#475569] tracking-wider">
                       <div className="flex flex-col items-center gap-1">
-                        <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                          <Target className="size-3.5 text-[#0284C7]" />
+                        <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
+                          <Target className="size-3 text-[#0284C7]" />
                         </div>
-                        <span className="text-[8px] md:text-[9px] font-bold text-slate-500 mt-1">Sales Cloud</span>
+                        <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Sales Cloud</span>
                       </div>
                       <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
                       <div className="flex flex-col items-center gap-1">
-                        <div className="size-8.5 rounded-full bg-sky-100 text-[#0284C7] flex items-center justify-center border border-sky-200 shadow-md animate-pulse">
-                          <Headset className="size-4 text-[#0284C7]" />
+                        <div className="size-7.5 rounded-full bg-sky-100 text-[#0284C7] flex items-center justify-center border border-sky-200 shadow-md animate-pulse">
+                          <Headset className="size-3.5 text-[#0284C7]" />
                         </div>
-                        <span className="text-[8px] md:text-[9px] font-black text-[#0284C7] mt-1">Service Cloud</span>
+                        <span className="text-[7.5px] md:text-[8px] font-black text-[#0284C7] mt-0.5">Service Cloud</span>
                       </div>
                       <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
                       <div className="flex flex-col items-center gap-1">
-                        <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                          <Megaphone className="size-3.5 text-[#0284C7]" />
+                        <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
+                          <Megaphone className="size-3 text-[#0284C7]" />
                         </div>
-                        <span className="text-[8px] md:text-[9px] font-bold text-slate-500 mt-1">Marketing Cloud</span>
+                        <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Marketing Cloud</span>
                       </div>
                     </div>
                   )}
