@@ -1018,7 +1018,7 @@ function SceneContent({ scene }: { scene: Scene }) {
     ];
 
     return (
-      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-6 px-6 md:px-8 justify-between gap-7 md:gap-9">
+      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-4 px-6 md:px-8 justify-between gap-4 md:gap-5">
         {/* Blueprint Grid Background + Radial Glow */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -1032,26 +1032,26 @@ function SceneContent({ scene }: { scene: Scene }) {
         </div>
 
         {/* Radial Glow Behind Title */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10" style={{
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10" style={{
           background: "radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%)"
         }} />
 
         {/* SECTION HEADER: Centered */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto relative z-10">
-          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-3">
+          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-2">
             <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
             {scene.kicker}
           </div>
-          <h2 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-[42px] xl:text-[48px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-2">
             {scene.title}
           </h2>
-          <p className="text-sm md:text-[17px] text-[#475569] font-medium leading-relaxed max-w-2xl">
+          <p className="text-xs md:text-[15px] text-[#475569] font-medium leading-relaxed max-w-2xl">
             {scene.subtitle}
           </p>
         </div>
 
         {/* 3x2 Grid of 6 Premium Cloud Cards with Connection Lines */}
-        <div className="relative w-full flex-1">
+        <div className="relative w-full flex-1 min-h-0">
           {/* Subtle Connection Lines (SVG Layer) */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-5" style={{ zIndex: 1 }}>
             <line x1="33%" y1="10%" x2="33%" y2="90%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
@@ -1059,7 +1059,7 @@ function SceneContent({ scene }: { scene: Scene }) {
             <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
           </svg>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 w-full h-full items-stretch relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 w-full h-full items-stretch relative z-10">
             {scene.items?.map((item, idx) => {
               const isSalesCloud = idx === 0;
 
@@ -1070,58 +1070,56 @@ function SceneContent({ scene }: { scene: Scene }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.08 }}
                   viewport={{ once: true }}
-                  className={`group relative bg-white/95 hover:bg-white rounded-[28px] flex flex-col justify-between text-center shadow-[0_10px_30px_rgba(2,132,199,0.06)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] hover:-translate-y-3 transition-all duration-500 flex-1 h-full overflow-hidden ${
+                  className={`group relative bg-white/95 hover:bg-white rounded-[24px] flex flex-col justify-between text-center shadow-[0_10px_30px_rgba(2,132,199,0.06)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] hover:-translate-y-2 transition-all duration-500 flex-1 h-full overflow-hidden ${
                     isSalesCloud
-                      ? "border-2 border-[#0284C7] md:scale-[1.05] md:row-span-1"
+                      ? "border-2 border-[#0284C7]"
                       : "border border-[#E2E8F0] hover:border-[#0284C7]/30"
                   }`}
                 >
                   {/* Blue Glow on Hover */}
-                  <div className="absolute inset-0 rounded-[28px] bg-gradient-to-b from-[#0284C7]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-[24px] bg-gradient-to-b from-[#0284C7]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                   {/* Most Popular Badge - Sales Cloud Only */}
                   {isSalesCloud && (
-                    <div className="absolute top-4 right-4 bg-[#0284C7] text-white rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-sky-500/20 z-20">
+                    <div className="absolute top-3 right-3 bg-[#0284C7] text-white rounded-full px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider shadow-lg shadow-sky-500/20 z-20">
                       Most Popular
                     </div>
                   )}
 
-                  {/* Large Cloud Icon in Blue Circle with Glow */}
-                  <div className="relative flex justify-center mb-4 pt-2">
-                    <div className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 ${
-                      isSalesCloud ? "size-24 bg-gradient-to-br from-[#0284C7] to-[#0164A0]" : "size-20 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]"
-                    }`}>
-                      <item.icon className={isSalesCloud ? "size-12" : "size-10"} />
-                      <span className={`absolute inset-0 rounded-full ${isSalesCloud ? "bg-[#0284C7]/25" : "bg-sky-400/20"} blur-md -z-10 group-hover:blur-lg transition-all duration-500`} />
+                  {/* Cloud Icon in Blue Circle with Glow */}
+                  <div className="relative flex justify-center mb-2 pt-1">
+                    <div className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 size-16 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]`}>
+                      <item.icon className="size-9" />
+                      <span className="absolute inset-0 rounded-full bg-sky-400/20 blur-md -z-10 group-hover:blur-lg transition-all duration-500" />
                     </div>
                   </div>
 
                   {/* Cloud Title */}
                   <div className="flex-1 flex flex-col justify-start px-3">
-                    <h3 className={`${isSalesCloud ? "text-xl md:text-2xl" : "text-lg md:text-xl"} lg:text-[22px] font-[800] text-[#0F172A] leading-tight mb-2 transition-all duration-300`}>
+                    <h3 className="text-base md:text-lg font-[800] text-[#0F172A] leading-tight mb-1">
                       {item.title}
                     </h3>
 
                     {/* Short Description */}
-                    <p className="text-sm md:text-base leading-relaxed text-[#475569] font-medium mb-3">
+                    <p className="text-xs md:text-sm leading-snug text-[#475569] font-medium mb-2">
                       {item.body}
                     </p>
                   </div>
 
                   {/* KPI Chip */}
-                  <div className="mb-3 px-3">
-                    <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] border border-[#0284C7]/20 rounded-full px-3 py-1.5 text-[9px] md:text-[10px] font-bold text-[#0284C7] shadow-sm">
-                      <span className="size-1.5 rounded-full bg-[#0284C7]" />
+                  <div className="mb-2 px-3">
+                    <div className="inline-flex items-center gap-1 bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] border border-[#0284C7]/20 rounded-full px-2.5 py-1 text-[8px] md:text-[9px] font-bold text-[#0284C7] shadow-sm">
+                      <span className="size-1 rounded-full bg-[#0284C7]" />
                       {kpiLabels[idx]}
                     </div>
                   </div>
 
                   {/* Bottom Capability Indicator Bars (5 segmented) */}
-                  <div className="mt-auto pt-4 flex items-center justify-center gap-1 px-3 pb-4 border-t border-[#E0F2FE]">
+                  <div className="mt-auto pt-2 flex items-center justify-center gap-0.5 px-3 pb-2.5 border-t border-[#E0F2FE]">
                     {[1, 2, 3, 4, 5].map((bar) => (
                       <div
                         key={bar}
-                        className="h-2 flex-1 rounded-full bg-[#E0F2FE] group-hover:bg-[#0284C7] transition-all duration-500 overflow-hidden relative"
+                        className="h-1.5 flex-1 rounded-full bg-[#E0F2FE] group-hover:bg-[#0284C7] transition-all duration-500 overflow-hidden relative"
                         style={{
                           animation: "slideRight 0.8s ease-out forwards",
                           animationDelay: `${bar * 0.12}s`,
