@@ -181,30 +181,40 @@ export const SCENES: Scene[] = [
   {
     id: 6,
     kicker: "District 06 · Marketing Cloud",
-    title: "Marketing Cloud Solutions",
-    variant: "flow",
+    title: "Create Personalized Customer Journeys That Convert",
+    subtitle: "Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.",
+    variant: "grid",
     items: [
       {
-        icon: LineChart,
-        title: "Data-Driven Campaigns",
-        body: "Every send backed by real signals.",
+        icon: RouteIcon,
+        title: "Customer Journey Automation",
+        body: "Automated multi-step customer workflows.",
       },
       {
-        icon: RouteIcon,
-        title: "Personalized Customer Journeys",
-        body: "Right message, right moment, every channel.",
+        icon: Users,
+        title: "Audience Segmentation",
+        body: "Precise targeting and audience discovery.",
+      },
+      {
+        icon: LineChart,
+        title: "Email & Campaign Management",
+        body: "Enterprise-grade email delivery.",
       },
       {
         icon: BrainCircuit,
-        title: "AI-Powered Insights",
-        body: "An intelligence layer above every journey.",
+        title: "AI-Powered Personalization",
+        body: "Intelligent content and timing.",
       },
-    ],
-    stats: [
-      { label: "Awareness", value: "→" },
-      { label: "Engagement", value: "→" },
-      { label: "Conversion", value: "→" },
-      { label: "Loyalty", value: "★" },
+      {
+        icon: Megaphone,
+        title: "Omnichannel Engagement",
+        body: "SMS, email, push, and web channels.",
+      },
+      {
+        icon: TrendingUp,
+        title: "Marketing Analytics & Attribution",
+        body: "Complete attribution and ROI tracking.",
+      },
     ],
   },
   {

@@ -771,6 +771,92 @@ function SceneContent({ scene }: { scene: Scene }) {
     );
   }
 
+  if (scene.id === 6) {
+    return (
+      <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-8 lg:p-10 w-full max-w-5xl">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-start md:gap-12 mb-8">
+          {/* Left: Title & Description */}
+          <div className="md:w-1/2 mb-6 md:mb-0">
+            <Kicker>{scene.kicker}</Kicker>
+            <h2 className="mt-4 text-3xl font-bold text-[#0F172A] md:text-4xl mb-3">
+              {scene.title}
+            </h2>
+            <p className="text-[#475569] font-medium text-sm md:text-base leading-relaxed max-w-sm">
+              {scene.subtitle}
+            </p>
+          </div>
+
+          {/* Right: Dashboard Preview */}
+          <div className="md:w-1/2 bg-white/40 border border-slate-200/50 rounded-2xl p-4 backdrop-blur-sm">
+            <p className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 mb-3">Marketing Performance Center</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-xs text-slate-500 font-medium mb-1">Email Campaigns</p>
+                <p className="text-xl font-black text-[#0284C7]">12,450</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium mb-1">Active Journeys</p>
+                <p className="text-xl font-black text-[#0284C7]">186</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium mb-1">Open Rate</p>
+                <p className="text-xl font-black text-[#0284C7]">68%</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium mb-1">Conversion Rate</p>
+                <p className="text-xl font-black text-[#0284C7]">21%</p>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-slate-200/50">
+              <div className="flex items-end justify-between h-12 gap-1">
+                {[35, 52, 42, 68, 78, 84, 92].map((h, i) => (
+                  <div key={i} className="w-full bg-gradient-to-t from-[#0284C7] to-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+              <p className="text-[8px] text-slate-400 font-medium mt-2 text-center">Campaign Performance (7-day)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Checklist */}
+        <div className="mt-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {scene.items?.map((it) => (
+              <div key={it.title} className="flex items-start gap-3">
+                <Check className="size-5 text-[#0284C7] flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-[#0F172A] text-sm">{it.title}</h4>
+                  <p className="text-xs text-[#475569] font-medium">{it.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom KPI Row */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50 text-center">
+            <div className="text-2xl font-black text-emerald-600">+68%</div>
+            <div className="text-xs font-semibold text-[#475569] mt-2 uppercase tracking-wide">Engagement Rate</div>
+          </div>
+          <div className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50 text-center">
+            <div className="text-2xl font-black text-emerald-600">+42%</div>
+            <div className="text-xs font-semibold text-[#475569] mt-2 uppercase tracking-wide">Campaign Conversion</div>
+          </div>
+          <div className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50 text-center">
+            <div className="text-2xl font-black text-[#0284C7]">3.8M</div>
+            <div className="text-xs font-semibold text-[#475569] mt-2 uppercase tracking-wide">Customer Interactions</div>
+          </div>
+          <div className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50 text-center">
+            <div className="text-2xl font-black text-emerald-600">91%</div>
+            <div className="text-xs font-semibold text-[#475569] mt-2 uppercase tracking-wide">Journey Completion</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (scene.id === 2) {
     return (
       <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[86vh] md:h-[80vh] max-w-7xl relative overflow-hidden flex flex-col p-8 md:p-12 justify-between">
