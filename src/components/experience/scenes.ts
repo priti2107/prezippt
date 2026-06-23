@@ -36,6 +36,8 @@ import {
   Home,
   Landmark,
   Zap,
+  Search,
+  Code,
 } from "lucide-react";
 
 export type SceneItem = {
@@ -363,14 +365,16 @@ export const SCENES: Scene[] = [
   },
   {
     id: 12,
-    kicker: "District 12 · The Ecosystem",
-    title: "Why Cascade Tech",
-    subtitle: "Salesforce. AI. Analytics. Automation — one connected ecosystem.",
+    kicker: "District 12 · Engagement Model",
+    title: "How We Work With You",
+    subtitle: "A structured, transparent roadmap built for predictability and rapid execution.",
     variant: "final",
     items: [
-      { icon: Lightbulb, title: "Innovation" },
-      { icon: BadgeCheck, title: "CRM Expertise" },
-      { icon: HeartHandshake, title: "Client Commitment" },
+      { icon: Search, title: "Discovery", body: "Requirements gathering, process mapping, and system analysis." },
+      { icon: Layers, title: "Blueprint", body: "Architecture design, data schema mapping, and integration plan." },
+      { icon: Code, title: "Build", body: "Salesforce configuration, automations, and custom development." },
+      { icon: GraduationCap, title: "Train & UAT", body: "Stakeholder testing, feedback loops, and user enablement." },
+      { icon: Rocket, title: "Go-Live & Support", body: "Production deployment, transition support, and optimization." },
     ],
   },
 ];

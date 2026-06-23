@@ -54,6 +54,9 @@ import {
   X,
   ChevronLeft,
   Wallet,
+  Rocket,
+  BrainCircuit,
+  Database,
 } from "lucide-react";
 import CityScene from "./CityScene";
 import { SCENES, type Scene } from "./scenes";
@@ -2104,6 +2107,10 @@ function SceneContent({ scene }: { scene: Scene }) {
     return <CaseStudiesScene scene={scene} />;
   }
 
+  if (scene.id === 12) {
+    return <EngagementModelScene scene={scene} />;
+  }
+
   if (scene.id === 2) {
     return (
       <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]">
@@ -3155,9 +3162,342 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
           </div>
         </motion.div>
       )}
+      {/* Bottom Glow reflection element */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+    </div>
+  );
+}
+
+function EngagementModelScene({ scene }: { scene: Scene }) {
+  const [activeStage, setActiveStage] = useState<number>(0);
+
+  const stages = [
+    {
+      id: "01",
+      title: "Discovery",
+      duration: "1–2 Weeks",
+      desc: "Requirements gathering, process mapping, and system analysis.",
+      icon: Search,
+      color: "from-sky-400 to-blue-500",
+    },
+    {
+      id: "02",
+      title: "Blueprint",
+      duration: "2 Weeks",
+      desc: "Architecture design, data schema mapping, and integration plan.",
+      icon: Layers,
+      color: "from-blue-500 to-indigo-500",
+    },
+    {
+      id: "03",
+      title: "Build",
+      duration: "3–6 Weeks",
+      desc: "Salesforce configuration, automations, and custom development.",
+      icon: Code,
+      color: "from-indigo-500 to-violet-500",
+    },
+    {
+      id: "04",
+      title: "Train & UAT",
+      duration: "1–2 Weeks",
+      desc: "Stakeholder testing, feedback loops, and user enablement.",
+      icon: GraduationCap,
+      color: "from-violet-500 to-purple-500",
+    },
+    {
+      id: "05",
+      title: "Go-Live & Support",
+      duration: "Ongoing",
+      desc: "Production deployment, transition support, and optimization.",
+      icon: Rocket,
+      color: "from-purple-500 to-emerald-500",
+    },
+  ];
+
+  return (
+    <div
+      className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-5 pb-5 px-4 md:px-6 justify-center gap-4 md:gap-5 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
+      style={{
+        background: "rgba(248, 250, 252, 0.95)",
+        backdropFilter: "blur(24px)",
+      }}
+    >
+      {/* Ambient glows */}
+      <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
+        background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
+      }} />
+      <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
+        background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
+      }} />
+
+      {/* Blueprint Grid Background */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-dist-12" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0284C7" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-dist-12)" />
+        </svg>
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto">
+        {/* LEFT COLUMN: 36% width */}
+        <div className="w-full md:w-[36%] flex flex-col justify-between text-left h-full py-1">
+          <div>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider text-[#0284C7] w-fit mb-2 md:mb-3">
+              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+              {scene.kicker}
+            </div>
+
+            {/* Title */}
+            <h2 className="text-xl sm:text-2xl md:text-[30px] lg:text-[38px] xl:text-[44px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-2 md:mb-3">
+              How We{" "}
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
+                Work With You
+                <svg className="absolute -bottom-0.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
+                  <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+                </svg>
+              </span>
+            </h2>
+
+            {/* Supporting Text */}
+            <p className="text-[10px] md:text-[12px] lg:text-[13px] text-slate-500 font-semibold leading-relaxed mb-3 md:mb-4">
+              {scene.subtitle}
+            </p>
+
+            {/* Illustration */}
+            <div className="relative w-full h-32 sm:h-36 md:h-40 bg-slate-50/50 backdrop-blur-sm rounded-2xl border border-slate-100/80 flex items-center justify-center overflow-hidden mb-3">
+              {/* SVG Connections */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                {/* Background Paths */}
+                <path d="M 180 30 C 130 30, 110 70, 70 70" fill="none" stroke="#F1F5F9" strokeWidth="2" />
+                <path d="M 70 70 C 110 70, 130 110, 180 110" fill="none" stroke="#F1F5F9" strokeWidth="2" />
+                <path d="M 180 110 C 230 110, 230 30, 180 30" fill="none" stroke="#F1F5F9" strokeWidth="2" />
+                
+                {/* Animated flowing paths */}
+                <path 
+                  d="M 180 30 C 130 30, 110 70, 70 70" 
+                  fill="none" 
+                  stroke="#0EA5E9" 
+                  strokeWidth="2" 
+                  className="animate-[dash_4s_linear_infinite]"
+                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
+                />
+                <path 
+                  d="M 70 70 C 110 70, 130 110, 180 110" 
+                  fill="none" 
+                  stroke="#10B981" 
+                  strokeWidth="2" 
+                  className="animate-[dash_4s_linear_infinite]"
+                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
+                />
+                <path 
+                  d="M 180 110 C 230 110, 230 30, 180 30" 
+                  fill="none" 
+                  stroke="#6366F1" 
+                  strokeWidth="2" 
+                  className="animate-[dash_4s_linear_infinite]"
+                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
+                />
+              </svg>
+
+              {/* Salesforce CRM Node (Center Left) */}
+              <div className="absolute top-[18px] left-[50%] -translate-x-1/2 flex flex-col items-center z-10">
+                <div className="size-8.5 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/10 border border-white/20 animate-pulse">
+                  <CloudCog className="size-4.5" />
+                </div>
+                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">Salesforce</span>
+              </div>
+
+              {/* AI Automation Node (Far Left) */}
+              <div className="absolute top-[58px] left-[20%] flex flex-col items-center z-10">
+                <div className="size-8.5 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/10 border border-white/20 animate-bounce" style={{ animationDuration: "3.5s" }}>
+                  <Sparkles className="size-4.5" />
+                </div>
+                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">AI Engine</span>
+              </div>
+
+              {/* CRM Workflows Node (Center Right) */}
+              <div className="absolute bottom-[18px] left-[50%] -translate-x-1/2 flex flex-col items-center z-10">
+                <div className="size-8.5 rounded-xl bg-gradient-to-br from-indigo-400 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/10 border border-white/20">
+                  <Workflow className="size-4.5" />
+                </div>
+                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">Workflows</span>
+              </div>
+
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 max-w-[80px] text-right pointer-events-none">
+                <span className="text-[8px] font-black text-[#0EA5E9] uppercase tracking-wider block">Data Flow</span>
+                <span className="text-[7px] text-slate-400 font-bold block mt-0.5">Real-time CRM Sync</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Timeline Summary Card */}
+          <div className="bg-white/90 border border-sky-100 rounded-2xl p-3 md:p-3.5 shadow-[0_8px_30px_rgba(15,23,42,0.02)] flex items-start gap-3 transition-all hover:border-[#0EA5E9]/20 hover:shadow-md mt-auto">
+            <div className="size-8 rounded-xl bg-sky-50 flex items-center justify-center text-[#0284C7] border border-sky-100 flex-shrink-0 mt-0.5">
+              <Clock className="size-4.5" />
+            </div>
+            <div>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">Typical Delivery Timeline</span>
+              <span className="text-base md:text-lg font-[900] text-slate-900 leading-tight block mt-0.5">8–14 Weeks</span>
+              <p className="text-[9.5px] md:text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-1">
+                Delivered in structured phases with weekly reviews and stakeholder visibility.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: 61% width */}
+        <div className="w-full md:w-[61%] flex flex-col justify-center h-full py-1 relative">
+          {/* Horizontal connecting line (Desktop only) */}
+          <div className="absolute left-[10%] right-[10%] top-[40px] h-[3px] pointer-events-none hidden md:block">
+            {/* Background trace line */}
+            <div className="absolute inset-0 bg-slate-200/80 rounded-full h-full w-full" />
+            {/* Active filled line */}
+            <div 
+              className="absolute left-0 top-0 bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] h-full rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(14,165,233,0.8)]" 
+              style={{ width: `${(activeStage / 4) * 100}%` }}
+            />
+            {/* Pulsing indicator dot */}
+            <div 
+              className="absolute size-2 bg-white border-2 border-[#0EA5E9] rounded-full shadow-[0_0_10px_rgba(14,165,233,1)] pointer-events-none -translate-y-[2.5px] -translate-x-[4px] transition-all duration-500"
+              style={{
+                left: `${(activeStage / 4) * 100}%`,
+              }}
+            />
+          </div>
+
+          {/* Desktop milestone cards flex (md and up) */}
+          <div className="hidden md:flex flex-row items-stretch justify-between gap-3 w-full h-[64%] py-1 relative">
+            {stages.map((stage, idx) => {
+              const Icon = stage.icon;
+              const isActive = activeStage === idx;
+              
+              return (
+                <div 
+                  key={idx} 
+                  className="flex-1 min-w-0 flex flex-col items-center text-center cursor-pointer group"
+                  onMouseEnter={() => setActiveStage(idx)}
+                >
+                  {/* Icon Node wrapper */}
+                  <div className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-10 bg-white relative ${
+                    isActive 
+                      ? "border-[#0EA5E9] text-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110" 
+                      : "border-slate-200 text-slate-400 group-hover:border-[#0EA5E9]/50 group-hover:text-[#0EA5E9]/70"
+                  }`}>
+                    <Icon className={`size-4.5 transition-transform duration-500 ${isActive ? "scale-110 rotate-3" : "group-hover:scale-105"}`} />
+                    {isActive && (
+                      <span className="absolute inset-0 rounded-full bg-[#0EA5E9]/10 animate-ping pointer-events-none" />
+                    )}
+                  </div>
+
+                  {/* Card Container */}
+                  <div className={`mt-4 bg-white/90 backdrop-blur-sm border rounded-2xl p-2.5 flex-1 flex flex-col justify-between transition-all duration-500 shadow-sm w-full relative ${
+                    isActive 
+                      ? "border-[#0EA5E9]/50 bg-white/98 shadow-[0_12px_30px_rgba(14,165,233,0.06)] -translate-y-1.5" 
+                      : "border-slate-200/80 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5"
+                  }`}>
+                    <div>
+                      {/* Step & Duration */}
+                      <div className="flex flex-col items-center">
+                        <span className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${
+                          isActive ? "text-[#0EA5E9]" : "text-slate-400"
+                        }`}>
+                          STAGE {stage.id}
+                        </span>
+                        
+                        <span className="mt-1 text-xs font-[800] text-slate-800 leading-tight">
+                          {stage.title}
+                        </span>
+                      </div>
+                      
+                      {/* Description */}
+                      <p className="mt-2 text-[10px] xl:text-[10.5px] leading-relaxed text-slate-500 font-semibold px-0.5">
+                        {stage.desc}
+                      </p>
+                    </div>
+
+                    {/* Duration Badge at bottom */}
+                    <div className="mt-2 pt-2 border-t border-slate-50 flex justify-center">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold border transition-all ${
+                        isActive 
+                          ? "text-[#0EA5E9] bg-sky-50 border-sky-100" 
+                          : "text-slate-500 bg-slate-50 border-slate-100"
+                      }`}>
+                        {stage.duration}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile/Tablet Stacked timeline (hidden on md and up) */}
+          <div className="md:hidden flex flex-col gap-3 w-full max-h-[50vh] overflow-y-auto pr-1">
+            {stages.map((stage, idx) => {
+              const Icon = stage.icon;
+              const isActive = activeStage === idx;
+              
+              return (
+                <div 
+                  key={idx}
+                  onClick={() => setActiveStage(idx)}
+                  className={`flex gap-3.5 p-3 rounded-2xl border transition-all duration-300 cursor-pointer bg-white/90 ${
+                    isActive 
+                      ? "border-[#0EA5E9] shadow-[0_8px_25px_rgba(14,165,233,0.04)] scale-[1.01]" 
+                      : "border-slate-200/80"
+                  }`}
+                >
+                  {/* Icon Node */}
+                  <div className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${
+                    isActive 
+                      ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50" 
+                      : "border-slate-200 text-slate-400"
+                  }`}>
+                    <Icon className="size-4" />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[8.5px] font-bold text-[#0EA5E9] uppercase tracking-wider">
+                          STAGE {stage.id}
+                        </span>
+                        <h4 className="text-xs sm:text-sm font-[800] text-slate-800 leading-tight">
+                          {stage.title}
+                        </h4>
+                      </div>
+                      <span className="inline-flex px-1.5 py-0.5 rounded-full text-[8.5px] font-bold text-slate-500 bg-slate-50 border border-slate-100">
+                        {stage.duration}
+                      </span>
+                    </div>
+                    <p className="text-[10px] leading-relaxed text-slate-500 font-semibold mt-1">
+                      {stage.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
       {/* Bottom Glow reflection element */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+
+      {/* Inline styles for connection dash animations */}
+      <style>{`
+        @keyframes dash {
+          to {
+            stroke-dashoffset: -32;
+          }
+        }
+      `}</style>
     </div>
   );
 }
