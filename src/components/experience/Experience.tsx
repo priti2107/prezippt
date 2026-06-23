@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import {
   ChevronDown,
+  ChevronUp,
   ArrowUpRight,
   CloudCog,
   Target,
@@ -57,6 +58,7 @@ import {
   Rocket,
   BrainCircuit,
   Database,
+  Linkedin,
 } from "lucide-react";
 import CityScene from "./CityScene";
 import { SCENES, type Scene } from "./scenes";
@@ -113,8 +115,55 @@ function CountUp({
     </>
   );
 }
+const getSafeRange = (
+  p0: number,
+  p1: number,
+  p2: number,
+  p3: number
+): [number, number, number, number] => {
+  let r0 = Math.max(0, Math.min(1, p0));
+  let r1 = Math.max(0, Math.min(1, p1));
+  let r2 = Math.max(0, Math.min(1, p2));
+  let r3 = Math.max(0, Math.min(1, p3));
 
+  const eps = 1e-6;
 
+  if (r1 <= r0) r1 = r0 + eps;
+  if (r2 <= r1) r2 = r1 + eps;
+  if (r3 <= r2) r3 = r2 + eps;
+
+  if (r3 > 1) {
+    r3 = 1;
+    if (r2 >= r3) r2 = r3 - eps;
+    if (r1 >= r2) r1 = r2 - eps;
+    if (r0 >= r1) r0 = r1 - eps;
+  }
+
+  return [r0, r1, r2, r3];
+};
+
+const getSafeRange3 = (
+  p0: number,
+  p1: number,
+  p2: number
+): [number, number, number] => {
+  let r0 = Math.max(0, Math.min(1, p0));
+  let r1 = Math.max(0, Math.min(1, p1));
+  let r2 = Math.max(0, Math.min(1, p2));
+
+  const eps = 1e-6;
+
+  if (r1 <= r0) r1 = r0 + eps;
+  if (r2 <= r1) r2 = r1 + eps;
+
+  if (r2 > 1) {
+    r2 = 1;
+    if (r1 >= r2) r1 = r2 - eps;
+    if (r0 >= r1) r0 = r1 - eps;
+  }
+
+  return [r0, r1, r2];
+};
 
 function SceneOverlay({
   scene,
@@ -127,46 +176,70 @@ function SceneOverlay({
   progress: MotionValue<number>;
   active: number;
 }) {
-  const center = (index + 0.5) / N;
-  const w = 1 / N;
-  const opacity = useTransform(
-    progress,
-    [
-      Math.max(0, center - w * 0.62),
-      Math.max(0, center - w * 0.28),
-      Math.min(1, center + w * 0.28),
-      Math.min(1, center + w * 0.62),
-    ],
-    [0, 1, 1, 0],
-  );
-  const y = useTransform(
-    progress,
-    [
-      Math.max(0, center - w * 0.62),
+  const divisor = N - 1;
+  const center = index / divisor;
+  const w = 1 / divisor;
+
+  let opacityRange: number[];
+  let opacityOutput: number[];
+  let yRange: number[];
+  let yOutput: number[];
+  let scaleRange: number[];
+  let scaleOutput: number[];
+
+  if (index === 0) {
+    opacityRange = [0, w * 0.45];
+    opacityOutput = [1, 0];
+
+    yRange = [0, w * 0.45];
+    yOutput = [0, -60];
+
+    scaleRange = [0, w * 0.45];
+    scaleOutput = [1, 1.04];
+  } else if (index === N - 1) {
+    opacityRange = [1 - w * 0.45, 1];
+    opacityOutput = [0, 1];
+
+    yRange = [1 - w * 0.45, 1];
+    yOutput = [60, 0];
+
+    scaleRange = [1 - w * 0.45, 1];
+    scaleOutput = [0.94, 1];
+  } else {
+    opacityRange = getSafeRange3(
+      center - w * 0.45,
       center,
-      Math.min(1, center + w * 0.62),
-    ],
-    [60, 0, -60],
-  );
-  const scale = useTransform(
-    progress,
-    [
-      Math.max(0, center - w * 0.62),
+      center + w * 0.45
+    );
+    opacityOutput = [0, 1, 0];
+
+    yRange = getSafeRange3(
+      center - w * 0.45,
       center,
-      Math.min(1, center + w * 0.62),
-    ],
-    [0.94, 1, 1.04],
-  );
+      center + w * 0.45
+    );
+    yOutput = [60, 0, -60];
+
+    scaleRange = getSafeRange3(
+      center - w * 0.45,
+      center,
+      center + w * 0.45
+    );
+    scaleOutput = [0.94, 1, 1.04];
+  }
+
+  const opacity = useTransform(progress, opacityRange, opacityOutput);
+  const y = useTransform(progress, yRange, yOutput);
+  const scale = useTransform(progress, scaleRange, scaleOutput);
 
   const shouldRender = Math.abs(active - index) <= 1;
   if (!shouldRender) return null;
-
   return (
     <motion.div
       style={{ opacity, y, scale }}
       className={`pointer-events-none fixed inset-0 flex items-center justify-center px-6 md:px-12 py-10`}
     >
-      <SceneContent scene={scene} />
+      <SceneContent scene={scene} isActive={active === index} />
     </motion.div>
   );
 }
@@ -180,7 +253,316 @@ function Kicker({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SceneContent({ scene }: { scene: Scene }) {
+
+function WhoWeAreScene({ scene }: { scene: Scene }) {
+  const [activeCard, setActiveCard] = useState(0);
+
+  return (
+    <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]">
+      {/* TOP ROW: Content (55%) + Dashboard (45%) */}
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-between w-full h-auto relative z-10">
+        {/* LEFT SIDE: Content (55% width) */}
+        <div className="w-full md:w-[55%] flex flex-col justify-start text-left max-w-[600px]">
+          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-2.5">
+            <span className="size-2 rounded-full bg-[#0284C7] animate-pulse" />
+            {scene.kicker}
+          </div>
+
+          <h2 className="text-xl sm:text-2xl lg:text-[32px] xl:text-[38px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2">
+            Built for the Modern Enterprise
+          </h2>
+          <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-3" />
+
+          <p className="text-xs md:text-sm text-[#475569] font-medium leading-relaxed max-w-[550px]">
+            Cascade Tech Ventures combines deep Salesforce craftsmanship with cutting-edge AI to help organizations grow, scale, and operate with precision.
+          </p>
+        </div>
+
+        {/* RIGHT SIDE: Floating Dashboard Panel (45% width, reduced height and width) */}
+        <div className="w-full md:w-[43%] flex flex-col h-auto rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-3 md:p-3.5 relative overflow-visible justify-between">
+          {/* Console Header */}
+          <div className="flex items-center justify-between border-b border-slate-200/40 pb-1.5 mb-1.5">
+            <div className="flex items-center gap-1">
+              <div className="size-2 rounded-full bg-[#EF4444]/90" />
+              <div className="size-2 rounded-full bg-[#F59E0B]/90" />
+              <div className="size-2 rounded-full bg-[#10B981]/90" />
+            </div>
+            <span className="text-[8px] font-bold text-slate-400 tracking-wider font-mono">
+              cascade.cloud / performance
+            </span>
+          </div>
+
+          {/* Dashboard Widgets Grid - Compact sizing */}
+          <div className="grid grid-cols-2 gap-2 content-center">
+            {/* CRM Performance Card */}
+            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">CRM Performance</span>
+                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+24%</span>
+              </div>
+              <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">99.8% Sync</p>
+              <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Real-time Health Check</p>
+            </div>
+
+            {/* Workflow Automation Metrics */}
+            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Workflows Active</span>
+                <span className="text-[8px] font-bold text-sky-600 bg-sky-50 px-1 rounded-full">Active</span>
+              </div>
+              <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">1,420 / hr</p>
+              <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Auto-routing tasks</p>
+            </div>
+
+            {/* Customer Growth Analytics */}
+            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Customer Growth</span>
+                <span className="text-[8px] font-bold text-[#10B981] bg-emerald-50 px-1.5 rounded-full">+120%</span>
+              </div>
+              <div className="flex items-end justify-between h-5 mt-1.5 px-0.5">
+                {[20, 45, 30, 55, 60, 40, 80].map((h, i) => (
+                  <div key={i} className="w-[8%] bg-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Salesforce Ecosystem Overview */}
+            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
+              <div className="flex items-center justify-between mb-0.5">
+                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Ecosystem Link</span>
+                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">Secure</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 mt-2 h-5">
+                <div className="size-4.5 rounded bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0">
+                  <Cloud className="size-2.5 text-[#0284C7]" />
+                </div>
+                <div className="h-[1px] bg-slate-200 flex-grow relative">
+                  <div className="absolute top-1/2 -translate-y-1/2 left-[40%] size-1 bg-[#0284C7] rounded-full animate-ping" />
+                </div>
+                <div className="size-4.5 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="size-2.5 text-emerald-500" />
+                </div>
+              </div>
+            </div>
+
+            {/* AI Process Optimization Chart (Col span 2) */}
+            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left col-span-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">AI Process Optimization</span>
+                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1.5 rounded-full">-35% Latency</span>
+              </div>
+              <div className="flex items-center gap-2 mt-1.5">
+                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                  <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
+                </div>
+                <span className="text-[10px] font-bold text-slate-700">85%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM ROW: Sliding Feature Cards */}
+      <div className="relative overflow-hidden w-full max-w-[640px] mx-auto h-[210px] md:h-[235px] z-10 flex flex-col justify-center mt-2.5">
+        <motion.div
+          className="flex w-full h-full"
+          animate={{ x: `-${activeCard * 100}%` }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {scene.items?.map((it, idx) => {
+            const titleText = idx === 0
+              ? "Tailored Digital Transformation"
+              : idx === 1
+                ? "Enhanced Operational Efficiency"
+                : "CRM Expertise for Success";
+
+            const descText = idx === 0
+              ? "Custom Salesforce strategies designed around your operating model, your customers, and your growth targets — never templated."
+              : idx === 1
+                ? "Automate manual workflows, eliminate data silos, and free your teams to focus on revenue-generating activity."
+                : "Deep multi-cloud Salesforce expertise — from architecture and implementation to managed support and optimization.";
+
+            return (
+              <div key={it.title} className="w-full h-full flex-shrink-0 px-2">
+                <motion.div
+                  animate={{
+                    scale: activeCard === idx ? 1 : 0.96,
+                    opacity: activeCard === idx ? 1 : 0.4
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-white/80 backdrop-blur-md border border-[#E2E8F0] rounded-2xl p-4 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:border-[#0EA5E9]/30 transition-all duration-300 h-full w-full relative"
+                >
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-8.5 items-center justify-center rounded-xl bg-sky-50 border border-sky-100 flex-shrink-0">
+                        <it.icon className="size-4.5 text-[#0284C7]" />
+                      </div>
+                      <h3 className="text-xs sm:text-sm md:text-base font-[800] text-[#0F172A] leading-tight">
+                        {titleText}
+                      </h3>
+                    </div>
+                    <p className="mt-1.5 text-[11px] md:text-xs leading-normal text-[#475569] font-medium">
+                      {descText}
+                    </p>
+                  </div>
+
+                  {/* Mini visual component anchored to card bottom */}
+                  <div className="mt-auto pt-2.5">
+                    {idx === 0 && (
+                      <div className="flex items-center justify-between w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100 text-[10px] md:text-xs font-bold text-[#475569]">
+                        <div className="flex flex-col items-center gap-1 flex-1">
+                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                            <Search className="size-3" />
+                          </div>
+                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Discovery</span>
+                        </div>
+                        <ChevronRight className="size-2.5 text-slate-400" />
+                        <div className="flex flex-col items-center gap-1 flex-1">
+                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                            <Layers className="size-3" />
+                          </div>
+                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Architecture</span>
+                        </div>
+                        <ChevronRight className="size-2.5 text-slate-400" />
+                        <div className="flex flex-col items-center gap-1 flex-1">
+                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
+                            <Code className="size-3" />
+                          </div>
+                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Build</span>
+                        </div>
+                        <ChevronRight className="size-2.5 text-slate-400" />
+                        <div className="flex flex-col items-center gap-1 flex-1">
+                          <div className="size-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm animate-pulse">
+                            <Check className="size-3" />
+                          </div>
+                          <span className="text-[8.5px] font-bold text-emerald-600 mt-0.5">Adopt</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {idx === 1 && (
+                      <div className="flex flex-col gap-1 w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100">
+                        <div className="flex items-center justify-between text-[9px] md:text-[10px] font-extrabold text-[#475569]">
+                          <span>Automation Gains</span>
+                          <span className="text-[#10B981] font-black text-[11px]">↓ 65% Operations</span>
+                        </div>
+                        <div className="flex flex-col gap-1 mt-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[8.5px] text-slate-400 font-bold w-18">Manual Hours</span>
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                              <div className="bg-slate-300 h-full rounded-full w-[30%]" />
+                            </div>
+                            <span className="text-[8.5px] text-slate-400 font-bold w-6 text-right">30%</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[8.5px] text-[#0284C7] font-bold w-18">Automated</span>
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                              <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
+                            </div>
+                            <span className="text-[8.5px] text-[#0284C7] font-bold w-6 text-right">85%</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {idx === 2 && (
+                      <div className="flex items-center justify-around w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100 text-[10px] font-bold uppercase text-[#475569] tracking-wider">
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
+                            <Target className="size-3 text-[#0284C7]" />
+                          </div>
+                          <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Sales Cloud</span>
+                        </div>
+                        <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="size-7.5 rounded-full bg-sky-100 text-[#0284C7] flex items-center justify-center border border-sky-200 shadow-md animate-pulse">
+                            <Headset className="size-3.5 text-[#0284C7]" />
+                          </div>
+                          <span className="text-[7.5px] md:text-[8px] font-black text-[#0284C7] mt-0.5">Service Cloud</span>
+                        </div>
+                        <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
+                            <Megaphone className="size-3 text-[#0284C7]" />
+                          </div>
+                          <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Marketing Cloud</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+
+      {/* SLIDER NAVIGATION CONTROLS */}
+      <div className="flex items-center justify-center gap-6 w-full max-w-[640px] mx-auto z-10 mt-6 mb-2">
+        {/* Previous Button */}
+        <button
+          onClick={() => activeCard > 0 && setActiveCard(activeCard - 1)}
+          disabled={activeCard === 0}
+          className={`group flex items-center gap-2 text-[11px] md:text-xs font-black transition-all duration-300 select-none ${activeCard === 0
+              ? "opacity-25 cursor-not-allowed text-slate-400"
+              : "cursor-pointer text-slate-700 hover:text-[#0EA5E9]"
+            }`}
+        >
+          <div className={`w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-[0_2px_6px_rgba(15,23,42,0.04)] border border-slate-200/50 transition-all duration-300 ${activeCard === 0 ? "" : "group-hover:scale-110 group-hover:shadow-[0_4px_10px_rgba(14,165,233,0.12)] group-hover:border-[#0ea5e9]/20 group-hover:-translate-x-[1px]"
+            }`}>
+            <ChevronLeft className="w-3.5 h-3.5 text-[#0EA5E9]" />
+          </div>
+          <span>Previous</span>
+        </button>
+
+        {/* Indicator dots: • • • */}
+        <div className="flex items-center gap-2 px-1">
+          {[0, 1, 2].map((idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveCard(idx)}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === activeCard
+                  ? "w-4 bg-[#0EA5E9] shadow-[0_0_6px_rgba(14,165,233,0.6)]"
+                  : "w-1.5 bg-slate-300 hover:bg-[#0EA5E9]/50"
+                }`}
+              aria-label={`Go to product ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <button
+          onClick={() => activeCard < 2 && setActiveCard(activeCard + 1)}
+          disabled={activeCard === 2}
+          className={`group flex items-center gap-2 text-[11px] md:text-xs font-black transition-all duration-300 select-none ${activeCard === 2
+              ? "opacity-25 cursor-not-allowed text-slate-400"
+              : "cursor-pointer text-slate-700 hover:text-[#0EA5E9]"
+            }`}
+        >
+          <span>Next</span>
+          <div className={`w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-[0_2px_6px_rgba(15,23,42,0.04)] border border-slate-200/50 transition-all duration-300 ${activeCard === 2 ? "" : "group-hover:scale-110 group-hover:shadow-[0_4px_10px_rgba(14,165,233,0.12)] group-hover:border-[#0ea5e9]/20 group-hover:translate-x-[1px]"
+            }`}>
+            <ChevronRight className="w-3.5 h-3.5 text-[#0EA5E9]" />
+          </div>
+        </button>
+      </div>
+
+      {/* Bottom Glow reflection element */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+    </div>
+  );
+}
+
+function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: boolean }) {
+  if (scene.id === 2) {
+    return <WhoWeAreScene scene={scene} />;
+  }
+
+  if (scene.id === 12) {
+    return <EngagementModelScene scene={scene} />;
+  }
+
   if (scene.variant === "hero") {
     return (
       <motion.div
@@ -503,41 +885,258 @@ function SceneContent({ scene }: { scene: Scene }) {
   }
 
   if (scene.variant === "final") {
+    const statsItems = [
+      { value: 50, suffix: "+", label: "Projects Delivered" },
+      { value: 8, suffix: "+", label: "Enterprise Clients" },
+      { value: 5, suffix: "+", label: "Cities Served" },
+      { value: 100, suffix: "%", label: "In-House Delivery" }
+    ];
+
     return (
-      <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-8 lg:p-10 w-full max-w-5xl flex flex-col items-center text-center">
-        <Kicker>{scene.kicker}</Kicker>
-        <h2 className="mt-4 text-3xl font-bold text-[#0F172A] md:text-4xl">
-          {scene.title}
-        </h2>
-        <p className="mt-3 max-w-xl text-[#475569] font-medium text-sm md:text-base">{scene.subtitle}</p>
-        <div className="mt-5 flex flex-wrap justify-center gap-2.5">
-          {scene.items?.map((it) => (
-            <span
-              key={it.title}
-              className="glass-panel flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-[#0F172A]"
+      <div
+        className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-6 pb-6 px-6 md:px-16 justify-center border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
+        style={{
+          background: "rgba(248, 250, 252, 0.95)",
+          backdropFilter: "blur(24px)",
+        }}
+      >
+        {/* Ambient soft blue glow */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
+          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
+        }} />
+
+        {/* Headline Spotlight Glow */}
+        <div className="absolute left-[30%] top-[30%] -translate-x-1/2 -translate-y-1/2 w-[400px] h-[180px] bg-gradient-to-r from-sky-400/8 to-blue-500/8 rounded-full blur-3xl pointer-events-none -z-10" />
+
+        {/* Split Screen Container - Centered and Contained within 1080px to close column gap */}
+        <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-center justify-between w-full h-full relative z-10 max-w-[1080px] mx-auto py-2">
+          
+          {/* LEFT COLUMN: Narrative & CTAs (54% width) */}
+          <div className="w-full md:w-[54%] flex flex-col justify-center items-start text-left h-full py-2">
+            <div className="flex flex-col items-start gap-3 w-full">
+              {/* Kicker Badge */}
+              <motion.div 
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3.5 py-1 text-xs md:text-sm font-bold tracking-wider text-[#0284C7] w-fit animate-pulse"
+              >
+                <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+                LET'S BUILD TOGETHER
+              </motion.div>
+
+              {/* Headline - Slightly smaller & readable */}
+              <motion.h2 
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-2xl sm:text-3xl md:text-[34px] lg:text-[42px] xl:text-[46px] font-[900] leading-[1.12] tracking-tight text-[#0F172A] font-display max-w-2xl"
+              >
+                Let's Build Something{" "}
+                <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
+                  That Actually Works.
+                  <svg className="absolute -bottom-1.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
+                    <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </motion.h2>
+
+              {/* Description - Slightly smaller space and font size */}
+              <motion.p 
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-4 text-xs sm:text-sm md:text-sm lg:text-[14.5px] text-[#475569] font-medium leading-relaxed max-w-2xl"
+              >
+                Whether you're implementing Salesforce, building AI-powered automation, launching digital products, or transforming customer operations — let's discuss what success looks like for your business.
+              </motion.p>
+
+              {/* Proven at Scale Label */}
+              <div className="mt-2">
+                <span className="text-[8.5px] md:text-[9.5px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Proven At Scale</span>
+              </div>
+
+              {/* Statistics Cards - Sized down to avoid overlaps and improve layout fit */}
+              <div className="grid grid-cols-2 gap-2.5 w-full max-w-md mt-0.5">
+                {statsItems.map((item, idx) => (
+                  <motion.div 
+                    key={idx} 
+                    animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                    transition={{ duration: 0.5, delay: 0.3 + idx * 0.1 }}
+                    className="bg-white border border-slate-100 rounded-xl p-1.5 px-3.5 shadow-[0_2px_10px_rgba(14,165,233,0.01)] hover:border-[#0EA5E9]/20 hover:scale-[1.02] transition-all duration-300 flex items-center gap-3.5 cursor-default"
+                  >
+                    <span className="text-2xl md:text-3xl lg:text-[32px] font-[950] text-[#0284C7] font-display leading-none tracking-tight flex-shrink-0 min-w-[45px]">
+                      {isActive ? (
+                        <CountUp value={item.value} suffix={item.suffix} delay={0.4 + idx * 0.1} />
+                      ) : (
+                        `0${item.suffix}`
+                      )}
+                    </span>
+                    <span className="text-[8.5px] md:text-[9.5px] font-bold text-slate-500 uppercase tracking-wider leading-snug">
+                      {item.label}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Trust Badges immediately below stats */}
+              <motion.div 
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex flex-wrap gap-2.5 mt-2"
+              >
+                {["Salesforce Partner", "AI-Native Team", "In-House Delivery", "Enterprise Ready"].map((tag) => (
+                  <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-100 text-[#0284C7] text-[9.5px] md:text-[11px] font-black uppercase tracking-wider">
+                    <Check className="size-2.5 text-[#0284C7] stroke-[3]" />
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              {/* CTA Buttons - Sized down to look highly compact & premium */}
+              <motion.div 
+                animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="relative flex flex-row items-center gap-2.5 mt-3 w-full"
+              >
+                {/* Subtle blue glow behind buttons */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/15 via-blue-500/15 to-indigo-500/15 blur-lg rounded-full -z-10 pointer-events-none" />
+
+                <a
+                  href="mailto:hello@cascadetech.ventures"
+                  className="group relative bg-[#0284C7] hover:bg-[#0369A1] text-white text-[11px] md:text-xs font-extrabold py-2 px-4.5 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-sky-500/5 transition-all duration-300 hover:scale-[1.02]"
+                >
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0EA5E9]/25 to-[#2563EB]/25 blur-md group-hover:blur-lg transition-all duration-300 -z-10 animate-pulse" />
+                  <span>Schedule A Discovery Call</span>
+                  <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <button
+                  onClick={() => {
+                    window.scrollTo({
+                      top: 10 * window.innerHeight,
+                      behavior: "smooth",
+                    });
+                  }}
+                  className="border border-[#E0F2FE] hover:border-[#0EA5E9]/20 bg-white hover:bg-slate-50 text-[#0284C7] text-[11px] md:text-xs font-bold py-2 px-4 rounded-full inline-flex items-center gap-1.5 transition-all duration-300 hover:scale-[1.01] shadow-sm"
+                >
+                  View Our Work
+                </button>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Premium Contact Drawer Card (41% width) - Centered and Larger */}
+          <motion.div 
+            animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 15 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="w-full md:w-[41%] flex flex-col justify-center h-full py-2"
+          >
+            <div
+              className="bg-white/95 border border-white/60 shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded-3xl p-5 md:p-6.5 flex flex-col gap-4 text-left relative overflow-hidden w-full max-w-[420px] border-t border-r mx-auto md:mx-0"
+              style={{
+                backdropFilter: "blur(20px)",
+              }}
             >
-              <it.icon className="size-4 text-primary" />
-              {it.title}
-            </span>
-          ))}
+              {/* Subtle grid pattern in background */}
+              <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                  <pattern id="grid-card-contact-refined" width="16" height="16" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
+                  </pattern>
+                  <rect width="100%" height="100%" fill="url(#grid-card-contact-refined)" />
+                </svg>
+              </div>
+
+              {/* Headline inside card */}
+              <div className="border-b border-slate-200/40 pb-2">
+                <span className="text-[10px] md:text-[11px] font-extrabold text-[#0284C7] uppercase tracking-widest block">Speak Directly With Our Founders</span>
+              </div>
+
+              {/* Leadership Profiles - Vertically centered with larger photos */}
+              <div className="flex flex-col gap-3">
+                {/* Aashish */}
+                <div className="flex items-center gap-4 bg-slate-50/60 hover:bg-slate-50 border border-slate-200/50 hover:border-[#0EA5E9]/25 rounded-2xl p-2 px-3.5 transition-all duration-300">
+                  <div className="relative flex-shrink-0">
+                    <img 
+                      src="/clients/Aashish Yadav.png" 
+                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm" 
+                      alt="Aashish Yadav" 
+                    />
+                    <span className="absolute bottom-0 right-0 size-2.5 bg-emerald-500 ring-2 ring-white rounded-full animate-pulse" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black text-slate-800 leading-none">Aashish Yadav</h4>
+                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">CEO & Founder</p>
+                    <span className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full leading-none">
+                      <span className="size-1 rounded-full bg-emerald-500" />
+                      Active Online
+                    </span>
+                  </div>
+                </div>
+
+                {/* Yash */}
+                <div className="flex items-center gap-4 bg-slate-50/60 hover:bg-slate-50 border border-slate-200/50 hover:border-[#0EA5E9]/25 rounded-2xl p-2 px-3.5 transition-all duration-300">
+                  <div className="relative flex-shrink-0">
+                    <img 
+                      src="/clients/Yash Jain.png" 
+                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm" 
+                      alt="Yash Jain" 
+                    />
+                    <span className="absolute bottom-0 right-0 size-2.5 bg-emerald-500 ring-2 ring-white rounded-full animate-pulse" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black text-slate-800 leading-none">Yash Jain</h4>
+                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">CTO & Co-Founder</p>
+                    <span className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full leading-none">
+                      <span className="size-1 rounded-full bg-emerald-500" />
+                      Active Online
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Subtle divider */}
+              <div className="border-t border-slate-200/40 my-1" />
+
+              {/* Direct Action Chips - Compact premium pills */}
+              <div className="flex flex-col gap-2">
+                {[
+                  { label: "Website", icon: Globe, val: "cascadetech.ventures", href: "https://cascadetech.ventures" },
+                  { label: "Email", icon: Mail, val: "hello@cascadetech.ventures", href: "mailto:hello@cascadetech.ventures" },
+                  { label: "Phone", icon: Phone, val: "+91 98765 43210", href: "tel:+919876543210" },
+                  { label: "LinkedIn", icon: Linkedin, val: "linkedin.com/company/cascade-tech", href: "https://linkedin.com" }
+                ].map((chip) => {
+                  const Icon = chip.icon;
+                  return (
+                    <a
+                      key={chip.label}
+                      href={chip.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-50/60 hover:bg-white border border-slate-200/50 hover:border-[#0EA5E9]/25 hover:shadow-[0_4px_12px_rgba(14,165,233,0.04)] transition-all duration-300 group/chip"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Icon className="size-4.5 text-[#0EA5E9] transition-transform duration-300 group-hover/chip:scale-110" />
+                        <span className="text-xs md:text-[13px] font-bold text-slate-600 group-hover/chip:text-[#0EA5E9]">{chip.val}</span>
+                      </div>
+                      <ChevronRight className="size-3.5 text-slate-300 group-hover/chip:text-[#0EA5E9] transition-transform duration-300 group-hover/chip:translate-x-0.5" />
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* Card Trust Statement Footer */}
+              <p className="text-[10px] md:text-[11px] text-slate-400 font-bold leading-normal text-center border-t border-slate-100/60 pt-3 px-1.5">
+                Trusted by leading developers, enterprise teams & businesses across India.
+              </p>
+            </div>
+          </motion.div>
+
         </div>
-        <div className="glass-panel mt-6 rounded-2xl px-6 py-4 text-left border border-slate-200/60 bg-white/50">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#475569] font-semibold">
-            Contact
-          </p>
-          <p className="mt-1 text-base font-bold text-[#0F172A]">Yash Jain</p>
-          <p className="text-sm font-semibold text-primary">CTO — Cascade Tech Ventures</p>
-        </div>
-        <a
-          href="mailto:hello@cascadetech.ventures"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-14px_color-mix(in_oklab,var(--primary)_70%,transparent)] transition-transform hover:scale-[1.03]"
-        >
-          Let's Build The Future Together
-          <ArrowUpRight className="size-4" />
-        </a>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
       </div>
     );
   }
+
   if (scene.id === 3) {
     return (
       <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-5 px-6 md:px-8 justify-between gap-3 md:gap-4">
@@ -1778,8 +2377,8 @@ function SceneContent({ scene }: { scene: Scene }) {
               <div
                 key={ind.id}
                 className={`bg-white/80 backdrop-blur-md rounded-[20px] p-3.5 flex flex-row items-center gap-3.5 text-left transition-all duration-500 relative overflow-hidden group min-h-[96px] md:min-h-[110px] w-full ${ind.highlight
-                    ? "border-2 border-[#0EA5E9] shadow-[0_15px_45px_rgba(14,165,233,0.12),inset_0_0_15px_rgba(14,165,233,0.03)]"
-                    : "border border-white/60 shadow-[0_10px_35px_rgba(15,23,42,0.04)] hover:border-[#0EA5E9]/30 hover:shadow-[0_15px_45px_rgba(14,165,233,0.08)]"
+                  ? "border-2 border-[#0EA5E9] shadow-[0_15px_45px_rgba(14,165,233,0.12),inset_0_0_15px_rgba(14,165,233,0.03)]"
+                  : "border border-white/60 shadow-[0_10px_35px_rgba(15,23,42,0.04)] hover:border-[#0EA5E9]/30 hover:shadow-[0_15px_45px_rgba(14,165,233,0.08)]"
                   }`}
               >
                 {/* Background brand color glow reflection */}
@@ -1788,8 +2387,8 @@ function SceneContent({ scene }: { scene: Scene }) {
 
                 {/* 64px Icon Wrapper */}
                 <div className={`w-[60px] md:w-[64px] h-[60px] md:h-[64px] flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0 ${ind.highlight
-                    ? "bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] text-white shadow-[0_6px_20px_rgba(14,165,233,0.25)]"
-                    : "bg-[#F0F9FF] border border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.08)]"
+                  ? "bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] text-white shadow-[0_6px_20px_rgba(14,165,233,0.25)]"
+                  : "bg-[#F0F9FF] border border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.08)]"
                   }`}>
                   <IconComp className={`w-7 md:w-8 h-7 md:h-8 ${ind.highlight ? "text-white" : "text-[#0EA5E9]"}`} />
                 </div>
@@ -2107,246 +2706,6 @@ function SceneContent({ scene }: { scene: Scene }) {
     return <CaseStudiesScene scene={scene} />;
   }
 
-  if (scene.id === 12) {
-    return <EngagementModelScene scene={scene} />;
-  }
-
-  if (scene.id === 2) {
-    return (
-      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]">
-        {/* TOP ROW: Content (55%) + Dashboard (45%) */}
-        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-between w-full h-auto relative z-10">
-          {/* LEFT SIDE: Content (55% width) */}
-          <div className="w-full md:w-[55%] flex flex-col justify-start text-left max-w-[600px]">
-            <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-2.5">
-              <span className="size-2 rounded-full bg-[#0284C7] animate-pulse" />
-              {scene.kicker}
-            </div>
-
-            <h2 className="text-xl sm:text-2xl lg:text-[32px] xl:text-[38px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2">
-              Built for the Modern Enterprise
-            </h2>
-            <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-3" />
-
-            <p className="text-xs md:text-sm text-[#475569] font-medium leading-relaxed max-w-[550px]">
-              Cascade Tech Ventures combines deep Salesforce craftsmanship with cutting-edge AI to help organizations grow, scale, and operate with precision.
-            </p>
-          </div>
-
-          {/* RIGHT SIDE: Floating Dashboard Panel (45% width, reduced height and width) */}
-          <div className="w-full md:w-[43%] flex flex-col h-auto rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-3 md:p-3.5 relative overflow-visible justify-between">
-            {/* Console Header */}
-            <div className="flex items-center justify-between border-b border-slate-200/40 pb-1.5 mb-1.5">
-              <div className="flex items-center gap-1">
-                <div className="size-2 rounded-full bg-[#EF4444]/90" />
-                <div className="size-2 rounded-full bg-[#F59E0B]/90" />
-                <div className="size-2 rounded-full bg-[#10B981]/90" />
-              </div>
-              <span className="text-[8px] font-bold text-slate-400 tracking-wider font-mono">
-                cascade.cloud / performance
-              </span>
-            </div>
-
-            {/* Dashboard Widgets Grid - Compact sizing */}
-            <div className="grid grid-cols-2 gap-2 content-center">
-              {/* CRM Performance Card */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-                <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">CRM Performance</span>
-                  <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+24%</span>
-                </div>
-                <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">99.8% Sync</p>
-                <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Real-time Health Check</p>
-              </div>
-
-              {/* Workflow Automation Metrics */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-                <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Workflows Active</span>
-                  <span className="text-[8px] font-bold text-sky-600 bg-sky-50 px-1 rounded-full">Active</span>
-                </div>
-                <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">1,420 / hr</p>
-                <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Auto-routing tasks</p>
-              </div>
-
-              {/* Customer Growth Analytics */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-                <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Customer Growth</span>
-                  <span className="text-[8px] font-bold text-[#10B981] bg-emerald-50 px-1.5 rounded-full">+120%</span>
-                </div>
-                <div className="flex items-end justify-between h-5 mt-1.5 px-0.5">
-                  {[20, 45, 30, 55, 60, 40, 80].map((h, i) => (
-                    <div key={i} className="w-[8%] bg-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Salesforce Ecosystem Overview */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Ecosystem Link</span>
-                  <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">Secure</span>
-                </div>
-                <div className="flex items-center justify-center gap-1.5 mt-2 h-5">
-                  <div className="size-4.5 rounded bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0">
-                    <Cloud className="size-2.5 text-[#0284C7]" />
-                  </div>
-                  <div className="h-[1px] bg-slate-200 flex-grow relative">
-                    <div className="absolute top-1/2 -translate-y-1/2 left-[40%] size-1 bg-[#0284C7] rounded-full animate-ping" />
-                  </div>
-                  <div className="size-4.5 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="size-2.5 text-emerald-500" />
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Process Optimization Chart (Col span 2) */}
-              <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left col-span-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">AI Process Optimization</span>
-                  <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1.5 rounded-full">-35% Latency</span>
-                </div>
-                <div className="flex items-center gap-2 mt-1.5">
-                  <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                    <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
-                  </div>
-                  <span className="text-[10px] font-bold text-slate-700">85%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* BOTTOM ROW: 3 Enterprise Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 w-full items-stretch flex-1 relative z-10">
-          {scene.items?.map((it, idx) => {
-            const titleText = idx === 0
-              ? "Tailored Digital Transformation"
-              : idx === 1
-                ? "Enhanced Operational Efficiency"
-                : "CRM Expertise for Success";
-
-            const descText = idx === 0
-              ? "Custom Salesforce strategies designed around your operating model, your customers, and your growth targets — never templated."
-              : idx === 1
-                ? "Automate manual workflows, eliminate data silos, and free your teams to focus on revenue-generating activity."
-                : "Deep multi-cloud Salesforce expertise — from architecture and implementation to managed support and optimization.";
-
-            return (
-              <div
-                key={it.title}
-                className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-2xl p-3.5 md:p-4 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex-1 h-full"
-              >
-                <div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-8.5 items-center justify-center rounded-xl bg-sky-50 border border-sky-100 flex-shrink-0">
-                      <it.icon className="size-4.5 text-[#0284C7]" />
-                    </div>
-                    <h3 className="text-xs sm:text-sm md:text-base font-[800] text-[#0F172A] leading-tight">
-                      {titleText}
-                    </h3>
-                  </div>
-                  <p className="mt-1.5 text-[11px] md:text-xs leading-normal text-[#475569] font-medium">
-                    {descText}
-                  </p>
-                </div>
-
-                {/* Mini visual component anchored to card bottom */}
-                <div className="mt-auto pt-2.5">
-                  {idx === 0 && (
-                    <div className="flex items-center justify-between w-full bg-slate-50/50 px-2 py-2 md:py-2.5 rounded-xl border border-slate-100 text-[10px] md:text-xs font-bold text-[#475569]">
-                      <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Search className="size-3" />
-                        </div>
-                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Discovery</span>
-                      </div>
-                      <ChevronRight className="size-2.5 text-slate-400" />
-                      <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Layers className="size-3" />
-                        </div>
-                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Architecture</span>
-                      </div>
-                      <ChevronRight className="size-2.5 text-slate-400" />
-                      <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                          <Code className="size-3" />
-                        </div>
-                        <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Build</span>
-                      </div>
-                      <ChevronRight className="size-2.5 text-slate-400" />
-                      <div className="flex flex-col items-center gap-1 flex-1">
-                        <div className="size-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm animate-pulse">
-                          <Check className="size-3" />
-                        </div>
-                        <span className="text-[8.5px] font-bold text-emerald-600 mt-0.5">Adopt</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {idx === 1 && (
-                    <div className="flex flex-col gap-1 w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100">
-                      <div className="flex items-center justify-between text-[9px] md:text-[10px] font-extrabold text-[#475569]">
-                        <span>Automation Gains</span>
-                        <span className="text-[#10B981] font-black text-[11px]">↓ 65% Operations</span>
-                      </div>
-                      <div className="flex flex-col gap-1 mt-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[8.5px] text-slate-400 font-bold w-18">Manual Hours</span>
-                          <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                            <div className="bg-slate-300 h-full rounded-full w-[30%]" />
-                          </div>
-                          <span className="text-[8.5px] text-slate-400 font-bold w-6 text-right">30%</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[8.5px] text-[#0284C7] font-bold w-18">Automated</span>
-                          <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                            <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
-                          </div>
-                          <span className="text-[8.5px] text-[#0284C7] font-bold w-6 text-right">85%</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {idx === 2 && (
-                    <div className="flex items-center justify-around w-full bg-slate-50/50 px-2 py-2 md:py-2.5 rounded-xl border border-slate-100 text-[10px] font-bold uppercase text-[#475569] tracking-wider">
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                          <Target className="size-3 text-[#0284C7]" />
-                        </div>
-                        <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Sales Cloud</span>
-                      </div>
-                      <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="size-7.5 rounded-full bg-sky-100 text-[#0284C7] flex items-center justify-center border border-sky-200 shadow-md animate-pulse">
-                          <Headset className="size-3.5 text-[#0284C7]" />
-                        </div>
-                        <span className="text-[7.5px] md:text-[8px] font-black text-[#0284C7] mt-0.5">Service Cloud</span>
-                      </div>
-                      <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
-                      <div className="flex flex-col items-center gap-1">
-                        <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                          <Megaphone className="size-3 text-[#0284C7]" />
-                        </div>
-                        <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Marketing Cloud</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Bottom Glow reflection element */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
-      </div>
-    );
-  }
-
   if (scene.id === 4) {
     const kpiLabels = [
       "AI Selling",
@@ -2411,8 +2770,8 @@ function SceneContent({ scene }: { scene: Scene }) {
                   transition={{ duration: 0.6, delay: idx * 0.08 }}
                   viewport={{ once: true }}
                   className={`group relative bg-white/95 hover:bg-white rounded-[24px] flex flex-col justify-between text-center shadow-[0_10px_30px_rgba(2,132,199,0.06)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] hover:-translate-y-2 transition-all duration-500 flex-1 h-full overflow-hidden ${isSalesCloud
-                      ? "border-2 border-[#0284C7]"
-                      : "border border-[#E2E8F0] hover:border-[#0284C7]/30"
+                    ? "border-2 border-[#0284C7]"
+                    : "border border-[#E2E8F0] hover:border-[#0284C7]/30"
                     }`}
                 >
                   {/* Blue Glow on Hover */}
@@ -2520,7 +2879,7 @@ function SceneContent({ scene }: { scene: Scene }) {
 
 function CountUpText({ text }: { text: string }) {
   const [val, setVal] = useState(0);
-  
+
   const match = text.match(/([\d.]+)/);
   const hasMatch = !!match;
   const numericValue = match ? parseFloat(match[1]) : 0;
@@ -2530,7 +2889,7 @@ function CountUpText({ text }: { text: string }) {
 
   useEffect(() => {
     if (!hasMatch) return;
-    
+
     let start = 0;
     const end = numericValue;
     if (start === end) return;
@@ -2841,7 +3200,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
         >
           {/* Top Sticky Navigation Bar */}
           <div className="sticky top-0 z-30 bg-white border-b border-slate-200/50 px-6 py-4 flex items-center justify-between shadow-sm">
-            <button 
+            <button
               onClick={() => setSelectedIdx(null)}
               className="text-xs font-bold text-slate-600 hover:text-[#0ea5e9] flex items-center gap-1.5 transition-all hover:scale-102 bg-slate-50 border border-slate-200 rounded-full px-4 py-2"
             >
@@ -2880,7 +3239,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
           {/* Success Story Article Container */}
           <div className="max-w-6xl mx-auto w-full px-6 py-6 flex flex-col gap-6 flex-grow">
-            
+
             {/* Top row: Quote & Metrics */}
             <div className="flex flex-col lg:flex-row gap-6 items-center justify-between w-full border-b border-slate-100 pb-5 text-left">
               {/* Left Quote */}
@@ -2918,7 +3277,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
             {/* Split Details Section */}
             <div className="flex flex-col lg:flex-row gap-6 items-stretch w-full mt-2">
-              
+
               {/* Left column details (Timeline Layout) */}
               <motion.div
                 key={`left-article-${selectedIdx}`}
@@ -3170,49 +3529,147 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
 function EngagementModelScene({ scene }: { scene: Scene }) {
   const [activeStage, setActiveStage] = useState<number>(0);
+  const [expandedStageIdx, setExpandedStageIdx] = useState<number | null>(null);
 
   const stages = [
     {
       id: "01",
       title: "Discovery",
-      duration: "1–2 Weeks",
-      desc: "Requirements gathering, process mapping, and system analysis.",
+      duration: "Week 1",
+      desc: "Aligning operational workflows and requirements with zero assumptions.",
+      challenge: "Fragmented processes, undocumented spreadsheets, and lack of real-time pipeline visibility.",
+      whatWeBuild: "Detailed operational audit, systems map, and technical architecture definition.",
+      deliverables: ["Lead Flow Audit Map", "API/CRM Integration Specs", "Success Metric Benchmarks"],
+      outcome: "Aligned timeline, budget, and system architecture design document.",
       icon: Search,
-      color: "from-sky-400 to-blue-500",
+      illustration: () => (
+        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#0EA5E9]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="6" className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]" strokeWidth="1.5" />
+          <circle cx="30" cy="60" r="6" className="fill-slate-100 stroke-slate-400" strokeWidth="1.5" />
+          <circle cx="30" cy="90" r="6" className="fill-[#3B82F6]/10 stroke-[#3B82F6]" strokeWidth="1.5" />
+          <path d="M36 30 H100" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="3 3" />
+          <path d="M36 60 Q70 60 100 60" className="stroke-slate-300" strokeWidth="1.5" />
+          <path d="M36 90 Q70 90 100 60" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="3 3" />
+          <circle cx="106" cy="60" r="12" className="fill-sky-50 stroke-[#0EA5E9]" strokeWidth="2" />
+          <path d="M101 60 L104 63 L111 56" className="stroke-[#0EA5E9]" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M118 60 H164" className="stroke-[#0EA5E9]" strokeWidth="2" />
+          <polygon points="164,57 170,60 164,63" className="fill-[#0EA5E9]" />
+          <circle cx="176" cy="60" r="8" className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]" strokeWidth="1.5" />
+        </svg>
+      )
     },
     {
       id: "02",
       title: "Blueprint",
-      duration: "2 Weeks",
-      desc: "Architecture design, data schema mapping, and integration plan.",
+      duration: "Week 2",
+      desc: "Designing database schemas and automation workflows.",
+      challenge: "Data model conflicts, security schema holes, and duplicate contact profiles.",
+      whatWeBuild: "Custom Entity Relationship Diagram (ERD) and object schema configuration blueprints.",
+      deliverables: ["Entity Relationship Diagrams (ERDs)", "Field-Level Security Matrix", "Sandbox Initialization Plans"],
+      outcome: "Technical blueprint signed off and sandbox environments provisioned.",
       icon: Layers,
-      color: "from-blue-500 to-indigo-500",
+      illustration: () => (
+        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#10B981]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="50" height="35" rx="4" className="fill-white stroke-[#10B981]" strokeWidth="1.5" />
+          <line x1="20" y1="32" x2="70" y2="32" className="stroke-[#10B981]" strokeWidth="1" />
+          <rect x="25" y="38" width="15" height="4" rx="1" className="fill-slate-200" />
+          <rect x="25" y="46" width="25" height="4" rx="1" className="fill-[#10B981]/30" />
+          <rect x="130" y="40" width="50" height="45" rx="4" className="fill-white stroke-slate-400" strokeWidth="1.5" />
+          <line x1="130" y1="52" x2="180" y2="52" className="stroke-slate-400" strokeWidth="1" />
+          <rect x="135" y="58" width="20" height="4" rx="1" className="fill-slate-200" />
+          <rect x="135" y="66" width="25" height="4" rx="1" className="fill-slate-200" />
+          <rect x="135" y="74" width="15" height="4" rx="1" className="fill-[#10B981]/30" />
+          <path d="M70 37 H95 V62 H130" className="stroke-[#10B981]" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path d="M125 58 L130 62 L125 66" className="stroke-[#10B981]" strokeWidth="1.5" />
+          <circle cx="120" cy="62" r="2" className="fill-white stroke-[#10B981]" strokeWidth="1" />
+        </svg>
+      )
     },
     {
       id: "03",
       title: "Build",
-      duration: "3–6 Weeks",
-      desc: "Salesforce configuration, automations, and custom development.",
+      duration: "Weeks 3–10",
+      desc: "Developing custom Apex, LWC, and CRM flow triggers.",
+      challenge: "Unreliable manual actions, sluggish data processing, and lack of automated alerts.",
+      whatWeBuild: "Robust custom apex coding, lightning web components (LWC), and API flows.",
+      deliverables: ["Apex & Flow Automations", "WhatsApp API Integration", "Migration scripts & runs"],
+      outcome: "Fully integrated and custom-coded CRM platform ready in staging.",
       icon: Code,
-      color: "from-indigo-500 to-violet-500",
+      illustration: () => (
+        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#6366F1]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="15" width="160" height="90" rx="6" className="fill-slate-900 stroke-slate-800" strokeWidth="2" />
+          <circle cx="35" cy="27" r="3" className="fill-rose-500" />
+          <circle cx="45" cy="27" r="3" className="fill-amber-500" />
+          <circle cx="55" cy="27" r="3" className="fill-emerald-500" />
+          <rect x="32" y="44" width="50" height="6" rx="2" className="fill-[#6366F1]" />
+          <rect x="87" y="44" width="30" height="6" rx="2" className="fill-slate-600" />
+          <rect x="32" y="58" width="25" height="6" rx="2" className="fill-[#10B981]" />
+          <rect x="62" y="58" width="60" height="6" rx="2" className="fill-slate-500" />
+          <rect x="45" y="72" width="80" height="6" rx="2" className="fill-[#F59E0B]" />
+          <rect x="32" y="86" width="40" height="6" rx="2" className="fill-slate-600" />
+        </svg>
+      )
     },
     {
       id: "04",
       title: "Train & UAT",
-      duration: "1–2 Weeks",
-      desc: "Stakeholder testing, feedback loops, and user enablement.",
+      duration: "Weeks 11–12",
+      desc: "Enabling teams and addressing feedback loops.",
+      challenge: "Low user adoption rates, administrative skill gaps, and transition friction.",
+      whatWeBuild: "Custom role-based training programs, UAT cycles, and transition playbooks.",
+      deliverables: ["UAT Testing Cycles", "Role-Based Training Manuals", "Administrator Enablement Guides"],
+      outcome: "Stakeholder sign-off and adoption readiness verified.",
       icon: GraduationCap,
-      color: "from-violet-500 to-purple-500",
+      illustration: () => (
+        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#8B5CF6]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="35" className="stroke-slate-200" strokeWidth="6" />
+          <circle cx="60" cy="60" r="35" className="stroke-[#8B5CF6]" strokeWidth="6" strokeDasharray="220" strokeDashoffset="55" strokeLinecap="round" />
+          <text x="60" y="66" className="fill-[#8B5CF6] font-extrabold text-[18px]" textAnchor="middle">85%</text>
+          <g transform="translate(135, 35)">
+            <rect x="0" y="0" width="45" height="20" rx="4" className="fill-violet-50 stroke-[#8B5CF6]" strokeWidth="1" />
+            <text x="22.5" y="13" className="fill-[#8B5CF6] text-[8px] font-bold" textAnchor="middle">Training</text>
+          </g>
+          <g transform="translate(135, 65)">
+            <rect x="0" y="0" width="45" height="20" rx="4" className="fill-emerald-50 stroke-[#10B981]" strokeWidth="1" />
+            <text x="22.5" y="13" className="fill-[#10B981] text-[8px] font-bold" textAnchor="middle">UAT Sign-off</text>
+          </g>
+          <path d="M96 50 C 110 50, 110 45, 135 45" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path d="M96 70 C 110 70, 110 75, 135 75" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="2 2" />
+        </svg>
+      )
     },
     {
       id: "05",
       title: "Go-Live & Support",
-      duration: "Ongoing",
-      desc: "Production deployment, transition support, and optimization.",
+      duration: "Post Week 12",
+      desc: "Deploying to production and supporting adoption.",
+      challenge: "Deployment downtime, cutover synchronization, and post-launch bugs.",
+      whatWeBuild: "Safe production package migration, 30-day hypercare, and ongoing annual maintenance (AMC).",
+      deliverables: ["Production Cutover Checklist", "30-Day Hypercare Support", "Long-term AMC Setup"],
+      outcome: "Live system deployed with zero downtime and continuous support.",
       icon: Rocket,
-      color: "from-purple-500 to-emerald-500",
+      illustration: () => (
+        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#EC4899]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 100 Q 80 85 105 55" className="stroke-[#EF4444]" strokeWidth="3" strokeLinecap="round" strokeDasharray="4 4" />
+          <path d="M20 110 Q 70 95 120 110" className="stroke-slate-300" strokeWidth="3" fill="none" />
+          <rect x="135" y="70" width="45" height="35" rx="4" className="fill-slate-50 stroke-slate-300" strokeWidth="1.5" />
+          <circle cx="145" cy="80" r="3" className="fill-[#10B981]" />
+          <line x1="154" y1="80" x2="172" y2="80" className="stroke-slate-400" strokeWidth="1.5" />
+          <circle cx="145" cy="90" r="3" className="fill-[#10B981]" />
+          <line x1="154" y1="90" x2="172" y2="90" className="stroke-slate-400" strokeWidth="1.5" />
+          <g transform="translate(100, 30) rotate(35)">
+            <path d="M0 -15 C 6 -10, 6 10, 0 15 C -6 10, -6 -10, 0 -15" className="fill-[#0EA5E9] stroke-[#0284C7]" strokeWidth="1" />
+            <path d="M-5 5 L-10 12 L-4 12 Z" className="fill-rose-500" />
+            <path d="M5 5 L10 12 L4 12 Z" className="fill-rose-500" />
+            <circle cx="0" cy="-2" r="2.5" className="fill-white" />
+            <path d="M-3 15 L0 23 L3 15 Z" className="fill-amber-500" />
+          </g>
+        </svg>
+      )
     },
   ];
+
+  const currentStage = expandedStageIdx !== null ? stages[expandedStageIdx] : null;
 
   return (
     <div
@@ -3231,29 +3688,29 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       }} />
 
       {/* Blueprint Grid Background */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="grid-dist-12" width="40" height="40" patternUnits="userSpaceOnUse">
+            <pattern id="grid-dist-12-new" width="40" height="40" patternUnits="userSpaceOnUse">
               <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0284C7" strokeWidth="0.5" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid-dist-12)" />
+          <rect width="100%" height="100%" fill="url(#grid-dist-12-new)" />
         </svg>
       </div>
 
       <div className="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto">
-        {/* LEFT COLUMN: 36% width */}
-        <div className="w-full md:w-[36%] flex flex-col justify-between text-left h-full py-1">
+        {/* LEFT COLUMN: 30% width */}
+        <div className="w-full md:w-[30%] flex flex-col justify-between text-left h-full py-1">
           <div>
             {/* Badge */}
             <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider text-[#0284C7] w-fit mb-2 md:mb-3">
               <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-              {scene.kicker}
+              ENGAGEMENT MODEL
             </div>
 
             {/* Title */}
-            <h2 className="text-xl sm:text-2xl md:text-[30px] lg:text-[38px] xl:text-[44px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-2 md:mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-[34px] lg:text-[40px] xl:text-[46px] font-[800] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-2 md:mb-3">
               How We{" "}
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                 Work With You
@@ -3264,106 +3721,78 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
             </h2>
 
             {/* Supporting Text */}
-            <p className="text-[10px] md:text-[12px] lg:text-[13px] text-slate-500 font-semibold leading-relaxed mb-3 md:mb-4">
-              {scene.subtitle}
+            <p className="text-[10.5px] md:text-[12.5px] lg:text-[13.5px] text-slate-500 font-semibold leading-relaxed mb-3 md:mb-4 pr-2">
+              We believe in structured delivery, complete alignment, and deep operational understanding. From the initial discovery to production launch, here is our roadmap for your project.
             </p>
-
-            {/* Illustration */}
-            <div className="relative w-full h-32 sm:h-36 md:h-40 bg-slate-50/50 backdrop-blur-sm rounded-2xl border border-slate-100/80 flex items-center justify-center overflow-hidden mb-3">
-              {/* SVG Connections */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {/* Background Paths */}
-                <path d="M 180 30 C 130 30, 110 70, 70 70" fill="none" stroke="#F1F5F9" strokeWidth="2" />
-                <path d="M 70 70 C 110 70, 130 110, 180 110" fill="none" stroke="#F1F5F9" strokeWidth="2" />
-                <path d="M 180 110 C 230 110, 230 30, 180 30" fill="none" stroke="#F1F5F9" strokeWidth="2" />
-                
-                {/* Animated flowing paths */}
-                <path 
-                  d="M 180 30 C 130 30, 110 70, 70 70" 
-                  fill="none" 
-                  stroke="#0EA5E9" 
-                  strokeWidth="2" 
-                  className="animate-[dash_4s_linear_infinite]"
-                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
-                />
-                <path 
-                  d="M 70 70 C 110 70, 130 110, 180 110" 
-                  fill="none" 
-                  stroke="#10B981" 
-                  strokeWidth="2" 
-                  className="animate-[dash_4s_linear_infinite]"
-                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
-                />
-                <path 
-                  d="M 180 110 C 230 110, 230 30, 180 30" 
-                  fill="none" 
-                  stroke="#6366F1" 
-                  strokeWidth="2" 
-                  className="animate-[dash_4s_linear_infinite]"
-                  style={{ strokeDasharray: "8,24", strokeDashoffset: 32 }}
-                />
-              </svg>
-
-              {/* Salesforce CRM Node (Center Left) */}
-              <div className="absolute top-[18px] left-[50%] -translate-x-1/2 flex flex-col items-center z-10">
-                <div className="size-8.5 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/10 border border-white/20 animate-pulse">
-                  <CloudCog className="size-4.5" />
-                </div>
-                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">Salesforce</span>
-              </div>
-
-              {/* AI Automation Node (Far Left) */}
-              <div className="absolute top-[58px] left-[20%] flex flex-col items-center z-10">
-                <div className="size-8.5 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/10 border border-white/20 animate-bounce" style={{ animationDuration: "3.5s" }}>
-                  <Sparkles className="size-4.5" />
-                </div>
-                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">AI Engine</span>
-              </div>
-
-              {/* CRM Workflows Node (Center Right) */}
-              <div className="absolute bottom-[18px] left-[50%] -translate-x-1/2 flex flex-col items-center z-10">
-                <div className="size-8.5 rounded-xl bg-gradient-to-br from-indigo-400 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/10 border border-white/20">
-                  <Workflow className="size-4.5" />
-                </div>
-                <span className="text-[7.5px] font-bold text-slate-500 mt-1 uppercase tracking-wider">Workflows</span>
-              </div>
-
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 max-w-[80px] text-right pointer-events-none">
-                <span className="text-[8px] font-black text-[#0EA5E9] uppercase tracking-wider block">Data Flow</span>
-                <span className="text-[7px] text-slate-400 font-bold block mt-0.5">Real-time CRM Sync</span>
-              </div>
-            </div>
           </div>
 
           {/* Timeline Summary Card */}
-          <div className="bg-white/90 border border-sky-100 rounded-2xl p-3 md:p-3.5 shadow-[0_8px_30px_rgba(15,23,42,0.02)] flex items-start gap-3 transition-all hover:border-[#0EA5E9]/20 hover:shadow-md mt-auto">
-            <div className="size-8 rounded-xl bg-sky-50 flex items-center justify-center text-[#0284C7] border border-sky-100 flex-shrink-0 mt-0.5">
-              <Clock className="size-4.5" />
+          <div className="bg-white/90 border border-sky-100 rounded-2xl p-3.5 md:p-4 shadow-[0_8px_30px_rgba(15,23,42,0.02)] flex items-start gap-3.5 transition-all hover:border-[#0EA5E9]/20 hover:shadow-md mt-auto">
+            <div className="size-9 rounded-xl bg-sky-50 flex items-center justify-center text-[#0284C7] border border-sky-100 flex-shrink-0 mt-0.5">
+              <Clock className="size-5" />
             </div>
             <div>
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">Typical Delivery Timeline</span>
-              <span className="text-base md:text-lg font-[900] text-slate-900 leading-tight block mt-0.5">8–14 Weeks</span>
-              <p className="text-[9.5px] md:text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-1">
-                Delivered in structured phases with weekly reviews and stakeholder visibility.
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">TYPICAL TIMELINE</span>
+              <span className="text-base md:text-lg lg:text-xl font-[900] text-slate-900 leading-tight block mt-0.5">8–14 Weeks</span>
+              <p className="text-[9.5px] md:text-[11px] text-slate-500 font-semibold leading-relaxed mt-1">
+                Complex multi-module projects for India's top developers — delivered on time and on budget.
               </p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: 61% width */}
-        <div className="w-full md:w-[61%] flex flex-col justify-center h-full py-1 relative">
+        {/* RIGHT COLUMN / CENTER: 68% width */}
+        <div className="w-full md:w-[68%] flex flex-col justify-center h-full py-1 relative">
+
+          {/* Background Visual Roadmap Illustration */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.06] md:opacity-[0.08] select-none z-0 overflow-hidden">
+            <svg className="w-full h-full" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Circuit board pathways in background connecting nodes */}
+              <path d="M120,180 Q250,80 400,150 T680,120" stroke="#0284C7" strokeWidth="2.5" strokeDasharray="5,5" />
+              <path d="M120,320 Q250,420 400,350 T680,380" stroke="#0EA5E9" strokeWidth="2" strokeDasharray="5,5" />
+              <path d="M280,120 L280,380" stroke="#10B981" strokeWidth="1.5" strokeDasharray="4,4" />
+              <path d="M520,120 L520,380" stroke="#6366F1" strokeWidth="1.5" strokeDasharray="4,4" />
+
+              {/* Node definitions */}
+              <g transform="translate(120, 180)">
+                <circle r="22" fill="#F0F9FF" stroke="#0EA5E9" strokeWidth="1.5" />
+                <text fill="#0284C7" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Salesforce</text>
+              </g>
+              <g transform="translate(280, 120)">
+                <circle r="22" fill="#ECFDF5" stroke="#10B981" strokeWidth="1.5" />
+                <text fill="#047857" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">AI Engine</text>
+              </g>
+              <g transform="translate(280, 380)">
+                <circle r="22" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.5" />
+                <text fill="#475569" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">CRM</text>
+              </g>
+              <g transform="translate(420, 200)">
+                <circle r="22" fill="#FFF1F2" stroke="#F43F5E" strokeWidth="1.5" />
+                <text fill="#BE123C" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">WhatsApp</text>
+              </g>
+              <g transform="translate(520, 120)">
+                <circle r="22" fill="#F5F3FF" stroke="#8B5CF6" strokeWidth="1.5" />
+                <text fill="#6D28D9" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Integrations</text>
+              </g>
+              <g transform="translate(520, 380)">
+                <circle r="22" fill="#EFF6FF" stroke="#3B82F6" strokeWidth="1.5" />
+                <text fill="#1D4ED8" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Deployment</text>
+              </g>
+            </svg>
+          </div>
+
           {/* Horizontal connecting line (Desktop only) */}
-          <div className="absolute left-[10%] right-[10%] top-[40px] h-[3px] pointer-events-none hidden md:block">
+          <div className="absolute left-[10%] right-[10%] top-5 h-[2px] pointer-events-none hidden md:block z-10">
             {/* Background trace line */}
             <div className="absolute inset-0 bg-slate-200/80 rounded-full h-full w-full" />
             {/* Active filled line */}
-            <div 
-              className="absolute left-0 top-0 bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] h-full rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(14,165,233,0.8)]" 
+            <div
+              className="absolute left-0 top-0 bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] h-full rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(14,165,233,0.8)]"
               style={{ width: `${(activeStage / 4) * 100}%` }}
             />
             {/* Pulsing indicator dot */}
-            <div 
-              className="absolute size-2 bg-white border-2 border-[#0EA5E9] rounded-full shadow-[0_0_10px_rgba(14,165,233,1)] pointer-events-none -translate-y-[2.5px] -translate-x-[4px] transition-all duration-500"
+            <div
+              className="absolute size-2 bg-white border-2 border-[#0EA5E9] rounded-full shadow-[0_0_10px_rgba(14,165,233,1)] pointer-events-none -translate-y-[3px] -translate-x-[4px] transition-all duration-500"
               style={{
                 left: `${(activeStage / 4) * 100}%`,
               }}
@@ -3371,23 +3800,23 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           </div>
 
           {/* Desktop milestone cards flex (md and up) */}
-          <div className="hidden md:flex flex-row items-stretch justify-between gap-3 w-full h-[64%] py-1 relative">
+          <div className="hidden md:flex flex-row items-stretch justify-between gap-3.5 w-full h-[66%] py-1 relative z-10">
             {stages.map((stage, idx) => {
               const Icon = stage.icon;
               const isActive = activeStage === idx;
-              
+
               return (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className="flex-1 min-w-0 flex flex-col items-center text-center cursor-pointer group"
                   onMouseEnter={() => setActiveStage(idx)}
+                  onClick={() => setExpandedStageIdx(idx)}
                 >
                   {/* Icon Node wrapper */}
-                  <div className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-10 bg-white relative ${
-                    isActive 
-                      ? "border-[#0EA5E9] text-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110" 
+                  <div className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-20 bg-white relative ${isActive
+                      ? "border-[#0EA5E9] text-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110"
                       : "border-slate-200 text-slate-400 group-hover:border-[#0EA5E9]/50 group-hover:text-[#0EA5E9]/70"
-                  }`}>
+                    }`}>
                     <Icon className={`size-4.5 transition-transform duration-500 ${isActive ? "scale-110 rotate-3" : "group-hover:scale-105"}`} />
                     {isActive && (
                       <span className="absolute inset-0 rounded-full bg-[#0EA5E9]/10 animate-ping pointer-events-none" />
@@ -3395,40 +3824,40 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                   </div>
 
                   {/* Card Container */}
-                  <div className={`mt-4 bg-white/90 backdrop-blur-sm border rounded-2xl p-2.5 flex-1 flex flex-col justify-between transition-all duration-500 shadow-sm w-full relative ${
-                    isActive 
-                      ? "border-[#0EA5E9]/50 bg-white/98 shadow-[0_12px_30px_rgba(14,165,233,0.06)] -translate-y-1.5" 
+                  <div className={`mt-4 bg-white/90 backdrop-blur-sm border rounded-2xl p-4 flex-1 flex flex-col justify-between transition-all duration-500 shadow-sm w-full relative z-10 ${isActive
+                      ? "border-[#0EA5E9]/50 bg-white/98 shadow-[0_12px_30px_rgba(14,165,233,0.06)] -translate-y-1.5"
                       : "border-slate-200/80 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5"
-                  }`}>
+                    }`}>
                     <div>
                       {/* Step & Duration */}
                       <div className="flex flex-col items-center">
-                        <span className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${
-                          isActive ? "text-[#0EA5E9]" : "text-slate-400"
-                        }`}>
+                        <span className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${isActive ? "text-[#0EA5E9]" : "text-slate-400"
+                          }`}>
                           STAGE {stage.id}
                         </span>
-                        
-                        <span className="mt-1 text-xs font-[800] text-slate-800 leading-tight">
+
+                        <span className="mt-0.5 text-xs lg:text-[13px] font-[800] text-slate-800 leading-tight">
                           {stage.title}
                         </span>
+
+                        <span className={`mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[8.5px] font-extrabold border transition-all ${isActive
+                            ? "text-[#0EA5E9] bg-sky-50 border-sky-100"
+                            : "text-slate-500 bg-slate-50 border-slate-100/80"
+                          }`}>
+                          {stage.duration}
+                        </span>
                       </div>
-                      
+
                       {/* Description */}
-                      <p className="mt-2 text-[10px] xl:text-[10.5px] leading-relaxed text-slate-500 font-semibold px-0.5">
+                      <p className="mt-2.5 text-[10px] xl:text-[10.5px] leading-relaxed text-slate-500 font-semibold px-0.5">
                         {stage.desc}
                       </p>
                     </div>
 
-                    {/* Duration Badge at bottom */}
-                    <div className="mt-2 pt-2 border-t border-slate-50 flex justify-center">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold border transition-all ${
-                        isActive 
-                          ? "text-[#0EA5E9] bg-sky-50 border-sky-100" 
-                          : "text-slate-500 bg-slate-50 border-slate-100"
-                      }`}>
-                        {stage.duration}
-                      </span>
+                    {/* Action Link */}
+                    <div className="mt-3 text-[9px] font-bold text-[#0EA5E9] flex items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span>Explore stage</span>
+                      <ChevronRight className="size-3" />
                     </div>
                   </div>
                 </div>
@@ -3437,30 +3866,31 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           </div>
 
           {/* Mobile/Tablet Stacked timeline (hidden on md and up) */}
-          <div className="md:hidden flex flex-col gap-3 w-full max-h-[50vh] overflow-y-auto pr-1">
+          <div className="md:hidden flex flex-col gap-3 w-full max-h-[50vh] overflow-y-auto pr-1 relative z-10">
             {stages.map((stage, idx) => {
               const Icon = stage.icon;
               const isActive = activeStage === idx;
-              
+
               return (
-                <div 
+                <div
                   key={idx}
-                  onClick={() => setActiveStage(idx)}
-                  className={`flex gap-3.5 p-3 rounded-2xl border transition-all duration-300 cursor-pointer bg-white/90 ${
-                    isActive 
-                      ? "border-[#0EA5E9] shadow-[0_8px_25px_rgba(14,165,233,0.04)] scale-[1.01]" 
+                  onClick={() => {
+                    setActiveStage(idx);
+                    setExpandedStageIdx(idx);
+                  }}
+                  className={`flex gap-3.5 p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer bg-white/90 ${isActive
+                      ? "border-[#0EA5E9] shadow-[0_8px_25px_rgba(14,165,233,0.04)] scale-[1.01]"
                       : "border-slate-200/80"
-                  }`}
+                    }`}
                 >
                   {/* Icon Node */}
-                  <div className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${
-                    isActive 
-                      ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50" 
+                  <div className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${isActive
+                      ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50"
                       : "border-slate-200 text-slate-400"
-                  }`}>
+                    }`}>
                     <Icon className="size-4" />
                   </div>
-                  
+
                   {/* Content */}
                   <div className="flex-1 text-left">
                     <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -3472,13 +3902,17 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                           {stage.title}
                         </h4>
                       </div>
-                      <span className="inline-flex px-1.5 py-0.5 rounded-full text-[8.5px] font-bold text-slate-500 bg-slate-50 border border-slate-100">
+                      <span className="inline-flex px-1.5 py-0.5 rounded-full text-[8px] font-bold text-slate-500 bg-slate-50 border border-slate-100">
                         {stage.duration}
                       </span>
                     </div>
                     <p className="text-[10px] leading-relaxed text-slate-500 font-semibold mt-1">
                       {stage.desc}
                     </p>
+                    <div className="mt-2 text-[9px] font-bold text-[#0EA5E9] flex items-center gap-0.5">
+                      <span>Tap to view details</span>
+                      <ChevronRight className="size-2.5" />
+                    </div>
                   </div>
                 </div>
               );
@@ -3486,6 +3920,156 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           </div>
         </div>
       </div>
+
+      {/* Slide-over details panel */}
+      {expandedStageIdx !== null && currentStage && (
+        <div className="fixed inset-0 z-[150] pointer-events-auto">
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity"
+            onClick={() => setExpandedStageIdx(null)}
+          />
+
+          {/* Drawer Container */}
+          <div
+            className="absolute inset-y-0 right-0 w-full sm:w-[460px] bg-white border-l border-slate-200/80 shadow-[0_0_80px_rgba(15,23,42,0.15)] flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-5 border-b border-slate-100">
+              <div>
+                <span className="text-[9px] font-bold tracking-widest text-[#0EA5E9] uppercase">
+                  STAGE {currentStage.id}
+                </span>
+                <h3 className="text-xl font-[900] text-slate-800 leading-tight mt-0.5">
+                  {currentStage.title}
+                </h3>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold text-[#0EA5E9] bg-sky-50 border border-sky-100/50">
+                  {currentStage.duration}
+                </span>
+                <button
+                  onClick={() => setExpandedStageIdx(null)}
+                  className="size-8 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Content Area (Scrollable) */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-5 text-left">
+              {/* Visual Illustration */}
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-center min-h-[120px] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+                  <svg width="100%" height="100%">
+                    <pattern id="grid-ill" width="16" height="16" patternUnits="userSpaceOnUse">
+                      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#grid-ill)" />
+                  </svg>
+                </div>
+                <div className="relative z-10 w-full max-w-[240px]">
+                  {currentStage.illustration()}
+                </div>
+              </div>
+
+              {/* Challenge Block */}
+              <div>
+                <span className="text-[9px] font-extrabold tracking-wider uppercase text-rose-500 block mb-1.5">
+                  The Challenge
+                </span>
+                <div className="bg-rose-50/40 border border-rose-100/60 rounded-xl p-3.5">
+                  <p className="text-slate-600 text-[11.5px] font-semibold leading-relaxed">
+                    {currentStage.challenge}
+                  </p>
+                </div>
+              </div>
+
+              {/* What We Build Block */}
+              <div>
+                <span className="text-[9px] font-extrabold tracking-wider uppercase text-[#0EA5E9] block mb-1.5">
+                  What We Build
+                </span>
+                <div className="bg-sky-50/40 border border-sky-100/60 rounded-xl p-3.5">
+                  <p className="text-slate-600 text-[11.5px] font-semibold leading-relaxed">
+                    {currentStage.whatWeBuild}
+                  </p>
+                </div>
+              </div>
+
+              {/* Deliverables Checklist */}
+              <div>
+                <span className="text-[9px] font-extrabold tracking-wider uppercase text-slate-400 block mb-2">
+                  Key Deliverables
+                </span>
+                <div className="flex flex-col gap-2 bg-slate-50/50 border border-slate-100/80 rounded-xl p-3.5">
+                  {currentStage.deliverables.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="size-4.5 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
+                        <Check className="size-2.5" />
+                      </span>
+                      <span className="text-slate-600 text-[11px] font-bold mt-0.5">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Expected Outcome */}
+              <div>
+                <span className="text-[9px] font-extrabold tracking-wider uppercase text-emerald-600 block mb-1.5">
+                  Expected Outcome
+                </span>
+                <div className="bg-emerald-50/40 border border-emerald-100/60 rounded-xl p-3.5">
+                  <p className="text-slate-700 text-[11.5px] font-extrabold leading-relaxed">
+                    {currentStage.outcome}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Navigation */}
+            <div className="p-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
+              <button
+                onClick={() => {
+                  if (expandedStageIdx > 0) {
+                    const newIdx = expandedStageIdx - 1;
+                    setExpandedStageIdx(newIdx);
+                    setActiveStage(newIdx);
+                  }
+                }}
+                disabled={expandedStageIdx === 0}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+              >
+                <ChevronLeft className="size-3.5" />
+                <span>Previous</span>
+              </button>
+
+              <span className="text-[10px] font-extrabold text-slate-400">
+                Stage {expandedStageIdx + 1} of 5
+              </span>
+
+              <button
+                onClick={() => {
+                  if (expandedStageIdx < 4) {
+                    const newIdx = expandedStageIdx + 1;
+                    setExpandedStageIdx(newIdx);
+                    setActiveStage(newIdx);
+                  }
+                }}
+                disabled={expandedStageIdx === 4}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+              >
+                <span>Next Stage</span>
+                <ChevronRight className="size-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bottom Glow reflection element */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
@@ -3504,7 +4088,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
 function ClientCard({ clientName }: { clientName: string }) {
   const [imgError, setImgError] = useState(false);
-  
+
   const normalizedName = clientName
     .toLowerCase()
     .normalize("NFD")
@@ -3546,32 +4130,6 @@ function Header({ scene }: { scene: Scene }) {
     </div>
   );
 }
-
-function ProgressDots({ progress, active }: { progress: MotionValue<number>; active: number }) {
-  return (
-    <div className="fixed right-5 top-1/2 z-20 hidden -translate-y-1/2 flex-col gap-2.5 md:flex">
-      {SCENES.map((s, i) => (
-        <button
-          key={s.id}
-          aria-label={`Go to ${s.title}`}
-          onClick={() =>
-            window.scrollTo({
-              top: ((i + 0.5) / N) * (document.body.scrollHeight - window.innerHeight),
-              behavior: "smooth",
-            })
-          }
-          className="group flex items-center justify-end gap-2"
-        >
-          <span
-            className={`h-1.5 rounded-full bg-primary transition-all ${i === active ? "w-7 opacity-100" : "w-1.5 opacity-30 group-hover:opacity-60"
-              }`}
-          />
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export default function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
@@ -3648,7 +4206,108 @@ export default function Experience() {
 
   const barScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  useEffect(() => setMounted(true), []);
+  const scrollTween = useRef<gsap.core.Tween | null>(null);
+
+  const scrollToScene = (sceneIndex: number) => {
+    const targetScrollTop = sceneIndex * window.innerHeight;
+
+    if (scrollTween.current) {
+      scrollTween.current.kill();
+    }
+
+    const scrollObj = { y: window.scrollY };
+    scrollTween.current = gsap.to(scrollObj, {
+      y: targetScrollTop,
+      duration: 1.0,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        window.scrollTo(0, scrollObj.y);
+      },
+      onComplete: () => {
+        scrollTween.current = null;
+      }
+    });
+  };
+
+  const handleNextSection = () => {
+    if (active < N - 1) {
+      scrollToScene(active + 1);
+    }
+  };
+
+  const handlePrevSection = () => {
+    if (active > 0) {
+      scrollToScene(active - 1);
+    }
+  };
+
+  // Keyboard controls
+  const activeRef = useRef(active);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === "INPUT" ||
+          activeEl.tagName === "TEXTAREA" ||
+          activeEl.getAttribute("contenteditable") === "true")
+      ) {
+        return;
+      }
+
+      const key = e.key || "";
+      const code = e.keyCode || e.which || 0;
+
+      const isDown = key === "ArrowDown" || code === 40;
+      const isRight = key === "ArrowRight" || code === 39;
+      const isUp = key === "ArrowUp" || code === 38;
+      const isLeft = key === "ArrowLeft" || code === 37;
+
+      if (isDown || isRight) {
+        e.preventDefault();
+        if (activeRef.current < N - 1) {
+          scrollToScene(activeRef.current + 1);
+        }
+      } else if (isUp || isLeft) {
+        e.preventDefault();
+        if (activeRef.current > 0) {
+          scrollToScene(activeRef.current - 1);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Force scroll to top immediately and reset active section state
+    window.scrollTo(0, 0);
+    setActive(0);
+
+    // Repeatedly force scroll position at multiple intervals to override asynchronous browser restoration
+    const intervals = [50, 150, 300, 500];
+    const timers = intervals.map(delay =>
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        setActive(0);
+      }, delay)
+    );
+
+    return () => {
+      timers.forEach(clearTimeout);
+    };
+  }, []);
 
   return (
     <div ref={containerRef} style={{ height: `${N * 100}vh` }} className="relative">
@@ -3697,7 +4356,34 @@ export default function Experience() {
         <SceneOverlay key={scene.id} scene={scene} index={i} progress={scrollYProgress} active={active} />
       ))}
 
-      <ProgressDots progress={scrollYProgress} active={active} />
+      {/* Floating global page navigation controls */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-row items-center gap-3 bg-white/70 backdrop-blur-md border border-slate-200/50 rounded-full p-1.5 shadow-lg select-none pointer-events-auto">
+        {/* Prev Button */}
+        <button
+          onClick={handlePrevSection}
+          disabled={active === 0}
+          className={`group/btn w-8.5 h-8.5 rounded-full bg-white flex items-center justify-center border border-slate-200/60 shadow-sm transition-all duration-300 ${active === 0
+              ? "opacity-25 cursor-not-allowed text-slate-400"
+              : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
+            }`}
+          aria-label="Previous Section"
+        >
+          <ChevronLeft className="w-4 h-4 transition-transform duration-300 group-hover/btn:-translate-x-0.5" />
+        </button>
+
+        {/* Next Button */}
+        <button
+          onClick={handleNextSection}
+          disabled={active === N - 1}
+          className={`group/btn w-8.5 h-8.5 rounded-full bg-white flex items-center justify-center border border-slate-200/60 shadow-sm transition-all duration-300 ${active === N - 1
+              ? "opacity-25 cursor-not-allowed text-slate-400"
+              : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
+            }`}
+          aria-label="Next Section"
+        >
+          <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+        </button>
+      </div>
 
       {/* Bottom progress bar */}
       <div className="fixed inset-x-0 bottom-0 z-20 h-1 bg-border/40">
