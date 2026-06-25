@@ -5313,47 +5313,6 @@ export default function Experience() {
         )}
       </div>
 
-      {/* Top brand bar */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 py-4 md:px-8 max-w-7xl mx-auto w-full left-1/2 -translate-x-1/2">
-        <div className="pointer-events-auto bg-white/90 backdrop-blur-md border border-slate-200/50 rounded-full px-6 py-3 flex items-center justify-between w-full shadow-sm">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="size-8 rounded-full bg-[#0EA5E9] flex items-center justify-center text-white shadow-sm">
-              <svg className="size-4.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4.5 16.5c1.5-3 4.5-9 9-9s7.5 6 9 9" />
-                <circle cx="4.5" cy="16.5" r="2" fill="currentColor" />
-                <circle cx="13.5" cy="7.5" r="2" fill="currentColor" />
-                <circle cx="22.5" cy="16.5" r="2" fill="currentColor" />
-              </svg>
-            </div>
-            <span className="text-base font-extrabold tracking-tight text-slate-900">Cascade Tech</span>
-          </div>
-
-          {/* Center Links */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-semibold text-[#475569]">
-            <button onClick={() => scrollToScene(1)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
-              Who We Are
-            </button>
-            <button onClick={() => scrollToScene(3)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
-              Specializations
-            </button>
-            <button onClick={() => scrollToScene(6)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
-              AI Voice
-            </button>
-            <button onClick={() => scrollToScene(9)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
-              Pricing
-            </button>
-            <button onClick={() => scrollToScene(11)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
-              Roadmap
-            </button>
-          </div>
-
-          {/* Get in touch Button */}
-          <button className="bg-[#0EA5E9] hover:bg-[#0284C7] text-white text-xs font-bold py-2.5 px-6 rounded-full shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03]">
-            Get in touch
-          </button>
-        </div>
-      </div>
 
       {/* Scene overlays */}
       {SCENES.map((scene, i) => (
