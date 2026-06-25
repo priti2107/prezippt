@@ -454,7 +454,7 @@ function WhoWeAreScene({ scene, isActive = false, activeCardIdx = 0 }: { scene: 
                 {/* Double quotes icon wrapper */}
                 <div className="size-9 rounded-lg border border-sky-400/20 bg-sky-500/5 text-sky-600 flex items-center justify-center flex-shrink-0 shadow-sm">
                   <svg className="size-4.5 text-sky-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14 17h3l2-4V7h-6v6h3zM3 13h3l2-4V7H2v6h3z"/>
+                    <path d="M14 17h3l2-4V7h-6v6h3zM3 13h3l2-4V7H2v6h3z" />
                   </svg>
                 </div>
                 <p className="text-[13.5px] md:text-[14.5px] text-slate-700 leading-relaxed font-semibold italic">
@@ -488,30 +488,30 @@ function WhoWeAreScene({ scene, isActive = false, activeCardIdx = 0 }: { scene: 
               className="w-full h-full object-cover select-none"
             />
             {/* Glossy overlay reflections */}
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none z-10"
               style={{
                 background: "linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(255,255,255,0.1) 100%)",
               }}
             />
             {/* Soft shadow gradient overlay */}
-            <div 
+            <div
               className="absolute inset-x-0 bottom-0 h-1/4 pointer-events-none z-10"
               style={{
                 background: "linear-gradient(to top, rgba(0,0,0,0.12), transparent)",
               }}
             />
-            
+
             {/* Floating Glass Spheres */}
             {/* Top-right sphere overlapping the border */}
-            <div 
+            <div
               className="absolute size-14 rounded-full bg-gradient-to-br from-white/40 to-white/5 border border-white/50 shadow-[inset_-4px_-4px_8px_rgba(255,255,255,0.35),_4px_4px_12px_rgba(0,0,0,0.15)] backdrop-blur-md -top-3 -right-3 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${mousePos.x * 6}px, ${mousePos.y * 6}px, 0)`,
               }}
             />
             {/* Bottom-left sphere overlapping the border */}
-            <div 
+            <div
               className="absolute size-16 rounded-full bg-gradient-to-br from-white/45 to-white/8 border border-white/50 shadow-[inset_-5px_-5px_10px_rgba(255,255,255,0.4),_5px_5px_15px_rgba(0,0,0,0.18)] backdrop-blur-md -bottom-4 -left-4 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${mousePos.x * -8}px, ${mousePos.y * -8}px, 0)`,
@@ -520,7 +520,7 @@ function WhoWeAreScene({ scene, isActive = false, activeCardIdx = 0 }: { scene: 
           </div>
 
           {/* Awards Capsule Bar below the image */}
-          <div 
+          <div
             className="w-fit mx-auto mt-4 px-6 py-2.5 bg-white/95 border border-white/60 shadow-sm rounded-full flex items-center gap-6 backdrop-blur-md"
             style={{
               opacity: isActive ? 1 : 0,
@@ -581,7 +581,8 @@ function ProductEcosystemScene() {
         boxShadow: "0 32px 80px rgba(0,90,160,0.10), 0 2px 0 rgba(255,255,255,0.8) inset, 0 -1px 0 rgba(0,119,182,0.08) inset",
       }}
     >
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes flowPulse { to { stroke-dashoffset: -30; } }
         @keyframes floatNode { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-6px)} }
         @keyframes glowBeat { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.85;transform:scale(1.15)} }
@@ -797,10 +798,10 @@ function ProductEcosystemScene() {
                     </linearGradient>
                     <filter id="cc-glow-f" x="-40%" y="-40%" width="180%" height="180%">
                       <feGaussianBlur stdDeviation="4" result="blur" />
-                      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                     <filter id="cc-soft-glow">
-                      <feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      <feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                     <linearGradient id="cc-card-g" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="white" stopOpacity="1" />
@@ -815,10 +816,10 @@ function ProductEcosystemScene() {
                   <circle cx="178" cy="97" r="32" fill="none" stroke="#0077B6" strokeWidth="1" className="eco-ring2" opacity="0.4" />
 
                   {/* Paths */}
-                  <path d="M 76 57 Q 130 57 152 97" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.7"/>
-                  <path d="M 76 97 L 152 97" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.7"/>
-                  <path d="M 76 137 Q 130 137 152 97" fill="none" stroke="#6EC8FF" strokeWidth="1.8" className="eco-flow-line" opacity="0.7"/>
-                  <path d="M 204 97 L 268 97" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.7"/>
+                  <path d="M 76 57 Q 130 57 152 97" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.7" />
+                  <path d="M 76 97 L 152 97" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.7" />
+                  <path d="M 76 137 Q 130 137 152 97" fill="none" stroke="#6EC8FF" strokeWidth="1.8" className="eco-flow-line" opacity="0.7" />
+                  <path d="M 204 97 L 268 97" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.7" />
 
                   {/* Animated particles */}
                   <circle r="3.5" fill="#3BA9F5" opacity="0.9" filter="url(#cc-glow-f)">
@@ -848,7 +849,7 @@ function ProductEcosystemScene() {
                     <rect x="10" y="78" width="66" height="38" rx="11" fill="url(#cc-card-g)" stroke="#E2EEF6" strokeWidth="1" filter="url(#cc-glow-f)" />
                     <rect x="10" y="78" width="66" height="38" rx="11" fill="#0077B6" opacity="0.05" />
                     <rect x="19" y="88" width="20" height="14" rx="3.5" fill="#0077B6" opacity="0.12" stroke="#0077B6" strokeWidth="1" />
-                    <path d="M19 90.5 L29 96 L39 90.5" stroke="#0077B6" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                    <path d="M19 90.5 L29 96 L39 90.5" stroke="#0077B6" strokeWidth="1.2" fill="none" strokeLinecap="round" />
                     <text x="43" y="98" fontSize="7.5" fontWeight="800" fill="#0F172A">Email</text>
                     <text x="43" y="108" fontSize="6.5" fill="#64748B">Native</text>
                   </g>
@@ -896,7 +897,7 @@ function ProductEcosystemScene() {
 
               {/* Feature chips */}
               <div className="flex flex-wrap gap-2 flex-shrink-0">
-                {["WhatsApp","Email","SMS","Comm. History"].map((label) => (
+                {["WhatsApp", "Email", "SMS", "Comm. History"].map((label) => (
                   <span key={label} className="eco-chip inline-flex items-center text-[10px] font-bold rounded-full px-3 py-1.5 cursor-default"
                     style={{ background: "linear-gradient(135deg, rgba(240,249,255,0.9) 0%, rgba(224,242,254,0.7) 100%)", border: "1px solid rgba(125,211,252,0.5)", color: "#0055A5", boxShadow: "0 2px 8px rgba(0,119,182,0.08), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     {label}
@@ -921,7 +922,7 @@ function ProductEcosystemScene() {
                   <div className="w-12 h-12 rounded-[14px] flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
                     style={{ background: "linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 40%, #7DD3FC 100%)", boxShadow: "0 6px 20px rgba(0,119,182,0.20), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <defs><linearGradient id="ic2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6"/><stop offset="100%" stopColor="#38BDF8"/></linearGradient></defs>
+                      <defs><linearGradient id="ic2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6" /><stop offset="100%" stopColor="#38BDF8" /></linearGradient></defs>
                       <circle cx="12" cy="12" r="9" fill="url(#ic2)" opacity="0.15" stroke="url(#ic2)" strokeWidth="1.6" />
                       <path d="M7.5 14.5L9.5 11l2.5 2.5 2.5-5L17 11" stroke="url(#ic2)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                       <circle cx="16.5" cy="7.5" r="2.5" fill="#38BDF8" />
@@ -942,98 +943,98 @@ function ProductEcosystemScene() {
                 <svg viewBox="0 0 360 195" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
                     <radialGradient id="cxp-hub-g" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.2"/>
-                      <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0"/>
+                      <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0" />
                     </radialGradient>
                     <linearGradient id="cxp-bar-g" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#0077B6" stopOpacity="0.85"/>
-                      <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0.4"/>
+                      <stop offset="0%" stopColor="#0077B6" stopOpacity="0.85" />
+                      <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0.4" />
                     </linearGradient>
                     <linearGradient id="cxp-card-g" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="white"/>
-                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95"/>
+                      <stop offset="0%" stopColor="white" />
+                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95" />
                     </linearGradient>
                     <filter id="cxp-glow-f">
-                      <feGaussianBlur stdDeviation="4" result="b"/>
-                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      <feGaussianBlur stdDeviation="4" result="b" />
+                      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                   </defs>
 
                   <circle cx="178" cy="97" r="80" fill="url(#cxp-hub-g)" />
 
                   {/* Connection lines */}
-                  <path d="M100 72 L140 90" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-flow-line" opacity="0.6"/>
-                  <path d="M100 122 L140 105" fill="none" stroke="#0077B6" strokeWidth="1.5" className="eco-flow-line" opacity="0.6"/>
-                  <path d="M218 90 L258 72" fill="none" stroke="#6EC8FF" strokeWidth="1.5" className="eco-flow-line" opacity="0.6"/>
-                  <path d="M218 105 L258 122" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-flow-line" opacity="0.6"/>
+                  <path d="M100 72 L140 90" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-flow-line" opacity="0.6" />
+                  <path d="M100 122 L140 105" fill="none" stroke="#0077B6" strokeWidth="1.5" className="eco-flow-line" opacity="0.6" />
+                  <path d="M218 90 L258 72" fill="none" stroke="#6EC8FF" strokeWidth="1.5" className="eco-flow-line" opacity="0.6" />
+                  <path d="M218 105 L258 122" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-flow-line" opacity="0.6" />
 
                   {/* Particles */}
-                  <circle r="3" fill="#3BA9F5" opacity="0.9" filter="url(#cxp-glow-f)"><animateMotion dur="2s" repeatCount="indefinite" path="M100 72 L140 90"/></circle>
-                  <circle r="3" fill="#0077B6" opacity="0.85" filter="url(#cxp-glow-f)"><animateMotion dur="2.3s" repeatCount="indefinite" path="M218 90 L258 72" begin="0.5s"/></circle>
-                  <circle r="3" fill="#6EC8FF" opacity="0.9" filter="url(#cxp-glow-f)"><animateMotion dur="2.6s" repeatCount="indefinite" path="M218 105 L258 122" begin="1s"/></circle>
+                  <circle r="3" fill="#3BA9F5" opacity="0.9" filter="url(#cxp-glow-f)"><animateMotion dur="2s" repeatCount="indefinite" path="M100 72 L140 90" /></circle>
+                  <circle r="3" fill="#0077B6" opacity="0.85" filter="url(#cxp-glow-f)"><animateMotion dur="2.3s" repeatCount="indefinite" path="M218 90 L258 72" begin="0.5s" /></circle>
+                  <circle r="3" fill="#6EC8FF" opacity="0.9" filter="url(#cxp-glow-f)"><animateMotion dur="2.6s" repeatCount="indefinite" path="M218 105 L258 122" begin="1s" /></circle>
 
                   {/* AI Brain card */}
                   <g className="eco-float">
-                    <rect x="8" y="30" width="88" height="74" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)"/>
-                    <rect x="8" y="30" width="88" height="18" rx="14" fill="#0077B6" opacity="0.07"/>
+                    <rect x="8" y="30" width="88" height="74" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)" />
+                    <rect x="8" y="30" width="88" height="18" rx="14" fill="#0077B6" opacity="0.07" />
                     <text x="52" y="43" fontSize="8" fontWeight="900" fill="#0077B6" textAnchor="middle">AI BRAIN</text>
                     {/* Neural dots */}
-                    <circle cx="28" cy="68" r="5" fill="#3BA9F5" opacity="0.25"/>
-                    <circle cx="52" cy="58" r="5" fill="#0077B6" opacity="0.25"/>
-                    <circle cx="76" cy="68" r="5" fill="#6EC8FF" opacity="0.25"/>
-                    <circle cx="40" cy="78" r="4" fill="#3BA9F5" opacity="0.2"/>
-                    <circle cx="64" cy="78" r="4" fill="#0077B6" opacity="0.2"/>
-                    <line x1="28" y1="68" x2="52" y2="58" stroke="#3BA9F5" strokeWidth="1.2" opacity="0.5"/>
-                    <line x1="52" y1="58" x2="76" y2="68" stroke="#0077B6" strokeWidth="1.2" opacity="0.5"/>
-                    <line x1="28" y1="68" x2="40" y2="78" stroke="#3BA9F5" strokeWidth="1.2" opacity="0.5"/>
-                    <line x1="76" y1="68" x2="64" y2="78" stroke="#0077B6" strokeWidth="1.2" opacity="0.5"/>
-                    <circle cx="28" cy="68" r="3" fill="#3BA9F5" className="eco-glow"/>
-                    <circle cx="52" cy="58" r="3" fill="#0077B6" className="eco-glow"/>
-                    <circle cx="76" cy="68" r="3" fill="#6EC8FF" className="eco-glow"/>
+                    <circle cx="28" cy="68" r="5" fill="#3BA9F5" opacity="0.25" />
+                    <circle cx="52" cy="58" r="5" fill="#0077B6" opacity="0.25" />
+                    <circle cx="76" cy="68" r="5" fill="#6EC8FF" opacity="0.25" />
+                    <circle cx="40" cy="78" r="4" fill="#3BA9F5" opacity="0.2" />
+                    <circle cx="64" cy="78" r="4" fill="#0077B6" opacity="0.2" />
+                    <line x1="28" y1="68" x2="52" y2="58" stroke="#3BA9F5" strokeWidth="1.2" opacity="0.5" />
+                    <line x1="52" y1="58" x2="76" y2="68" stroke="#0077B6" strokeWidth="1.2" opacity="0.5" />
+                    <line x1="28" y1="68" x2="40" y2="78" stroke="#3BA9F5" strokeWidth="1.2" opacity="0.5" />
+                    <line x1="76" y1="68" x2="64" y2="78" stroke="#0077B6" strokeWidth="1.2" opacity="0.5" />
+                    <circle cx="28" cy="68" r="3" fill="#3BA9F5" className="eco-glow" />
+                    <circle cx="52" cy="58" r="3" fill="#0077B6" className="eco-glow" />
+                    <circle cx="76" cy="68" r="3" fill="#6EC8FF" className="eco-glow" />
                   </g>
 
                   {/* Analytics Dashboard top */}
                   <g className="eco-float-2">
-                    <rect x="116" y="8" width="124" height="60" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)"/>
-                    <rect x="116" y="8" width="124" height="18" rx="14" fill="#0077B6" opacity="0.07"/>
+                    <rect x="116" y="8" width="124" height="60" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)" />
+                    <rect x="116" y="8" width="124" height="18" rx="14" fill="#0077B6" opacity="0.07" />
                     <text x="178" y="21.5" fontSize="7.5" fontWeight="900" fill="#0077B6" textAnchor="middle">Analytics Dashboard</text>
                     {/* Bar chart */}
-                    <rect x="128" y="56" width="10" height="8" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="142" y="48" width="10" height="16" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="156" y="40" width="10" height="24" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="170" y="35" width="10" height="29" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="184" y="42" width="10" height="22" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="198" y="50" width="10" height="14" rx="2" fill="url(#cxp-bar-g)"/>
-                    <rect x="212" y="45" width="10" height="19" rx="2" fill="url(#cxp-bar-g)"/>
-                    <path d="M128 56 L142 48 L156 40 L170 35 L184 42 L198 50 L212 45" stroke="#0077B6" strokeWidth="1.5" fill="none" strokeLinejoin="round"/>
-                    <circle cx="170" cy="35" r="3" fill="#0077B6" className="eco-glow"/>
+                    <rect x="128" y="56" width="10" height="8" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="142" y="48" width="10" height="16" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="156" y="40" width="10" height="24" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="170" y="35" width="10" height="29" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="184" y="42" width="10" height="22" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="198" y="50" width="10" height="14" rx="2" fill="url(#cxp-bar-g)" />
+                    <rect x="212" y="45" width="10" height="19" rx="2" fill="url(#cxp-bar-g)" />
+                    <path d="M128 56 L142 48 L156 40 L170 35 L184 42 L198 50 L212 45" stroke="#0077B6" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                    <circle cx="170" cy="35" r="3" fill="#0077B6" className="eco-glow" />
                   </g>
 
                   {/* Health Score right */}
                   <g className="eco-float-3">
-                    <rect x="264" y="22" width="90" height="80" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)"/>
-                    <rect x="264" y="22" width="90" height="18" rx="14" fill="#0077B6" opacity="0.07"/>
+                    <rect x="264" y="22" width="90" height="80" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)" />
+                    <rect x="264" y="22" width="90" height="18" rx="14" fill="#0077B6" opacity="0.07" />
                     <text x="309" y="35.5" fontSize="7.5" fontWeight="900" fill="#0077B6" textAnchor="middle">Health Score</text>
-                    <path d="M279 88 A 30 30 0 0 1 339 88" fill="none" stroke="#E2EEF8" strokeWidth="9" strokeLinecap="round"/>
-                    <path d="M279 88 A 30 30 0 0 1 336 73" fill="none" stroke="url(#cxp-bar-g)" strokeWidth="9" strokeLinecap="round"/>
+                    <path d="M279 88 A 30 30 0 0 1 339 88" fill="none" stroke="#E2EEF8" strokeWidth="9" strokeLinecap="round" />
+                    <path d="M279 88 A 30 30 0 0 1 336 73" fill="none" stroke="url(#cxp-bar-g)" strokeWidth="9" strokeLinecap="round" />
                     <text x="309" y="85" fontSize="16" fontWeight="900" fill="#0A1628" textAnchor="middle">82</text>
                     <text x="309" y="96" fontSize="7" fontWeight="700" fill="#0077B6" textAnchor="middle">Healthy</text>
                   </g>
 
                   {/* Churn Prediction bottom left */}
                   <g className="eco-float">
-                    <rect x="8" y="115" width="106" height="65" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)"/>
-                    <rect x="8" y="115" width="106" height="18" rx="14" fill="#0077B6" opacity="0.07"/>
+                    <rect x="8" y="115" width="106" height="65" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)" />
+                    <rect x="8" y="115" width="106" height="18" rx="14" fill="#0077B6" opacity="0.07" />
                     <text x="61" y="128.5" fontSize="7.5" fontWeight="900" fill="#0077B6" textAnchor="middle">Churn Prediction</text>
-                    <path d="M20 170 Q 38 145 60 155 T 102 140" fill="none" stroke="#0077B6" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M20 170 Q 38 145 60 155 T 102 140 L102 173 L20 173Z" fill="#0077B6" opacity="0.07"/>
-                    <circle cx="102" cy="140" r="3.5" fill="#0077B6" className="eco-glow"/>
+                    <path d="M20 170 Q 38 145 60 155 T 102 140" fill="none" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M20 170 Q 38 145 60 155 T 102 140 L102 173 L20 173Z" fill="#0077B6" opacity="0.07" />
+                    <circle cx="102" cy="140" r="3.5" fill="#0077B6" className="eco-glow" />
                   </g>
 
                   {/* Revenue Intel bottom right */}
                   <g className="eco-float-2">
-                    <rect x="254" y="115" width="100" height="65" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)"/>
-                    <rect x="254" y="115" width="100" height="18" rx="14" fill="#0077B6" opacity="0.07"/>
+                    <rect x="254" y="115" width="100" height="65" rx="14" fill="url(#cxp-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#cxp-glow-f)" />
+                    <rect x="254" y="115" width="100" height="18" rx="14" fill="#0077B6" opacity="0.07" />
                     <text x="304" y="128.5" fontSize="7.5" fontWeight="900" fill="#0077B6" textAnchor="middle">Revenue Intel</text>
                     <text x="304" y="153" fontSize="19" fontWeight="900" fill="#0A1628" textAnchor="middle">₹48.7L</text>
                     <text x="304" y="170" fontSize="8" fontWeight="700" fill="#3BA9F5" textAnchor="middle">↑ 28% vs last qtr</text>
@@ -1042,7 +1043,7 @@ function ProductEcosystemScene() {
               </div>
 
               <div className="flex flex-wrap gap-2 flex-shrink-0">
-                {["NPS Analytics","Churn Predict","Health Score","Revenue Intel"].map((label) => (
+                {["NPS Analytics", "Churn Predict", "Health Score", "Revenue Intel"].map((label) => (
                   <span key={label} className="eco-chip inline-flex items-center text-[10px] font-bold rounded-full px-3 py-1.5 cursor-default"
                     style={{ background: "linear-gradient(135deg, rgba(240,249,255,0.9) 0%, rgba(224,242,254,0.7) 100%)", border: "1px solid rgba(125,211,252,0.5)", color: "#0055A5", boxShadow: "0 2px 8px rgba(0,119,182,0.08), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     {label}
@@ -1073,8 +1074,8 @@ function ProductEcosystemScene() {
                   <div className="w-12 h-12 rounded-[14px] flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
                     style={{ background: "linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 40%, #7DD3FC 100%)", boxShadow: "0 6px 20px rgba(0,119,182,0.20), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <defs><linearGradient id="ic3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6"/><stop offset="100%" stopColor="#0EA5E9"/></linearGradient></defs>
-                      <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" stroke="url(#ic3)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                      <defs><linearGradient id="ic3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6" /><stop offset="100%" stopColor="#0EA5E9" /></linearGradient></defs>
+                      <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" stroke="url(#ic3)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
                   <div>
@@ -1092,93 +1093,93 @@ function ProductEcosystemScene() {
                 <svg viewBox="0 0 340 195" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
                     <linearGradient id="cf-step-g" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="white"/>
-                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95"/>
+                      <stop offset="0%" stopColor="white" />
+                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95" />
                     </linearGradient>
                     <linearGradient id="cf-accent" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#0077B6"/>
-                      <stop offset="100%" stopColor="#3BA9F5"/>
+                      <stop offset="0%" stopColor="#0077B6" />
+                      <stop offset="100%" stopColor="#3BA9F5" />
                     </linearGradient>
                     <filter id="cf-glow-f">
-                      <feGaussianBlur stdDeviation="4" result="b"/>
-                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      <feGaussianBlur stdDeviation="4" result="b" />
+                      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                     <marker id="cf-arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-                      <path d="M0,0 L0,8 L8,4 z" fill="#3BA9F5" opacity="0.8"/>
+                      <path d="M0,0 L0,8 L8,4 z" fill="#3BA9F5" opacity="0.8" />
                     </marker>
                   </defs>
 
                   {/* Vertical spine */}
-                  <line x1="170" y1="25" x2="170" y2="178" stroke="#E2EEF8" strokeWidth="2" strokeDasharray="4 4"/>
+                  <line x1="170" y1="25" x2="170" y2="178" stroke="#E2EEF8" strokeWidth="2" strokeDasharray="4 4" />
 
                   {/* Step 1 */}
                   <g className="eco-float">
-                    <rect x="88" y="10" width="164" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)"/>
-                    <rect x="88" y="10" width="164" height="38" rx="12" fill="#0077B6" opacity="0.04"/>
-                    <rect x="88" y="10" width="4" height="38" rx="2" fill="url(#cf-accent)"/>
-                    <rect x="100" y="19" width="20" height="20" rx="5" fill="#0077B6" opacity="0.12"/>
-                    <path d="M104 25L118 25M104 30L114 30" stroke="#0077B6" strokeWidth="1.5" strokeLinecap="round"/>
+                    <rect x="88" y="10" width="164" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)" />
+                    <rect x="88" y="10" width="164" height="38" rx="12" fill="#0077B6" opacity="0.04" />
+                    <rect x="88" y="10" width="4" height="38" rx="2" fill="url(#cf-accent)" />
+                    <rect x="100" y="19" width="20" height="20" rx="5" fill="#0077B6" opacity="0.12" />
+                    <path d="M104 25L118 25M104 30L114 30" stroke="#0077B6" strokeWidth="1.5" strokeLinecap="round" />
                     <text x="128" y="27" fontSize="9" fontWeight="900" fill="#0A1628">Customer Ticket</text>
                     <text x="128" y="39" fontSize="7.5" fontWeight="700" fill="#3BA9F5">Inbound case created</text>
                   </g>
 
                   {/* Arrow + particle */}
-                  <path d="M170 48 L170 62" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line"/>
+                  <path d="M170 48 L170 62" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line" />
                   <circle r="3.5" fill="#3BA9F5" opacity="0.9" filter="url(#cf-glow-f)">
-                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M170 48 L170 62"/>
+                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M170 48 L170 62" />
                   </circle>
 
                   {/* Step 2 */}
                   <g className="eco-float-2">
-                    <rect x="80" y="60" width="180" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.5" filter="url(#cf-glow-f)"/>
-                    <rect x="80" y="60" width="180" height="38" rx="12" fill="#0077B6" opacity="0.07"/>
-                    <rect x="80" y="60" width="4" height="38" rx="2" fill="url(#cf-accent)"/>
-                    <circle cx="100" cy="79" r="11" fill="#0077B6" opacity="0.14"/>
-                    <path d="M96 79 L100 72 L104 79 L100 86Z" fill="#0077B6" opacity="0.7"/>
+                    <rect x="80" y="60" width="180" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.5" filter="url(#cf-glow-f)" />
+                    <rect x="80" y="60" width="180" height="38" rx="12" fill="#0077B6" opacity="0.07" />
+                    <rect x="80" y="60" width="4" height="38" rx="2" fill="url(#cf-accent)" />
+                    <circle cx="100" cy="79" r="11" fill="#0077B6" opacity="0.14" />
+                    <path d="M96 79 L100 72 L104 79 L100 86Z" fill="#0077B6" opacity="0.7" />
                     <text x="118" y="77" fontSize="9" fontWeight="900" fill="#0A1628">AI Routing Engine</text>
                     <text x="118" y="89" fontSize="7.5" fontWeight="700" fill="#3BA9F5">Auto-assigns to best agent</text>
                   </g>
 
-                  <path d="M170 98 L170 112" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line"/>
+                  <path d="M170 98 L170 112" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line" />
                   <circle r="3.5" fill="#0077B6" opacity="0.9" filter="url(#cf-glow-f)">
-                    <animateMotion dur="2s" repeatCount="indefinite" path="M170 98 L170 112" begin="0.4s"/>
+                    <animateMotion dur="2s" repeatCount="indefinite" path="M170 98 L170 112" begin="0.4s" />
                   </circle>
 
                   {/* Step 3 */}
                   <g className="eco-float-3">
-                    <rect x="88" y="110" width="164" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)"/>
-                    <rect x="88" y="110" width="164" height="38" rx="12" fill="#3BA9F5" opacity="0.04"/>
-                    <rect x="88" y="110" width="4" height="38" rx="2" fill="url(#cf-accent)"/>
-                    <circle cx="106" cy="129" r="10" fill="none" stroke="#3BA9F5" strokeWidth="1.8"/>
-                    <path d="M106 122 L106 129 L112 133" stroke="#3BA9F5" strokeWidth="1.8" strokeLinecap="round"/>
+                    <rect x="88" y="110" width="164" height="38" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)" />
+                    <rect x="88" y="110" width="164" height="38" rx="12" fill="#3BA9F5" opacity="0.04" />
+                    <rect x="88" y="110" width="4" height="38" rx="2" fill="url(#cf-accent)" />
+                    <circle cx="106" cy="129" r="10" fill="none" stroke="#3BA9F5" strokeWidth="1.8" />
+                    <path d="M106 122 L106 129 L112 133" stroke="#3BA9F5" strokeWidth="1.8" strokeLinecap="round" />
                     <text x="124" y="127" fontSize="9" fontWeight="900" fill="#0A1628">SLA Tracking</text>
                     <text x="124" y="139" fontSize="7.5" fontWeight="700" fill="#3BA9F5">12-min target enforced</text>
                   </g>
 
-                  <path d="M170 148 L170 162" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line"/>
+                  <path d="M170 148 L170 162" stroke="#3BA9F5" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#cf-arr)" className="eco-flow-line" />
                   <circle r="3.5" fill="#3BA9F5" opacity="0.9" filter="url(#cf-glow-f)">
-                    <animateMotion dur="1.9s" repeatCount="indefinite" path="M170 148 L170 162" begin="0.7s"/>
+                    <animateMotion dur="1.9s" repeatCount="indefinite" path="M170 148 L170 162" begin="0.7s" />
                   </circle>
 
                   {/* Step 4 */}
                   <g className="eco-float-2">
-                    <rect x="88" y="160" width="164" height="30" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)"/>
-                    <rect x="88" y="160" width="164" height="30" rx="12" fill="#0077B6" opacity="0.04"/>
-                    <rect x="88" y="160" width="4" height="30" rx="2" fill="url(#cf-accent)"/>
-                    <circle cx="106" cy="175" r="9" fill="#0077B6" opacity="0.14"/>
-                    <path d="M101 175 L104 178 L111 170" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    <rect x="88" y="160" width="164" height="30" rx="12" fill="url(#cf-step-g)" stroke="#BAE6FD" strokeWidth="1.2" filter="url(#cf-glow-f)" />
+                    <rect x="88" y="160" width="164" height="30" rx="12" fill="#0077B6" opacity="0.04" />
+                    <rect x="88" y="160" width="4" height="30" rx="2" fill="url(#cf-accent)" />
+                    <circle cx="106" cy="175" r="9" fill="#0077B6" opacity="0.14" />
+                    <path d="M101 175 L104 178 L111 170" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     <text x="124" y="172" fontSize="9" fontWeight="900" fill="#0A1628">Resolution</text>
                     <text x="124" y="183" fontSize="7.5" fontWeight="700" fill="#3BA9F5">Solved &amp; auto-closed</text>
                   </g>
 
                   {/* Ambient side glows */}
-                  <circle cx="60" cy="79" r="6" fill="#6EC8FF" opacity="0.35" className="eco-glow"/>
-                  <circle cx="280" cy="129" r="6" fill="#3BA9F5" opacity="0.35" className="eco-glow"/>
+                  <circle cx="60" cy="79" r="6" fill="#6EC8FF" opacity="0.35" className="eco-glow" />
+                  <circle cx="280" cy="129" r="6" fill="#3BA9F5" opacity="0.35" className="eco-glow" />
                 </svg>
               </div>
 
               <div className="flex flex-wrap gap-2 flex-shrink-0">
-                {["Auto Routing","SLA Automation","Escalation Mgmt","Resolution Track"].map((label) => (
+                {["Auto Routing", "SLA Automation", "Escalation Mgmt", "Resolution Track"].map((label) => (
                   <span key={label} className="eco-chip inline-flex items-center text-[10px] font-bold rounded-full px-3 py-1.5 cursor-default"
                     style={{ background: "linear-gradient(135deg, rgba(240,249,255,0.9) 0%, rgba(224,242,254,0.7) 100%)", border: "1px solid rgba(125,211,252,0.5)", color: "#0055A5", boxShadow: "0 2px 8px rgba(0,119,182,0.08), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     {label}
@@ -1203,13 +1204,13 @@ function ProductEcosystemScene() {
                   <div className="w-12 h-12 rounded-[14px] flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
                     style={{ background: "linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 40%, #7DD3FC 100%)", boxShadow: "0 6px 20px rgba(0,119,182,0.20), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <defs><linearGradient id="ic4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6"/><stop offset="100%" stopColor="#38BDF8"/></linearGradient></defs>
-                      <circle cx="12" cy="12" r="3.5" fill="url(#ic4)" opacity="0.25" stroke="url(#ic4)" strokeWidth="1.6"/>
-                      <circle cx="5" cy="6" r="2.5" stroke="#3BA9F5" strokeWidth="1.4"/>
-                      <circle cx="19" cy="6" r="2.5" stroke="#3BA9F5" strokeWidth="1.4"/>
-                      <circle cx="5" cy="18" r="2.5" stroke="#7DD3FC" strokeWidth="1.4"/>
-                      <circle cx="19" cy="18" r="2.5" stroke="#7DD3FC" strokeWidth="1.4"/>
-                      <path d="M7.5 7.5L10 10M16.5 7.5L14 10M7.5 16.5L10 14M16.5 16.5L14 14" stroke="url(#ic4)" strokeWidth="1.3" strokeLinecap="round"/>
+                      <defs><linearGradient id="ic4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#0077B6" /><stop offset="100%" stopColor="#38BDF8" /></linearGradient></defs>
+                      <circle cx="12" cy="12" r="3.5" fill="url(#ic4)" opacity="0.25" stroke="url(#ic4)" strokeWidth="1.6" />
+                      <circle cx="5" cy="6" r="2.5" stroke="#3BA9F5" strokeWidth="1.4" />
+                      <circle cx="19" cy="6" r="2.5" stroke="#3BA9F5" strokeWidth="1.4" />
+                      <circle cx="5" cy="18" r="2.5" stroke="#7DD3FC" strokeWidth="1.4" />
+                      <circle cx="19" cy="18" r="2.5" stroke="#7DD3FC" strokeWidth="1.4" />
+                      <path d="M7.5 7.5L10 10M16.5 7.5L14 10M7.5 16.5L10 14M16.5 16.5L14 14" stroke="url(#ic4)" strokeWidth="1.3" strokeLinecap="round" />
                     </svg>
                   </div>
                   <div>
@@ -1227,106 +1228,106 @@ function ProductEcosystemScene() {
                 <svg viewBox="0 0 360 200" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
                     <radialGradient id="nx-hub-g" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#0077B6" stopOpacity="0.22"/>
-                      <stop offset="100%" stopColor="#0077B6" stopOpacity="0"/>
+                      <stop offset="0%" stopColor="#0077B6" stopOpacity="0.22" />
+                      <stop offset="100%" stopColor="#0077B6" stopOpacity="0" />
                     </radialGradient>
                     <linearGradient id="nx-card-g" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="white"/>
-                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95"/>
+                      <stop offset="0%" stopColor="white" />
+                      <stop offset="100%" stopColor="#F0F9FF" stopOpacity="0.95" />
                     </linearGradient>
                     <filter id="nx-glow-f">
-                      <feGaussianBlur stdDeviation="4" result="b"/>
-                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      <feGaussianBlur stdDeviation="4" result="b" />
+                      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                   </defs>
 
-                  <circle cx="180" cy="100" r="70" fill="url(#nx-hub-g)"/>
+                  <circle cx="180" cy="100" r="70" fill="url(#nx-hub-g)" />
                   {/* Pulse rings on hub */}
-                  <circle cx="180" cy="100" r="34" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-ring1" opacity="0.5"/>
-                  <circle cx="180" cy="100" r="34" fill="none" stroke="#0077B6" strokeWidth="1" className="eco-ring2" opacity="0.35"/>
+                  <circle cx="180" cy="100" r="34" fill="none" stroke="#3BA9F5" strokeWidth="1.5" className="eco-ring1" opacity="0.5" />
+                  <circle cx="180" cy="100" r="34" fill="none" stroke="#0077B6" strokeWidth="1" className="eco-ring2" opacity="0.35" />
 
                   {/* Connections: left 2 nodes */}
-                  <path d="M98 60 L152 100" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.65"/>
-                  <path d="M98 140 L152 100" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.65"/>
+                  <path d="M98 60 L152 100" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.65" />
+                  <path d="M98 140 L152 100" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.65" />
                   {/* Connections: right 3 nodes */}
-                  <path d="M208 100 L262 55" fill="none" stroke="#6EC8FF" strokeWidth="1.8" className="eco-flow-line" opacity="0.65"/>
-                  <path d="M208 100 L262 100" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.65"/>
-                  <path d="M208 100 L262 145" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.65"/>
+                  <path d="M208 100 L262 55" fill="none" stroke="#6EC8FF" strokeWidth="1.8" className="eco-flow-line" opacity="0.65" />
+                  <path d="M208 100 L262 100" fill="none" stroke="#3BA9F5" strokeWidth="1.8" className="eco-flow-line" opacity="0.65" />
+                  <path d="M208 100 L262 145" fill="none" stroke="#0077B6" strokeWidth="1.8" className="eco-flow-line" opacity="0.65" />
 
                   {/* Particles */}
-                  <circle r="3.5" fill="#3BA9F5" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2.2s" repeatCount="indefinite" path="M98 60 L152 100"/></circle>
-                  <circle r="3" fill="#0077B6" opacity="0.85" filter="url(#nx-glow-f)"><animateMotion dur="2.5s" repeatCount="indefinite" path="M98 140 L152 100" begin="0.5s"/></circle>
-                  <circle r="3" fill="#6EC8FF" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2s" repeatCount="indefinite" path="M208 100 L262 55" begin="0.3s"/></circle>
-                  <circle r="3" fill="#3BA9F5" opacity="0.85" filter="url(#nx-glow-f)"><animateMotion dur="2.3s" repeatCount="indefinite" path="M208 100 L262 100" begin="0.8s"/></circle>
-                  <circle r="3" fill="#0077B6" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2.1s" repeatCount="indefinite" path="M208 100 L262 145" begin="1.1s"/></circle>
+                  <circle r="3.5" fill="#3BA9F5" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2.2s" repeatCount="indefinite" path="M98 60 L152 100" /></circle>
+                  <circle r="3" fill="#0077B6" opacity="0.85" filter="url(#nx-glow-f)"><animateMotion dur="2.5s" repeatCount="indefinite" path="M98 140 L152 100" begin="0.5s" /></circle>
+                  <circle r="3" fill="#6EC8FF" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2s" repeatCount="indefinite" path="M208 100 L262 55" begin="0.3s" /></circle>
+                  <circle r="3" fill="#3BA9F5" opacity="0.85" filter="url(#nx-glow-f)"><animateMotion dur="2.3s" repeatCount="indefinite" path="M208 100 L262 100" begin="0.8s" /></circle>
+                  <circle r="3" fill="#0077B6" opacity="0.9" filter="url(#nx-glow-f)"><animateMotion dur="2.1s" repeatCount="indefinite" path="M208 100 L262 145" begin="1.1s" /></circle>
 
                   {/* Central Nexora Hub */}
-                  <circle cx="180" cy="100" r="36" fill="white" filter="url(#nx-glow-f)"/>
-                  <circle cx="180" cy="100" r="34" fill="url(#nx-hub-g)"/>
+                  <circle cx="180" cy="100" r="36" fill="white" filter="url(#nx-glow-f)" />
+                  <circle cx="180" cy="100" r="34" fill="url(#nx-hub-g)" />
                   <text x="180" y="96" fontSize="8" fontWeight="900" fill="#0077B6" textAnchor="middle">NEXORA</text>
                   <text x="180" y="108" fontSize="7" fontWeight="700" fill="#64748B" textAnchor="middle">Platform</text>
-                  <circle cx="180" cy="100" r="34" stroke="#3BA9F5" strokeWidth="1.2" strokeDasharray="4 3" fill="none" className="eco-glow"/>
+                  <circle cx="180" cy="100" r="34" stroke="#3BA9F5" strokeWidth="1.2" strokeDasharray="4 3" fill="none" className="eco-glow" />
 
                   {/* Left: Partner Network */}
                   <g className="eco-float">
-                    <rect x="10" y="35" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)"/>
-                    <rect x="10" y="35" width="88" height="15" rx="13" fill="#3BA9F5" opacity="0.07"/>
+                    <rect x="10" y="35" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)" />
+                    <rect x="10" y="35" width="88" height="15" rx="13" fill="#3BA9F5" opacity="0.07" />
                     <text x="54" y="47" fontSize="7" fontWeight="900" fill="#0077B6" textAnchor="middle">Partner Network</text>
-                    <circle cx="26" cy="64" r="7" fill="#3BA9F5" opacity="0.2"/>
-                    <circle cx="22" cy="61" r="4" fill="#3BA9F5" opacity="0.5"/>
-                    <circle cx="30" cy="61" r="3.5" fill="#6EC8FF" opacity="0.5"/>
-                    <circle cx="26" cy="68" r="4" fill="#0077B6" opacity="0.4"/>
-                    <line x1="22" y1="61" x2="26" y2="68" stroke="#3BA9F5" strokeWidth="1"/>
-                    <line x1="30" y1="61" x2="26" y2="68" stroke="#6EC8FF" strokeWidth="1"/>
+                    <circle cx="26" cy="64" r="7" fill="#3BA9F5" opacity="0.2" />
+                    <circle cx="22" cy="61" r="4" fill="#3BA9F5" opacity="0.5" />
+                    <circle cx="30" cy="61" r="3.5" fill="#6EC8FF" opacity="0.5" />
+                    <circle cx="26" cy="68" r="4" fill="#0077B6" opacity="0.4" />
+                    <line x1="22" y1="61" x2="26" y2="68" stroke="#3BA9F5" strokeWidth="1" />
+                    <line x1="30" y1="61" x2="26" y2="68" stroke="#6EC8FF" strokeWidth="1" />
                     <text x="68" y="63" fontSize="7.5" fontWeight="800" fill="#0A1628" textAnchor="middle">120+</text>
                     <text x="68" y="73" fontSize="6.5" fill="#64748B" textAnchor="middle">active</text>
                   </g>
                   {/* Left: Meeting Planning */}
                   <g className="eco-float-3">
-                    <rect x="10" y="115" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)"/>
-                    <rect x="10" y="115" width="88" height="15" rx="13" fill="#0077B6" opacity="0.07"/>
+                    <rect x="10" y="115" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)" />
+                    <rect x="10" y="115" width="88" height="15" rx="13" fill="#0077B6" opacity="0.07" />
                     <text x="54" y="127" fontSize="7" fontWeight="900" fill="#0077B6" textAnchor="middle">Meeting Planning</text>
-                    <rect x="20" y="134" width="22" height="22" rx="5" fill="#0077B6" opacity="0.1"/>
-                    <line x1="22" y1="140" x2="40" y2="140" stroke="#0077B6" strokeWidth="1.2" strokeLinecap="round"/>
-                    <line x1="22" y1="145" x2="36" y2="145" stroke="#3BA9F5" strokeWidth="1.2" strokeLinecap="round"/>
-                    <line x1="22" y1="150" x2="40" y2="150" stroke="#0077B6" strokeWidth="1.2" strokeLinecap="round"/>
+                    <rect x="20" y="134" width="22" height="22" rx="5" fill="#0077B6" opacity="0.1" />
+                    <line x1="22" y1="140" x2="40" y2="140" stroke="#0077B6" strokeWidth="1.2" strokeLinecap="round" />
+                    <line x1="22" y1="145" x2="36" y2="145" stroke="#3BA9F5" strokeWidth="1.2" strokeLinecap="round" />
+                    <line x1="22" y1="150" x2="40" y2="150" stroke="#0077B6" strokeWidth="1.2" strokeLinecap="round" />
                     <text x="70" y="143" fontSize="7.5" fontWeight="800" fill="#0A1628" textAnchor="middle">Auto</text>
                     <text x="70" y="153" fontSize="7.5" fontWeight="800" fill="#0A1628" textAnchor="middle">Sched.</text>
                   </g>
                   {/* Right: Activity */}
                   <g className="eco-float-2">
-                    <rect x="262" y="30" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)"/>
-                    <rect x="262" y="30" width="88" height="15" rx="13" fill="#6EC8FF" opacity="0.08"/>
+                    <rect x="262" y="30" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)" />
+                    <rect x="262" y="30" width="88" height="15" rx="13" fill="#6EC8FF" opacity="0.08" />
                     <text x="306" y="42" fontSize="7" fontWeight="900" fill="#0077B6" textAnchor="middle">Activity Tracker</text>
-                    <rect x="272" y="51" width="10" height="20" rx="3" fill="#6EC8FF" opacity="0.5"/>
-                    <rect x="285" y="44" width="10" height="27" rx="3" fill="#3BA9F5" opacity="0.6"/>
-                    <rect x="298" y="38" width="10" height="33" rx="3" fill="#0077B6" opacity="0.7"/>
+                    <rect x="272" y="51" width="10" height="20" rx="3" fill="#6EC8FF" opacity="0.5" />
+                    <rect x="285" y="44" width="10" height="27" rx="3" fill="#3BA9F5" opacity="0.6" />
+                    <rect x="298" y="38" width="10" height="33" rx="3" fill="#0077B6" opacity="0.7" />
                     <text x="330" y="63" fontSize="7.5" fontWeight="800" fill="#3BA9F5" textAnchor="middle">High ↑</text>
                   </g>
                   {/* Right: Deal Pipeline */}
                   <g className="eco-float">
-                    <rect x="262" y="75" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)"/>
-                    <rect x="262" y="75" width="88" height="15" rx="13" fill="#0077B6" opacity="0.07"/>
+                    <rect x="262" y="75" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)" />
+                    <rect x="262" y="75" width="88" height="15" rx="13" fill="#0077B6" opacity="0.07" />
                     <text x="306" y="87" fontSize="7" fontWeight="900" fill="#0077B6" textAnchor="middle">Deal Pipeline</text>
-                    <path d="M272 115 L278 106 L284 110 L292 98 L300 102" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                    <circle cx="300" cy="102" r="3" fill="#0077B6" className="eco-glow"/>
+                    <path d="M272 115 L278 106 L284 110 L292 98 L300 102" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                    <circle cx="300" cy="102" r="3" fill="#0077B6" className="eco-glow" />
                     <text x="326" y="107" fontSize="9" fontWeight="900" fill="#0A1628" textAnchor="middle">₹4.2Cr</text>
                   </g>
                   {/* Right: Growth */}
                   <g className="eco-float-3">
-                    <rect x="262" y="120" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)"/>
-                    <rect x="262" y="120" width="88" height="15" rx="13" fill="#3BA9F5" opacity="0.07"/>
+                    <rect x="262" y="120" width="88" height="50" rx="13" fill="url(#nx-card-g)" stroke="#BAE6FD" strokeWidth="1" filter="url(#nx-glow-f)" />
+                    <rect x="262" y="120" width="88" height="15" rx="13" fill="#3BA9F5" opacity="0.07" />
                     <text x="306" y="132" fontSize="7" fontWeight="900" fill="#0077B6" textAnchor="middle">Growth Dashboard</text>
-                    <path d="M272 163 L280 152 L288 156 L296 144 L304 148 L312 138" stroke="#3BA9F5" strokeWidth="2" strokeLinecap="round" fill="none"/>
-                    <path d="M272 163 L280 152 L288 156 L296 144 L304 148 L312 138 L312 165 L272 165Z" fill="#3BA9F5" opacity="0.07"/>
-                    <circle cx="312" cy="138" r="3.5" fill="#3BA9F5" className="eco-glow"/>
+                    <path d="M272 163 L280 152 L288 156 L296 144 L304 148 L312 138" stroke="#3BA9F5" strokeWidth="2" strokeLinecap="round" fill="none" />
+                    <path d="M272 163 L280 152 L288 156 L296 144 L304 148 L312 138 L312 165 L272 165Z" fill="#3BA9F5" opacity="0.07" />
+                    <circle cx="312" cy="138" r="3.5" fill="#3BA9F5" className="eco-glow" />
                     <text x="338" y="148" fontSize="7" fontWeight="700" fill="#3BA9F5" textAnchor="middle">↑ Trend</text>
                   </g>
                 </svg>
               </div>
 
               <div className="flex flex-wrap gap-2 flex-shrink-0">
-                {["Meeting Planner","Activity Track","Partner Mgmt","Deal Pipeline"].map((label) => (
+                {["Meeting Planner", "Activity Track", "Partner Mgmt", "Deal Pipeline"].map((label) => (
                   <span key={label} className="eco-chip inline-flex items-center text-[10px] font-bold rounded-full px-3 py-1.5 cursor-default"
                     style={{ background: "linear-gradient(135deg, rgba(240,249,255,0.9) 0%, rgba(224,242,254,0.7) 100%)", border: "1px solid rgba(125,211,252,0.5)", color: "#0055A5", boxShadow: "0 2px 8px rgba(0,119,182,0.08), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
                     {label}
@@ -3172,182 +3173,270 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
   }
 
   if (scene.id === 4) {
-    const kpiLabels = [
-      "AI Selling",
-      "Journey Builder",
-      "Customer 360",
-      "Patient 360",
-      "Student Lifecycle",
-      "Unified Commerce",
-    ];
-
     return (
-      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-4 px-6 md:px-8 justify-between gap-4 md:gap-5">
-        {/* Blueprint Grid Background + Radial Glow */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0284C7" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-        </div>
+      <div
+        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-6 pb-4 px-6 md:px-10 gap-5"
+        style={{
+          background: "radial-gradient(ellipse at 60% 0%, rgba(0,119,182,0.07) 0%, transparent 55%), radial-gradient(ellipse at 10% 100%, rgba(59,169,245,0.05) 0%, transparent 50%), rgba(247,250,253,0.98)",
+          backdropFilter: "blur(28px)",
+          boxShadow: "0 32px 80px rgba(0,90,160,0.10), 0 2px 0 rgba(255,255,255,0.8) inset",
+        }}
+      >
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes cred-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+          @keyframes cred-spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+          @keyframes cred-spin-rev { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
+          @keyframes cred-particle { 0%{opacity:0;transform:scale(0.5) translateY(0)} 40%{opacity:1;transform:scale(1) translateY(-10px)} 80%{opacity:0.6;transform:scale(0.8) translateY(-22px)} 100%{opacity:0;transform:scale(0.3) translateY(-34px)} }
+          @keyframes cred-pulse-ring { 0%{r:46;opacity:0.5} 100%{r:70;opacity:0} }
+          .cred-float { animation: cred-float 3.5s ease-in-out infinite; }
+          .cred-float-2 { animation: cred-float 4.2s ease-in-out infinite; animation-delay:1s; }
+          .cred-orbit1 { animation: cred-spin-slow 14s linear infinite; transform-origin: 100px 100px; }
+          .cred-orbit2 { animation: cred-spin-rev 20s linear infinite; transform-origin: 100px 100px; }
+          .cred-p1 { animation: cred-particle 3s ease-in-out infinite; }
+          .cred-p2 { animation: cred-particle 4s ease-in-out infinite; animation-delay:1.2s; }
+          .cred-p3 { animation: cred-particle 3.5s ease-in-out infinite; animation-delay:2.2s; }
+          .cred-pulse { animation: cred-pulse-ring 2.8s ease-out infinite; }
+          .cred-badge { transition: all 0.25s ease; }
+          .cred-badge:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,119,182,0.18); }
+        ` }} />
 
-        {/* Radial Glow Behind Title */}
-        <div
-          className="absolute top-12 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10"
-          style={{
-            background: "radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%)",
-          }}
-        />
+        {/* Ambient orbs */}
+        <div className="absolute -right-24 -top-24 w-[420px] h-[420px] rounded-full pointer-events-none -z-10"
+          style={{ background: "radial-gradient(circle, rgba(0,119,182,0.08) 0%, transparent 68%)" }} />
+        <div className="absolute -left-20 bottom-0 w-[340px] h-[340px] rounded-full pointer-events-none -z-10"
+          style={{ background: "radial-gradient(circle, rgba(59,169,245,0.06) 0%, transparent 68%)" }} />
+        <div className="absolute inset-0 pointer-events-none -z-10 opacity-[0.04]"
+          style={{ backgroundImage: "radial-gradient(#0077B6 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
-        {/* SECTION HEADER: Centered */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto relative z-10">
-          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-2">
-            <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-            {scene.kicker}
+        {/* ── HEADER ── */}
+        <div className="flex flex-col items-center text-center flex-shrink-0 gap-2 z-10">
+          <div className="inline-flex items-center gap-2 bg-[#EFF8FF] border border-[#BFDBFE]/80 rounded-full px-4 py-1.5 text-[11px] font-bold tracking-[0.15em] text-[#0077B6] w-fit shadow-[0_2px_8px_rgba(0,119,182,0.10)]">
+            <span className="size-1.5 rounded-full bg-[#0077B6] animate-pulse" />
+            CREDENTIALS
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-[42px] xl:text-[48px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-2">
-            {scene.title}
+          <h2 className="text-[28px] sm:text-[34px] font-[900] leading-[1.1] tracking-tight text-[#0A1628]">
+            Our Salesforce{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066A0] via-[#0077B6] to-[#3BA9F5]">
+              Credentials
+            </span>
           </h2>
-          <p className="text-xs md:text-[15px] text-[#475569] font-medium leading-relaxed max-w-2xl">
-            {scene.subtitle}
+          <p className="text-[14px] text-slate-500 font-medium max-w-xl">
+            Before you evaluate us — here is what qualifies us.
           </p>
         </div>
 
-        {/* 3x2 Grid of 6 Premium Cloud Cards with Connection Lines */}
-        <div className="relative w-full flex-1 min-h-0">
-          {/* Subtle Connection Lines (SVG Layer) */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none opacity-5"
-            style={{ zIndex: 1 }}
-          >
-            <line
-              x1="33%"
-              y1="10%"
-              x2="33%"
-              y2="90%"
-              stroke="#0284C7"
-              strokeWidth="1"
-              strokeDasharray="5,5"
-            />
-            <line
-              x1="67%"
-              y1="10%"
-              x2="67%"
-              y2="90%"
-              stroke="#0284C7"
-              strokeWidth="1"
-              strokeDasharray="5,5"
-            />
-            <line
-              x1="0%"
-              y1="50%"
-              x2="100%"
-              y2="50%"
-              stroke="#0284C7"
-              strokeWidth="1"
-              strokeDasharray="5,5"
-            />
-          </svg>
+        {/* ── BODY: Illustration + Two Cards ── */}
+        <div className="flex-1 min-h-0 z-10 grid grid-cols-[220px_1fr_1fr] gap-5 w-full">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 w-full h-full items-stretch relative z-10">
-            {scene.items?.map((item, idx) => {
-              const isSalesCloud = idx === 0;
+          {/* LEFT: 3D Certification Shield */}
+          <div className="flex flex-col items-center justify-center relative select-none">
+            <svg width="210" height="230" viewBox="0 0 210 230" xmlns="http://www.w3.org/2000/svg" className="cred-float" style={{ filter: "drop-shadow(0 16px 40px rgba(0,119,182,0.28))" }}>
+              <defs>
+                <linearGradient id="sh-body" x1="0" y1="0" x2="0.4" y2="1">
+                  <stop offset="0%" stopColor="#005B99" /><stop offset="45%" stopColor="#0077B6" /><stop offset="100%" stopColor="#0099D4" />
+                </linearGradient>
+                <linearGradient id="sh-shine" x1="0" y1="0" x2="0.55" y2="0.6">
+                  <stop offset="0%" stopColor="white" stopOpacity="0.38" /><stop offset="100%" stopColor="white" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="sh-holo" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.18" /><stop offset="35%" stopColor="#A78BFA" stopOpacity="0.10" /><stop offset="65%" stopColor="#34D399" stopOpacity="0.08" /><stop offset="100%" stopColor="#F472B6" stopOpacity="0.06" />
+                </linearGradient>
+                <radialGradient id="sh-halo" cx="50%" cy="55%" r="50%">
+                  <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.28" /><stop offset="100%" stopColor="#0077B6" stopOpacity="0" />
+                </radialGradient>
+                <linearGradient id="sh-rim" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.7" /><stop offset="50%" stopColor="#0077B6" stopOpacity="0.3" /><stop offset="100%" stopColor="#38BDF8" stopOpacity="0.6" />
+                </linearGradient>
+                <filter id="sh-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="3.5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="sh-shadow" x="-20%" y="-10%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#0055A5" floodOpacity="0.38" />
+                </filter>
+              </defs>
+              <ellipse cx="105" cy="132" rx="78" ry="88" fill="url(#sh-halo)" />
+              <path d="M105 14 L178 42 L178 108 C178 152 105 188 105 188 C105 188 32 152 32 108 L32 42 Z" fill="#002F5C" opacity="0.30" transform="translate(0,6)" filter="url(#sh-shadow)" />
+              <path d="M105 14 L178 42 L178 108 C178 152 105 188 105 188 C105 188 32 152 32 108 L32 42 Z" fill="url(#sh-body)" filter="url(#sh-shadow)" />
+              <path d="M105 14 L178 42 L178 108 C178 152 105 188 105 188 C105 188 32 152 32 108 L32 42 Z" fill="url(#sh-holo)" />
+              <path d="M105 14 L178 42 L178 108 C178 152 105 188 105 188 C105 188 32 152 32 108 L32 42 Z" fill="url(#sh-shine)" />
+              <path d="M105 14 L178 42 L178 108 C178 152 105 188 105 188 C105 188 32 152 32 108 L32 42 Z" fill="none" stroke="url(#sh-rim)" strokeWidth="1.8" />
+              <path d="M105 24 L170 49 L170 108 C170 146 105 178 105 178 C105 178 40 146 40 108 L40 49 Z" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+              <g filter="url(#sh-glow)">
+                <path d="M105 72 C98 72 92 77 91.5 84 C89 84 86 86.5 86 90 C86 93.5 89 96 92 96 L118 96 C121 96 124 93.5 124 90 C124 86.5 121 84 118.5 84 C118 77 112 72 105 72Z" fill="white" opacity="0.95" />
+              </g>
+              <g filter="url(#sh-glow)">
+                <circle cx="105" cy="115" r="12" fill="white" opacity="0.13" />
+                <path d="M105 107l2 5.8h6.2l-5 3.6 1.9 5.8-5.1-3.7-5.1 3.7 1.9-5.8-5-3.6h6.2z" fill="white" opacity="0.90" />
+              </g>
+              <line x1="68" y1="137" x2="142" y2="137" stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
+              <text x="105" y="152" fontSize="8.5" fontWeight="900" fill="white" textAnchor="middle" opacity="0.85" letterSpacing="2">CERTIFIED</text>
+              <text x="105" y="163" fontSize="6.5" fontWeight="600" fill="rgba(255,255,255,0.6)" textAnchor="middle" letterSpacing="1">SALESFORCE</text>
+              <g className="cred-p1" filter="url(#sh-glow)">
+                <rect x="12" y="50" width="30" height="30" rx="9" fill="rgba(255,255,255,0.92)" stroke="rgba(0,119,182,0.22)" strokeWidth="1" />
+                <circle cx="27" cy="65" r="8" fill="url(#sh-body)" opacity="0.9" />
+                <path d="M22.5 65l3 3 6-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </g>
+              <g className="cred-p2" filter="url(#sh-glow)">
+                <rect x="168" y="46" width="30" height="30" rx="9" fill="rgba(255,255,255,0.92)" stroke="rgba(0,119,182,0.22)" strokeWidth="1" />
+                <circle cx="183" cy="61" r="8" fill="url(#sh-body)" opacity="0.9" />
+                <path d="M178.5 61l3 3 6-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </g>
+              <g className="cred-p3" filter="url(#sh-glow)">
+                <rect x="6" y="126" width="28" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(0,119,182,0.18)" strokeWidth="1" />
+                <circle cx="20" cy="140" r="7" fill="url(#sh-body)" opacity="0.85" />
+                <path d="M16 140l2.8 2.8 5.4-5.4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </g>
+              <g className="cred-p1" filter="url(#sh-glow)" style={{ animationDelay: "1.6s" }}>
+                <rect x="176" y="120" width="28" height="28" rx="8" fill="rgba(255,255,255,0.88)" stroke="rgba(0,119,182,0.18)" strokeWidth="1" />
+                <circle cx="190" cy="134" r="7" fill="url(#sh-body)" opacity="0.85" />
+                <path d="M186 134l2.8 2.8 5.4-5.4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </g>
+              <circle cx="52" cy="22" r="3" fill="#38BDF8" opacity="0.7" className="cred-p2" filter="url(#sh-glow)" />
+              <circle cx="162" cy="18" r="2.5" fill="#7DD3FC" opacity="0.6" className="cred-p3" filter="url(#sh-glow)" />
+              <circle cx="28" cy="98" r="2" fill="#0EA5E9" opacity="0.55" className="cred-p1" filter="url(#sh-glow)" />
+              <circle cx="184" cy="92" r="2.5" fill="#3BA9F5" opacity="0.6" className="cred-p2" filter="url(#sh-glow)" />
+            </svg>
+            <div className="mt-3 flex flex-col items-center gap-1.5">
+              <div className="px-4 py-1.5 rounded-full text-[11px] font-bold text-[#0055A5] tracking-wide"
+                style={{ background: "linear-gradient(135deg,rgba(224,242,254,0.9),rgba(186,230,253,0.6))", border: "1px solid rgba(125,211,252,0.5)", boxShadow: "0 2px 8px rgba(0,119,182,0.12)" }}>
+                ✦ Salesforce Certified
+              </div>
+              <div className="px-3 py-1 rounded-full text-[10px] font-semibold text-[#0077B6]"
+                style={{ background: "rgba(240,249,255,0.7)", border: "1px solid rgba(186,230,253,0.4)" }}>
+                Partner Since 2022
+              </div>
+            </div>
+          </div>
 
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: idx * 0.08 }}
-                  viewport={{ once: true }}
-                  className={`group relative rounded-[24px] flex flex-col justify-between text-center flex-1 h-full overflow-hidden ${isSalesCloud
-                    ? "premium-glass-card-active"
-                    : "premium-glass-card premium-glass-card-hover"
-                    }`}
-                >
-                  {/* Blue Glow on Hover */}
-                  <div className="absolute inset-0 rounded-[24px] bg-gradient-to-b from-[#0284C7]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          {/* CENTER CARD: Company Credentials */}
+          <div className="relative rounded-[22px] p-5 flex flex-col gap-4 overflow-hidden"
+            style={{
+              background: "radial-gradient(ellipse at 20% 0%, rgba(0,119,182,0.14) 0%, rgba(224,242,254,0.80) 100%)",
+              border: "1px solid rgba(0,119,182,0.22)",
+              boxShadow: "0 6px 28px rgba(0,90,160,0.10), 0 1px 0 rgba(255,255,255,0.75) inset",
+            }}>
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />
 
-                  {/* Most Popular Badge - Sales Cloud Only */}
-                  {isSalesCloud && (
-                    <div className="absolute top-3 right-3 bg-[#0284C7] text-white rounded-full px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider shadow-lg shadow-sky-500/20 z-20">
-                      Most Popular
-                    </div>
-                  )}
+            {/* Card header */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="w-11 h-11 rounded-[12px] flex items-center justify-center flex-shrink-0"
+                style={{ background: "linear-gradient(135deg, #BAE6FD 0%, #7DD3FC 50%, #38BDF8 100%)", boxShadow: "0 6px 18px rgba(0,119,182,0.22), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
+                <svg viewBox="0 0 24 24" className="w-5.5 h-5.5" fill="none">
+                  <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" fill="white" opacity="0.9" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-[17px] font-[900] text-[#0A1628] leading-tight">Company-Level</h3>
+                <p className="text-[11px] text-[#0077B6] font-semibold mt-0.5">Verified partner credentials</p>
+              </div>
+            </div>
 
-                  {/* Cloud Icon in Blue Circle with Glow */}
-                  <div className="relative flex justify-center mb-2 pt-1">
-                    <div
-                      className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 size-16 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]`}
-                    >
-                      <item.icon className="size-9" />
-                      <span className="absolute inset-0 rounded-full bg-sky-400/20 blur-md -z-10 group-hover:blur-lg transition-all duration-500" />
-                    </div>
+            {/* Credential badges */}
+            <div className="flex flex-col gap-2.5 flex-1">
+              {[
+                { icon: "🏅", label: "Salesforce Registered Partner", sub: "Official partner network member" },
+                { icon: "🌐", label: "Active Partner Community Member", sub: "AppExchange ecosystem" },
+                { icon: "⭐", label: "AppExchange Listed · 5-Star Rating", sub: "Verified customer reviews" },
+                { icon: "🎓", label: "Trailhead Ranger & Superbadges", sub: "Team-wide Trailhead achievements" },
+              ].map(({ icon, label, sub }) => (
+                <div key={label} className="cred-badge flex items-center gap-3 rounded-[14px] px-3.5 py-2.5 cursor-default"
+                  style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.85) 0%,rgba(240,249,255,0.75) 100%)", border: "1px solid rgba(125,211,252,0.4)", boxShadow: "0 2px 10px rgba(0,119,182,0.07), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
+                  {/* Checkmark circle */}
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background: "linear-gradient(135deg,#0077B6,#3BA9F5)", boxShadow: "0 3px 10px rgba(0,119,182,0.30)" }}>
+                    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5"><path d="M3 8l3.5 3.5 6.5-7" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>
                   </div>
-
-                  {/* Cloud Title */}
-                  <div className="flex-1 flex flex-col justify-start px-3">
-                    <h3 className="text-base md:text-lg font-[800] text-[#0F172A] leading-tight mb-1">
-                      {item.title}
-                    </h3>
-
-                    {/* Short Description */}
-                    <p className="text-xs md:text-sm leading-snug text-[#475569] font-medium mb-2">
-                      {item.body}
-                    </p>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[11.5px] font-[800] text-[#0A1628] leading-tight">{label}</div>
+                    <div className="text-[10px] text-[#64748B] font-medium mt-0.5">{sub}</div>
                   </div>
+                  <span className="text-[15px] flex-shrink-0">{icon}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                  {/* KPI Chip */}
-                  <div className="mb-2 px-3">
-                    <div className="inline-flex items-center gap-1 bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] border border-[#0284C7]/20 rounded-full px-2.5 py-1 text-[8px] md:text-[9px] font-bold text-[#0284C7] shadow-sm">
-                      <span className="size-1 rounded-full bg-[#0284C7]" />
-                      {kpiLabels[idx]}
-                    </div>
-                  </div>
+          {/* RIGHT CARD: Team Certifications */}
+          <div className="relative rounded-[22px] p-5 flex flex-col gap-4 overflow-hidden"
+            style={{
+              background: "radial-gradient(ellipse at 80% 0%, rgba(59,169,245,0.14) 0%, rgba(224,242,254,0.80) 100%)",
+              border: "1px solid rgba(0,119,182,0.22)",
+              boxShadow: "0 6px 28px rgba(0,90,160,0.10), 0 1px 0 rgba(255,255,255,0.75) inset",
+            }}>
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />
 
-                  {/* Bottom Capability Indicator Bars (5 segmented) */}
-                  <div className="mt-auto pt-2 flex items-center justify-center gap-0.5 px-3 pb-2.5 border-t border-[#E0F2FE]">
-                    {[1, 2, 3, 4, 5].map((bar) => (
-                      <div
-                        key={bar}
-                        className="h-1.5 flex-1 rounded-full bg-[#E0F2FE] group-hover:bg-[#0284C7] transition-all duration-500 overflow-hidden relative"
-                        style={{
-                          animation: "slideRight 0.8s ease-out forwards",
-                          animationDelay: `${bar * 0.12}s`,
-                        }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#0284C7]/60 to-[#0EA5E9] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
-                      </div>
-                    ))}
+            {/* Card header */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="w-11 h-11 rounded-[12px] flex items-center justify-center flex-shrink-0"
+                style={{ background: "linear-gradient(135deg, #BAE6FD 0%, #7DD3FC 50%, #38BDF8 100%)", boxShadow: "0 6px 18px rgba(0,119,182,0.22), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none">
+                  <circle cx="12" cy="8" r="4" stroke="white" strokeWidth="1.7" />
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-[17px] font-[900] text-[#0A1628] leading-tight">Team Certifications</h3>
+                <p className="text-[11px] text-[#0077B6] font-semibold mt-0.5">Individual Salesforce credentials</p>
+              </div>
+            </div>
+
+            {/* Cert badge grid */}
+            <div className="grid grid-cols-2 gap-2 flex-1">
+              {[
+                { label: "Technical Architect", tier: "Architect" },
+                { label: "AI Specialist", tier: "AI" },
+                { label: "Agentforce Specialist", tier: "Agent" },
+                { label: "Data Cloud Consultant", tier: "Data" },
+                { label: "Sales Cloud Consultant", tier: "Sales" },
+                { label: "Marketing Cloud", tier: "Marketing" },
+                { label: "Service Cloud Consultant", tier: "Service" },
+                { label: "Platform Developer", tier: "Dev" },
+                { label: "Platform Administrator", tier: "Admin" },
+              ].map(({ label, tier }) => (
+                <div key={label} className="cred-badge flex items-center gap-2 rounded-[12px] px-3 py-2 cursor-default"
+                  style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.85) 0%,rgba(240,249,255,0.75) 100%)", border: "1px solid rgba(125,211,252,0.4)", boxShadow: "0 2px 8px rgba(0,119,182,0.06), 0 1px 0 rgba(255,255,255,0.8) inset" }}>
+                  {/* Mini cert medallion */}
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[8px] font-[900] text-white"
+                    style={{ background: "linear-gradient(135deg,#0077B6,#3BA9F5)", boxShadow: "0 2px 8px rgba(0,119,182,0.28)" }}>
+                    {tier.slice(0, 2).toUpperCase()}
                   </div>
-                </motion.div>
-              );
-            })}
+                  <span className="text-[10.5px] font-[700] text-[#0A1628] leading-tight">{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Bottom Glow reflection element */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+        {/* ── TRUST STRIP ── */}
+        <div className="flex-shrink-0 z-10 rounded-[16px] px-6 py-3 flex items-center justify-between gap-4"
+          style={{ background: "linear-gradient(135deg, rgba(0,119,182,0.10) 0%, rgba(59,169,245,0.07) 100%)", border: "1px solid rgba(0,119,182,0.18)", boxShadow: "0 2px 10px rgba(0,119,182,0.07)" }}>
+          {[
+            { value: "Salesforce Partner", label: "Official Program", dot: "#0077B6" },
+            { value: "AppExchange", label: "5-Star Listed", dot: "#F59E0B" },
+            { value: "9 Certs", label: "Across the team", dot: "#10B981" },
+            { value: "100%", label: "On-time delivery", dot: "#3BA9F5" },
+          ].map(({ value, label, dot }) => (
+            <div key={value} className="flex items-center gap-3 flex-1 justify-center">
+              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: dot, boxShadow: `0 0 6px ${dot}` }} />
+              <div className="flex flex-col">
+                <span className="text-[13px] font-[900] text-[#0A1628] leading-tight">{value}</span>
+                <span className="text-[10px] text-[#64748B] font-medium">{label}</span>
+              </div>
+            </div>
+          ))}
+          <div className="h-8 w-[1px] bg-[#BAE6FD]/60 hidden md:block" />
+          <p className="text-[11px] text-[#475569] font-medium leading-snug max-w-[260px] text-center hidden lg:block">
+            Our team collectively holds certifications across Sales, Marketing, Platform, and Service tracks.
+          </p>
+        </div>
 
-        <style>{`
-          @keyframes slideRight {
-            from {
-              width: 0;
-              opacity: 0;
-            }
-            to {
-              width: 100%;
-              opacity: 1;
-            }
-          }
-        `}</style>
+        {/* Bottom glow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-6px_30px_rgba(116,203,244,0.9)] opacity-90 rounded-full pointer-events-none" />
       </div>
     );
   }
+
 
   return (
     <div className="pointer-events-auto glass-panel shadow-[0_30px_90px_rgba(15,23,42,0.06)] rounded-[32px] p-6 sm:p-8 lg:p-10 w-full max-w-5xl">
