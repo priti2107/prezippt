@@ -50,7 +50,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
-        
+
         {/* Diagnostics block */}
         <div className="mt-6 p-4 bg-slate-900 text-red-400 text-xs font-mono text-left rounded-lg overflow-auto max-h-[300px] border border-red-500/20 shadow-inner">
           <p className="font-bold text-red-500 mb-2">Error: {error.message || String(error)}</p>
@@ -118,7 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Manrope:wght@400..700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Manrope:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;450;500;600;700;800&display=swap",
       },
       {
         rel: "stylesheet",

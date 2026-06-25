@@ -121,39 +121,40 @@ export const SCENES: Scene[] = [
     id: 4,
     kicker: "District 04 · Cloud Skyline",
     title: "The Full Salesforce Cloud Stack",
-    subtitle: "Deep, certified expertise across the Salesforce clouds that matter most to enterprise growth and customer experience.",
+    subtitle:
+      "Deep, certified expertise across the Salesforce clouds that matter most to enterprise growth and customer experience.",
     align: "center",
     variant: "grid",
     items: [
       {
         icon: Target,
         title: "Sales Cloud",
-        body: "Pipeline visibility, forecasting and AI-assisted selling that closes faster."
+        body: "Pipeline visibility, forecasting and AI-assisted selling that closes faster.",
       },
       {
         icon: Megaphone,
         title: "Marketing Cloud",
-        body: "Personalized journeys, segmentation and analytics across every touchpoint."
+        body: "Personalized journeys, segmentation and analytics across every touchpoint.",
       },
       {
         icon: Globe,
         title: "Experience Cloud",
-        body: "Branded portals and communities that scale customer and partner engagement."
+        body: "Branded portals and communities that scale customer and partner engagement.",
       },
       {
         icon: HeartPulse,
         title: "Health Cloud",
-        body: "Patient-360 workflows that connect care teams, records and outcomes."
+        body: "Patient-360 workflows that connect care teams, records and outcomes.",
       },
       {
         icon: GraduationCap,
         title: "Education Cloud",
-        body: "Recruit, engage and retain learners across the full education lifecycle."
+        body: "Recruit, engage and retain learners across the full education lifecycle.",
       },
       {
         icon: ShoppingCart,
         title: "Commerce Cloud",
-        body: "Unified B2B and B2C commerce experiences powered by data and AI."
+        body: "Unified B2B and B2C commerce experiences powered by data and AI.",
       },
     ],
   },
@@ -190,7 +191,8 @@ export const SCENES: Scene[] = [
     id: 6,
     kicker: "District 06 · Marketing Cloud",
     title: "Create Personalized Customer Journeys That Convert",
-    subtitle: "Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.",
+    subtitle:
+      "Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.",
     variant: "grid",
     items: [
       {
@@ -291,7 +293,8 @@ export const SCENES: Scene[] = [
     id: 9,
     kicker: "District 09 · Why Cascade Tech",
     title: "Why Developers & Enterprises Choose Cascade",
-    subtitle: "We combine Salesforce expertise, AI innovation, product thinking and real-world industry execution to deliver measurable business outcomes.",
+    subtitle:
+      "We combine Salesforce expertise, AI innovation, product thinking and real-world industry execution to deliver measurable business outcomes.",
     variant: "grid",
     items: [
       {
@@ -331,7 +334,8 @@ export const SCENES: Scene[] = [
     id: 10,
     kicker: "District 10 · Clients",
     title: "Organizations That Trust Cascade Tech",
-    subtitle: "From Mumbai's leading real estate developers to growing enterprise organizations, Cascade Tech powers Salesforce, AI and automation initiatives across multiple industries.",
+    subtitle:
+      "From Mumbai's leading real estate developers to growing enterprise organizations, Cascade Tech powers Salesforce, AI and automation initiatives across multiple industries.",
     variant: "grid",
     stats: [
       { label: "Clients Served", value: "8+" },
@@ -355,7 +359,8 @@ export const SCENES: Scene[] = [
     id: 11,
     kicker: "District 11 · Case Studies",
     title: "Work In Production. Outcomes That Compound.",
-    subtitle: "Real Salesforce implementations, AI automations and marketing transformations delivering measurable business outcomes across real estate organizations.",
+    subtitle:
+      "Real Salesforce implementations, AI automations and marketing transformations delivering measurable business outcomes across real estate organizations.",
     variant: "grid",
     items: [
       { title: "Kohinoor Group", icon: Building2 },
@@ -367,14 +372,35 @@ export const SCENES: Scene[] = [
     id: 12,
     kicker: "District 12 · Engagement Model",
     title: "How We Work With You",
-    subtitle: "From the first conversation to long-term partnership — here is what working with Cascade looks like.",
+    subtitle:
+      "From the first conversation to long-term partnership — here is what working with Cascade looks like.",
     variant: "final",
     items: [
-      { icon: Search, title: "Discovery", body: "We learn how leads come in and how your team works today — before suggesting anything. No assumptions." },
-      { icon: Layers, title: "Blueprint", body: "We design the org architecture, data model and automation map. You see exactly what we'll build and why." },
-      { icon: Code, title: "Build", body: "Configuration, Apex/LWC, integrations and migration — delivered in sprints with weekly demos." },
-      { icon: GraduationCap, title: "Train & UAT", body: "Role-based training, UAT cycles and adoption playbooks — your team is ready on day one." },
-      { icon: Rocket, title: "Go-Live & Support", body: "We go live with you. First 30 days covered; our AMC keeps us your ongoing Salesforce partner." },
+      {
+        icon: Search,
+        title: "Discovery",
+        body: "We learn how leads come in and how your team works today — before suggesting anything. No assumptions.",
+      },
+      {
+        icon: Layers,
+        title: "Blueprint",
+        body: "We design the org architecture, data model and automation map. You see exactly what we'll build and why.",
+      },
+      {
+        icon: Code,
+        title: "Build",
+        body: "Configuration, Apex/LWC, integrations and migration — delivered in sprints with weekly demos.",
+      },
+      {
+        icon: GraduationCap,
+        title: "Train & UAT",
+        body: "Role-based training, UAT cycles and adoption playbooks — your team is ready on day one.",
+      },
+      {
+        icon: Rocket,
+        title: "Go-Live & Support",
+        body: "We go live with you. First 30 days covered; our AMC keeps us your ongoing Salesforce partner.",
+      },
     ],
   },
   {

@@ -6,8 +6,9 @@ import * as THREE from "three";
 const N = 12;
 
 // District centers laid out along a winding depth path.
-const DISTRICTS: THREE.Vector3[] = Array.from({ length: N }, (_, i) =>
-  new THREE.Vector3(Math.sin(i * 0.85) * 24, 0, -i * 72),
+const DISTRICTS: THREE.Vector3[] = Array.from(
+  { length: N },
+  (_, i) => new THREE.Vector3(Math.sin(i * 0.85) * 24, 0, -i * 72),
 );
 
 // Accent colors alternate between primary sky and secondary light-blue.
@@ -26,9 +27,7 @@ const CAM_POINTS: THREE.Vector3[] = DISTRICTS.map((d, i) => {
   );
 });
 
-const LOOK_POINTS: THREE.Vector3[] = DISTRICTS.map(
-  (d) => new THREE.Vector3(d.x * 0.5, 8, d.z),
-);
+const LOOK_POINTS: THREE.Vector3[] = DISTRICTS.map((d) => new THREE.Vector3(d.x * 0.5, 8, d.z));
 
 function smooth(t: number) {
   return t * t * (3 - 2 * t);
@@ -76,12 +75,7 @@ function Buildings() {
   return (
     <Instances limit={buildings.length} castShadow receiveShadow>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial
-        metalness={0.35}
-        roughness={0.18}
-        transparent
-        opacity={0.18}
-      />
+      <meshStandardMaterial metalness={0.35} roughness={0.18} transparent opacity={0.18} />
       {buildings.map((b, i) => (
         <Instance key={i} position={b.pos} scale={b.scale} color={b.color} />
       ))}
@@ -113,11 +107,7 @@ function Beacons() {
             <Float speed={2} rotationIntensity={0.6} floatIntensity={1.4}>
               <mesh position={[0, 30, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <torusGeometry args={[7, 0.18, 16, 64]} />
-                <meshStandardMaterial
-                  color={accent}
-                  emissive={accent}
-                  emissiveIntensity={1.6}
-                />
+                <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={1.6} />
               </mesh>
             </Float>
             <Float speed={1.4} rotationIntensity={0.4} floatIntensity={2}>
@@ -136,11 +126,7 @@ function Beacons() {
             {/* glow disc on ground */}
             <mesh position={[0, 0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <circleGeometry args={[26, 48]} />
-              <meshBasicMaterial
-                color={accent}
-                transparent
-                opacity={0.06}
-              />
+              <meshBasicMaterial color={accent} transparent opacity={0.06} />
             </mesh>
 
             {/* Hero Tower behind Salesforce Core (District 0) */}
@@ -246,7 +232,13 @@ function DataStreams() {
   );
 }
 
-function CameraRig({ progress, isCameraReady }: { progress: RefObject<number>; isCameraReady: boolean }) {
+function CameraRig({
+  progress,
+  isCameraReady,
+}: {
+  progress: RefObject<number>;
+  isCameraReady: boolean;
+}) {
   const target = useRef(new THREE.Vector3(0, 8, 0));
   const camPos = useRef(new THREE.Vector3());
   const lookPos = useRef(new THREE.Vector3());
@@ -259,7 +251,7 @@ function CameraRig({ progress, isCameraReady }: { progress: RefObject<number>; i
       mountTime.current = state.clock.getElapsedTime();
     }
     const elapsed = state.clock.getElapsedTime() - mountTime.current;
-    
+
     // Camera slow mount entry over 3.5 seconds
     const entryProgress = Math.min(1, elapsed / 3.5);
     const smoothEntry = smooth(entryProgress);
@@ -288,7 +280,13 @@ function CameraRig({ progress, isCameraReady }: { progress: RefObject<number>; i
   return null;
 }
 
-export default function CityScene({ progress, isCameraReady }: { progress: RefObject<number>; isCameraReady: boolean }) {
+export default function CityScene({
+  progress,
+  isCameraReady,
+}: {
+  progress: RefObject<number>;
+  isCameraReady: boolean;
+}) {
   return (
     <>
       <color attach="background" args={["#F8FAFC"]} />
@@ -299,12 +297,7 @@ export default function CityScene({ progress, isCameraReady }: { progress: RefOb
       <directionalLight position={[40, 80, 30]} intensity={1.0} color="#f0f9ff" />
       <pointLight position={[0, 30, 0]} intensity={120} color="#38BDF8" distance={160} />
       <pointLight position={[0, 30, -28]} intensity={150} color="#0EA5E9" distance={100} />
-      <pointLight
-        position={[0, 30, -360]}
-        intensity={140}
-        color="#0EA5E9"
-        distance={200}
-      />
+      <pointLight position={[0, 30, -360]} intensity={140} color="#0EA5E9" distance={200} />
 
       <Grid
         position={[0, 0, -420]}

@@ -11,6 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   ArrowUpRight,
+  ArrowRight,
   CloudCog,
   Target,
   Megaphone,
@@ -37,6 +38,8 @@ import {
   Layers,
   HeartHandshake,
   Award,
+  Star,
+  MapPin,
   Calendar,
   ShieldCheck,
   Lightbulb,
@@ -59,6 +62,8 @@ import {
   BrainCircuit,
   Database,
   Linkedin,
+  Compass,
+  Package,
 } from "lucide-react";
 import CityScene from "./CityScene";
 import { SCENES, type Scene } from "./scenes";
@@ -119,7 +124,7 @@ const getSafeRange = (
   p0: number,
   p1: number,
   p2: number,
-  p3: number
+  p3: number,
 ): [number, number, number, number] => {
   let r0 = Math.max(0, Math.min(1, p0));
   let r1 = Math.max(0, Math.min(1, p1));
@@ -142,11 +147,7 @@ const getSafeRange = (
   return [r0, r1, r2, r3];
 };
 
-const getSafeRange3 = (
-  p0: number,
-  p1: number,
-  p2: number
-): [number, number, number] => {
+const getSafeRange3 = (p0: number, p1: number, p2: number): [number, number, number] => {
   let r0 = Math.max(0, Math.min(1, p0));
   let r1 = Math.max(0, Math.min(1, p1));
   let r2 = Math.max(0, Math.min(1, p2));
@@ -170,11 +171,13 @@ function SceneOverlay({
   index,
   progress,
   active,
+  activeCardIdx,
 }: {
   scene: Scene;
   index: number;
   progress: MotionValue<number>;
   active: number;
+  activeCardIdx: number;
 }) {
   const divisor = N - 1;
   const center = index / divisor;
@@ -206,25 +209,13 @@ function SceneOverlay({
     scaleRange = [1 - w * 0.45, 1];
     scaleOutput = [0.94, 1];
   } else {
-    opacityRange = getSafeRange3(
-      center - w * 0.45,
-      center,
-      center + w * 0.45
-    );
+    opacityRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
     opacityOutput = [0, 1, 0];
 
-    yRange = getSafeRange3(
-      center - w * 0.45,
-      center,
-      center + w * 0.45
-    );
+    yRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
     yOutput = [60, 0, -60];
 
-    scaleRange = getSafeRange3(
-      center - w * 0.45,
-      center,
-      center + w * 0.45
-    );
+    scaleRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
     scaleOutput = [0.94, 1, 1.04];
   }
 
@@ -239,7 +230,7 @@ function SceneOverlay({
       style={{ opacity, y, scale }}
       className={`pointer-events-none fixed inset-0 flex items-center justify-center px-6 md:px-12 py-10`}
     >
-      <SceneContent scene={scene} isActive={active === index} />
+      <SceneContent scene={scene} isActive={active === index} activeCardIdx={activeCardIdx} />
     </motion.div>
   );
 }
@@ -253,310 +244,477 @@ function Kicker({ children }: { children: React.ReactNode }) {
   );
 }
 
+function WhoWeAreScene({ scene, isActive = false, activeCardIdx = 0 }: { scene: Scene; isActive?: boolean; activeCardIdx?: number }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-function WhoWeAreScene({ scene }: { scene: Scene }) {
-  const [activeCard, setActiveCard] = useState(0);
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      setMousePos({ x, y });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
-    <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-between gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]">
-      {/* TOP ROW: Content (55%) + Dashboard (45%) */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-between w-full h-auto relative z-10">
-        {/* LEFT SIDE: Content (55% width) */}
-        <div className="w-full md:w-[55%] flex flex-col justify-start text-left max-w-[600px]">
-          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-4 py-1.5 text-xs font-bold tracking-wider text-[#0369A1] w-fit mb-2.5">
-            <span className="size-2 rounded-full bg-[#0284C7] animate-pulse" />
-            {scene.kicker}
+    <div className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-5 pb-5 px-6 md:px-8 justify-center gap-4">
+      {/* Scoped CSS classes for District 02 foundations scene styling */}
+      <style>{`
+        .who-we-are-glass-panel {
+          background: rgba(248, 251, 255, 0.94) !important;
+          backdrop-filter: blur(24px) !important;
+          border: 1px solid rgba(14, 165, 233, 0.15) !important;
+          box-shadow: 
+            0 25px 65px -15px rgba(0, 119, 182, 0.05),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+        }
+        .foundations-quote-card {
+          background: linear-gradient(135deg, #0077B6 0%, #0096C7 100%) !important;
+          backdrop-filter: blur(24px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.25) !important;
+          box-shadow: 
+            0 20px 45px -10px rgba(0, 119, 182, 0.2),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .foundations-quote-card:hover {
+          background: linear-gradient(135deg, #0096C7 0%, #00B4D8 100%) !important;
+          box-shadow: 
+            0 25px 50px -8px rgba(0, 119, 182, 0.28),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.4) !important;
+          transform: translateY(-6px) !important;
+        }
+        
+        .differentiator-card-1 {
+          background: rgba(255, 255, 255, 0.65) !important;
+          backdrop-filter: blur(20px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.5) !important;
+          box-shadow: 0 10px 30px rgba(0, 119, 182, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.6) !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .differentiator-card-1:hover {
+          background: rgba(255, 255, 255, 0.95) !important;
+          box-shadow: 0 20px 40px rgba(0, 119, 182, 0.08) !important;
+          transform: translateY(-6px) !important;
+        }
+
+        .differentiator-card-2 {
+          background: rgba(243, 250, 254, 0.8) !important;
+          backdrop-filter: blur(20px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.5) !important;
+          box-shadow: 0 10px 30px rgba(0, 119, 182, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.6) !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .differentiator-card-2:hover {
+          background: rgba(243, 250, 254, 0.98) !important;
+          box-shadow: 0 20px 40px rgba(0, 119, 182, 0.08) !important;
+          transform: translateY(-6px) !important;
+        }
+
+        .differentiator-card-3 {
+          background: rgba(255, 255, 255, 0.65) !important;
+          backdrop-filter: blur(20px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.5) !important;
+          box-shadow: 0 10px 30px rgba(0, 119, 182, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.6) !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .differentiator-card-3:hover {
+          background: rgba(255, 255, 255, 0.95) !important;
+          box-shadow: 0 20px 40px rgba(0, 119, 182, 0.08) !important;
+          transform: translateY(-6px) !important;
+        }
+        @keyframes float-particle {
+          0%, 100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 0.3;
+          }
+          50% {
+            transform: translate3d(15px, -20px, 0);
+            opacity: 0.8;
+          }
+        }
+        @keyframes pulse-glow-slow {
+          0%, 100% {
+            opacity: 0.65;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.95;
+            transform: scale(1.04);
+          }
+        }
+      `}</style>
+
+      {/* Blueprint Grid Accent (3.5% Opacity) */}
+      <div className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-overlay">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <pattern
+            id="grid-pattern-foundations"
+            width="24"
+            height="24"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#003B73" strokeWidth="0.8" />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#grid-pattern-foundations)" />
+        </svg>
+      </div>
+
+      {/* Subtle Center Divider Line with Glowing Nodes (md screens and above) */}
+      <div
+        className="hidden md:flex absolute top-[10%] bottom-[10%] left-[47.5%] -translate-x-1/2 flex-col items-center justify-between pointer-events-none -z-10"
+        style={{ width: "24px" }}
+      >
+        {/* Line */}
+        <div
+          className="absolute top-0 bottom-0 w-[1px]"
+          style={{
+            background: "linear-gradient(to bottom, rgba(14, 165, 233, 0) 0%, rgba(14, 165, 233, 0.25) 20%, rgba(14, 165, 233, 0.25) 80%, rgba(14, 165, 233, 0) 100%)",
+            left: "50%",
+            transform: "translateX(-50%)",
+            boxShadow: "0 0 6px rgba(14, 165, 233, 0.1)",
+          }}
+        />
+
+        {/* Node 1 */}
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="size-4 rounded-full border border-sky-400/25 bg-sky-50/30 backdrop-blur-md flex items-center justify-center shadow-sm">
+            <div className="size-1.5 rounded-full bg-sky-400/90 shadow-[0_0_6px_#0ea5e9] animate-pulse" />
           </div>
-
-          <h2 className="text-xl sm:text-2xl lg:text-[32px] xl:text-[38px] font-[800] leading-[1.1] tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2">
-            Built for the Modern Enterprise
-          </h2>
-          <div className="w-16 h-[3px] bg-[#0284C7] rounded mb-3" />
-
-          <p className="text-xs md:text-sm text-[#475569] font-medium leading-relaxed max-w-[550px]">
-            Cascade Tech Ventures combines deep Salesforce craftsmanship with cutting-edge AI to help organizations grow, scale, and operate with precision.
-          </p>
         </div>
 
-        {/* RIGHT SIDE: Floating Dashboard Panel (45% width, reduced height and width) */}
-        <div className="w-full md:w-[43%] flex flex-col h-auto rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-3 md:p-3.5 relative overflow-visible justify-between">
-          {/* Console Header */}
-          <div className="flex items-center justify-between border-b border-slate-200/40 pb-1.5 mb-1.5">
-            <div className="flex items-center gap-1">
-              <div className="size-2 rounded-full bg-[#EF4444]/90" />
-              <div className="size-2 rounded-full bg-[#F59E0B]/90" />
-              <div className="size-2 rounded-full bg-[#10B981]/90" />
+        {/* Node 2 */}
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="size-4 rounded-full border border-sky-400/25 bg-sky-50/30 backdrop-blur-md flex items-center justify-center shadow-sm">
+            <div className="size-1.5 rounded-full bg-sky-400/70 shadow-[0_0_4px_#38bdf8]" />
+          </div>
+        </div>
+
+        {/* Node 3 */}
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="size-4 rounded-full border border-sky-400/25 bg-sky-50/30 backdrop-blur-md flex items-center justify-center shadow-sm">
+            <div className="size-1.5 rounded-full bg-sky-400/70 shadow-[0_0_4px_#38bdf8]" />
+          </div>
+        </div>
+
+        {/* Node 4 */}
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="size-4 rounded-full border border-sky-400/25 bg-sky-50/30 backdrop-blur-md flex items-center justify-center shadow-sm">
+            <div className="size-1.5 rounded-full bg-sky-400/90 shadow-[0_0_6px_#0ea5e9] animate-pulse" />
+          </div>
+        </div>
+      </div>
+
+      {/* One large blurred blue gradient behind the section at 6% opacity */}
+      <div
+        className="absolute w-[600px] h-[600px] rounded-full blur-[130px] pointer-events-none -z-20 opacity-[0.06] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{
+          background: "radial-gradient(circle, #0EA5E9 0%, #2563EB 50%, transparent 100%)",
+        }}
+      />
+
+      {/* Keep only 2 tiny glowing particles */}
+      <div
+        className="absolute rounded-full bg-[#90E0EF] pointer-events-none -z-10 shadow-[0_0_8px_#90E0EF]"
+        style={{
+          width: "4px",
+          height: "4px",
+          left: "22%",
+          top: "18%",
+          animation: "float-particle 9s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute rounded-full bg-[#48CAE4] pointer-events-none -z-10 shadow-[0_0_8px_#48CAE4]"
+        style={{
+          width: "3px",
+          height: "3px",
+          right: "25%",
+          bottom: "28%",
+          animation: "float-particle 10s ease-in-out infinite",
+        }}
+      />
+
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-10 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto py-2">
+        {/* LEFT COLUMN: 45% width */}
+        <div
+          className="w-full md:w-[45%] flex flex-col justify-between text-left h-full py-1 relative z-10"
+          style={{
+            transform: `translate3d(${mousePos.x * 4}px, ${mousePos.y * 4}px, 0)`,
+          }}
+        >
+          <div className="flex flex-col gap-4">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-sky-500/5 border border-sky-400/20 rounded-full px-3 py-1 text-[10px] md:text-[11px] font-bold tracking-wider text-[#0284C7] w-fit">
+              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+              District 02 • Foundations
             </div>
-            <span className="text-[8px] font-bold text-slate-400 tracking-wider font-mono">
-              cascade.cloud / performance
-            </span>
+
+            {/* Title */}
+            <h2 className="text-xl sm:text-2xl md:text-[32px] lg:text-[40px] xl:text-[46px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display">
+              A Different Kind <br />
+              of{" "}
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0ea5e9] via-[#0284C7] to-[#2563EB]">
+                Salesforce Partner
+              </span>
+            </h2>
+
+            {/* Horizontal Line Under Heading */}
+            <div className="w-12 h-[3.5px] bg-[#0284C7] rounded-full" />
+
+            {/* Supporting Text */}
+            <p
+              className="max-w-[480px]"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "16px",
+                fontWeight: 500,
+                lineHeight: "1.7",
+                color: "#475569",
+              }}
+            >
+              We cap our active client load deliberately. Cascade Tech Ventures was founded on the belief
+              that enterprise Salesforce architecture shouldn't be built on generic templates,
+              bloated overhead, or junior-only teams. We craft robust customer ecosystems designed
+              for high-value operations.
+            </p>
           </div>
 
-          {/* Dashboard Widgets Grid - Compact sizing */}
-          <div className="grid grid-cols-2 gap-2 content-center">
-            {/* CRM Performance Card */}
-            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">CRM Performance</span>
-                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">+24%</span>
-              </div>
-              <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">99.8% Sync</p>
-              <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Real-time Health Check</p>
-            </div>
+          {/* Founder Philosophy Card */}
+          <div
+            className="foundations-quote-card rounded-[24px] px-6 py-5 text-left relative overflow-hidden w-full max-w-[460px]"
+            style={{
+              opacity: isActive ? 1 : 0,
+              transform: isActive ? undefined : "translateY(20px) scale(0.98)",
+              transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), scale 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            {/* Soft Diagonal Glass Reflection Highlight */}
+            <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                background: "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, transparent 40%)",
+                opacity: 0.15,
+              }}
+            />
 
-            {/* Workflow Automation Metrics */}
-            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Workflows Active</span>
-                <span className="text-[8px] font-bold text-sky-600 bg-sky-50 px-1 rounded-full">Active</span>
-              </div>
-              <p className="text-sm md:text-base lg:text-[17px] font-black text-slate-800 mt-0.5 font-display leading-none">1,420 / hr</p>
-              <p className="text-[8px] text-slate-400 mt-0.5 font-medium">Auto-routing tasks</p>
-            </div>
+            {/* Large Quote Mark at 10% opacity */}
+            <span className="absolute -top-3 -left-1.5 text-[140px] font-serif text-white/10 leading-none select-none pointer-events-none">
+              “
+            </span>
 
-            {/* Customer Growth Analytics */}
-            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Customer Growth</span>
-                <span className="text-[8px] font-bold text-[#10B981] bg-emerald-50 px-1.5 rounded-full">+120%</span>
+            <div className="flex flex-col h-full justify-between relative z-10">
+              <div>
+                <div className="flex items-center gap-2 mb-3 relative z-10">
+                  <span className="text-[28px] font-serif text-white leading-none select-none font-extrabold">
+                    “
+                  </span>
+                  <span className="text-[10px] font-extrabold tracking-widest text-white uppercase block">
+                    Founder Philosophy
+                  </span>
+                </div>
+                <div
+                  className="text-[15px] md:text-[17px] italic text-white leading-relaxed mb-3"
+                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                >
+                  “We deliberately cap our active client load to ensure deep engineering
+                  integration. Your architecture is owned directly by senior strategists, not junior
+                  delegates.”
+                </div>
               </div>
-              <div className="flex items-end justify-between h-5 mt-1.5 px-0.5">
-                {[20, 45, 30, 55, 60, 40, 80].map((h, i) => (
-                  <div key={i} className="w-[8%] bg-[#0EA5E9] rounded-t-sm" style={{ height: `${h}%` }} />
+
+              {/* Sub-list separated by border */}
+              <div className="border-t border-white/30 pt-3 mt-1.5 flex flex-col gap-2">
+                {[
+                  "Direct access to principal architects",
+                  "No junior-only delivery teams",
+                  "Bespoke high-value engineering",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2.5 text-[11px] md:text-[12px] font-semibold text-white"
+                  >
+                    <div className="size-4.5 rounded-full bg-white/25 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <Check className="size-2.5 stroke-[4.5] text-white" />
+                    </div>
+                    <span style={{ fontFamily: "'Inter', sans-serif" }}>{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
-
-            {/* Salesforce Ecosystem Overview */}
-            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 text-left">
-              <div className="flex items-center justify-between mb-0.5">
-                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">Ecosystem Link</span>
-                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded-full">Secure</span>
-              </div>
-              <div className="flex items-center justify-center gap-1.5 mt-2 h-5">
-                <div className="size-4.5 rounded bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0">
-                  <Cloud className="size-2.5 text-[#0284C7]" />
-                </div>
-                <div className="h-[1px] bg-slate-200 flex-grow relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 left-[40%] size-1 bg-[#0284C7] rounded-full animate-ping" />
-                </div>
-                <div className="size-4.5 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="size-2.5 text-emerald-500" />
-                </div>
-              </div>
-            </div>
-
-            {/* AI Process Optimization Chart (Col span 2) */}
-            <div className="bg-white border border-slate-100 rounded-xl p-2 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 text-left col-span-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] font-extrabold text-slate-500 uppercase tracking-wider">AI Process Optimization</span>
-                <span className="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1.5 rounded-full">-35% Latency</span>
-              </div>
-              <div className="flex items-center gap-2 mt-1.5">
-                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                  <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
-                </div>
-                <span className="text-[10px] font-bold text-slate-700">85%</span>
-              </div>
-            </div>
           </div>
         </div>
-      </div>
 
-      {/* BOTTOM ROW: Sliding Feature Cards */}
-      <div className="relative overflow-hidden w-full max-w-[640px] mx-auto h-[210px] md:h-[235px] z-10 flex flex-col justify-center mt-2.5">
-        <motion.div
-          className="flex w-full h-full"
-          animate={{ x: `-${activeCard * 100}%` }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        {/* RIGHT COLUMN: Stack of 3 Differentiator Cards (51% width) */}
+        <div
+          className="w-full md:w-[51%] flex flex-col justify-center h-full py-1 relative z-10"
+          style={{
+            transform: `translate3d(${mousePos.x * -4}px, ${mousePos.y * -4}px, 0)`,
+          }}
         >
-          {scene.items?.map((it, idx) => {
-            const titleText = idx === 0
-              ? "Tailored Digital Transformation"
-              : idx === 1
-                ? "Enhanced Operational Efficiency"
-                : "CRM Expertise for Success";
+          <div className="relative pl-12 flex flex-col justify-center h-full">
+            {/* Thin vertical accent line */}
+            <div className="absolute left-[24px] top-4 bottom-4 w-[1.5px] bg-gradient-to-b from-sky-400/20 via-blue-500/35 to-sky-400/20" />
 
-            const descText = idx === 0
-              ? "Custom Salesforce strategies designed around your operating model, your customers, and your growth targets — never templated."
-              : idx === 1
-                ? "Automate manual workflows, eliminate data silos, and free your teams to focus on revenue-generating activity."
-                : "Deep multi-cloud Salesforce expertise — from architecture and implementation to managed support and optimization.";
+            <div className="flex flex-col gap-4">
+              {[
+                {
+                  title: "Boutique By Design",
+                  desc: "By capping our active client load, we ensure deep engineering integration. Your architecture is owned directly by senior strategists, not junior delegates.",
+                  badge: "Boutique",
+                },
+                {
+                  title: "Real Estate Expertise",
+                  desc: "Specialized workflows built specifically for developers, channel partners, and high-value customer acquisitions. We translate complex property cycles directly into CRM systems.",
+                  badge: "Real Estate",
+                },
+                {
+                  title: "Products + Services",
+                  desc: "We combine bespoke custom consulting with ready-to-deploy products. This hybrid approach accelerates delivery timelines and ensures a much faster return on your Salesforce investment.",
+                  badge: "Products",
+                },
+              ].map((card, idx) => {
+                const cardClass = `differentiator-card-${idx + 1} rounded-[24px] p-5 md:p-6 flex flex-col items-start text-left relative overflow-hidden transition-all duration-300 group`;
 
-            return (
-              <div key={it.title} className="w-full h-full flex-shrink-0 px-2">
-                <motion.div
-                  animate={{
-                    scale: activeCard === idx ? 1 : 0.96,
-                    opacity: activeCard === idx ? 1 : 0.4
-                  }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-white/80 backdrop-blur-md border border-[#E2E8F0] rounded-2xl p-4 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:border-[#0EA5E9]/30 transition-all duration-300 h-full w-full relative"
-                >
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-8.5 items-center justify-center rounded-xl bg-sky-50 border border-sky-100 flex-shrink-0">
-                        <it.icon className="size-4.5 text-[#0284C7]" />
-                      </div>
-                      <h3 className="text-xs sm:text-sm md:text-base font-[800] text-[#0F172A] leading-tight">
-                        {titleText}
-                      </h3>
+                const cardStyle: React.CSSProperties = {
+                  opacity: isActive ? 1 : 0,
+                  transform: isActive ? undefined : "translateY(20px) scale(0.98)",
+                  transition: `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${(idx + 1) * 0.1}s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${(idx + 1) * 0.1}s, scale 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${(idx + 1) * 0.1}s`,
+                };
+
+                const titleColorClass =
+                  "text-[#03045E] font-[800] text-lg md:text-[20px] leading-snug mb-2 tracking-tight font-display";
+
+                return (
+                  <div key={idx} className={cardClass} style={cardStyle}>
+                    {/* Soft Diagonal Glass Reflection Highlight */}
+                    <div
+                      className="absolute inset-0 pointer-events-none z-10"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, transparent 40%)",
+                        opacity: 0.15,
+                      }}
+                    />
+                    {/* Blue dot on the line with matching light shades */}
+                    <div className="absolute left-[-29px] top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none z-20">
+                      <div
+                        className="size-2.5 rounded-full transition-all duration-300"
+                        style={{
+                          backgroundColor: idx === 0 ? "#CAF0F8" : idx === 1 ? "#ADE8F4" : "#90E0EF",
+                          boxShadow: idx === 0
+                            ? "0 0 10px rgba(202, 240, 248, 0.8), 0 0 0 4px rgba(202, 240, 248, 0.2)"
+                            : idx === 1
+                              ? "0 0 10px rgba(173, 232, 244, 0.8), 0 0 0 4px rgba(173, 232, 244, 0.2)"
+                              : "0 0 10px rgba(144, 224, 239, 0.8), 0 0 0 4px rgba(144, 224, 239, 0.2)",
+                          border: "1px solid rgba(3, 4, 94, 0.15)"
+                        }}
+                      />
                     </div>
-                    <p className="mt-1.5 text-[11px] md:text-xs leading-normal text-[#475569] font-medium">
-                      {descText}
-                    </p>
+
+                    {/* Thin horizontal connecting line from timeline to card */}
+                    <div
+                      className="absolute left-[-24px] top-1/2 -translate-y-1/2 h-[1px] pointer-events-none z-10"
+                      style={{
+                        width: "24px",
+                        background: "linear-gradient(90deg, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0.15) 100%)",
+                        boxShadow: "0 0 4px rgba(59, 130, 246, 0.15)",
+                      }}
+                    />
+
+                    {/* 3x3 Dot Matrix Pattern */}
+                    <div
+                      className="absolute top-3.5 right-3.5 pointer-events-none transition-opacity duration-300 text-[#03045E] opacity-15"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 18 18" fill="currentColor">
+                        <circle cx="3" cy="3" r="1.5" />
+                        <circle cx="9" cy="3" r="1.5" />
+                        <circle cx="15" cy="3" r="1.5" />
+                        <circle cx="3" cy="9" r="1.5" />
+                        <circle cx="9" cy="9" r="1.5" />
+                        <circle cx="15" cy="9" r="1.5" />
+                        <circle cx="3" cy="15" r="1.5" />
+                        <circle cx="9" cy="15" r="1.5" />
+                        <circle cx="15" cy="15" r="1.5" />
+                      </svg>
+                    </div>
+
+                    <div className="flex-grow min-w-0 w-full">
+                      <div className="flex items-center gap-3.5 mb-3.5 w-full">
+                        {/* 42px circular glass icon badge */}
+                        <div
+                          className="size-[42px] rounded-full flex items-center justify-center border border-white/40 shadow-sm relative overflow-hidden backdrop-blur-md flex-shrink-0"
+                          style={{
+                            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.1) 100%)",
+                            boxShadow: "0 4px 12px rgba(3, 4, 94, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.6)",
+                          }}
+                        >
+                          <div
+                            className="absolute inset-0 pointer-events-none"
+                            style={{
+                              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%)",
+                            }}
+                          />
+                          {idx === 0 ? (
+                            <Compass className="size-5 text-[#0077B6]" />
+                          ) : idx === 1 ? (
+                            <Building2 className="size-5 text-[#0077B6]" />
+                          ) : (
+                            <Zap className="size-5 text-[#0077B6]" />
+                          )}
+                        </div>
+
+                        <div>
+                          {/* Subtle label instead of giant number */}
+                          <span className="text-[10px] font-extrabold tracking-widest text-[#0EA5E9] uppercase block leading-none mb-1">
+                            0{idx + 1} &bull; {card.badge}
+                          </span>
+                          <h3 className={titleColorClass} style={{ marginBottom: 0 }}>
+                            {card.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <p
+                        className="line-clamp-2"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: "16px",
+                          fontWeight: 500,
+                          lineHeight: "1.7",
+                          color: "#475569",
+                        }}
+                      >
+                        {card.desc}
+                      </p>
+                    </div>
                   </div>
-
-                  {/* Mini visual component anchored to card bottom */}
-                  <div className="mt-auto pt-2.5">
-                    {idx === 0 && (
-                      <div className="flex items-center justify-between w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100 text-[10px] md:text-xs font-bold text-[#475569]">
-                        <div className="flex flex-col items-center gap-1 flex-1">
-                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                            <Search className="size-3" />
-                          </div>
-                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Discovery</span>
-                        </div>
-                        <ChevronRight className="size-2.5 text-slate-400" />
-                        <div className="flex flex-col items-center gap-1 flex-1">
-                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                            <Layers className="size-3" />
-                          </div>
-                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Architecture</span>
-                        </div>
-                        <ChevronRight className="size-2.5 text-slate-400" />
-                        <div className="flex flex-col items-center gap-1 flex-1">
-                          <div className="size-6 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
-                            <Code className="size-3" />
-                          </div>
-                          <span className="text-[8.5px] font-bold text-slate-600 mt-0.5">Build</span>
-                        </div>
-                        <ChevronRight className="size-2.5 text-slate-400" />
-                        <div className="flex flex-col items-center gap-1 flex-1">
-                          <div className="size-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm animate-pulse">
-                            <Check className="size-3" />
-                          </div>
-                          <span className="text-[8.5px] font-bold text-emerald-600 mt-0.5">Adopt</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {idx === 1 && (
-                      <div className="flex flex-col gap-1 w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100">
-                        <div className="flex items-center justify-between text-[9px] md:text-[10px] font-extrabold text-[#475569]">
-                          <span>Automation Gains</span>
-                          <span className="text-[#10B981] font-black text-[11px]">↓ 65% Operations</span>
-                        </div>
-                        <div className="flex flex-col gap-1 mt-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[8.5px] text-slate-400 font-bold w-18">Manual Hours</span>
-                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                              <div className="bg-slate-300 h-full rounded-full w-[30%]" />
-                            </div>
-                            <span className="text-[8.5px] text-slate-400 font-bold w-6 text-right">30%</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-[8.5px] text-[#0284C7] font-bold w-18">Automated</span>
-                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                              <div className="bg-[#0284C7] h-full rounded-full w-[85%]" />
-                            </div>
-                            <span className="text-[8.5px] text-[#0284C7] font-bold w-6 text-right">85%</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {idx === 2 && (
-                      <div className="flex items-center justify-around w-full bg-slate-50/50 px-2 py-2 rounded-xl border border-slate-100 text-[10px] font-bold uppercase text-[#475569] tracking-wider">
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                            <Target className="size-3 text-[#0284C7]" />
-                          </div>
-                          <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Sales Cloud</span>
-                        </div>
-                        <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="size-7.5 rounded-full bg-sky-100 text-[#0284C7] flex items-center justify-center border border-sky-200 shadow-md animate-pulse">
-                            <Headset className="size-3.5 text-[#0284C7]" />
-                          </div>
-                          <span className="text-[7.5px] md:text-[8px] font-black text-[#0284C7] mt-0.5">Service Cloud</span>
-                        </div>
-                        <div className="h-[1px] bg-slate-200 flex-grow max-w-[30px] mx-1 border-dashed border-sky-300 border-t" />
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="size-6.5 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-[#E2E8F0] shadow-sm">
-                            <Megaphone className="size-3 text-[#0284C7]" />
-                          </div>
-                          <span className="text-[7.5px] md:text-[8px] font-bold text-slate-500 mt-0.5">Marketing Cloud</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              </div>
-            );
-          })}
-        </motion.div>
-      </div>
-
-      {/* SLIDER NAVIGATION CONTROLS */}
-      <div className="flex items-center justify-center gap-6 w-full max-w-[640px] mx-auto z-10 mt-6 mb-2">
-        {/* Previous Button */}
-        <button
-          onClick={() => activeCard > 0 && setActiveCard(activeCard - 1)}
-          disabled={activeCard === 0}
-          className={`group flex items-center gap-2 text-[11px] md:text-xs font-black transition-all duration-300 select-none ${activeCard === 0
-              ? "opacity-25 cursor-not-allowed text-slate-400"
-              : "cursor-pointer text-slate-700 hover:text-[#0EA5E9]"
-            }`}
-        >
-          <div className={`w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-[0_2px_6px_rgba(15,23,42,0.04)] border border-slate-200/50 transition-all duration-300 ${activeCard === 0 ? "" : "group-hover:scale-110 group-hover:shadow-[0_4px_10px_rgba(14,165,233,0.12)] group-hover:border-[#0ea5e9]/20 group-hover:-translate-x-[1px]"
-            }`}>
-            <ChevronLeft className="w-3.5 h-3.5 text-[#0EA5E9]" />
+                );
+              })}
+            </div>
           </div>
-          <span>Previous</span>
-        </button>
-
-        {/* Indicator dots: • • • */}
-        <div className="flex items-center gap-2 px-1">
-          {[0, 1, 2].map((idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveCard(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === activeCard
-                  ? "w-4 bg-[#0EA5E9] shadow-[0_0_6px_rgba(14,165,233,0.6)]"
-                  : "w-1.5 bg-slate-300 hover:bg-[#0EA5E9]/50"
-                }`}
-              aria-label={`Go to product ${idx + 1}`}
-            />
-          ))}
         </div>
-
-        {/* Next Button */}
-        <button
-          onClick={() => activeCard < 2 && setActiveCard(activeCard + 1)}
-          disabled={activeCard === 2}
-          className={`group flex items-center gap-2 text-[11px] md:text-xs font-black transition-all duration-300 select-none ${activeCard === 2
-              ? "opacity-25 cursor-not-allowed text-slate-400"
-              : "cursor-pointer text-slate-700 hover:text-[#0EA5E9]"
-            }`}
-        >
-          <span>Next</span>
-          <div className={`w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-[0_2px_6px_rgba(15,23,42,0.04)] border border-slate-200/50 transition-all duration-300 ${activeCard === 2 ? "" : "group-hover:scale-110 group-hover:shadow-[0_4px_10px_rgba(14,165,233,0.12)] group-hover:border-[#0ea5e9]/20 group-hover:translate-x-[1px]"
-            }`}>
-            <ChevronRight className="w-3.5 h-3.5 text-[#0EA5E9]" />
-          </div>
-        </button>
       </div>
-
-      {/* Bottom Glow reflection element */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
     </div>
   );
 }
 
-function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: boolean }) {
+function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: Scene; isActive?: boolean; activeCardIdx?: number }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (scene.variant !== "hero") return;
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      setMousePos({ x, y });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [scene.variant]);
+
   if (scene.id === 2) {
-    return <WhoWeAreScene scene={scene} />;
+    return <WhoWeAreScene scene={scene} isActive={isActive} activeCardIdx={activeCardIdx} />;
   }
 
   if (scene.id === 12) {
@@ -569,317 +727,445 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.0, ease: "easeOut", delay: 0.5 }}
-        className="pointer-events-auto hero-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[86vh] md:h-[80vh] max-w-7xl relative overflow-hidden flex flex-col md:flex-row p-8 md:p-10 justify-center gap-6 md:gap-10"
+        className="pointer-events-auto hero-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[86vh] md:h-[80vh] max-w-7xl relative overflow-hidden flex flex-col p-6 md:p-8 justify-between gap-6"
       >
-        <div className="w-full md:w-1/2 flex flex-col justify-between h-full text-left">
-          {/* Top content */}
-          <div className="flex flex-col justify-start">
-            {/* Kicker Pill */}
-            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-2">
-              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-              Salesforce Partner &bull; AI Voice Platform
+        {/* Layered Background Stack */}
+        {/* 1. Subtle grid texture */}
+        <div className="absolute inset-0 opacity-[0.025] pointer-events-none mix-blend-overlay">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="grid-pattern-hero-redesign"
+                width="32"
+                height="32"
+                patternUnits="userSpaceOnUse"
+              >
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#003B73" strokeWidth="0.8" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-pattern-hero-redesign)" />
+          </svg>
+        </div>
+        {/* 2. Noise Filter Overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.012] pointer-events-none mix-blend-overlay">
+          <filter id="noiseFilterHeroRedesign">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.8"
+              numOctaves="4"
+              stitchTiles="stitch"
+            />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilterHeroRedesign)" />
+        </svg>
+        {/* 3. Deep blue mesh gradients and ambient spotlights */}
+        <div
+          className="absolute left-[-10%] top-[-10%] w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(2,132,199,0.18) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute right-[-10%] bottom-[-10%] w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[40%] top-[20%] w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 60%)",
+          }}
+        />
+
+        {/* 4. Glowing Floating Particles */}
+        <div
+          className="absolute top-[12%] left-[18%] size-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] blur-[0.3px] animate-float-slow"
+          style={{ animationDelay: "0.2s", animationDuration: "6s" }}
+        />
+        <div
+          className="absolute top-[42%] right-[10%] size-2.5 rounded-full bg-blue-400 shadow-[0_0_10px_#60a5fa] blur-[0.4px] animate-float-slow"
+          style={{ animationDelay: "1.5s", animationDuration: "8s" }}
+        />
+        <div
+          className="absolute bottom-[35%] left-[25%] size-2 rounded-full bg-indigo-400 shadow-[0_0_8px_#818cf8] blur-[0.3px] animate-float-slow"
+          style={{ animationDelay: "2.5s", animationDuration: "7s" }}
+        />
+        <div
+          className="absolute bottom-[18%] right-[28%] size-1.8 rounded-full bg-sky-300 shadow-[0_0_6px_#7dd3fc] blur-[0.2px] animate-float-slow"
+          style={{ animationDelay: "0.9s", animationDuration: "9s" }}
+        />
+        <div
+          className="absolute top-[60%] left-[8%] size-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] blur-[0.3px] animate-float-slow"
+          style={{ animationDelay: "3.2s", animationDuration: "10s" }}
+        />
+        <div
+          className="absolute top-[25%] right-[32%] size-1 rounded-full bg-blue-300 shadow-[0_0_6px_#93c5fd] blur-[0.1px] animate-float-slow"
+          style={{ animationDelay: "0.5s", animationDuration: "5s" }}
+        />
+
+        {/* Content Container */}
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-between w-full h-full relative z-10 overflow-hidden md:overflow-visible">
+          {/* LEFT SIDE (38% width) */}
+          <div className="w-full md:w-[38%] flex flex-col justify-between h-full text-left">
+            <div className="flex flex-col justify-start">
+              {/* Kicker Pill */}
+              <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1.5 text-[10px] font-extrabold tracking-wider text-[#0284C7] w-fit mb-4 shadow-sm">
+                <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+                Salesforce Partner &bull; AI Voice Platform
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl lg:text-[40px] xl:text-[46px] font-[900] leading-[1.06] tracking-tight text-[#0F172A] font-display">
+                Empowering <br />
+                Growth Through <br />
+                <span className="relative inline-block text-[#0284C7] drop-shadow-[0_2px_12px_rgba(2,132,199,0.25)] font-[900]">
+                  Salesforce Expertise
+                  <span className="absolute -inset-1 bg-sky-500/5 blur-md rounded-lg -z-10" />
+                </span>{" "}
+                <br />&{" "}
+                <span className="relative inline-block text-[#0284C7] drop-shadow-[0_2px_12px_rgba(2,132,199,0.25)] font-[900]">
+                  AI Innovation
+                  <span className="absolute -inset-1 bg-sky-500/5 blur-md rounded-lg -z-10" />
+                </span>
+              </h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.7 }}
+                className="mt-4 text-xs sm:text-[13px] text-[#475569] font-medium leading-[1.65] max-w-[420px]"
+              >
+                Cascade Tech Ventures LLP is a Mumbai-based Salesforce partner helping real estate developers and enterprise businesses modernise their sales, marketing and customer experience operations — boutique by design, senior on every project.
+              </motion.p>
+
+              {/* Action Row */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.9 }}
+                className="mt-6 flex flex-wrap gap-3 pointer-events-auto"
+              >
+                <button
+                  onClick={() =>
+                    window.scrollTo({
+                      top: (1.5 / N) * (document.body.scrollHeight - window.innerHeight),
+                      behavior: "smooth",
+                    })
+                  }
+                  className="bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold py-2.5 px-6 rounded-full inline-flex items-center gap-2 shadow-lg shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(2,132,199,0.2)] cursor-pointer"
+                >
+                  Book a 30-min consult
+                  <ArrowRight className="size-3.5" />
+                </button>
+                <button
+                  onClick={() =>
+                    window.scrollTo({
+                      top: (6.5 / N) * (document.body.scrollHeight - window.innerHeight),
+                      behavior: "smooth",
+                    })
+                  }
+                  className="border border-slate-200 bg-white hover:bg-slate-50 text-[#0284C7] text-xs font-bold py-2.5 px-6 rounded-full inline-flex items-center gap-2 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer"
+                >
+                  Explore our products
+                </button>
+              </motion.div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-[38px] xl:text-[44px] font-[800] leading-[1.08] tracking-tight text-[#0F172A] font-display">
-              Empowering <br />
-              Growth Through <br />
-              <span className="text-[#0284C7]">Salesforce Expertise</span> <br />
-              & AI Innovation
-            </h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.7 }}
-              className="mt-2 text-xs sm:text-sm text-[#475569] font-medium leading-relaxed max-w-md"
-            >
-              Unlocking potential through strategic Salesforce solutions and next-generation AI voice technology.
-            </motion.p>
-
-            {/* Action Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.9 }}
-              className="mt-3.5 flex flex-wrap gap-3 pointer-events-auto"
-            >
-              <button
-                onClick={() =>
-                  window.scrollTo({
-                    top: (1.5 / N) * (document.body.scrollHeight - window.innerHeight),
-                    behavior: "smooth",
-                  })
-                }
-                className="bg-[#0284C7] hover:bg-[#0369A1] text-xs font-bold py-2.5 px-5 rounded-full inline-flex items-center gap-2 shadow-lg shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03]"
-              >
-                Start a conversation
-                <ArrowUpRight className="size-3.5" />
-              </button>
-              <button
-                onClick={() =>
-                  window.scrollTo({
-                    top: (6.5 / N) * (document.body.scrollHeight - window.innerHeight),
-                    behavior: "smooth",
-                  })
-                }
-                className="border border-[#E0F2FE] bg-white hover:bg-slate-50 text-[#0284C7] text-xs font-bold py-2.5 px-5 rounded-full inline-flex items-center gap-2 transition-all duration-300 hover:scale-[1.02]"
-              >
-                Explore AI Voice
-              </button>
-            </motion.div>
-          </div>
-
-          {/* Bottom elements (Stats & scroll indicator) */}
-          <div className="flex flex-col gap-3 mt-auto">
-            {/* Statistics Row - Premium Mini KPI Cards */}
+            {/* Clean Trust Information Row */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2.1 }}
-              className="grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-200/40 w-full"
+              className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 pt-5 border-t border-slate-200/40 w-full mt-auto text-left"
             >
-              {/* KPI Card 1 */}
-              <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-[16px] p-2.5 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 cursor-default">
-                <div className="size-7 rounded-full bg-[#0284C7] text-white flex items-center justify-center mb-1.5 shadow-sm shadow-sky-500/10">
-                  <CloudCog className="size-3.5" />
-                </div>
-                <div>
-                  <span className="block text-base sm:text-lg font-[800] text-[#0F172A] font-display leading-none">
-                    <CountUp value={6} suffix="+" delay={2.3} />
-                  </span>
-                  <span className="block text-[9px] font-bold text-[#475569] mt-0.5 leading-tight">
-                    Salesforce Clouds
-                  </span>
-                </div>
-                <div className="mt-1.5 inline-flex items-center gap-1 bg-[#F0F9FF] text-[#0284C7] rounded-full px-1.5 py-0.5 text-[7px] font-bold tracking-wide w-fit">
-                  <Check className="size-2 text-[#0284C7] stroke-[3]" />
-                  <span>Enterprise Ready</span>
-                </div>
+              <div className="flex items-center gap-2 text-slate-500 text-[10px] font-extrabold tracking-wider uppercase">
+                <Award className="size-4 text-[#0284C7]" />
+                <span>Salesforce Registered Partner</span>
               </div>
-
-              {/* KPI Card 2 */}
-              <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-[16px] p-2.5 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 cursor-default">
-                <div className="size-7 rounded-full bg-[#0284C7] text-white flex items-center justify-center mb-1.5 shadow-sm shadow-sky-500/10">
-                  <BarChart3 className="size-3.5" />
-                </div>
-                <div>
-                  <span className="block text-base sm:text-lg font-[800] text-[#0F172A] font-display leading-none">
-                    70-90%
-                  </span>
-                  <span className="block text-[9px] font-bold text-[#475569] mt-0.5 leading-tight">
-                    Cost Savings
-                  </span>
-                </div>
-                <div className="mt-1.5 inline-flex items-center gap-1 bg-[#F0F9FF] text-[#0284C7] rounded-full px-1.5 py-0.5 text-[7px] font-bold tracking-wide w-fit">
-                  <Check className="size-2 text-[#0284C7] stroke-[3]" />
-                  <span>Proven ROI</span>
-                </div>
+              <div className="flex items-center gap-2 text-slate-500 text-[10px] font-extrabold tracking-wider uppercase">
+                <Star className="size-4 text-[#0284C7]" />
+                <span>5-Star on AppExchange</span>
               </div>
-
-              {/* KPI Card 3 */}
-              <div className="bg-white/80 hover:bg-white border border-[#E2E8F0] rounded-[16px] p-2.5 flex flex-col justify-between text-left shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 cursor-default">
-                <div className="size-7 rounded-full bg-[#0284C7] text-white flex items-center justify-center mb-1.5 shadow-sm shadow-sky-500/10">
-                  <Headset className="size-3.5" />
-                </div>
-                <div>
-                  <span className="block text-base sm:text-lg font-[800] text-[#0F172A] font-display leading-none">
-                    24/7
-                  </span>
-                  <span className="block text-[9px] font-bold text-[#475569] mt-0.5 leading-tight">
-                    AI Voice Agents
-                  </span>
-                </div>
-                <div className="mt-1.5 inline-flex items-center gap-1 bg-[#F0F9FF] text-[#0284C7] rounded-full px-1.5 py-0.5 text-[7px] font-bold tracking-wide w-fit">
-                  <Check className="size-2 text-[#0284C7] stroke-[3]" />
-                  <span>Always On</span>
-                </div>
+              <div className="flex items-center gap-2 text-slate-500 text-[10px] font-extrabold tracking-wider uppercase">
+                <MapPin className="size-4 text-[#0284C7]" />
+                <span>Mumbai, India</span>
               </div>
             </motion.div>
+          </div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3.2, duration: 0.6 }}
-              className="pt-1.5 flex items-center gap-2 text-[#0284C7] font-bold tracking-wider text-[10px]"
+          {/* RIGHT SIDE (58% width) - PREMIUM VIDEO DASHBOARD & ECOSYSTEM */}
+          <div
+            className="hidden md:flex md:w-[58%] h-full relative items-center justify-center select-none"
+            style={{ perspective: "1000px" }}
+          >
+            {/* --- 3. Ambient Glow Elements Behind Video --- */}
+            {/* Primary soft blue glow spot */}
+            <div
+              className="absolute w-[80%] h-[80%] bg-[#0284C7]/18 blur-[80px] rounded-full pointer-events-none -z-20 animate-pulse"
+              style={{
+                animationDuration: "8s",
+                transform: `translate3d(${mousePos.x * -15}px, ${mousePos.y * -15}px, 0)`,
+              }}
+            />
+            {/* Secondary indigo gradient spot */}
+            <div
+              className="absolute w-[60%] h-[60%] bg-[#6366F1]/12 blur-[90px] rounded-full pointer-events-none -z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -8}px, ${mousePos.y * -8}px, 0)`,
+              }}
+            />
+            {/* Light blue core spotlight */}
+            <div
+              className="absolute w-[40%] h-[40%] bg-sky-300/10 blur-[60px] rounded-full pointer-events-none -z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -25}px, ${mousePos.y * -25}px, 0)`,
+              }}
+            />
+
+            {/* --- 2. Data Orbit System Behind Video --- */}
+            <div
+              className="absolute w-[125%] h-[125%] -z-10 pointer-events-none flex items-center justify-center"
+              style={{
+                transform: `translate3d(${mousePos.x * -6}px, ${mousePos.y * -6}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
             >
-              <span>Scroll to explore</span>
-              <ChevronDown className="size-4 animate-bounce text-[#0284C7]" />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE (50%) - LIVE CONSOLE REDESIGNED */}
-        <div className="hidden md:flex md:w-1/2 flex-col h-full rounded-2xl border border-white/60 bg-[#F8FAFC]/90 shadow-inner p-6 md:p-7 relative overflow-visible">
-          {/* Floating Claude AI badge (top-left edge, overlapping Card 1) */}
-          <div className="absolute -left-6 top-[20%] bg-white/95 border border-slate-100 rounded-[16px] py-2 px-3 shadow-lg flex items-center gap-3 z-15 animate-float-slow hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-default">
-            <div className="size-8 rounded-full bg-[#0284C7] text-white flex items-center justify-center shadow-md shadow-sky-500/10">
-              <Sparkles className="size-4 text-white" />
-            </div>
-            <div className="text-left">
-              <span className="block text-[10px] font-black text-slate-800 leading-none">Claude AI</span>
-              <span className="block text-[8px] text-slate-400 font-bold mt-1 leading-none">
-                Real-time NLU
-              </span>
-            </div>
-          </div>
-
-          {/* Floating +44% Conversion badge (bottom-right edge) */}
-          <div className="absolute -right-4 bottom-[6%] bg-white/95 border border-slate-100 rounded-2xl p-2.5 shadow-xl flex items-center gap-2 max-w-[190px] text-left z-15 animate-float-slow hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-default">
-            <div className="size-7 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center border border-emerald-100">
-              <TrendingUp className="size-4 text-[#10B981]" />
-            </div>
-            <div>
-              <p className="text-[10px] font-extrabold text-[#10B981] leading-none">+44% Conversion</p>
-              <p className="text-[8px] font-bold text-slate-400 mt-1 leading-none">AI-assisted leads</p>
-            </div>
-          </div>
-
-          {/* Console Header */}
-          <div className="flex items-center justify-between border-b border-slate-200/40 pb-3 mb-4">
-            <div className="flex items-center gap-1.5">
-              <div className="size-2.5 rounded-full bg-[#EF4444]/90" />
-              <div className="size-2.5 rounded-full bg-[#F59E0B]/90" />
-              <div className="size-2.5 rounded-full bg-[#10B981]/90" />
-            </div>
-            <span className="text-[10px] font-bold text-slate-400 tracking-wider font-mono">
-              cascade.cloud / dashboard
-            </span>
-          </div>
-
-          {/* Grid Layout of Status Cards - Row 1 */}
-          <div className="grid grid-cols-3 gap-4">
-            {/* Card 1: Claude AI */}
-            <div className="relative bg-white border border-slate-100 rounded-2xl p-4 pt-7 shadow-sm hover:shadow-md hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between text-left cursor-default">
-              <div className="flex items-start justify-between">
-                <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100">
-                  <BarChart3 className="size-4 text-[#0284C7]" />
-                </div>
-                <span className="absolute top-3 right-3 text-[8px] font-extrabold text-[#10B981] bg-emerald-50 px-1.5 py-0.5 rounded-full">
-                  +18%
-                </span>
-              </div>
-
-              <div className="mt-3">
-                <p className="text-base md:text-lg font-black text-slate-800 font-display leading-none">$4.2M</p>
-                <p className="text-[8px] text-slate-400 font-black uppercase tracking-wider mt-1.5">Pipeline</p>
-              </div>
-            </div>
-
-            {/* Card 2: Closed */}
-            <div className="relative bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-md hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between text-left cursor-default">
-              <div className="flex items-start justify-between">
-                <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100">
-                  <Clock className="size-4 text-[#0284C7]" />
-                </div>
-                <span className="absolute top-3 right-3 text-[8px] font-extrabold text-[#10B981] bg-emerald-50 px-1.5 py-0.5 rounded-full">
-                  +9%
-                </span>
-              </div>
-              <div className="mt-3">
-                <p className="text-base md:text-lg font-black text-slate-800 font-display leading-none">312</p>
-                <p className="text-[8px] text-slate-400 font-black uppercase tracking-wider mt-1.5">Closed</p>
-              </div>
-            </div>
-
-            {/* Card 3: AI Calls */}
-            <div className="relative bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-md hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between text-left cursor-default">
-              <div className="flex items-start justify-between">
-                <div className="size-7 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center border border-sky-100">
-                  <Phone className="size-4 text-[#0284C7]" />
-                </div>
-                <span className="absolute top-3 right-3 text-[8px] font-extrabold text-[#10B981] bg-emerald-50 px-1.5 py-0.5 rounded-full">
-                  +44%
-                </span>
-              </div>
-              <div className="mt-3">
-                <p className="text-base md:text-lg font-black text-slate-800 font-display leading-none">8,914</p>
-                <p className="text-[8px] text-slate-400 font-black uppercase tracking-wider mt-1.5">AI Calls</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Lead Conversion Rounded Column Chart - Row 2 */}
-          <div className="mt-4 bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-md hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between text-left cursor-default">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-extrabold text-slate-700 tracking-wider">Lead &rarr; Conversion</span>
-              <span className="text-[8px] font-bold text-slate-400">Last 30 days</span>
-            </div>
-
-            <div className="flex items-end justify-between h-28 w-full mt-2 pt-2 px-1">
-              {[
-                { h: "20%" },
-                { h: "35%" },
-                { h: "28%" },
-                { h: "45%" },
-                { h: "55%" },
-                { h: "35%" },
-                { h: "70%" },
-                { h: "60%" },
-                { h: "85%" },
-                { h: "75%" },
-                { h: "95%" },
-              ].map((bar, idx) => (
-                <div
-                  key={idx}
-                  style={{ height: bar.h }}
-                  className="w-[7%] bg-[#0EA5E9] rounded-t-full transition-all duration-500 hover:bg-[#38BDF8]"
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 500 500">
+                {/* Orbit Ellipse 1 */}
+                <ellipse
+                  cx="250"
+                  cy="250"
+                  rx="220"
+                  ry="130"
+                  fill="none"
+                  stroke="rgba(14,165,233,0.15)"
+                  strokeWidth="1"
+                  transform="rotate(-15, 250, 250)"
                 />
-              ))}
-            </div>
-          </div>
+                {/* Orbit Ellipse 2 (Dashed) */}
+                <ellipse
+                  cx="250"
+                  cy="250"
+                  rx="250"
+                  ry="160"
+                  fill="none"
+                  stroke="rgba(99,102,241,0.12)"
+                  strokeWidth="1"
+                  strokeDasharray="4 6"
+                  transform="rotate(18, 250, 250)"
+                />
 
-          {/* Grid Layout - Row 3 */}
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {/* Live AI Voice */}
-            <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-md hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 text-left flex flex-col justify-between cursor-default">
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <Mic className="size-3.5 text-[#0EA5E9]" />
-                <span className="text-[9px] md:text-[10px] font-extrabold text-slate-800 tracking-wider">Live AI Voice</span>
-              </div>
-
-              {/* Waveform visual */}
-              <div className="flex items-end justify-between h-8 mt-2 px-1">
-                {[3, 6, 4, 7, 5, 8, 4, 6, 5, 7, 3, 5].map((h, i) => (
-                  <span
-                    key={i}
-                    className="w-1 bg-[#0EA5E9] rounded-full animate-pulse"
-                    style={{
-                      height: `${h * 10}%`,
-                      animationDelay: `${i * 0.15}s`,
-                    }}
+                {/* Traveling dot on Orbit 1 */}
+                <circle r="3.5" fill="#38BDF8" className="shadow-[0_0_10px_#38bdf8]">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M 250,120 A 220,130 0 1,1 249.9,120 Z"
+                    rotate="auto"
                   />
-                ))}
+                </circle>
+
+                {/* Traveling dot on Orbit 2 */}
+                <circle r="2.5" fill="#818CF8" className="shadow-[0_0_8px_#818cf8]">
+                  <animateMotion
+                    dur="26s"
+                    repeatCount="indefinite"
+                    path="M 250,90 A 250,160 0 1,1 249.9,90 Z"
+                    rotate="auto"
+                  />
+                </circle>
+              </svg>
+            </div>
+
+            {/* --- 4. Enterprise Tech Accents (Grid Fragments, Matrix) --- */}
+            {/* Dot Matrix Grid (Top-Center/Right) */}
+            <div
+              className="absolute -top-[5%] right-[20%] opacity-20 -z-10 pointer-events-none"
+              style={{
+                transform: `translate3d(${mousePos.x * -8}px, ${mousePos.y * -8}px, 0)`,
+              }}
+            >
+              <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+                {[0, 10, 20, 30, 40, 50].map((x) =>
+                  [0, 10, 20, 30].map((y) => (
+                    <circle key={`${x}-${y}`} cx={x + 4} cy={y + 4} r="1.2" fill="#0284C7" />
+                  ))
+                )}
+              </svg>
+            </div>
+
+            {/* Bottom-Right Dot Matrix */}
+            <div
+              className="absolute bottom-[8%] right-[4%] opacity-20 -z-10 pointer-events-none"
+              style={{ transform: `translate3d(${mousePos.x * -4}px, ${mousePos.y * -4}px, 0)` }}
+            >
+              <svg width="46" height="46" viewBox="0 0 40 40" fill="none">
+                {[0, 10, 20, 30].map((x) =>
+                  [0, 10, 20, 30].map((y) => (
+                    <circle key={`${x}-${y}`} cx={x + 4} cy={y + 4} r="1" fill="#6366F1" />
+                  )),
+                )}
+              </svg>
+            </div>
+
+            {/* Corner Tech Bracket Accents framing the video parent */}
+            <div
+              className="absolute w-[102%] h-[96%] pointer-events-none -z-10 flex items-center justify-center"
+              style={{
+                transform: `translate3d(${mousePos.x * -11}px, ${mousePos.y * -11}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="w-full h-full relative max-w-full max-h-full aspect-[1.6]">
+                <div className="absolute -top-3 -left-3 size-5 border-t border-l border-[#0284C7]/50" />
+                <div className="absolute -top-3 -right-3 size-5 border-t border-r border-[#0284C7]/50" />
+                <div className="absolute -bottom-3 -left-3 size-5 border-b border-l border-[#0284C7]/50" />
+                <div className="absolute -bottom-3 -right-3 size-5 border-b border-r border-[#0284C7]/50" />
               </div>
             </div>
 
-            {/* Salesforce Sync checklist */}
-            <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-md hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 text-left flex flex-col justify-between cursor-default">
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <CloudCog className="size-3.5 text-[#0EA5E9]" />
-                <span className="text-[9px] md:text-[10px] font-extrabold text-slate-800 tracking-wider">Salesforce Sync</span>
-              </div>
+            {/* --- 1. Floating 3D/Glass Objects (Redesigned matching screenshot) --- */}
 
-              <div className="flex flex-col gap-1.5 mt-1">
-                {[
-                  "Contact updated",
-                  "Opportunity created",
-                  "Case logged",
-                ].map((text) => (
-                  <div key={text} className="flex items-center gap-2 text-[9px] font-bold text-slate-600">
-                    <div className="size-3.5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 flex-shrink-0">
-                      <Check className="size-2" />
-                    </div>
-                    <span>{text}</span>
-                  </div>
-                ))}
+            {/* Floating 3D Glass Cube with solid blue cube inside (Top-Left) */}
+            <div
+              className="absolute -top-[5%] left-[5%] pointer-events-none z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -25}px, ${mousePos.y * -25}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="size-14 relative flex items-center justify-center bg-white/20 border border-white/40 rounded-2xl shadow-lg backdrop-blur-md rotate-[15deg] animate-float-slow">
+                <div className="size-5.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-md shadow-md animate-pulse" />
               </div>
+            </div>
+
+            {/* Vibrant Gradient Sphere (Bottom-Left) */}
+            <div
+              className="absolute bottom-[8%] left-[2%] pointer-events-none z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -35}px, ${mousePos.y * -35}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="size-13 rounded-full bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 shadow-[0_10px_25px_rgba(99,102,241,0.4)] animate-float-slow" />
+            </div>
+
+            {/* Floating Pie Chart (Bottom-Right) */}
+            <div
+              className="absolute bottom-[4%] right-[2%] pointer-events-none z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -20}px, ${mousePos.y * -20}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="relative size-20 animate-float-slow" style={{ animationDelay: "1s" }}>
+                <svg className="w-full h-full filter drop-shadow-[0_12px_20px_rgba(2,132,199,0.3)]" viewBox="0 0 100 100">
+                  <path d="M 50,50 L 50,10 A 40,40 0 0,1 90,50 Z" fill="#0284C7" />
+                  <path d="M 50,50 L 90,50 A 40,40 0 0,1 50,90 Z" fill="#38BDF8" />
+                  <rect x="30" y="60" width="12" height="12" rx="3" fill="white" className="shadow-sm" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Floating Connection Node Card (Far-Right) */}
+            <div
+              className="absolute top-[25%] -right-[6%] pointer-events-none z-20"
+              style={{
+                transform: `translate3d(${mousePos.x * -15}px, ${mousePos.y * -15}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="size-10 rounded-xl bg-white border border-slate-200/80 shadow-md flex items-center justify-center text-[#0284C7] animate-float-slow">
+                <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1" />
+                  <path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4" />
+                  <circle cx="8" cy="12" r="2" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Outer glowing blue frame accent */}
+            <div
+              className="absolute w-[100%] h-[94%] rounded-[30px] border border-[#0284C7]/30 pointer-events-none -z-10 shadow-[0_0_15px_rgba(2,132,199,0.12)]"
+              style={{
+                transform: `translate3d(${mousePos.x * -10.5}px, ${mousePos.y * -10.5}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            />
+
+            {/* --- The Video Container (Centered & Shrunk by ~10% for visual breathing space) --- */}
+            <div
+              className="w-[98%] h-[92%] max-w-full max-h-full aspect-[1.6] rounded-3xl border border-[#0284C7]/40 bg-white/5 backdrop-blur-md relative overflow-hidden shadow-[0_20px_50px_rgba(2,132,199,0.25),0_0_20px_rgba(2,132,199,0.15)] z-10 hover:scale-[1.01] transition-all duration-300"
+              style={{
+                transform: `translate3d(${mousePos.x * -10}px, ${mousePos.y * -10}px, 0)`,
+                transition: "transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1)",
+              }}
+            >
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover rounded-[inherit]"
+              >
+                <source src="/Create_a_premium_SaaS_product.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
 
-        {/* Bottom Glow reflection element */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
+        {/* Full-width Certification Trust Strip at the bottom */}
+        <div className="w-full mt-auto pt-4 border-t border-slate-200/35 flex flex-col sm:flex-row items-center justify-between gap-4 z-10">
+          <span className="text-[10px] font-black text-[#475569] uppercase tracking-widest leading-none">
+            Cascade Tech Credentials:
+          </span>
+          <div className="flex flex-wrap gap-2.5">
+            {[
+              { text: "Salesforce Partner", icon: Cloud },
+              { text: "Agentforce Specialist", icon: Headset },
+              { text: "AI Specialist", icon: Sparkles },
+              { text: "Trailhead Ranger", icon: Globe },
+              { text: "Multi-Cloud Certified", icon: ShieldCheck }
+            ].map((cert) => {
+              const Icon = cert.icon;
+              return (
+                <div
+                  key={cert.text}
+                  className="flex items-center gap-2 bg-white border border-[#E2E8F0] rounded-full px-3.5 py-1.5 text-[11px] font-bold text-[#0F172A] shadow-sm hover:border-[#0284C7]/45 hover:text-slate-800 transition-all duration-300 cursor-default"
+                >
+                  <Icon className="size-3.5 text-[#0284C7]" />
+                  <span>{cert.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Custom CSS animations self-contained inside the variant block */}
+        <style>{`
+          @keyframes energy-pulse-anim {
+            0% {
+              stroke-dashoffset: 380;
+            }
+            100% {
+              stroke-dashoffset: -380;
+            }
+          }
+          .energy-line-pulse {
+            animation: energy-pulse-anim 6s linear infinite;
+          }
+          @keyframes glow-pulse {
+            0%, 100% {
+              filter: drop-shadow(0 0 2px rgba(2, 132, 199, 0.3));
+            }
+            50% {
+              filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.65));
+            }
+          }
+          .pulse-node-glow {
+            animation: glow-pulse 3s ease-in-out infinite;
+          }
+        `}</style>
       </motion.div>
     );
   }
@@ -889,7 +1175,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
       { value: 50, suffix: "+", label: "Projects Delivered" },
       { value: 8, suffix: "+", label: "Enterprise Clients" },
       { value: 5, suffix: "+", label: "Cities Served" },
-      { value: 100, suffix: "%", label: "In-House Delivery" }
+      { value: 100, suffix: "%", label: "In-House Delivery" },
     ];
 
     return (
@@ -901,21 +1187,23 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Ambient soft blue glow */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+          }}
+        />
 
         {/* Headline Spotlight Glow */}
         <div className="absolute left-[30%] top-[30%] -translate-x-1/2 -translate-y-1/2 w-[400px] h-[180px] bg-gradient-to-r from-sky-400/8 to-blue-500/8 rounded-full blur-3xl pointer-events-none -z-10" />
 
         {/* Split Screen Container - Centered and Contained within 1080px to close column gap */}
         <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-center justify-between w-full h-full relative z-10 max-w-[1080px] mx-auto py-2">
-          
           {/* LEFT COLUMN: Narrative & CTAs (54% width) */}
           <div className="w-full md:w-[54%] flex flex-col justify-center items-start text-left h-full py-2">
             <div className="flex flex-col items-start gap-3 w-full">
               {/* Kicker Badge */}
-              <motion.div 
+              <motion.div
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3.5 py-1 text-xs md:text-sm font-bold tracking-wider text-[#0284C7] w-fit animate-pulse"
@@ -925,7 +1213,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               </motion.div>
 
               {/* Headline - Slightly smaller & readable */}
-              <motion.h2 
+              <motion.h2
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-2xl sm:text-3xl md:text-[34px] lg:text-[42px] xl:text-[46px] font-[900] leading-[1.12] tracking-tight text-[#0F172A] font-display max-w-2xl"
@@ -933,34 +1221,48 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 Let's Build Something{" "}
                 <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                   That Actually Works.
-                  <svg className="absolute -bottom-1.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                    <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+                  <svg
+                    className="absolute -bottom-1.5 left-0 w-full h-[4px]"
+                    viewBox="0 0 200 5"
+                    fill="none"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                      stroke="#0EA5E9"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </span>
               </motion.h2>
 
               {/* Description - Slightly smaller space and font size */}
-              <motion.p 
+              <motion.p
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mt-4 text-xs sm:text-sm md:text-sm lg:text-[14.5px] text-[#475569] font-medium leading-relaxed max-w-2xl"
               >
-                Whether you're implementing Salesforce, building AI-powered automation, launching digital products, or transforming customer operations — let's discuss what success looks like for your business.
+                Whether you're implementing Salesforce, building AI-powered automation, launching
+                digital products, or transforming customer operations — let's discuss what success
+                looks like for your business.
               </motion.p>
 
               {/* Proven at Scale Label */}
               <div className="mt-2">
-                <span className="text-[8.5px] md:text-[9.5px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Proven At Scale</span>
+                <span className="text-[8.5px] md:text-[9.5px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">
+                  Proven At Scale
+                </span>
               </div>
 
               {/* Statistics Cards - Sized down to avoid overlaps and improve layout fit */}
               <div className="grid grid-cols-2 gap-2.5 w-full max-w-md mt-0.5">
                 {statsItems.map((item, idx) => (
-                  <motion.div 
-                    key={idx} 
+                  <motion.div
+                    key={idx}
                     animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                     transition={{ duration: 0.5, delay: 0.3 + idx * 0.1 }}
-                    className="bg-white border border-slate-100 rounded-xl p-1.5 px-3.5 shadow-[0_2px_10px_rgba(14,165,233,0.01)] hover:border-[#0EA5E9]/20 hover:scale-[1.02] transition-all duration-300 flex items-center gap-3.5 cursor-default"
+                    className="premium-glass-card premium-glass-card-hover rounded-xl p-1.5 px-3.5 flex items-center gap-3.5 cursor-default"
                   >
                     <span className="text-2xl md:text-3xl lg:text-[32px] font-[950] text-[#0284C7] font-display leading-none tracking-tight flex-shrink-0 min-w-[45px]">
                       {isActive ? (
@@ -977,13 +1279,21 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               </div>
 
               {/* Trust Badges immediately below stats */}
-              <motion.div 
+              <motion.div
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="flex flex-wrap gap-2.5 mt-2"
               >
-                {["Salesforce Partner", "AI-Native Team", "In-House Delivery", "Enterprise Ready"].map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-100 text-[#0284C7] text-[9.5px] md:text-[11px] font-black uppercase tracking-wider">
+                {[
+                  "Salesforce Partner",
+                  "AI-Native Team",
+                  "In-House Delivery",
+                  "Enterprise Ready",
+                ].map((tag) => (
+                  <span
+                    key={tag}
+                    className="glass-chip inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[#0284C7] text-[9.5px] md:text-[11px] font-black uppercase tracking-wider"
+                  >
                     <Check className="size-2.5 text-[#0284C7] stroke-[3]" />
                     {tag}
                   </span>
@@ -991,7 +1301,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               </motion.div>
 
               {/* CTA Buttons - Sized down to look highly compact & premium */}
-              <motion.div 
+              <motion.div
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
                 className="relative flex flex-row items-center gap-2.5 mt-3 w-full"
@@ -1023,21 +1333,21 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* RIGHT COLUMN: Premium Contact Drawer Card (41% width) - Centered and Larger */}
-          <motion.div 
+          <motion.div
             animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 15 }}
             transition={{ duration: 0.7, delay: 0.4 }}
             className="w-full md:w-[41%] flex flex-col justify-center h-full py-2"
           >
-            <div
-              className="bg-white/95 border border-white/60 shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded-3xl p-5 md:p-6.5 flex flex-col gap-4 text-left relative overflow-hidden w-full max-w-[420px] border-t border-r mx-auto md:mx-0"
-              style={{
-                backdropFilter: "blur(20px)",
-              }}
-            >
+            <div className="premium-glass-card rounded-3xl p-5 md:p-6.5 flex flex-col gap-4 text-left relative overflow-hidden w-full max-w-[420px] mx-auto md:mx-0">
               {/* Subtle grid pattern in background */}
               <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                  <pattern id="grid-card-contact-refined" width="16" height="16" patternUnits="userSpaceOnUse">
+                  <pattern
+                    id="grid-card-contact-refined"
+                    width="16"
+                    height="16"
+                    patternUnits="userSpaceOnUse"
+                  >
                     <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
                   </pattern>
                   <rect width="100%" height="100%" fill="url(#grid-card-contact-refined)" />
@@ -1046,24 +1356,30 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
               {/* Headline inside card */}
               <div className="border-b border-slate-200/40 pb-2">
-                <span className="text-[10px] md:text-[11px] font-extrabold text-[#0284C7] uppercase tracking-widest block">Speak Directly With Our Founders</span>
+                <span className="text-[10px] md:text-[11px] font-extrabold text-[#0284C7] uppercase tracking-widest block">
+                  Speak Directly With Our Founders
+                </span>
               </div>
 
               {/* Leadership Profiles - Vertically centered with larger photos */}
               <div className="flex flex-col gap-3">
                 {/* Aashish */}
-                <div className="flex items-center gap-4 bg-slate-50/60 hover:bg-slate-50 border border-slate-200/50 hover:border-[#0EA5E9]/25 rounded-2xl p-2 px-3.5 transition-all duration-300">
+                <div className="flex items-center gap-4 premium-glass-card premium-glass-card-hover rounded-2xl p-2 px-3.5">
                   <div className="relative flex-shrink-0">
-                    <img 
-                      src="/clients/Aashish Yadav.png" 
-                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm" 
-                      alt="Aashish Yadav" 
+                    <img
+                      src="/clients/Aashish Yadav.png"
+                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm"
+                      alt="Aashish Yadav"
                     />
                     <span className="absolute bottom-0 right-0 size-2.5 bg-emerald-500 ring-2 ring-white rounded-full animate-pulse" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-slate-800 leading-none">Aashish Yadav</h4>
-                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">CEO & Founder</p>
+                    <h4 className="text-sm font-black text-slate-800 leading-none">
+                      Aashish Yadav
+                    </h4>
+                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">
+                      CEO & Founder
+                    </p>
                     <span className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full leading-none">
                       <span className="size-1 rounded-full bg-emerald-500" />
                       Active Online
@@ -1072,18 +1388,20 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 </div>
 
                 {/* Yash */}
-                <div className="flex items-center gap-4 bg-slate-50/60 hover:bg-slate-50 border border-slate-200/50 hover:border-[#0EA5E9]/25 rounded-2xl p-2 px-3.5 transition-all duration-300">
+                <div className="flex items-center gap-4 premium-glass-card premium-glass-card-hover rounded-2xl p-2 px-3.5">
                   <div className="relative flex-shrink-0">
-                    <img 
-                      src="/clients/Yash Jain.png" 
-                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm" 
-                      alt="Yash Jain" 
+                    <img
+                      src="/clients/Yash Jain.png"
+                      className="w-13 h-13 rounded-full border border-sky-100 object-cover shadow-sm"
+                      alt="Yash Jain"
                     />
                     <span className="absolute bottom-0 right-0 size-2.5 bg-emerald-500 ring-2 ring-white rounded-full animate-pulse" />
                   </div>
                   <div>
                     <h4 className="text-sm font-black text-slate-800 leading-none">Yash Jain</h4>
-                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">CTO & Co-Founder</p>
+                    <p className="text-[9.5px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none">
+                      CTO & Co-Founder
+                    </p>
                     <span className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full leading-none">
                       <span className="size-1 rounded-full bg-emerald-500" />
                       Active Online
@@ -1098,10 +1416,30 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               {/* Direct Action Chips - Compact premium pills */}
               <div className="flex flex-col gap-2">
                 {[
-                  { label: "Website", icon: Globe, val: "cascadetech.ventures", href: "https://cascadetech.ventures" },
-                  { label: "Email", icon: Mail, val: "hello@cascadetech.ventures", href: "mailto:hello@cascadetech.ventures" },
-                  { label: "Phone", icon: Phone, val: "+91 98765 43210", href: "tel:+919876543210" },
-                  { label: "LinkedIn", icon: Linkedin, val: "linkedin.com/company/cascade-tech", href: "https://linkedin.com" }
+                  {
+                    label: "Website",
+                    icon: Globe,
+                    val: "cascadetech.ventures",
+                    href: "https://cascadetech.ventures",
+                  },
+                  {
+                    label: "Email",
+                    icon: Mail,
+                    val: "hello@cascadetech.ventures",
+                    href: "mailto:hello@cascadetech.ventures",
+                  },
+                  {
+                    label: "Phone",
+                    icon: Phone,
+                    val: "+91 98765 43210",
+                    href: "tel:+919876543210",
+                  },
+                  {
+                    label: "LinkedIn",
+                    icon: Linkedin,
+                    val: "linkedin.com/company/cascade-tech",
+                    href: "https://linkedin.com",
+                  },
                 ].map((chip) => {
                   const Icon = chip.icon;
                   return (
@@ -1110,11 +1448,13 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                       href={chip.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-50/60 hover:bg-white border border-slate-200/50 hover:border-[#0EA5E9]/25 hover:shadow-[0_4px_12px_rgba(14,165,233,0.04)] transition-all duration-300 group/chip"
+                      className="flex items-center justify-between px-4 py-2.5 rounded-2xl premium-glass-card premium-glass-card-hover group/chip"
                     >
                       <div className="flex items-center gap-2.5">
                         <Icon className="size-4.5 text-[#0EA5E9] transition-transform duration-300 group-hover/chip:scale-110" />
-                        <span className="text-xs md:text-[13px] font-bold text-slate-600 group-hover/chip:text-[#0EA5E9]">{chip.val}</span>
+                        <span className="text-xs md:text-[13px] font-bold text-slate-600 group-hover/chip:text-[#0EA5E9]">
+                          {chip.val}
+                        </span>
                       </div>
                       <ChevronRight className="size-3.5 text-slate-300 group-hover/chip:text-[#0EA5E9] transition-transform duration-300 group-hover/chip:translate-x-0.5" />
                     </a>
@@ -1128,7 +1468,6 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               </p>
             </div>
           </motion.div>
-
         </div>
 
         {/* Bottom Glow reflection element */}
@@ -1147,17 +1486,21 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             District 03 &bull; Principles
           </div>
           <h2 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-1.5">
-            What we <span className="bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] bg-clip-text text-transparent">stand for</span>
+            What we{" "}
+            <span className="bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] bg-clip-text text-transparent">
+              stand for
+            </span>
           </h2>
           <p className="text-sm md:text-[17px] text-[#475569] font-medium leading-relaxed max-w-2xl">
-            Our values drive every Salesforce implementation, AI automation initiative, and digital transformation journey we deliver.
+            Our values drive every Salesforce implementation, AI automation initiative, and digital
+            transformation journey we deliver.
           </p>
         </div>
 
         {/* 2x2 Grid of 4 Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 h-[71%] md:h-[73%] w-full items-stretch">
           {/* Card 1: Innovation */}
-          <div className="bg-gradient-to-br from-[#F0F9FF]/95 via-white/80 to-[#E0F2FE]/50 backdrop-blur-md hover:bg-white/90 border border-sky-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full animate-float-soft">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full animate-float-soft">
             <div>
               <div className="flex items-center gap-3">
                 <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
@@ -1169,7 +1512,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 </h3>
               </div>
               <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We continuously explore AI, automation, and emerging technologies to create smarter business solutions.
+                We continuously explore AI, automation, and emerging technologies to create smarter
+                business solutions.
               </p>
             </div>
 
@@ -1198,7 +1542,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* Card 2: Client Commitment */}
-          <div className="bg-gradient-to-br from-[#E0F2FE]/90 via-white/80 to-[#BAE6FD]/40 backdrop-blur-md hover:bg-white/90 border border-blue-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
             <div>
               <div className="flex items-center gap-3">
                 <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
@@ -1210,7 +1554,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 </h3>
               </div>
               <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We build long-term partnerships focused on measurable outcomes, transparency, and growth.
+                We build long-term partnerships focused on measurable outcomes, transparency, and
+                growth.
               </p>
             </div>
 
@@ -1222,7 +1567,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                     <div className="size-6.5 rounded-full bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] text-white flex items-center justify-center text-[10px] font-bold border border-white shadow-sm hover:scale-110 transition-transform duration-300 cursor-default">
                       {letter}
                     </div>
-                    {index < 4 && <div className="w-2 h-[2px] bg-gradient-to-r from-sky-400 to-sky-300" />}
+                    {index < 4 && (
+                      <div className="w-2 h-[2px] bg-gradient-to-r from-sky-400 to-sky-300" />
+                    )}
                   </div>
                 ))}
               </div>
@@ -1233,7 +1580,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* Card 3: Excellence */}
-          <div className="bg-gradient-to-br from-white/95 via-sky-50/70 to-[#F0F9FF]/90 backdrop-blur-md hover:bg-white/90 border border-sky-100/80 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
             <div>
               <div className="flex items-center gap-3">
                 <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
@@ -1245,7 +1592,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 </h3>
               </div>
               <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We maintain the highest standards in delivery, architecture, implementation, and support.
+                We maintain the highest standards in delivery, architecture, implementation, and
+                support.
               </p>
             </div>
 
@@ -1274,7 +1622,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* Card 4: Integrity */}
-          <div className="bg-gradient-to-br from-[#F8FAFC]/95 via-[#F1F5F9]/85 to-[#E2E8F0]/40 backdrop-blur-md hover:bg-white/90 border border-slate-200/50 rounded-[28px] py-4 px-5 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(2,132,199,0.06)] hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)] hover:-translate-y-1.5 hover:scale-[1.01] transition-all duration-500 flex-1 h-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
             <div>
               <div className="flex items-center gap-3">
                 <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
@@ -1286,7 +1634,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 </h3>
               </div>
               <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We operate with honesty, accountability, and trust in every engagement and business decision.
+                We operate with honesty, accountability, and trust in every engagement and business
+                decision.
               </p>
             </div>
 
@@ -1297,7 +1646,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <ShieldCheck className="size-4.5 text-[#0284C7]" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-bold text-slate-800 leading-tight">Trust & Ethics</span>
+                  <span className="text-[10px] font-bold text-slate-800 leading-tight">
+                    Trust & Ethics
+                  </span>
                   <span className="text-[8px] text-[#0284C7] font-black uppercase tracking-wider mt-0.5 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100/40 w-fit">
                     Compliance Active
                   </span>
@@ -1322,7 +1673,10 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         <Header scene={scene} />
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {scene.items?.map((it) => (
-            <div key={it.title} className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50">
+            <div
+              key={it.title}
+              className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50"
+            >
               <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
                 <it.icon className="size-5 text-primary" />
               </div>
@@ -1378,12 +1732,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Ambient Glow Effects */}
-        <div className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)",
+          }}
+        />
 
         {/* Blueprint Grid Background */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -1400,7 +1760,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         {/* Fractal Noise Overlay for subtle visual grain */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.015] pointer-events-none mix-blend-overlay">
           <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.8"
+              numOctaves="3"
+              stitchTiles="stitch"
+            />
           </filter>
           <rect width="100%" height="100%" filter="url(#noiseFilter)" />
         </svg>
@@ -1414,14 +1779,23 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               DISTRICT 05 &bull; SALES CLOUD
             </div>
 
-            <h2 className="text-xl sm:text-[30px] md:text-[38px] lg:text-[48px] xl:text-[60px] 2xl:text-[72px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2 md:mb-3" style={{ lineHeight: 0.95 }}>
+            <h2
+              className="text-xl sm:text-[30px] md:text-[38px] lg:text-[48px] xl:text-[60px] 2xl:text-[72px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[600px] mb-2 md:mb-3"
+              style={{ lineHeight: 0.95 }}
+            >
               Close More Deals <br />
               with Intelligent <br />
-              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">Sales Cloud</span>
+              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">
+                Sales Cloud
+              </span>
             </h2>
 
-            <p className="text-sm sm:text-[15px] md:text-[17px] lg:text-[19px] xl:text-[21px] 2xl:text-[25px] text-[#475569] font-medium max-w-[620px] mb-3 md:mb-4" style={{ lineHeight: 1.5 }}>
-              Design Sales Cloud around your real sales process with AI-powered forecasting, opportunity management, lead automation and pipeline visibility.
+            <p
+              className="text-sm sm:text-[15px] md:text-[17px] lg:text-[19px] xl:text-[21px] 2xl:text-[25px] text-[#475569] font-medium max-w-[620px] mb-3 md:mb-4"
+              style={{ lineHeight: 1.5 }}
+            >
+              Design Sales Cloud around your real sales process with AI-powered forecasting,
+              opportunity management, lead automation and pipeline visibility.
             </p>
 
             {/* Checklist: Vertical Stack */}
@@ -1432,23 +1806,32 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 "Custom CPQ, quoting and approvals",
                 "Sales engagement and outreach automation",
               ].map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-3 group/item transition-transform duration-300 hover:translate-x-1 cursor-default">
+                <div
+                  key={idx}
+                  className="flex items-start gap-3 group/item transition-transform duration-300 hover:translate-x-1 cursor-default"
+                >
                   <div className="flex size-5 md:size-5.5 items-center justify-center rounded-full bg-[#0176D3]/10 border border-[#00A1E0]/20 text-[#0176D3] shadow-sm flex-shrink-0 group-hover/item:bg-[#0176D3] group-hover/item:text-white group-hover/item:shadow-md transition-all duration-300 mt-0.5">
                     <Check className="size-3 md:size-3.5 stroke-[3.5]" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-[14px] xl:text-[15px] 2xl:text-[17px] text-[#475569] font-semibold group-hover/item:text-[#0F172A] transition-colors duration-300 leading-snug">{feat}</span>
+                  <span className="text-xs md:text-sm lg:text-[14px] xl:text-[15px] 2xl:text-[17px] text-[#475569] font-semibold group-hover/item:text-[#0F172A] transition-colors duration-300 leading-snug">
+                    {feat}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* RIGHT SIDE: CRM Pipeline Dashboard Card (60% width, h-fit, aligned & offset 20px upward relative to heading) */}
-          <div className="w-full md:w-[58%] bg-white/92 backdrop-blur-[24px] border border-sky-100/80 shadow-[0_30px_80px_rgba(1,118,211,0.12)] rounded-[28px] p-5 md:p-6 flex flex-col justify-between h-fit md:mt-[16px] transition-all duration-300 relative">
+          <div className="w-full md:w-[58%] premium-glass-card rounded-[28px] p-5 md:p-6 flex flex-col justify-between h-fit md:mt-[16px] relative">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-2.5">
               <div className="flex flex-col text-left">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Salesforce Dashboard</span>
-                <span className="text-sm md:text-base lg:text-[18px] font-black text-[#0F172A] leading-tight">CRM Pipeline</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  Salesforce Dashboard
+                </span>
+                <span className="text-sm md:text-base lg:text-[18px] font-black text-[#0F172A] leading-tight">
+                  CRM Pipeline
+                </span>
               </div>
               <div className="flex flex-col items-end">
                 <span className="bg-[#0176D3]/10 text-[#0176D3] font-extrabold px-3 py-1 rounded-full text-[10px] border border-[#00A1E0]/20 flex items-center gap-1 shadow-sm">
@@ -1468,10 +1851,16 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/95 border border-slate-100 hover:border-[#0176D3]/30 rounded-xl p-2.5 md:p-3 shadow-[0_2px_8px_rgba(1,118,211,0.02)] hover:shadow-[0_4px_12px_rgba(1,118,211,0.06)] hover:-translate-y-0.5 transition-all duration-300"
+                  className="premium-glass-card premium-glass-card-hover rounded-xl p-2.5 md:p-3"
                 >
-                  <span className="block text-[8px] md:text-[9.5px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1 md:mb-1.5">{card.label}</span>
-                  <span className={`text-xs sm:text-sm md:text-[15px] lg:text-base font-black ${card.color}`}>{card.val}</span>
+                  <span className="block text-[8px] md:text-[9.5px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1 md:mb-1.5">
+                    {card.label}
+                  </span>
+                  <span
+                    className={`text-xs sm:text-sm md:text-[15px] lg:text-base font-black ${card.color}`}
+                  >
+                    {card.val}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1479,7 +1868,10 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             {/* Funnel chart (Salesforce brand blue gradient with thicker bars and hover scaling animations) */}
             <div className="flex flex-col gap-2 md:gap-2.5 flex-1 justify-center my-1 md:my-1.5">
               {funnelSteps.map((step) => (
-                <div key={step.label} className="flex flex-col gap-0.5 md:gap-1 w-full group/bar cursor-pointer">
+                <div
+                  key={step.label}
+                  className="flex flex-col gap-0.5 md:gap-1 w-full group/bar cursor-pointer"
+                >
                   <div className="flex justify-between items-center text-[10px] md:text-xs font-bold text-slate-500 transition-colors duration-200 group-hover/bar:text-slate-800">
                     <span>{step.label}</span>
                     <span className="text-[#0F172A] font-extrabold">{step.value}</span>
@@ -1504,8 +1896,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <TrendingUp className="size-3.5 md:size-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">11.4%</span>
-                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Win rate</span>
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">
+                    11.4%
+                  </span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">
+                    Win rate
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 md:gap-2">
@@ -1513,8 +1909,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <Target className="size-3.5 md:size-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">$32k</span>
-                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Avg deal</span>
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">
+                    $32k
+                  </span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">
+                    Avg deal
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 md:gap-2">
@@ -1522,8 +1922,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <Calendar className="size-3.5 md:size-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">28 days</span>
-                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">Sales cycle</span>
+                  <span className="text-xs md:text-sm font-black text-slate-800 leading-tight">
+                    28 days
+                  </span>
+                  <span className="text-[8px] md:text-[9px] text-slate-500 font-bold uppercase tracking-wider">
+                    Sales cycle
+                  </span>
                 </div>
               </div>
             </div>
@@ -1531,7 +1935,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         </div>
 
         {/* BOTTOM ROW: Consolidated horizontal ribbon with a top accent blue border, positioned higher */}
-        <div className="w-full border-t-[3px] border-t-[#0176D3] bg-white/92 backdrop-blur-md rounded-2xl py-3 px-4 md:py-4 md:px-6 shadow-[0_12px_36px_rgba(1,118,211,0.1)] relative z-10 mt-4 md:mt-5 mb-1 md:mb-2">
+        <div className="w-full border-t-[3px] border-t-[#0176D3] premium-glass-card rounded-2xl py-3 px-4 md:py-4 md:px-6 relative z-10 mt-4 md:mt-5 mb-1 md:mb-2">
           <div className="grid grid-cols-2 md:flex md:flex-row items-center justify-between gap-3 md:gap-4 w-full">
             {kpiCards.map((card, idx) => (
               <div
@@ -1542,8 +1946,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <card.icon className="size-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-[8px] md:text-[9.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-1">{card.label}</span>
-                  <span className="text-sm md:text-base lg:text-lg font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">{card.val}</span>
+                  <span className="text-[8px] md:text-[9.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-1">
+                    {card.label}
+                  </span>
+                  <span className="text-sm md:text-base lg:text-lg font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">
+                    {card.val}
+                  </span>
                 </div>
               </div>
             ))}
@@ -1556,9 +1964,6 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
     );
   }
 
-
-
-
   if (scene.id === 6) {
     return (
       <div
@@ -1569,12 +1974,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Ambient Glow Effects */}
-        <div className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.22) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[400px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.12) 0%, transparent 70%)",
+          }}
+        />
 
         {/* Blueprint Grid Background */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -1591,7 +2002,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         {/* Fractal Noise Overlay for subtle visual grain */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.015] pointer-events-none mix-blend-overlay">
           <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.8"
+              numOctaves="3"
+              stitchTiles="stitch"
+            />
           </filter>
           <rect width="100%" height="100%" filter="url(#noiseFilter)" />
         </svg>
@@ -1605,24 +2021,38 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               DISTRICT 06 &bull; MARKETING CLOUD
             </div>
 
-            <h2 className="text-xl sm:text-[26px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[500px] mb-1.5 md:mb-2.5" style={{ lineHeight: 0.95 }}>
+            <h2
+              className="text-xl sm:text-[26px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px] font-extrabold tracking-tight text-[#0F172A] font-display max-w-[500px] mb-1.5 md:mb-2.5"
+              style={{ lineHeight: 0.95 }}
+            >
               Create Personalized <br />
               Customer Journeys <br />
-              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">That Convert</span>
+              <span className="bg-gradient-to-r from-[#00A1E0] via-[#0176D3] to-[#0B5CAB] bg-clip-text text-transparent">
+                That Convert
+              </span>
             </h2>
 
-            <p className="text-xs sm:text-sm md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px] text-[#475569] font-medium max-w-[520px] mb-1" style={{ lineHeight: 1.45 }}>
-              Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.
+            <p
+              className="text-xs sm:text-sm md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px] text-[#475569] font-medium max-w-[520px] mb-1"
+              style={{ lineHeight: 1.45 }}
+            >
+              Marketing Cloud helps businesses engage customers with personalized campaigns,
+              automated journeys, audience segmentation, and AI-powered engagement across every
+              channel.
             </p>
           </div>
 
           {/* RIGHT SIDE: Marketing Dashboard Card (50% width, compact size, shadow & grid) */}
-          <div className="w-full md:w-[48%] bg-white/92 backdrop-blur-[24px] border border-sky-100/80 shadow-[0_30px_80px_rgba(1,118,211,0.12)] rounded-[24px] p-3 md:p-4 flex flex-col justify-between h-fit transition-all duration-300 relative">
+          <div className="w-full md:w-[48%] premium-glass-card rounded-[24px] p-3 md:p-4 flex flex-col justify-between h-fit relative">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2">
               <div className="flex flex-col text-left">
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Marketing Performance Center</span>
-                <span className="text-xs md:text-sm lg:text-[15px] font-black text-[#0F172A] leading-tight">Campaign Performance</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  Marketing Performance Center
+                </span>
+                <span className="text-xs md:text-sm lg:text-[15px] font-black text-[#0F172A] leading-tight">
+                  Campaign Performance
+                </span>
               </div>
               <div className="flex flex-col items-end">
                 <span className="bg-[#0176D3]/10 text-[#0176D3] font-extrabold px-2.5 py-0.5 rounded-full text-[9px] border border-[#00A1E0]/20 flex items-center gap-1 shadow-sm">
@@ -1642,10 +2072,16 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               ].map((card, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/95 border border-slate-100 hover:border-[#0176D3]/30 rounded-xl p-3 md:p-3 shadow-[0_2px_8px_rgba(1,118,211,0.02)] hover:shadow-[0_4px_12px_rgba(1,118,211,0.06)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
+                  className="premium-glass-card premium-glass-card-hover rounded-xl p-3 md:p-3 flex flex-col justify-between"
                 >
-                  <span className="block text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">{card.label}</span>
-                  <span className={`text-[11px] sm:text-xs md:text-[13px] lg:text-sm font-black ${card.color} leading-none`}>{card.val}</span>
+                  <span className="block text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">
+                    {card.label}
+                  </span>
+                  <span
+                    className={`text-[11px] sm:text-xs md:text-[13px] lg:text-sm font-black ${card.color} leading-none`}
+                  >
+                    {card.val}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1654,10 +2090,16 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             <div className="pt-2 md:pt-2.5 border-t border-slate-100 mt-0.5">
               <div className="flex items-end justify-between h-10 md:h-12 lg:h-14 gap-1.5 my-0.5">
                 {[35, 52, 42, 68, 78, 84, 92].map((h, i) => (
-                  <div key={i} className="w-full bg-gradient-to-t from-[#0176D3] to-[#00A1E0] rounded-t-md hover:scale-y-[1.03] transition-all duration-200 cursor-pointer" style={{ height: `${h}%` }} />
+                  <div
+                    key={i}
+                    className="w-full bg-gradient-to-t from-[#0176D3] to-[#00A1E0] rounded-t-md hover:scale-y-[1.03] transition-all duration-200 cursor-pointer"
+                    style={{ height: `${h}%` }}
+                  />
                 ))}
               </div>
-              <p className="text-[7.5px] md:text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 text-center">Campaign Performance (7-day)</p>
+              <p className="text-[7.5px] md:text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-1.5 text-center">
+                Campaign Performance (7-day)
+              </p>
             </div>
           </div>
         </div>
@@ -1671,15 +2113,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               return (
                 <div
                   key={it.title}
-                  className="rounded-2xl p-3 flex items-start gap-3 h-[70px] md:h-[78px] lg:h-[84px] transition-all duration-300 hover:shadow-[0_8px_20px_rgba(1,118,211,0.08)] hover:border-[#0176D3]/25 cursor-default bg-white/65 border"
-                  style={{ borderColor: "rgba(0, 150, 255, 0.08)" }}
+                  className="premium-glass-card premium-glass-card-hover rounded-2xl p-3 flex items-start gap-3 h-[70px] md:h-[78px] lg:h-[84px] cursor-default"
                 >
                   <div className="flex size-7 md:size-8 items-center justify-center rounded-full bg-[#0176D3]/10 border border-[#00A1E0]/20 text-[#0176D3] flex-shrink-0 mt-0.5 shadow-sm">
                     <IconComp className="size-4 stroke-[3.5]" />
                   </div>
                   <div className="min-w-0 flex-1 flex flex-col justify-center h-full text-left">
-                    <h4 className="font-bold text-xs md:text-sm lg:text-[14px] text-[#0F172A] leading-tight mb-0.5 truncate">{it.title}</h4>
-                    <p className="text-[10px] md:text-xs lg:text-[12px] text-[#475569] font-medium leading-snug line-clamp-2">{it.body}</p>
+                    <h4 className="font-bold text-xs md:text-sm lg:text-[14px] text-[#0F172A] leading-tight mb-0.5 truncate">
+                      {it.title}
+                    </h4>
+                    <p className="text-[10px] md:text-xs lg:text-[12px] text-[#475569] font-medium leading-snug line-clamp-2">
+                      {it.body}
+                    </p>
                   </div>
                 </div>
               );
@@ -1688,7 +2133,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         </div>
 
         {/* BOTTOM ROW: Consolidated horizontal ribbon with a top accent blue border */}
-        <div className="w-full border-t-[3px] border-t-[#0176D3] bg-white/92 backdrop-blur-md rounded-2xl py-2 px-3 md:py-2.5 md:px-5 shadow-[0_12px_36px_rgba(1,118,211,0.1)] relative z-10">
+        <div className="w-full border-t-[3px] border-t-[#0176D3] premium-glass-card rounded-2xl py-2 px-3 md:py-2.5 md:px-5 relative z-10">
           <div className="grid grid-cols-2 md:flex md:flex-row items-center justify-between gap-2.5 md:gap-3 w-full">
             {[
               { val: "+68%", label: "Engage", icon: Megaphone },
@@ -1704,8 +2149,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   <card.icon className="size-3.5 md:size-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-[7.5px] md:text-[8.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-0.5">{card.label}</span>
-                  <span className="text-xs sm:text-sm md:text-base font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">{card.val}</span>
+                  <span className="text-[7.5px] md:text-[8.5px] text-[#475569] font-bold uppercase tracking-wider leading-none mb-0.5">
+                    {card.label}
+                  </span>
+                  <span className="text-xs sm:text-sm md:text-base font-black text-[#0F172A] leading-none transition-colors duration-200 group-hover/kpi:text-[#0176D3]">
+                    {card.val}
+                  </span>
                 </div>
               </div>
             ))}
@@ -1739,12 +2188,13 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         )}
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {scene.items?.map((it) => (
-            <div key={it.title} className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50">
+            <div
+              key={it.title}
+              className="glass-panel rounded-2xl p-5 border border-slate-200/50 bg-white/50"
+            >
               <it.icon className="size-5 text-primary" />
               <h3 className="mt-3 text-sm md:text-base font-bold text-[#0F172A]">{it.title}</h3>
-              {it.body && (
-                <p className="mt-1 text-xs text-[#475569] font-medium">{it.body}</p>
-              )}
+              {it.body && <p className="mt-1 text-xs text-[#475569] font-medium">{it.body}</p>}
             </div>
           ))}
         </div>
@@ -1762,8 +2212,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Style injection for animations */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           @keyframes pulseFlow {
             to {
               stroke-dashoffset: -20;
@@ -1782,15 +2233,23 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           .voice-bar-3 { animation: voiceWave 0.9s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.3s; }
           .voice-bar-4 { animation: voiceWave 0.7s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.45s; }
           .voice-bar-5 { animation: voiceWave 1.0s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.2s; }
-        `}} />
+        `,
+          }}
+        />
 
         {/* Soft blue ambient glow */}
-        <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+          }}
+        />
 
         {/* TOP ROW: Title & Kicker (left) + Description paragraphs (right) */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start justify-start w-full h-auto relative z-10 mt-0.5">
@@ -1805,20 +2264,34 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               Real Problems. <br />
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                 Purpose-Built
-                <svg className="absolute -bottom-0.5 left-0 w-full h-[5px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                  <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="3" strokeLinecap="round" />
+                <svg
+                  className="absolute -bottom-0.5 left-0 w-full h-[5px]"
+                  viewBox="0 0 200 5"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                    stroke="#0EA5E9"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
                 </svg>
-              </span> Products.
+              </span>{" "}
+              Products.
             </h2>
           </div>
 
           {/* RIGHT SIDE: Description Paragraphs */}
           <div className="w-full md:flex-1 flex flex-col justify-start text-left max-w-[620px] pt-0 md:pt-[24px]">
             <p className="text-[14.5px] md:text-[18px] lg:text-[20px] font-[800] text-[#0F172A] leading-tight mb-1.5">
-              Most Salesforce partners implement what Salesforce sells.<br />We went further.
+              Most Salesforce partners implement what Salesforce sells.
+              <br />
+              We went further.
             </p>
             <p className="text-[12.5px] md:text-[15px] lg:text-[16px] text-slate-500 font-semibold leading-relaxed mb-1.5">
-              Working with real estate developers and enterprise teams across India, we found gaps no off-the-shelf tool was solving cleanly — and we built for them.
+              Working with real estate developers and enterprise teams across India, we found gaps
+              no off-the-shelf tool was solving cleanly — and we built for them.
             </p>
             <p className="text-[12.5px] md:text-[15px] lg:text-[16px] text-[#0EA5E9] font-extrabold leading-relaxed">
               Every product here is live with a paying client. No filler. No vaporware.
@@ -1832,7 +2305,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         {/* BOTTOM ROW: 3 premium product cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 md:gap-4 w-full max-w-[1240px] mx-auto items-stretch relative z-10 mb-2 justify-center">
           {/* Card 1: Cascade Connect */}
-          <div className="bg-white/80 backdrop-blur-md border border-white/60 rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(15,23,42,0.06),0_0_20px_rgba(14,165,233,0.02)] hover:shadow-[0_25px_60px_rgba(14,165,233,0.14)] hover:border-[#0EA5E9]/30 transition-all duration-500 relative overflow-hidden group h-[340px] md:h-[375px] w-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
             {/* Background brand color glow reflection */}
             <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
 
@@ -1867,7 +2340,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
               {/* 4. Description */}
               <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                WhatsApp, Email and SMS natively logged in Salesforce. Real-time delivery tracking, read receipts and communication history inside CRM.
+                WhatsApp, Email and SMS natively logged in Salesforce. Real-time delivery tracking,
+                read receipts and communication history inside CRM.
               </p>
 
               {/* 5. Feature chips */}
@@ -1895,11 +2369,36 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow flex flex-col justify-between">
               <div className="relative w-full h-[90px] md:h-[105px] flex items-center justify-between">
                 {/* Animated SVG Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M 30 20 C 40 20, 43 50, 45 50" fill="none" className="animated-flow-line stroke-[#0EA5E9]" strokeWidth="1.5" />
-                  <path d="M 30 50 L 45 50" fill="none" className="animated-flow-line stroke-[#2563EB]" strokeWidth="1.5" />
-                  <path d="M 30 80 C 40 80, 43 50, 45 50" fill="none" className="animated-flow-line stroke-[#3B82F6]" strokeWidth="1.5" />
-                  <path d="M 55 50 L 70 50" fill="none" className="animated-flow-line stroke-[#2563EB]" strokeWidth="1.5" />
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 30 20 C 40 20, 43 50, 45 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#0EA5E9]"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M 30 50 L 45 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#2563EB]"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M 30 80 C 40 80, 43 50, 45 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#3B82F6]"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M 55 50 L 70 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#2563EB]"
+                    strokeWidth="1.5"
+                  />
                 </svg>
 
                 {/* Left Column: Channels */}
@@ -1907,7 +2406,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   {/* WhatsApp Node */}
                   <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
                     <MessageSquare className="w-3.5 h-3.5 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">WhatsApp</span>
+                    <span className="text-[9.5px] font-black text-slate-700 truncate">
+                      WhatsApp
+                    </span>
                   </div>
                   {/* Email Node */}
                   <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
@@ -1931,7 +2432,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 {/* Right Salesforce CRM Node */}
                 <div className="w-[32%] bg-slate-50 border border-slate-200/50 rounded-xl py-1.5 px-2 shadow-sm flex flex-col items-center justify-center text-center z-10 relative">
                   <Cloud className="w-5 h-5 text-[#2563EB] flex-shrink-0" />
-                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">Salesforce CRM</span>
+                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">
+                    Salesforce CRM
+                  </span>
                 </div>
               </div>
 
@@ -1948,7 +2451,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                       <m.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
                       <span className="truncate">{m.val}</span>
                     </div>
-                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">{m.label}</span>
+                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">
+                      {m.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -1956,7 +2461,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* Card 2: CX Prism */}
-          <div className="bg-white/80 backdrop-blur-md border border-white/60 rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(15,23,42,0.06),0_0_20px_rgba(37,99,235,0.02)] hover:shadow-[0_25px_60px_rgba(37,99,235,0.14)] hover:border-[#2563EB]/30 transition-all duration-500 relative overflow-hidden group h-[340px] md:h-[375px] w-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
             {/* Background brand color glow reflection */}
             <div className="absolute -inset-1 bg-gradient-to-br from-[#2563EB]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
 
@@ -1991,7 +2496,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
               {/* 4. Description */}
               <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                AI-powered NPS analysis, churn prediction, risk alerts, sentiment intelligence and customer health monitoring directly inside Salesforce.
+                AI-powered NPS analysis, churn prediction, risk alerts, sentiment intelligence and
+                customer health monitoring directly inside Salesforce.
               </p>
 
               {/* 5. Feature chips */}
@@ -2019,27 +2525,60 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow grid grid-cols-3 gap-2 items-stretch h-[115px] md:h-[130px]">
               {/* Column 1: NPS Score */}
               <div className="flex flex-col items-center justify-center text-center border-r border-slate-100 pr-1">
-                <span className="text-[8.5px] font-black text-slate-500 mb-0.5 leading-none">NPS Score</span>
+                <span className="text-[8.5px] font-black text-slate-500 mb-0.5 leading-none">
+                  NPS Score
+                </span>
                 <div className="relative w-20 h-11 md:h-13 flex items-center justify-center mt-0.5">
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 60">
-                    <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#F1F5F9" strokeWidth="8" strokeLinecap="round" />
-                    <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#2563EB" strokeWidth="8" strokeLinecap="round" strokeDasharray="125.6" strokeDashoffset="35.2" />
+                    <path
+                      d="M 10 50 A 40 40 0 0 1 90 50"
+                      fill="none"
+                      stroke="#F1F5F9"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M 10 50 A 40 40 0 0 1 90 50"
+                      fill="none"
+                      stroke="#2563EB"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeDasharray="125.6"
+                      strokeDashoffset="35.2"
+                    />
                   </svg>
                   <div className="absolute top-3.5 md:top-4.5 flex flex-col items-center">
                     <span className="text-base font-black text-slate-800 leading-none">72</span>
-                    <span className="text-[7px] font-bold text-slate-500 uppercase leading-none mt-0.5">Good</span>
+                    <span className="text-[7px] font-bold text-slate-500 uppercase leading-none mt-0.5">
+                      Good
+                    </span>
                   </div>
                 </div>
-                <span className="text-[7.5px] font-black text-[#0EA5E9] mt-1 leading-none">+12 vs 30d</span>
+                <span className="text-[7.5px] font-black text-[#0EA5E9] mt-1 leading-none">
+                  +12 vs 30d
+                </span>
               </div>
 
               {/* Column 2: Sentiment Trend */}
               <div className="flex flex-col justify-between h-full relative border-r border-slate-100 pr-1 pl-0.5">
-                <span className="text-[8.5px] font-black text-slate-500 text-left pl-0.5">Sentiment</span>
+                <span className="text-[8.5px] font-black text-slate-500 text-left pl-0.5">
+                  Sentiment
+                </span>
                 <div className="relative w-full h-11 md:h-13 mt-0.5">
-                  <svg className="w-full h-full" viewBox="0 0 160 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    className="w-full h-full"
+                    viewBox="0 0 160 50"
+                    preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <defs>
-                      <linearGradient id="sentiment-prism-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <linearGradient
+                        id="sentiment-prism-gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
                         <stop offset="0%" stopColor="#2563EB" stopOpacity="0.2" />
                         <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
                       </linearGradient>
@@ -2047,8 +2586,16 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                     <line x1="0" y1="12.5" x2="160" y2="12.5" stroke="#F1F5F9" strokeWidth="0.5" />
                     <line x1="0" y1="25" x2="160" y2="25" stroke="#F1F5F9" strokeWidth="0.5" />
                     <line x1="0" y1="37.5" x2="160" y2="37.5" stroke="#F1F5F9" strokeWidth="0.5" />
-                    <path d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8" fill="none" stroke="#2563EB" strokeWidth="2" />
-                    <path d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8 L 160 50 L 0 50 Z" fill="url(#sentiment-prism-gradient)" />
+                    <path
+                      d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8"
+                      fill="none"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8 L 160 50 L 0 50 Z"
+                      fill="url(#sentiment-prism-gradient)"
+                    />
                     <circle cx="160" cy="8" r="2.5" fill="#2563EB" />
                   </svg>
                 </div>
@@ -2066,26 +2613,59 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 {/* Customer Health */}
                 <div className="flex items-center justify-between gap-1 w-full border-b border-slate-100 pb-0.5">
                   <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">Health</span>
-                    <span className="text-[8.5px] font-black text-[#0EA5E9] mt-0.5 leading-none">Healthy</span>
+                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
+                      Health
+                    </span>
+                    <span className="text-[8.5px] font-black text-[#0EA5E9] mt-0.5 leading-none">
+                      Healthy
+                    </span>
                   </div>
                   <svg className="w-5.5 h-5.5 flex-shrink-0" viewBox="0 0 32 32">
-                    <circle cx="16" cy="16" r="12" fill="transparent" stroke="#E2E8F0" strokeWidth="3" />
-                    <circle cx="16" cy="16" r="12" fill="transparent" stroke="#0EA5E9" strokeWidth="3" strokeDasharray="75" strokeDashoffset="13.5" strokeLinecap="round" transform="rotate(-90 16 16)" />
-                    <text x="16" y="19" textAnchor="middle" className="text-[8px] font-black fill-[#0EA5E9]">82</text>
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="12"
+                      fill="transparent"
+                      stroke="#E2E8F0"
+                      strokeWidth="3"
+                    />
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="12"
+                      fill="transparent"
+                      stroke="#0EA5E9"
+                      strokeWidth="3"
+                      strokeDasharray="75"
+                      strokeDashoffset="13.5"
+                      strokeLinecap="round"
+                      transform="rotate(-90 16 16)"
+                    />
+                    <text
+                      x="16"
+                      y="19"
+                      textAnchor="middle"
+                      className="text-[8px] font-black fill-[#0EA5E9]"
+                    >
+                      82
+                    </text>
                   </svg>
                 </div>
 
                 {/* Churn Risk */}
                 <div className="flex items-center justify-between gap-1 w-full border-b border-slate-100 py-0.5">
                   <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">Churn</span>
-                    <span className="text-[8.5px] font-black text-slate-600 mt-0.5 leading-none">Low</span>
+                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
+                      Churn
+                    </span>
+                    <span className="text-[8.5px] font-black text-slate-600 mt-0.5 leading-none">
+                      Low
+                    </span>
                   </div>
                   <div className="flex items-center gap-0.5">
                     <span className="text-[8px] font-black text-slate-700">12%</span>
                     <div className="w-6 h-0.75 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#2563EB] rounded-full" style={{ width: '12%' }} />
+                      <div className="h-full bg-[#2563EB] rounded-full" style={{ width: "12%" }} />
                     </div>
                   </div>
                 </div>
@@ -2093,8 +2673,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 {/* Revenue Impact */}
                 <div className="flex items-center justify-between gap-1 w-full pt-0.5">
                   <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">Revenue</span>
-                    <span className="text-[8.5px] font-black text-[#2563EB] mt-0.5 leading-none font-sans">₹48.7L</span>
+                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
+                      Revenue
+                    </span>
+                    <span className="text-[8.5px] font-black text-[#2563EB] mt-0.5 leading-none font-sans">
+                      ₹48.7L
+                    </span>
                   </div>
                 </div>
               </div>
@@ -2102,7 +2686,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           </div>
 
           {/* Card 3: AI Voice Platform */}
-          <div className="bg-white/80 backdrop-blur-md border border-white/60 rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left shadow-[0_20px_50px_rgba(15,23,42,0.06),0_0_20px_rgba(14,165,233,0.02)] hover:shadow-[0_25px_60px_rgba(14,165,233,0.14)] hover:border-[#0EA5E9]/30 transition-all duration-500 relative overflow-hidden group h-[340px] md:h-[375px] w-full">
+          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
             {/* Background brand color glow reflection */}
             <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
 
@@ -2137,7 +2721,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
               {/* 4. Description */}
               <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                Intelligent inbound and outbound calls. Automatic call transcription, sentiment tagging, CRM updates, and pipelines built for scale.
+                Intelligent inbound and outbound calls. Automatic call transcription, sentiment
+                tagging, CRM updates, and pipelines built for scale.
               </p>
 
               {/* 5. Feature chips */}
@@ -2165,16 +2750,33 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow flex flex-col justify-between">
               <div className="relative w-full h-[90px] md:h-[105px] flex items-center justify-between">
                 {/* Animated SVG Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M 30 50 L 45 50" fill="none" className="animated-flow-line stroke-[#0EA5E9]" strokeWidth="1.5" />
-                  <path d="M 55 50 L 70 50" fill="none" className="animated-flow-line stroke-[#2563EB]" strokeWidth="1.5" />
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 30 50 L 45 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#0EA5E9]"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M 55 50 L 70 50"
+                    fill="none"
+                    className="animated-flow-line stroke-[#2563EB]"
+                    strokeWidth="1.5"
+                  />
                 </svg>
 
                 {/* Left Column: Customer */}
                 <div className="flex flex-col justify-center h-full z-10 relative w-[32%] py-0.5">
                   <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
                     <Phone className="w-3.5 h-3.5 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">Customer</span>
+                    <span className="text-[9.5px] font-black text-slate-700 truncate">
+                      Customer
+                    </span>
                   </div>
                 </div>
 
@@ -2198,7 +2800,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 {/* Right Salesforce CRM Node */}
                 <div className="w-[32%] bg-slate-50 border border-[#E2E8F0]/50 rounded-xl py-1.5 px-2 shadow-sm flex flex-col items-center justify-center text-center z-10 relative">
                   <Cloud className="w-5 h-5 text-[#2563EB] flex-shrink-0" />
-                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">Salesforce CRM</span>
+                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">
+                    Salesforce CRM
+                  </span>
                 </div>
               </div>
 
@@ -2215,7 +2819,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                       <m.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
                       <span className="truncate">{m.val}</span>
                     </div>
-                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">{m.label}</span>
+                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">
+                      {m.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -2227,23 +2833,20 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200/80 to-transparent opacity-60 my-0.5 relative z-10" />
 
         {/* PREMIUM METRIC STRIP: Slim unified glass ribbon */}
-        <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-2.5 md:gap-4 w-full max-w-5xl mx-auto h-[60px] md:h-[90px] mb-1.5 py-1 px-6 rounded-xl bg-white/70 backdrop-blur-md border border-[#0EA5E9]/15 shadow-[0_10px_30px_rgba(15,23,42,0.03),0_-6px_25px_rgba(14,165,233,0.06)] z-10 relative">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-2.5 md:gap-4 w-full max-w-5xl mx-auto h-[60px] md:h-[90px] mb-1.5 py-1 px-6 rounded-xl premium-glass-card border border-[#0EA5E9]/15 z-10 relative">
           {[
             { value: "3", label: "Proprietary Products", icon: Sparkles, color: "#0EA5E9" },
             { value: "100%", label: "Live Deployments", icon: BadgeCheck, color: "#2563EB" },
             { value: "8+", label: "Enterprise Clients", icon: Users, color: "#2563EB" },
-            { value: "In-House", label: "Built In-House", icon: Code, color: "#0EA5E9" }
+            { value: "In-House", label: "Built In-House", icon: Code, color: "#0EA5E9" },
           ].map((stat, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-3.5 px-2 py-0.5 group cursor-default"
-            >
+            <div key={idx} className="flex items-center gap-3.5 px-2 py-0.5 group cursor-default">
               <div
                 className="w-9 md:w-11 h-9 md:h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
                 style={{
                   background: `${stat.color}10`,
                   color: stat.color,
-                  border: `1px solid ${stat.color}20`
+                  border: `1px solid ${stat.color}20`,
                 }}
               >
                 <stat.icon className="w-4.5 h-4.5" />
@@ -2327,12 +2930,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Soft blue ambient glow */}
-        <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+          }}
+        />
 
         {/* TOP ROW: Title & Kicker (left) + Description paragraphs (right) */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start justify-start w-full h-auto relative z-10 mt-0.5">
@@ -2347,8 +2956,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               Built for Real Estate. <br />
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                 Ready for Enterprise.
-                <svg className="absolute -bottom-0.5 left-0 w-full h-[5px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                  <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="3" strokeLinecap="round" />
+                <svg
+                  className="absolute -bottom-0.5 left-0 w-full h-[5px]"
+                  viewBox="0 0 200 5"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                    stroke="#0EA5E9"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
             </h2>
@@ -2357,10 +2976,14 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           {/* RIGHT SIDE: Description Paragraphs */}
           <div className="w-full md:flex-1 flex flex-col justify-start text-left max-w-[620px] pt-0 md:pt-[24px]">
             <p className="text-[14.5px] md:text-[18px] lg:text-[20px] font-[800] text-[#0F172A] leading-tight mb-1.5">
-              Deep industry-specific solutions built on Salesforce.<br />We deploy AI where it matters.
+              Deep industry-specific solutions built on Salesforce.
+              <br />
+              We deploy AI where it matters.
             </p>
             <p className="text-[12.5px] md:text-[15px] lg:text-[16px] text-slate-500 font-semibold leading-relaxed">
-              We design custom workflows, secure database architectures, and automated customer journeys designed specifically to solve the unique operational pressures of your industry vertical.
+              We design custom workflows, secure database architectures, and automated customer
+              journeys designed specifically to solve the unique operational pressures of your
+              industry vertical.
             </p>
           </div>
         </div>
@@ -2376,21 +2999,29 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             return (
               <div
                 key={ind.id}
-                className={`bg-white/80 backdrop-blur-md rounded-[20px] p-3.5 flex flex-row items-center gap-3.5 text-left transition-all duration-500 relative overflow-hidden group min-h-[96px] md:min-h-[110px] w-full ${ind.highlight
-                  ? "border-2 border-[#0EA5E9] shadow-[0_15px_45px_rgba(14,165,233,0.12),inset_0_0_15px_rgba(14,165,233,0.03)]"
-                  : "border border-white/60 shadow-[0_10px_35px_rgba(15,23,42,0.04)] hover:border-[#0EA5E9]/30 hover:shadow-[0_15px_45px_rgba(14,165,233,0.08)]"
+                className={`rounded-[20px] p-3.5 flex flex-row items-center gap-3.5 text-left relative overflow-hidden group min-h-[96px] md:min-h-[110px] w-full ${ind.highlight
+                  ? "premium-glass-card-active"
+                  : "premium-glass-card premium-glass-card-hover"
                   }`}
               >
                 {/* Background brand color glow reflection */}
-                <div className={`absolute -inset-1 bg-gradient-to-br opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10 ${ind.highlight ? "from-[#0EA5E9]/10 to-transparent" : "from-[#0EA5E9]/5 to-transparent"
-                  }`} />
+                <div
+                  className={`absolute -inset-1 bg-gradient-to-br opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10 ${ind.highlight
+                    ? "from-[#0EA5E9]/10 to-transparent"
+                    : "from-[#0EA5E9]/5 to-transparent"
+                    }`}
+                />
 
                 {/* 64px Icon Wrapper */}
-                <div className={`w-[60px] md:w-[64px] h-[60px] md:h-[64px] flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0 ${ind.highlight
-                  ? "bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] text-white shadow-[0_6px_20px_rgba(14,165,233,0.25)]"
-                  : "bg-[#F0F9FF] border border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.08)]"
-                  }`}>
-                  <IconComp className={`w-7 md:w-8 h-7 md:h-8 ${ind.highlight ? "text-white" : "text-[#0EA5E9]"}`} />
+                <div
+                  className={`w-[60px] md:w-[64px] h-[60px] md:h-[64px] flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0 ${ind.highlight
+                    ? "bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] text-white shadow-[0_6px_20px_rgba(14,165,233,0.25)]"
+                    : "bg-[#F0F9FF] border border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.08)]"
+                    }`}
+                >
+                  <IconComp
+                    className={`w-7 md:w-8 h-7 md:h-8 ${ind.highlight ? "text-white" : "text-[#0EA5E9]"}`}
+                  />
                 </div>
 
                 <div className="flex-grow min-w-0 flex flex-col justify-center h-full">
@@ -2475,12 +3106,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Soft blue ambient glow */}
-        <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+          }}
+        />
 
         {/* TOP ROW: Title & Kicker (left) + Description paragraphs (right) */}
         <div className="flex flex-col md:flex-row md:items-center justify-start w-full h-auto relative z-10 gap-8 lg:gap-16 mt-1">
@@ -2495,8 +3132,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               Why Developers & Enterprises <br className="hidden lg:inline" />
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                 Choose Cascade
-                <svg className="absolute -bottom-0.5 left-0 w-full h-[5px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                  <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="3" strokeLinecap="round" />
+                <svg
+                  className="absolute -bottom-0.5 left-0 w-full h-[5px]"
+                  viewBox="0 0 200 5"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                    stroke="#0EA5E9"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
             </h2>
@@ -2505,7 +3152,8 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
           {/* RIGHT SIDE: Subheading */}
           <div className="w-full md:max-w-[40%] lg:max-w-[450px] flex flex-col justify-center text-left">
             <p className="text-[11px] md:text-[13px] lg:text-[14.5px] text-slate-500 font-semibold leading-relaxed">
-              We combine Salesforce expertise, AI innovation, product thinking and real-world industry execution to deliver measurable business outcomes.
+              We combine Salesforce expertise, AI innovation, product thinking and real-world
+              industry execution to deliver measurable business outcomes.
             </p>
           </div>
         </div>
@@ -2515,85 +3163,89 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
         {/* MIDDLE ROW: 4 Normal Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-[1280px] mx-auto items-stretch relative z-10">
-          {reasons.filter(r => !r.isLarge).map((r) => {
-            const IconComp = r.icon;
+          {reasons
+            .filter((r) => !r.isLarge)
+            .map((r) => {
+              const IconComp = r.icon;
 
-            return (
-              <div
-                key={r.id}
-                className="backdrop-blur-md rounded-[20px] p-3.5 md:p-4 flex flex-col justify-start text-left transition-all duration-500 relative overflow-hidden group w-full min-h-[160px] md:min-h-[190px] bg-white/80 border border-white/60 shadow-[0_10px_35px_rgba(15,23,42,0.04)] hover:shadow-[0_25px_60px_rgba(14,165,233,0.15)] hover:border-[#0EA5E9]/40 hover:ring-4 hover:ring-[#0EA5E9]/5 hover:-translate-y-2"
-              >
-                {/* Permanent subtle background glows */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0EA5E9]/5 via-[#2563EB]/2 to-transparent rounded-[20px] pointer-events-none -z-10" />
-                <div className="absolute -inset-px bg-gradient-to-br from-[#0EA5E9]/10 via-transparent to-[#2563EB]/5 rounded-[20px] pointer-events-none -z-20" />
+              return (
+                <div
+                  key={r.id}
+                  className="premium-glass-card premium-glass-card-hover rounded-[20px] p-3.5 md:p-4 flex flex-col justify-start text-left relative overflow-hidden group w-full min-h-[160px] md:min-h-[190px]"
+                >
+                  {/* Permanent subtle background glows */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#0EA5E9]/5 via-[#2563EB]/2 to-transparent rounded-[20px] pointer-events-none -z-10" />
+                  <div className="absolute -inset-px bg-gradient-to-br from-[#0EA5E9]/10 via-transparent to-[#2563EB]/5 rounded-[20px] pointer-events-none -z-20" />
 
-                {/* Hover blue glow reflection */}
-                <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/12 via-[#2563EB]/6 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
+                  {/* Hover blue glow reflection */}
+                  <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/12 via-[#2563EB]/6 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
 
-                {/* Icon Wrapper */}
-                <div className="w-[46px] h-[46px] md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full border shadow-sm group-hover:scale-105 transition-all duration-300 flex-shrink-0 mb-2.5 bg-[#F0F9FF] border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.06)] group-hover:shadow-[0_8px_24px_rgba(14,165,233,0.1)]">
-                  <IconComp className="w-5.5 h-5.5 md:w-6 h-6 text-[#0EA5E9]" />
+                  {/* Icon Wrapper */}
+                  <div className="w-[46px] h-[46px] md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full border shadow-sm group-hover:scale-105 transition-all duration-300 flex-shrink-0 mb-2.5 bg-[#F0F9FF] border-[#E0F2FE]/50 text-[#0EA5E9] shadow-[0_4px_12px_rgba(14,165,233,0.06)] group-hover:shadow-[0_8px_24px_rgba(14,165,233,0.1)]">
+                    <IconComp className="w-5.5 h-5.5 md:w-6 h-6 text-[#0EA5E9]" />
+                  </div>
+
+                  <div className="flex-grow min-w-0 flex flex-col justify-start">
+                    <h3 className="text-[13px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-[900] text-[#0F172A] leading-snug tracking-tight mb-0.5">
+                      {r.title}
+                    </h3>
+
+                    {/* Horizontal accent line */}
+                    <div className="w-8 h-[2px] bg-[#0EA5E9] rounded-full mb-1.5 transition-all duration-300 group-hover:w-12" />
+
+                    <p className="text-[9.5px] md:text-[10.5px] lg:text-[11px] leading-relaxed text-slate-500 font-semibold line-clamp-3 md:line-clamp-4">
+                      {r.desc}
+                    </p>
+                  </div>
                 </div>
-
-                <div className="flex-grow min-w-0 flex flex-col justify-start">
-                  <h3 className="text-[13px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-[900] text-[#0F172A] leading-snug tracking-tight mb-0.5">
-                    {r.title}
-                  </h3>
-
-                  {/* Horizontal accent line */}
-                  <div className="w-8 h-[2px] bg-[#0EA5E9] rounded-full mb-1.5 transition-all duration-300 group-hover:w-12" />
-
-                  <p className="text-[9.5px] md:text-[10.5px] lg:text-[11px] leading-relaxed text-slate-500 font-semibold line-clamp-3 md:line-clamp-4">
-                    {r.desc}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
 
         {/* BOTTOM ROW: 2 Featured Cards (1.5x wider, centered) */}
         <div className="flex flex-col md:flex-row justify-center gap-4 w-full max-w-[1280px] mx-auto items-stretch relative z-10 mt-1">
-          {reasons.filter(r => r.isLarge).map((r) => {
-            const IconComp = r.icon;
+          {reasons
+            .filter((r) => r.isLarge)
+            .map((r) => {
+              const IconComp = r.icon;
 
-            return (
-              <div
-                key={r.id}
-                className="backdrop-blur-md rounded-[20px] p-3.5 md:p-4 flex flex-col justify-start text-left transition-all duration-500 relative overflow-hidden group w-full md:w-[36%] flex-shrink-0 min-h-[160px] md:min-h-[190px] bg-gradient-to-br from-[#F8FAFC]/95 via-white/90 to-[#E0F2FE]/40 border border-[#0EA5E9]/20 shadow-[0_12px_40px_rgba(15,23,42,0.05)] hover:shadow-[0_25px_60px_rgba(14,165,233,0.18)] hover:border-[#0EA5E9]/50 hover:ring-4 hover:ring-[#0EA5E9]/5 hover:-translate-y-2"
-              >
-                {/* Featured Badge */}
-                <span className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E0F2FE] text-[#0284C7] text-[8px] font-black uppercase tracking-wider shadow-sm border border-[#0EA5E9]/10">
-                  Featured
-                </span>
+              return (
+                <div
+                  key={r.id}
+                  className="premium-glass-card premium-glass-card-hover rounded-[20px] p-3.5 md:p-4 flex flex-col justify-start text-left relative overflow-hidden group w-full md:w-[36%] flex-shrink-0 min-h-[160px] md:min-h-[190px]"
+                >
+                  {/* Featured Badge */}
+                  <span className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E0F2FE] text-[#0284C7] text-[8px] font-black uppercase tracking-wider shadow-sm border border-[#0EA5E9]/10">
+                    Featured
+                  </span>
 
-                {/* Permanent subtle background glows */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0EA5E9]/5 via-[#2563EB]/2 to-transparent rounded-[20px] pointer-events-none -z-10" />
-                <div className="absolute -inset-px bg-gradient-to-br from-[#0EA5E9]/10 via-transparent to-[#2563EB]/5 rounded-[20px] pointer-events-none -z-20" />
+                  {/* Permanent subtle background glows */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#0EA5E9]/5 via-[#2563EB]/2 to-transparent rounded-[20px] pointer-events-none -z-10" />
+                  <div className="absolute -inset-px bg-gradient-to-br from-[#0EA5E9]/10 via-transparent to-[#2563EB]/5 rounded-[20px] pointer-events-none -z-20" />
 
-                {/* Hover blue glow reflection */}
-                <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/12 via-[#2563EB]/6 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
+                  {/* Hover blue glow reflection */}
+                  <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/12 via-[#2563EB]/6 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
 
-                {/* Icon Wrapper */}
-                <div className="w-[46px] h-[46px] md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full border shadow-sm group-hover:scale-105 transition-all duration-300 flex-shrink-0 mb-2.5 bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] border-[#0EA5E9]/20 text-white shadow-[0_8px_20px_rgba(14,165,233,0.2)] group-hover:shadow-[0_12px_28px_rgba(14,165,233,0.3)]">
-                  <IconComp className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                  {/* Icon Wrapper */}
+                  <div className="w-[46px] h-[46px] md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full border shadow-sm group-hover:scale-105 transition-all duration-300 flex-shrink-0 mb-2.5 bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] border-[#0EA5E9]/20 text-white shadow-[0_8px_20px_rgba(14,165,233,0.2)] group-hover:shadow-[0_12px_28px_rgba(14,165,233,0.3)]">
+                    <IconComp className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                  </div>
+
+                  <div className="flex-grow min-w-0 flex flex-col justify-start">
+                    <h3 className="text-[13px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-[900] text-[#0F172A] leading-snug tracking-tight mb-0.5">
+                      {r.title}
+                    </h3>
+
+                    {/* Horizontal accent line */}
+                    <div className="w-12 h-[2.5px] bg-[#2563EB] rounded-full mb-1.5 transition-all duration-300 group-hover:w-20" />
+
+                    <p className="text-[9.5px] md:text-[10.5px] lg:text-[11px] leading-relaxed text-slate-500 font-semibold line-clamp-3 md:line-clamp-4">
+                      {r.desc}
+                    </p>
+                  </div>
                 </div>
-
-                <div className="flex-grow min-w-0 flex flex-col justify-start">
-                  <h3 className="text-[13px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-[900] text-[#0F172A] leading-snug tracking-tight mb-0.5">
-                    {r.title}
-                  </h3>
-
-                  {/* Horizontal accent line */}
-                  <div className="w-12 h-[2.5px] bg-[#2563EB] rounded-full mb-1.5 transition-all duration-300 group-hover:w-20" />
-
-                  <p className="text-[9.5px] md:text-[10.5px] lg:text-[11px] leading-relaxed text-slate-500 font-semibold line-clamp-3 md:line-clamp-4">
-                    {r.desc}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
 
         {/* Bottom Glow reflection element */}
@@ -2613,7 +3265,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
       "GAYATRI CONSTRUCTORS",
       "AUTOMATENHANDEL24",
       "NANDIVARDHAN",
-      "ASHWIN SHETH"
+      "ASHWIN SHETH",
     ];
 
     return (
@@ -2625,12 +3277,18 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         }}
       >
         {/* Soft blue ambient glow */}
-        <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-        }} />
-        <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+          style={{
+            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+          style={{
+            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+          }}
+        />
 
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto">
           {/* LEFT COLUMN: 40% width */}
@@ -2647,15 +3305,27 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                 Organizations That <br />
                 <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                   Trust Cascade Tech
-                  <svg className="absolute -bottom-0.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                    <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+                  <svg
+                    className="absolute -bottom-0.5 left-0 w-full h-[4px]"
+                    viewBox="0 0 200 5"
+                    fill="none"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                      stroke="#0EA5E9"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </span>
               </h2>
 
               {/* Supporting Text */}
               <p className="text-[11px] md:text-[12.5px] lg:text-[14px] text-slate-500 font-semibold leading-relaxed mb-4">
-                From Mumbai's leading real estate developers to growing enterprise organizations, Cascade Tech powers Salesforce, AI and automation initiatives across multiple industries.
+                From Mumbai's leading real estate developers to growing enterprise organizations,
+                Cascade Tech powers Salesforce, AI and automation initiatives across multiple
+                industries.
               </p>
             </div>
 
@@ -2664,11 +3334,11 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
               {[
                 { value: "8+", label: "Clients Served" },
                 { value: "5", label: "Cities" },
-                { value: "5", label: "Industries" }
+                { value: "5", label: "Industries" },
               ].map((stat, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/80 border border-[#0EA5E9]/15 rounded-2xl p-3 shadow-[0_8px_30px_rgba(15,23,42,0.02)] text-left flex flex-col justify-center transition-all duration-300 hover:border-[#0EA5E9]/30"
+                  className="premium-glass-card premium-glass-card-hover rounded-2xl p-3 text-left flex flex-col justify-center"
                 >
                   <span className="text-lg md:text-xl xl:text-2xl font-[900] text-[#0EA5E9] leading-none">
                     {stat.value}
@@ -2731,9 +3401,12 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         </div>
 
         {/* Radial Glow Behind Title */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10" style={{
-          background: "radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%)"
-        }} />
+        <div
+          className="absolute top-12 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-radial-blue opacity-20 blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%)",
+          }}
+        />
 
         {/* SECTION HEADER: Centered */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto relative z-10">
@@ -2752,10 +3425,37 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
         {/* 3x2 Grid of 6 Premium Cloud Cards with Connection Lines */}
         <div className="relative w-full flex-1 min-h-0">
           {/* Subtle Connection Lines (SVG Layer) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-5" style={{ zIndex: 1 }}>
-            <line x1="33%" y1="10%" x2="33%" y2="90%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
-            <line x1="67%" y1="10%" x2="67%" y2="90%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
-            <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="#0284C7" strokeWidth="1" strokeDasharray="5,5" />
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none opacity-5"
+            style={{ zIndex: 1 }}
+          >
+            <line
+              x1="33%"
+              y1="10%"
+              x2="33%"
+              y2="90%"
+              stroke="#0284C7"
+              strokeWidth="1"
+              strokeDasharray="5,5"
+            />
+            <line
+              x1="67%"
+              y1="10%"
+              x2="67%"
+              y2="90%"
+              stroke="#0284C7"
+              strokeWidth="1"
+              strokeDasharray="5,5"
+            />
+            <line
+              x1="0%"
+              y1="50%"
+              x2="100%"
+              y2="50%"
+              stroke="#0284C7"
+              strokeWidth="1"
+              strokeDasharray="5,5"
+            />
           </svg>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 w-full h-full items-stretch relative z-10">
@@ -2769,9 +3469,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.08 }}
                   viewport={{ once: true }}
-                  className={`group relative bg-white/95 hover:bg-white rounded-[24px] flex flex-col justify-between text-center shadow-[0_10px_30px_rgba(2,132,199,0.06)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] hover:-translate-y-2 transition-all duration-500 flex-1 h-full overflow-hidden ${isSalesCloud
-                    ? "border-2 border-[#0284C7]"
-                    : "border border-[#E2E8F0] hover:border-[#0284C7]/30"
+                  className={`group relative rounded-[24px] flex flex-col justify-between text-center flex-1 h-full overflow-hidden ${isSalesCloud
+                    ? "premium-glass-card-active"
+                    : "premium-glass-card premium-glass-card-hover"
                     }`}
                 >
                   {/* Blue Glow on Hover */}
@@ -2786,7 +3486,9 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
 
                   {/* Cloud Icon in Blue Circle with Glow */}
                   <div className="relative flex justify-center mb-2 pt-1">
-                    <div className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 size-16 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]`}>
+                    <div
+                      className={`relative flex items-center justify-center rounded-full text-white shadow-[0_8px_24px_rgba(2,132,199,0.35)] group-hover:shadow-[0_16px_40px_rgba(2,132,199,0.5)] group-hover:scale-110 transition-all duration-500 flex-shrink-0 size-16 bg-gradient-to-br from-[#0EA5E9] to-[#0284C7]`}
+                    >
                       <item.icon className="size-9" />
                       <span className="absolute inset-0 rounded-full bg-sky-400/20 blur-md -z-10 group-hover:blur-lg transition-all duration-500" />
                     </div>
@@ -2866,9 +3568,7 @@ function SceneContent({ scene, isActive = false }: { scene: Scene; isActive?: bo
             </div>
             <h3 className="mt-3 text-sm md:text-base font-bold text-[#0F172A]">{it.title}</h3>
             {it.body && (
-              <p className="mt-1 text-xs leading-relaxed text-[#475569] font-medium">
-                {it.body}
-              </p>
+              <p className="mt-1 text-xs leading-relaxed text-[#475569] font-medium">{it.body}</p>
             )}
           </div>
         ))}
@@ -2935,24 +3635,28 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
       companyName: "Kohinoor Group",
       subtitle: "REAL ESTATE",
       solutionStack: "Salesforce CRM + Meta CAPI + CX Prism™",
-      quote: "From lead to booking to possession — Kohinoor's entire customer journey now runs through a single Salesforce environment built by Cascade Tech.",
-      challenge: "Pre-sales ran across spreadsheets, broker WhatsApp groups and disconnected calling tools. No single view of a prospect's journey and Meta ad attribution was guesswork.",
-      whatWeBuilt: "Full Sales Cloud covering lead capture, source tracking, site-visit scheduling, opportunity management and dashboards — plus a native Meta Conversions API integration in Apex and Flow with zero middleware. CX Prism™ now deploying for post-possession NPS.",
-      outcome: "Live in production. End-to-end marketing attribution active for the first time — which campaigns drive site visits, bookings and true CAC.",
+      quote:
+        "From lead to booking to possession — Kohinoor's entire customer journey now runs through a single Salesforce environment built by Cascade Tech.",
+      challenge:
+        "Pre-sales ran across spreadsheets, broker WhatsApp groups and disconnected calling tools. No single view of a prospect's journey and Meta ad attribution was guesswork.",
+      whatWeBuilt:
+        "Full Sales Cloud covering lead capture, source tracking, site-visit scheduling, opportunity management and dashboards — plus a native Meta Conversions API integration in Apex and Flow with zero middleware. CX Prism™ now deploying for post-possession NPS.",
+      outcome:
+        "Live in production. End-to-end marketing attribution active for the first time — which campaigns drive site visits, bookings and true CAC.",
       oneLineOutcome: "Active end-to-end marketing attribution sync for true CAC and site visits.",
       metrics: [
         { value: "+40%", label: "Lead Visibility", icon: TrendingUp },
         { value: "+65%", label: "Process Automation", icon: Zap },
         { value: "100%", label: "Salesforce Adoption", icon: ShieldCheck },
-        { value: "Real-Time", label: "Attribution Sync", icon: RefreshCw }
+        { value: "Real-Time", label: "Attribution Sync", icon: RefreshCw },
       ],
       dashboardType: "kohinoor",
       businessImpact: [
         { icon: Users, text: "More qualified leads captured accurately" },
         { icon: TrendingUp, text: "Clear visibility from ad spend to booking" },
         { icon: Wallet, text: "Lower cost per acquisition with true attribution" },
-        { icon: HeartHandshake, text: "Better customer experience with CX Prism™" }
-      ]
+        { icon: HeartHandshake, text: "Better customer experience with CX Prism™" },
+      ],
     },
     {
       id: 2,
@@ -2960,49 +3664,59 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
       subtitle: "REAL ESTATE",
       solutionStack: "Enterprise Salesforce Implementation",
       specialBadge: "₹57,74,000 + GST • 138-day roadmap",
-      quote: "A ground-up Salesforce transformation across pre-sales, bookings, incentives and channel partners — delivered on time and on budget.",
-      challenge: "A comprehensive CRM transformation across multiple projects and teams at once. Existing setup had no channel-partner visibility, no incentive management, no tele-calling integration and no unified booking workflow.",
-      whatWeBuilt: "Five-module Salesforce rollout: pre-sales, bookings, incentives, channel-partner onboarding and tele-calling — delivered as one cohesive program.",
-      outcome: "One of our largest, most complex implementations to date. All five modules delivered within the committed timeline; channel-partner onboarding time reduced significantly.",
-      oneLineOutcome: "Complex 5-module Salesforce CRM transformation delivered on time and budget.",
+      quote:
+        "A ground-up Salesforce transformation across pre-sales, bookings, incentives and channel partners — delivered on time and on budget.",
+      challenge:
+        "A comprehensive CRM transformation across multiple projects and teams at once. Existing setup had no channel-partner visibility, no incentive management, no tele-calling integration and no unified booking workflow.",
+      whatWeBuilt:
+        "Five-module Salesforce rollout: pre-sales, bookings, incentives, channel-partner onboarding and tele-calling — delivered as one cohesive program.",
+      outcome:
+        "One of our largest, most complex implementations to date. All five modules delivered within the committed timeline; channel-partner onboarding time reduced significantly.",
+      oneLineOutcome:
+        "Complex 5-module Salesforce CRM transformation delivered on time and budget.",
       metrics: [
         { value: "138 Days", label: "Roadmap Delivery", icon: Clock },
         { value: "5 Modules", label: "CRM Integration", icon: Layers },
         { value: "100%", label: "On Time & Budget", icon: ShieldCheck },
-        { value: "Reduced", label: "Onboarding Cycle", icon: TrendingUp }
+        { value: "Reduced", label: "Onboarding Cycle", icon: TrendingUp },
       ],
       dashboardType: "ashwin",
       businessImpact: [
         { icon: Users, text: "Unified view across multiple project sales teams" },
         { icon: TrendingUp, text: "Accelerated channel-partner onboarding cycle" },
         { icon: BadgeCheck, text: "Automated incentive calculations and audit trails" },
-        { icon: ShieldCheck, text: "Zero booking slip-ups or pipeline dead-ends" }
-      ]
+        { icon: ShieldCheck, text: "Zero booking slip-ups or pipeline dead-ends" },
+      ],
     },
     {
       id: 3,
       companyName: "Naiknavare Developers",
       subtitle: "REAL ESTATE",
       solutionStack: "Marketing Cloud + Cascade Connect",
-      quote: "From unstructured campaign activity to a properly configured Marketing Cloud setup — with a clear roadmap for WhatsApp automation next.",
-      challenge: "Marketing team ran email and SMS through Marketing Cloud but lacked campaign structure, reporting visibility and channel-level data. Lead follow-up was manual, inconsistent and untracked.",
-      whatWeBuilt: "Restructured Marketing Cloud setup with proper journeys, governance and reporting. Cascade Connect proposed for Phase 2 WhatsApp automation.",
-      outcome: "Campaign reporting now active and used weekly by the marketing team. Clear roadmap for WhatsApp automation in place.",
-      oneLineOutcome: "Configured clean Campaign Reporting dashboards used weekly by marketing teams.",
+      quote:
+        "From unstructured campaign activity to a properly configured Marketing Cloud setup — with a clear roadmap for WhatsApp automation next.",
+      challenge:
+        "Marketing team ran email and SMS through Marketing Cloud but lacked campaign structure, reporting visibility and channel-level data. Lead follow-up was manual, inconsistent and untracked.",
+      whatWeBuilt:
+        "Restructured Marketing Cloud setup with proper journeys, governance and reporting. Cascade Connect proposed for Phase 2 WhatsApp automation.",
+      outcome:
+        "Campaign reporting now active and used weekly by the marketing team. Clear roadmap for WhatsApp automation in place.",
+      oneLineOutcome:
+        "Configured clean Campaign Reporting dashboards used weekly by marketing teams.",
       metrics: [
         { value: "+24.8%", label: "Email Open Rate", icon: Mail },
         { value: "Phase 2", label: "WhatsApp Ready", icon: MessageSquare },
         { value: "Weekly", label: "Attribution Reports", icon: LineChart },
-        { value: "Active", label: "Campaign Attrib.", icon: RefreshCw }
+        { value: "Active", label: "Campaign Attrib.", icon: RefreshCw },
       ],
       dashboardType: "naiknavare",
       businessImpact: [
         { icon: Megaphone, text: "Structured marketing journeys and clean reporting" },
         { icon: TrendingUp, text: "24.8% open rate achieved on primary campaigns" },
         { icon: Layers, text: "Clean database segmentation and governance" },
-        { icon: MessageSquare, text: "Ready for automated Phase 2 WhatsApp journeys" }
-      ]
-    }
+        { icon: MessageSquare, text: "Ready for automated Phase 2 WhatsApp journeys" },
+      ],
+    },
   ];
 
   const selectedCaseStudy = selectedIdx !== null ? caseStudies[selectedIdx] : null;
@@ -3030,12 +3744,18 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
       }}
     >
       {/* Soft blue ambient glow */}
-      <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-        background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-      }} />
-      <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-        background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-      }} />
+      <div
+        className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+        style={{
+          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+        style={{
+          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+        }}
+      />
 
       {/* SECTION HEADER */}
       <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-start justify-between w-full h-auto relative z-10 mt-1 mb-1">
@@ -3048,15 +3768,26 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
             Work In Production. <br />
             <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
               Outcomes That Compound.
-              <svg className="absolute -bottom-0.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+              <svg
+                className="absolute -bottom-0.5 left-0 w-full h-[4px]"
+                viewBox="0 0 200 5"
+                fill="none"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                  stroke="#0EA5E9"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
               </svg>
             </span>
           </h2>
         </div>
         <div className="w-full md:max-w-[40%] flex flex-col justify-start text-left pt-0 md:pt-4">
           <p className="text-[11px] md:text-[12.5px] text-slate-500 font-semibold leading-normal">
-            Real Salesforce implementations, AI automations and marketing transformations delivering measurable business outcomes.
+            Real Salesforce implementations, AI automations and marketing transformations delivering
+            measurable business outcomes.
           </p>
         </div>
       </div>
@@ -3069,7 +3800,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
         {caseStudies.map((cs, idx) => (
           <div
             key={cs.id}
-            className="bg-white/85 hover:bg-white border border-slate-200/40 hover:border-[#0EA5E9]/30 rounded-[20px] p-4 md:p-4.5 flex flex-col justify-between text-left shadow-[0_12px_40px_rgba(15,23,42,0.03)] hover:shadow-[0_25px_60px_rgba(14,165,233,0.08)] hover:scale-[1.01] transition-all duration-300 relative group cursor-pointer"
+            className="premium-glass-card premium-glass-card-hover rounded-[20px] p-4 md:p-4.5 flex flex-col justify-between text-left relative group cursor-pointer"
             onClick={() => setSelectedIdx(idx)}
           >
             <div>
@@ -3089,7 +3820,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
               </h3>
 
               {/* Large Dashboard Preview Console on the Card */}
-              <div className="w-full h-[110px] bg-slate-50/60 border border-slate-200/40 rounded-xl my-2.5 p-2.5 overflow-hidden relative flex flex-col justify-center select-none shadow-inner">
+              <div className="w-full h-[110px] bg-white/40 backdrop-blur-sm border border-white/50 rounded-xl my-2.5 p-2.5 overflow-hidden relative flex flex-col justify-center select-none shadow-[inset_0_1px_3px_rgba(2,132,199,0.02)]">
                 {cs.dashboardType === "kohinoor" && (
                   <div className="flex flex-col gap-1.5 w-full">
                     <div className="flex justify-between text-[7.5px] text-slate-400 font-black">
@@ -3118,7 +3849,10 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                     </div>
                     <div className="grid grid-cols-5 gap-0.5">
                       {[1, 2, 3, 4, 5].map((i) => (
-                        <div key={i} className="h-1 bg-emerald-100 border border-emerald-200 rounded-xs" />
+                        <div
+                          key={i}
+                          className="h-1 bg-emerald-100 border border-emerald-200 rounded-xs"
+                        />
                       ))}
                     </div>
                     <div className="flex justify-between text-[6.5px] text-slate-500 leading-none">
@@ -3159,7 +3893,10 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
               {/* 3 Key Metrics */}
               <div className="grid grid-cols-3 gap-1.5 mt-2.5">
                 {cs.metrics.slice(0, 3).map((m, mIdx) => (
-                  <div key={mIdx} className="bg-slate-50/50 border border-slate-100 rounded-lg p-2 text-left flex flex-col justify-between min-h-[56px]">
+                  <div
+                    key={mIdx}
+                    className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[56px]"
+                  >
                     <span className="text-[#0EA5E9] text-lg sm:text-xl font-extrabold tracking-tight font-display leading-none">
                       {m.value}
                     </span>
@@ -3210,7 +3947,9 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
             {/* Title, Subtitle, and Stack directly in the header */}
             <div className="flex items-center gap-3 text-left">
-              <span className="text-xl md:text-2xl font-black text-[#0F172A] tracking-tight">{selectedCaseStudy.companyName}</span>
+              <span className="text-xl md:text-2xl font-black text-[#0F172A] tracking-tight">
+                {selectedCaseStudy.companyName}
+              </span>
               <span className="bg-[#ebf8ff] text-[#3182ce] text-[10px] font-bold px-2 py-0.5 rounded-md leading-none">
                 {selectedCaseStudy.subtitle}
               </span>
@@ -3239,7 +3978,6 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
           {/* Success Story Article Container */}
           <div className="max-w-6xl mx-auto w-full px-6 py-6 flex flex-col gap-6 flex-grow">
-
             {/* Top row: Quote & Metrics */}
             <div className="flex flex-col lg:flex-row gap-6 items-center justify-between w-full border-b border-slate-100 pb-5 text-left">
               {/* Left Quote */}
@@ -3257,7 +3995,10 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                 {selectedCaseStudy.metrics.map((m: any, mIdx: number) => {
                   const MetricIcon = m.icon;
                   return (
-                    <div key={mIdx} className="bg-white border border-slate-200/50 rounded-2xl p-3 flex flex-col justify-between min-h-[90px] shadow-[0_2px_8px_rgba(15,23,42,0.02)] hover:border-sky-500/30 transition-all duration-300">
+                    <div
+                      key={mIdx}
+                      className="premium-glass-card rounded-2xl p-3 flex flex-col justify-between min-h-[90px]"
+                    >
                       <div className="text-sky-500 flex items-center justify-start">
                         <MetricIcon className="size-4" />
                       </div>
@@ -3277,7 +4018,6 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
             {/* Split Details Section */}
             <div className="flex flex-col lg:flex-row gap-6 items-stretch w-full mt-2">
-
               {/* Left column details (Timeline Layout) */}
               <motion.div
                 key={`left-article-${selectedIdx}`}
@@ -3292,7 +4032,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                 {[
                   { label: "Challenge", body: selectedCaseStudy.challenge, icon: AlertTriangle },
                   { label: "What We Built", body: selectedCaseStudy.whatWeBuilt, icon: Workflow },
-                  { label: "Outcome", body: selectedCaseStudy.outcome, icon: BadgeCheck }
+                  { label: "Outcome", body: selectedCaseStudy.outcome, icon: BadgeCheck },
                 ].map((item, subIdx) => (
                   <div key={subIdx} className="relative flex flex-col">
                     {/* Circle Node */}
@@ -3303,7 +4043,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                     </div>
 
                     {/* Card Content */}
-                    <div className="bg-white border border-slate-200/50 rounded-2xl p-4 md:p-5 flex flex-col justify-start text-left shadow-[0_4px_16px_rgba(15,23,42,0.02)] hover:border-sky-500/30 transition-all duration-300">
+                    <div className="premium-glass-card rounded-2xl p-4 md:p-5 flex flex-col justify-start text-left">
                       <span className="text-[10px] font-black uppercase tracking-wider text-sky-500">
                         {item.label}
                       </span>
@@ -3324,7 +4064,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                 className="w-full lg:w-[52%] flex flex-col"
               >
                 {/* Large visual console */}
-                <div className="w-full flex-grow flex flex-col justify-between bg-slate-100/60 border border-slate-200/60 rounded-xl p-4 relative overflow-hidden min-h-[300px] lg:min-h-[330px] shadow-sm select-none hover:shadow-md transition-shadow duration-300">
+                <div className="w-full flex-grow flex flex-col justify-between bg-white/40 backdrop-blur-md border border-white/50 rounded-xl p-4 relative overflow-hidden min-h-[300px] lg:min-h-[330px] shadow-[inset_0_1px_3px_rgba(2,132,199,0.02)] select-none">
                   <div className="flex items-center justify-between border-b border-slate-200/40 pb-2 mb-3">
                     <div className="flex items-center gap-1">
                       <div className="size-2 rounded-full bg-[#EF4444]/90" />
@@ -3332,7 +4072,8 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                       <div className="size-2 rounded-full bg-[#10B981]/90" />
                     </div>
                     <span className="text-[8px] font-bold text-slate-400 tracking-wider font-mono">
-                      {selectedCaseStudy.companyName.toLowerCase().replace(/[^a-z0-9]/g, "")}.salesforce / console
+                      {selectedCaseStudy.companyName.toLowerCase().replace(/[^a-z0-9]/g, "")}
+                      .salesforce / console
                     </span>
                   </div>
 
@@ -3340,17 +4081,19 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                     {selectedCaseStudy.dashboardType === "kohinoor" && (
                       <>
                         <div className="flex flex-col gap-1.5 w-full text-left">
-                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Conversion Funnel</span>
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">
+                            Conversion Funnel
+                          </span>
                           <div className="flex flex-col gap-1 mt-0.5 text-[10px] font-bold text-slate-600">
-                            <div className="w-full bg-sky-50 border border-sky-100 rounded-lg p-2 flex justify-between items-center leading-none">
+                            <div className="w-full premium-glass-card rounded-lg p-2 flex justify-between items-center leading-none">
                               <span>1. Leads</span>
                               <span className="text-[#0EA5E9] font-black">12,400</span>
                             </div>
-                            <div className="w-[82%] bg-sky-50 border border-sky-100 rounded-lg p-2 flex justify-between items-center leading-none">
+                            <div className="w-[82%] premium-glass-card rounded-lg p-2 flex justify-between items-center leading-none">
                               <span>2. Contacted</span>
                               <span className="text-[#0EA5E9] font-black">8,680</span>
                             </div>
-                            <div className="w-[62%] bg-sky-100/55 border border-sky-200/55 rounded-lg p-2 flex justify-between items-center leading-none">
+                            <div className="w-[62%] premium-glass-card rounded-lg p-2 flex justify-between items-center leading-none">
                               <span>3. Site Visits</span>
                               <span className="text-[#0EA5E9] font-black">2,400</span>
                             </div>
@@ -3362,20 +4105,45 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                         </div>
 
                         <div className="grid grid-cols-2 gap-2 mt-0.5">
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Weekly Visits</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Weekly Visits
+                            </span>
                             <div className="flex items-end justify-between h-9 mt-1 px-1">
                               {[25, 45, 60, 75, 95].map((h, i) => (
-                                <div key={i} className="w-[12%] bg-[#0EA5E9] rounded-t-xs" style={{ height: `${h}%` }} />
+                                <div
+                                  key={i}
+                                  className="w-[12%] bg-[#0EA5E9] rounded-t-xs"
+                                  style={{ height: `${h}%` }}
+                                />
                               ))}
                             </div>
                           </div>
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Meta Attribution</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Meta Attribution
+                            </span>
                             <div className="flex items-center gap-2 mt-1.5">
                               <svg className="size-8 flex-shrink-0" viewBox="0 0 32 32">
-                                <circle cx="16" cy="16" r="14" fill="transparent" stroke="#E2E8F0" strokeWidth="4" />
-                                <circle cx="16" cy="16" r="14" fill="transparent" stroke="#0EA5E9" strokeWidth="4" strokeDasharray="60 100" strokeDashoffset="0" transform="rotate(-90 16 16)" />
+                                <circle
+                                  cx="16"
+                                  cy="16"
+                                  r="14"
+                                  fill="transparent"
+                                  stroke="#E2E8F0"
+                                  strokeWidth="4"
+                                />
+                                <circle
+                                  cx="16"
+                                  cy="16"
+                                  r="14"
+                                  fill="transparent"
+                                  stroke="#0EA5E9"
+                                  strokeWidth="4"
+                                  strokeDasharray="60 100"
+                                  strokeDashoffset="0"
+                                  transform="rotate(-90 16 16)"
+                                />
                               </svg>
                               <div className="flex flex-col text-[7.5px] leading-tight">
                                 <span className="font-black text-[#0ea5e9]">68% Meta CAPI</span>
@@ -3390,33 +4158,48 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                     {selectedCaseStudy.dashboardType === "ashwin" && (
                       <>
                         <div className="flex flex-col gap-1.5 w-full text-left">
-                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Implementation Progress</span>
-                          <div className="flex items-center justify-between w-full bg-white border border-slate-100 p-2.5 rounded-lg mt-0.5 shadow-sm">
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">
+                            Implementation Progress
+                          </span>
+                          <div className="flex items-center justify-between w-full premium-glass-card p-2.5 rounded-lg mt-0.5">
                             {[
                               { label: "Pre-Sales", status: "completed" },
                               { label: "Bookings", status: "completed" },
                               { label: "Incentives", status: "completed" },
                               { label: "Partners", status: "completed" },
-                              { label: "Tele-Calls", status: "completed" }
+                              { label: "Tele-Calls", status: "completed" },
                             ].map((step, sIdx) => (
-                              <div key={sIdx} className="flex flex-col items-center flex-1 relative">
+                              <div
+                                key={sIdx}
+                                className="flex flex-col items-center flex-1 relative"
+                              >
                                 <div className="size-5 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shadow-xs">
                                   <Check className="size-2.5" />
                                 </div>
-                                <span className="text-[7.5px] font-bold text-slate-600 mt-1 leading-none truncate w-full text-center">{step.label}</span>
+                                <span className="text-[7.5px] font-bold text-slate-600 mt-1 leading-none truncate w-full text-center">
+                                  {step.label}
+                                </span>
                               </div>
                             ))}
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-2 mt-0.5">
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Incentives Tracked</span>
-                            <p className="text-lg font-[900] text-[#8B5CF6] mt-1.5 font-display leading-none">₹57.7L</p>
-                            <span className="text-[7px] text-slate-400 font-bold leading-none mt-1">100% Audit Verified</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Incentives Tracked
+                            </span>
+                            <p className="text-lg font-[900] text-[#8B5CF6] mt-1.5 font-display leading-none">
+                              ₹57.7L
+                            </p>
+                            <span className="text-[7px] text-slate-400 font-bold leading-none mt-1">
+                              100% Audit Verified
+                            </span>
                           </div>
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Partner Sync</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Partner Sync
+                            </span>
                             <div className="flex flex-col gap-1 mt-1.5 w-full">
                               <div className="flex justify-between text-[7.5px] text-slate-500 font-bold leading-none">
                                 <span>Active Brokers</span>
@@ -3434,51 +4217,79 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                     {selectedCaseStudy.dashboardType === "naiknavare" && (
                       <>
                         <div className="flex flex-col gap-1.5 w-full text-left">
-                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">WhatsApp Lead Journey</span>
-                          <div className="flex items-center justify-between w-full bg-white border border-slate-100 px-3 py-2 rounded-lg mt-0.5 shadow-sm">
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">
+                            WhatsApp Lead Journey
+                          </span>
+                          <div className="flex items-center justify-between w-full premium-glass-card px-3 py-2 rounded-lg mt-0.5">
                             <div className="flex flex-col items-center">
                               <div className="size-5.5 rounded bg-sky-50 text-[#0EA5E9] border border-sky-100 flex items-center justify-center shadow-xs">
                                 <Users className="size-2.5" />
                               </div>
-                              <span className="text-[7.5px] font-bold text-slate-500 mt-1 leading-none">Ad Click</span>
+                              <span className="text-[7.5px] font-bold text-slate-500 mt-1 leading-none">
+                                Ad Click
+                              </span>
                             </div>
                             <div className="h-[1px] bg-slate-200 flex-grow mx-1 border-dashed border-t" />
                             <div className="flex flex-col items-center">
                               <div className="size-6.5 rounded-full bg-sky-500 text-white flex items-center justify-center shadow-xs animate-pulse">
                                 <MessageSquare className="size-3 text-white" />
                               </div>
-                              <span className="text-[7.5px] font-black text-[#0EA5E9] mt-1 leading-none">Opt-In Msg</span>
+                              <span className="text-[7.5px] font-black text-[#0EA5E9] mt-1 leading-none">
+                                Opt-In Msg
+                              </span>
                             </div>
                             <div className="h-[1px] bg-slate-200 flex-grow mx-1 border-dashed border-t" />
                             <div className="flex flex-col items-center">
                               <div className="size-5.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shadow-xs">
                                 <Cloud className="size-2.5" />
                               </div>
-                              <span className="text-[7.5px] font-bold text-slate-500 mt-1 leading-none">CRM Update</span>
+                              <span className="text-[7.5px] font-bold text-slate-500 mt-1 leading-none">
+                                CRM Update
+                              </span>
                             </div>
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-2 mt-0.5">
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Campaign Stats</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Campaign Stats
+                            </span>
                             <div className="flex flex-col gap-1 mt-1.5">
                               <div className="flex justify-between items-center text-[8.5px] font-bold text-slate-700">
-                                <span className="text-slate-400 text-[7px] font-bold">Open Rate</span>
+                                <span className="text-slate-400 text-[7px] font-bold">
+                                  Open Rate
+                                </span>
                                 <span>24.8%</span>
                               </div>
                               <div className="flex justify-between items-center text-[8.5px] font-bold text-slate-700">
-                                <span className="text-slate-400 text-[7px] font-bold">Click Rate</span>
+                                <span className="text-slate-400 text-[7px] font-bold">
+                                  Click Rate
+                                </span>
                                 <span>4.2%</span>
                               </div>
                             </div>
                           </div>
-                          <div className="bg-white border border-slate-100 rounded-lg p-2 text-left shadow-sm flex flex-col justify-between min-h-[70px]">
-                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">Engagement Trend</span>
+                          <div className="premium-glass-card rounded-lg p-2 text-left flex flex-col justify-between min-h-[70px]">
+                            <span className="text-[8px] font-black text-slate-400 uppercase leading-none">
+                              Engagement Trend
+                            </span>
                             <div className="h-7 mt-1.5 relative">
-                              <svg className="w-full h-full" viewBox="0 0 100 30" preserveAspectRatio="none">
-                                <path d="M 0 25 C 20 5, 40 30, 60 10 T 100 8" fill="none" stroke="#2563EB" strokeWidth="1.5" />
-                                <path d="M 0 25 C 20 5, 40 30, 60 10 T 100 8 L 100 30 L 0 30 Z" fill="rgba(37,99,235,0.06)" />
+                              <svg
+                                className="w-full h-full"
+                                viewBox="0 0 100 30"
+                                preserveAspectRatio="none"
+                              >
+                                <path
+                                  d="M 0 25 C 20 5, 40 30, 60 10 T 100 8"
+                                  fill="none"
+                                  stroke="#2563EB"
+                                  strokeWidth="1.5"
+                                />
+                                <path
+                                  d="M 0 25 C 20 5, 40 30, 60 10 T 100 8 L 100 30 L 0 30 Z"
+                                  fill="rgba(37,99,235,0.06)"
+                                />
                               </svg>
                             </div>
                           </div>
@@ -3488,13 +4299,12 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                   </div>
                 </div>
               </motion.div>
-
             </div>
 
             {/* Bottom business impact ribbon */}
             <div
               key={`impact-article-${selectedIdx}`}
-              className="bg-white border border-slate-200/50 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between shadow-[0_4px_20px_rgba(15,23,42,0.02)] w-full mt-4 text-left gap-4"
+              className="premium-glass-card rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between w-full mt-4 text-left gap-4"
             >
               <div className="flex items-center gap-2 border-b md:border-b-0 md:border-r border-slate-200 pb-2 md:pb-0 pr-0 md:pr-4 flex-shrink-0">
                 <span className="text-[#0EA5E9] text-[10px] font-black uppercase tracking-wider">
@@ -3517,7 +4327,6 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
                 })}
               </div>
             </div>
-
           </div>
         </motion.div>
       )}
@@ -3537,26 +4346,83 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       title: "Discovery",
       duration: "Week 1",
       desc: "Aligning operational workflows and requirements with zero assumptions.",
-      challenge: "Fragmented processes, undocumented spreadsheets, and lack of real-time pipeline visibility.",
-      whatWeBuild: "Detailed operational audit, systems map, and technical architecture definition.",
-      deliverables: ["Lead Flow Audit Map", "API/CRM Integration Specs", "Success Metric Benchmarks"],
+      challenge:
+        "Fragmented processes, undocumented spreadsheets, and lack of real-time pipeline visibility.",
+      whatWeBuild:
+        "Detailed operational audit, systems map, and technical architecture definition.",
+      deliverables: [
+        "Lead Flow Audit Map",
+        "API/CRM Integration Specs",
+        "Success Metric Benchmarks",
+      ],
       outcome: "Aligned timeline, budget, and system architecture design document.",
       icon: Search,
       illustration: () => (
-        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#0EA5E9]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="30" r="6" className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]" strokeWidth="1.5" />
-          <circle cx="30" cy="60" r="6" className="fill-slate-100 stroke-slate-400" strokeWidth="1.5" />
-          <circle cx="30" cy="90" r="6" className="fill-[#3B82F6]/10 stroke-[#3B82F6]" strokeWidth="1.5" />
-          <path d="M36 30 H100" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="3 3" />
+        <svg
+          viewBox="0 0 200 120"
+          className="w-full h-24 text-[#0EA5E9]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="30"
+            cy="30"
+            r="6"
+            className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="30"
+            cy="60"
+            r="6"
+            className="fill-slate-100 stroke-slate-400"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="30"
+            cy="90"
+            r="6"
+            className="fill-[#3B82F6]/10 stroke-[#3B82F6]"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M36 30 H100"
+            className="stroke-slate-300"
+            strokeWidth="1.5"
+            strokeDasharray="3 3"
+          />
           <path d="M36 60 Q70 60 100 60" className="stroke-slate-300" strokeWidth="1.5" />
-          <path d="M36 90 Q70 90 100 60" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="3 3" />
-          <circle cx="106" cy="60" r="12" className="fill-sky-50 stroke-[#0EA5E9]" strokeWidth="2" />
-          <path d="M101 60 L104 63 L111 56" className="stroke-[#0EA5E9]" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M36 90 Q70 90 100 60"
+            className="stroke-slate-300"
+            strokeWidth="1.5"
+            strokeDasharray="3 3"
+          />
+          <circle
+            cx="106"
+            cy="60"
+            r="12"
+            className="fill-sky-50 stroke-[#0EA5E9]"
+            strokeWidth="2"
+          />
+          <path
+            d="M101 60 L104 63 L111 56"
+            className="stroke-[#0EA5E9]"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
           <path d="M118 60 H164" className="stroke-[#0EA5E9]" strokeWidth="2" />
           <polygon points="164,57 170,60 164,63" className="fill-[#0EA5E9]" />
-          <circle cx="176" cy="60" r="8" className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]" strokeWidth="1.5" />
+          <circle
+            cx="176"
+            cy="60"
+            r="8"
+            className="fill-[#0EA5E9]/10 stroke-[#0EA5E9]"
+            strokeWidth="1.5"
+          />
         </svg>
-      )
+      ),
     },
     {
       id: "02",
@@ -3564,40 +4430,89 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       duration: "Week 2",
       desc: "Designing database schemas and automation workflows.",
       challenge: "Data model conflicts, security schema holes, and duplicate contact profiles.",
-      whatWeBuild: "Custom Entity Relationship Diagram (ERD) and object schema configuration blueprints.",
-      deliverables: ["Entity Relationship Diagrams (ERDs)", "Field-Level Security Matrix", "Sandbox Initialization Plans"],
+      whatWeBuild:
+        "Custom Entity Relationship Diagram (ERD) and object schema configuration blueprints.",
+      deliverables: [
+        "Entity Relationship Diagrams (ERDs)",
+        "Field-Level Security Matrix",
+        "Sandbox Initialization Plans",
+      ],
       outcome: "Technical blueprint signed off and sandbox environments provisioned.",
       icon: Layers,
       illustration: () => (
-        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#10B981]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="50" height="35" rx="4" className="fill-white stroke-[#10B981]" strokeWidth="1.5" />
+        <svg
+          viewBox="0 0 200 120"
+          className="w-full h-24 text-[#10B981]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="20"
+            y="20"
+            width="50"
+            height="35"
+            rx="4"
+            className="fill-white stroke-[#10B981]"
+            strokeWidth="1.5"
+          />
           <line x1="20" y1="32" x2="70" y2="32" className="stroke-[#10B981]" strokeWidth="1" />
           <rect x="25" y="38" width="15" height="4" rx="1" className="fill-slate-200" />
           <rect x="25" y="46" width="25" height="4" rx="1" className="fill-[#10B981]/30" />
-          <rect x="130" y="40" width="50" height="45" rx="4" className="fill-white stroke-slate-400" strokeWidth="1.5" />
+          <rect
+            x="130"
+            y="40"
+            width="50"
+            height="45"
+            rx="4"
+            className="fill-white stroke-slate-400"
+            strokeWidth="1.5"
+          />
           <line x1="130" y1="52" x2="180" y2="52" className="stroke-slate-400" strokeWidth="1" />
           <rect x="135" y="58" width="20" height="4" rx="1" className="fill-slate-200" />
           <rect x="135" y="66" width="25" height="4" rx="1" className="fill-slate-200" />
           <rect x="135" y="74" width="15" height="4" rx="1" className="fill-[#10B981]/30" />
-          <path d="M70 37 H95 V62 H130" className="stroke-[#10B981]" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path
+            d="M70 37 H95 V62 H130"
+            className="stroke-[#10B981]"
+            strokeWidth="1.5"
+            strokeDasharray="2 2"
+          />
           <path d="M125 58 L130 62 L125 66" className="stroke-[#10B981]" strokeWidth="1.5" />
           <circle cx="120" cy="62" r="2" className="fill-white stroke-[#10B981]" strokeWidth="1" />
         </svg>
-      )
+      ),
     },
     {
       id: "03",
       title: "Build",
       duration: "Weeks 3–10",
       desc: "Developing custom Apex, LWC, and CRM flow triggers.",
-      challenge: "Unreliable manual actions, sluggish data processing, and lack of automated alerts.",
+      challenge:
+        "Unreliable manual actions, sluggish data processing, and lack of automated alerts.",
       whatWeBuild: "Robust custom apex coding, lightning web components (LWC), and API flows.",
-      deliverables: ["Apex & Flow Automations", "WhatsApp API Integration", "Migration scripts & runs"],
+      deliverables: [
+        "Apex & Flow Automations",
+        "WhatsApp API Integration",
+        "Migration scripts & runs",
+      ],
       outcome: "Fully integrated and custom-coded CRM platform ready in staging.",
       icon: Code,
       illustration: () => (
-        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#6366F1]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="15" width="160" height="90" rx="6" className="fill-slate-900 stroke-slate-800" strokeWidth="2" />
+        <svg
+          viewBox="0 0 200 120"
+          className="w-full h-24 text-[#6366F1]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="20"
+            y="15"
+            width="160"
+            height="90"
+            rx="6"
+            className="fill-slate-900 stroke-slate-800"
+            strokeWidth="2"
+          />
           <circle cx="35" cy="27" r="3" className="fill-rose-500" />
           <circle cx="45" cy="27" r="3" className="fill-amber-500" />
           <circle cx="55" cy="27" r="3" className="fill-emerald-500" />
@@ -3608,7 +4523,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           <rect x="45" y="72" width="80" height="6" rx="2" className="fill-[#F59E0B]" />
           <rect x="32" y="86" width="40" height="6" rx="2" className="fill-slate-600" />
         </svg>
-      )
+      ),
     },
     {
       id: "04",
@@ -3617,26 +4532,91 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       desc: "Enabling teams and addressing feedback loops.",
       challenge: "Low user adoption rates, administrative skill gaps, and transition friction.",
       whatWeBuild: "Custom role-based training programs, UAT cycles, and transition playbooks.",
-      deliverables: ["UAT Testing Cycles", "Role-Based Training Manuals", "Administrator Enablement Guides"],
+      deliverables: [
+        "UAT Testing Cycles",
+        "Role-Based Training Manuals",
+        "Administrator Enablement Guides",
+      ],
       outcome: "Stakeholder sign-off and adoption readiness verified.",
       icon: GraduationCap,
       illustration: () => (
-        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#8B5CF6]" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          viewBox="0 0 200 120"
+          className="w-full h-24 text-[#8B5CF6]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <circle cx="60" cy="60" r="35" className="stroke-slate-200" strokeWidth="6" />
-          <circle cx="60" cy="60" r="35" className="stroke-[#8B5CF6]" strokeWidth="6" strokeDasharray="220" strokeDashoffset="55" strokeLinecap="round" />
-          <text x="60" y="66" className="fill-[#8B5CF6] font-extrabold text-[18px]" textAnchor="middle">85%</text>
+          <circle
+            cx="60"
+            cy="60"
+            r="35"
+            className="stroke-[#8B5CF6]"
+            strokeWidth="6"
+            strokeDasharray="220"
+            strokeDashoffset="55"
+            strokeLinecap="round"
+          />
+          <text
+            x="60"
+            y="66"
+            className="fill-[#8B5CF6] font-extrabold text-[18px]"
+            textAnchor="middle"
+          >
+            85%
+          </text>
           <g transform="translate(135, 35)">
-            <rect x="0" y="0" width="45" height="20" rx="4" className="fill-violet-50 stroke-[#8B5CF6]" strokeWidth="1" />
-            <text x="22.5" y="13" className="fill-[#8B5CF6] text-[8px] font-bold" textAnchor="middle">Training</text>
+            <rect
+              x="0"
+              y="0"
+              width="45"
+              height="20"
+              rx="4"
+              className="fill-violet-50 stroke-[#8B5CF6]"
+              strokeWidth="1"
+            />
+            <text
+              x="22.5"
+              y="13"
+              className="fill-[#8B5CF6] text-[8px] font-bold"
+              textAnchor="middle"
+            >
+              Training
+            </text>
           </g>
           <g transform="translate(135, 65)">
-            <rect x="0" y="0" width="45" height="20" rx="4" className="fill-emerald-50 stroke-[#10B981]" strokeWidth="1" />
-            <text x="22.5" y="13" className="fill-[#10B981] text-[8px] font-bold" textAnchor="middle">UAT Sign-off</text>
+            <rect
+              x="0"
+              y="0"
+              width="45"
+              height="20"
+              rx="4"
+              className="fill-emerald-50 stroke-[#10B981]"
+              strokeWidth="1"
+            />
+            <text
+              x="22.5"
+              y="13"
+              className="fill-[#10B981] text-[8px] font-bold"
+              textAnchor="middle"
+            >
+              UAT Sign-off
+            </text>
           </g>
-          <path d="M96 50 C 110 50, 110 45, 135 45" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="2 2" />
-          <path d="M96 70 C 110 70, 110 75, 135 75" className="stroke-slate-300" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path
+            d="M96 50 C 110 50, 110 45, 135 45"
+            className="stroke-slate-300"
+            strokeWidth="1.5"
+            strokeDasharray="2 2"
+          />
+          <path
+            d="M96 70 C 110 70, 110 75, 135 75"
+            className="stroke-slate-300"
+            strokeWidth="1.5"
+            strokeDasharray="2 2"
+          />
         </svg>
-      )
+      ),
     },
     {
       id: "05",
@@ -3644,28 +4624,61 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       duration: "Post Week 12",
       desc: "Deploying to production and supporting adoption.",
       challenge: "Deployment downtime, cutover synchronization, and post-launch bugs.",
-      whatWeBuild: "Safe production package migration, 30-day hypercare, and ongoing annual maintenance (AMC).",
-      deliverables: ["Production Cutover Checklist", "30-Day Hypercare Support", "Long-term AMC Setup"],
+      whatWeBuild:
+        "Safe production package migration, 30-day hypercare, and ongoing annual maintenance (AMC).",
+      deliverables: [
+        "Production Cutover Checklist",
+        "30-Day Hypercare Support",
+        "Long-term AMC Setup",
+      ],
       outcome: "Live system deployed with zero downtime and continuous support.",
       icon: Rocket,
       illustration: () => (
-        <svg viewBox="0 0 200 120" className="w-full h-24 text-[#EC4899]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 100 Q 80 85 105 55" className="stroke-[#EF4444]" strokeWidth="3" strokeLinecap="round" strokeDasharray="4 4" />
-          <path d="M20 110 Q 70 95 120 110" className="stroke-slate-300" strokeWidth="3" fill="none" />
-          <rect x="135" y="70" width="45" height="35" rx="4" className="fill-slate-50 stroke-slate-300" strokeWidth="1.5" />
+        <svg
+          viewBox="0 0 200 120"
+          className="w-full h-24 text-[#EC4899]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M50 100 Q 80 85 105 55"
+            className="stroke-[#EF4444]"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="4 4"
+          />
+          <path
+            d="M20 110 Q 70 95 120 110"
+            className="stroke-slate-300"
+            strokeWidth="3"
+            fill="none"
+          />
+          <rect
+            x="135"
+            y="70"
+            width="45"
+            height="35"
+            rx="4"
+            className="fill-slate-50 stroke-slate-300"
+            strokeWidth="1.5"
+          />
           <circle cx="145" cy="80" r="3" className="fill-[#10B981]" />
           <line x1="154" y1="80" x2="172" y2="80" className="stroke-slate-400" strokeWidth="1.5" />
           <circle cx="145" cy="90" r="3" className="fill-[#10B981]" />
           <line x1="154" y1="90" x2="172" y2="90" className="stroke-slate-400" strokeWidth="1.5" />
           <g transform="translate(100, 30) rotate(35)">
-            <path d="M0 -15 C 6 -10, 6 10, 0 15 C -6 10, -6 -10, 0 -15" className="fill-[#0EA5E9] stroke-[#0284C7]" strokeWidth="1" />
+            <path
+              d="M0 -15 C 6 -10, 6 10, 0 15 C -6 10, -6 -10, 0 -15"
+              className="fill-[#0EA5E9] stroke-[#0284C7]"
+              strokeWidth="1"
+            />
             <path d="M-5 5 L-10 12 L-4 12 Z" className="fill-rose-500" />
             <path d="M5 5 L10 12 L4 12 Z" className="fill-rose-500" />
             <circle cx="0" cy="-2" r="2.5" className="fill-white" />
             <path d="M-3 15 L0 23 L3 15 Z" className="fill-amber-500" />
           </g>
         </svg>
-      )
+      ),
     },
   ];
 
@@ -3680,12 +4693,18 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       }}
     >
       {/* Ambient glows */}
-      <div className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-        background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)"
-      }} />
-      <div className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" style={{
-        background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)"
-      }} />
+      <div
+        className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+        style={{
+          background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+        style={{
+          background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+        }}
+      />
 
       {/* Blueprint Grid Background */}
       <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
@@ -3714,28 +4733,45 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
               How We{" "}
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
                 Work With You
-                <svg className="absolute -bottom-0.5 left-0 w-full h-[4px]" viewBox="0 0 200 5" fill="none" preserveAspectRatio="none">
-                  <path d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" />
+                <svg
+                  className="absolute -bottom-0.5 left-0 w-full h-[4px]"
+                  viewBox="0 0 200 5"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                    stroke="#0EA5E9"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
             </h2>
 
             {/* Supporting Text */}
             <p className="text-[10.5px] md:text-[12.5px] lg:text-[13.5px] text-slate-500 font-semibold leading-relaxed mb-3 md:mb-4 pr-2">
-              We believe in structured delivery, complete alignment, and deep operational understanding. From the initial discovery to production launch, here is our roadmap for your project.
+              We believe in structured delivery, complete alignment, and deep operational
+              understanding. From the initial discovery to production launch, here is our roadmap
+              for your project.
             </p>
           </div>
 
           {/* Timeline Summary Card */}
-          <div className="bg-white/90 border border-sky-100 rounded-2xl p-3.5 md:p-4 shadow-[0_8px_30px_rgba(15,23,42,0.02)] flex items-start gap-3.5 transition-all hover:border-[#0EA5E9]/20 hover:shadow-md mt-auto">
+          <div className="premium-glass-card premium-glass-card-hover rounded-2xl p-3.5 md:p-4 flex items-start gap-3.5 mt-auto">
             <div className="size-9 rounded-xl bg-sky-50 flex items-center justify-center text-[#0284C7] border border-sky-100 flex-shrink-0 mt-0.5">
               <Clock className="size-5" />
             </div>
             <div>
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">TYPICAL TIMELINE</span>
-              <span className="text-base md:text-lg lg:text-xl font-[900] text-slate-900 leading-tight block mt-0.5">8–14 Weeks</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">
+                TYPICAL TIMELINE
+              </span>
+              <span className="text-base md:text-lg lg:text-xl font-[900] text-slate-900 leading-tight block mt-0.5">
+                8–14 Weeks
+              </span>
               <p className="text-[9.5px] md:text-[11px] text-slate-500 font-semibold leading-relaxed mt-1">
-                Complex multi-module projects for India's top developers — delivered on time and on budget.
+                Complex multi-module projects for India's top developers — delivered on time and on
+                budget.
               </p>
             </div>
           </div>
@@ -3743,40 +4779,76 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
         {/* RIGHT COLUMN / CENTER: 68% width */}
         <div className="w-full md:w-[68%] flex flex-col justify-center h-full py-1 relative">
-
           {/* Background Visual Roadmap Illustration */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.06] md:opacity-[0.08] select-none z-0 overflow-hidden">
-            <svg className="w-full h-full" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="w-full h-full"
+              viewBox="0 0 800 500"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               {/* Circuit board pathways in background connecting nodes */}
-              <path d="M120,180 Q250,80 400,150 T680,120" stroke="#0284C7" strokeWidth="2.5" strokeDasharray="5,5" />
-              <path d="M120,320 Q250,420 400,350 T680,380" stroke="#0EA5E9" strokeWidth="2" strokeDasharray="5,5" />
-              <path d="M280,120 L280,380" stroke="#10B981" strokeWidth="1.5" strokeDasharray="4,4" />
-              <path d="M520,120 L520,380" stroke="#6366F1" strokeWidth="1.5" strokeDasharray="4,4" />
+              <path
+                d="M120,180 Q250,80 400,150 T680,120"
+                stroke="#0284C7"
+                strokeWidth="2.5"
+                strokeDasharray="5,5"
+              />
+              <path
+                d="M120,320 Q250,420 400,350 T680,380"
+                stroke="#0EA5E9"
+                strokeWidth="2"
+                strokeDasharray="5,5"
+              />
+              <path
+                d="M280,120 L280,380"
+                stroke="#10B981"
+                strokeWidth="1.5"
+                strokeDasharray="4,4"
+              />
+              <path
+                d="M520,120 L520,380"
+                stroke="#6366F1"
+                strokeWidth="1.5"
+                strokeDasharray="4,4"
+              />
 
               {/* Node definitions */}
               <g transform="translate(120, 180)">
                 <circle r="22" fill="#F0F9FF" stroke="#0EA5E9" strokeWidth="1.5" />
-                <text fill="#0284C7" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Salesforce</text>
+                <text fill="#0284C7" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  Salesforce
+                </text>
               </g>
               <g transform="translate(280, 120)">
                 <circle r="22" fill="#ECFDF5" stroke="#10B981" strokeWidth="1.5" />
-                <text fill="#047857" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">AI Engine</text>
+                <text fill="#047857" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  AI Engine
+                </text>
               </g>
               <g transform="translate(280, 380)">
                 <circle r="22" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.5" />
-                <text fill="#475569" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">CRM</text>
+                <text fill="#475569" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  CRM
+                </text>
               </g>
               <g transform="translate(420, 200)">
                 <circle r="22" fill="#FFF1F2" stroke="#F43F5E" strokeWidth="1.5" />
-                <text fill="#BE123C" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">WhatsApp</text>
+                <text fill="#BE123C" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  WhatsApp
+                </text>
               </g>
               <g transform="translate(520, 120)">
                 <circle r="22" fill="#F5F3FF" stroke="#8B5CF6" strokeWidth="1.5" />
-                <text fill="#6D28D9" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Integrations</text>
+                <text fill="#6D28D9" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  Integrations
+                </text>
               </g>
               <g transform="translate(520, 380)">
                 <circle r="22" fill="#EFF6FF" stroke="#3B82F6" strokeWidth="1.5" />
-                <text fill="#1D4ED8" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">Deployment</text>
+                <text fill="#1D4ED8" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
+                  Deployment
+                </text>
               </g>
             </svg>
           </div>
@@ -3813,26 +4885,34 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                   onClick={() => setExpandedStageIdx(idx)}
                 >
                   {/* Icon Node wrapper */}
-                  <div className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-20 bg-white relative ${isActive
+                  <div
+                    className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-20 bg-white relative ${isActive
                       ? "border-[#0EA5E9] text-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110"
                       : "border-slate-200 text-slate-400 group-hover:border-[#0EA5E9]/50 group-hover:text-[#0EA5E9]/70"
-                    }`}>
-                    <Icon className={`size-4.5 transition-transform duration-500 ${isActive ? "scale-110 rotate-3" : "group-hover:scale-105"}`} />
+                      }`}
+                  >
+                    <Icon
+                      className={`size-4.5 transition-transform duration-500 ${isActive ? "scale-110 rotate-3" : "group-hover:scale-105"}`}
+                    />
                     {isActive && (
                       <span className="absolute inset-0 rounded-full bg-[#0EA5E9]/10 animate-ping pointer-events-none" />
                     )}
                   </div>
 
                   {/* Card Container */}
-                  <div className={`mt-4 bg-white/90 backdrop-blur-sm border rounded-2xl p-4 flex-1 flex flex-col justify-between transition-all duration-500 shadow-sm w-full relative z-10 ${isActive
-                      ? "border-[#0EA5E9]/50 bg-white/98 shadow-[0_12px_30px_rgba(14,165,233,0.06)] -translate-y-1.5"
-                      : "border-slate-200/80 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5"
-                    }`}>
+                  <div
+                    className={`mt-4 rounded-2xl p-4 flex-1 flex flex-col justify-between transition-all duration-500 w-full relative z-10 ${isActive
+                      ? "premium-glass-card-active -translate-y-1.5"
+                      : "premium-glass-card premium-glass-card-hover"
+                      }`}
+                  >
                     <div>
                       {/* Step & Duration */}
                       <div className="flex flex-col items-center">
-                        <span className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${isActive ? "text-[#0EA5E9]" : "text-slate-400"
-                          }`}>
+                        <span
+                          className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${isActive ? "text-[#0EA5E9]" : "text-slate-400"
+                            }`}
+                        >
                           STAGE {stage.id}
                         </span>
 
@@ -3840,10 +4920,12 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                           {stage.title}
                         </span>
 
-                        <span className={`mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[8.5px] font-extrabold border transition-all ${isActive
+                        <span
+                          className={`mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[8.5px] font-extrabold border transition-all ${isActive
                             ? "text-[#0EA5E9] bg-sky-50 border-sky-100"
                             : "text-slate-500 bg-slate-50 border-slate-100/80"
-                          }`}>
+                            }`}
+                        >
                           {stage.duration}
                         </span>
                       </div>
@@ -3878,16 +4960,18 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                     setActiveStage(idx);
                     setExpandedStageIdx(idx);
                   }}
-                  className={`flex gap-3.5 p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer bg-white/90 ${isActive
-                      ? "border-[#0EA5E9] shadow-[0_8px_25px_rgba(14,165,233,0.04)] scale-[1.01]"
-                      : "border-slate-200/80"
+                  className={`flex gap-3.5 p-3.5 rounded-2xl cursor-pointer ${isActive
+                    ? "premium-glass-card-active scale-[1.01]"
+                    : "premium-glass-card premium-glass-card-hover"
                     }`}
                 >
                   {/* Icon Node */}
-                  <div className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${isActive
+                  <div
+                    className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${isActive
                       ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50"
                       : "border-slate-200 text-slate-400"
-                    }`}>
+                      }`}
+                  >
                     <Icon className="size-4" />
                   </div>
 
@@ -3931,9 +5015,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           />
 
           {/* Drawer Container */}
-          <div
-            className="absolute inset-y-0 right-0 w-full sm:w-[460px] bg-white border-l border-slate-200/80 shadow-[0_0_80px_rgba(15,23,42,0.15)] flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300"
-          >
+          <div className="absolute inset-y-0 right-0 w-full sm:w-[460px] bg-white border-l border-slate-200/80 shadow-[0_0_80px_rgba(15,23,42,0.15)] flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300">
             {/* Header */}
             <div className="flex items-center justify-between p-5 border-b border-slate-100">
               <div>
@@ -3961,7 +5043,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
             {/* Content Area (Scrollable) */}
             <div className="flex-1 overflow-y-auto p-5 space-y-5 text-left">
               {/* Visual Illustration */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-center min-h-[120px] relative overflow-hidden">
+              <div className="premium-glass-card rounded-2xl p-4 flex items-center justify-center min-h-[120px] relative overflow-hidden">
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
                   <svg width="100%" height="100%">
                     <pattern id="grid-ill" width="16" height="16" patternUnits="userSpaceOnUse">
@@ -4004,15 +5086,13 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                 <span className="text-[9px] font-extrabold tracking-wider uppercase text-slate-400 block mb-2">
                   Key Deliverables
                 </span>
-                <div className="flex flex-col gap-2 bg-slate-50/50 border border-slate-100/80 rounded-xl p-3.5">
+                <div className="flex flex-col gap-2 premium-glass-card rounded-xl p-3.5">
                   {currentStage.deliverables.map((item, i) => (
                     <div key={i} className="flex items-start gap-2.5">
                       <span className="size-4.5 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
                         <Check className="size-2.5" />
                       </span>
-                      <span className="text-slate-600 text-[11px] font-bold mt-0.5">
-                        {item}
-                      </span>
+                      <span className="text-slate-600 text-[11px] font-bold mt-0.5">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -4098,9 +5178,7 @@ function ClientCard({ clientName }: { clientName: string }) {
     .replace(/^_+|_+$/g, "");
 
   return (
-    <div
-      className="bg-white/80 backdrop-blur-sm border border-white/60 rounded-xl p-1 md:p-1.5 flex items-center justify-center text-center shadow-[0_4px_20px_rgba(15,23,42,0.02)] hover:shadow-[0_15px_35px_rgba(14,165,233,0.08)] hover:border-[#0EA5E9]/30 hover:scale-[1.02] transition-all duration-300 min-h-[58px] md:min-h-[72px] overflow-hidden group/card"
-    >
+    <div className="premium-glass-card premium-glass-card-hover rounded-xl p-1 md:p-1.5 flex items-center justify-center text-center min-h-[58px] md:min-h-[72px] overflow-hidden group/card">
       {!imgError ? (
         <img
           src={`/clients/${normalizedName}.png`}
@@ -4124,9 +5202,7 @@ function Header({ scene }: { scene: Scene }) {
       <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground md:text-4xl">
         {scene.title}
       </h2>
-      {scene.subtitle && (
-        <p className="mt-3 text-base text-muted-foreground">{scene.subtitle}</p>
-      )}
+      {scene.subtitle && <p className="mt-3 text-base text-muted-foreground">{scene.subtitle}</p>}
     </div>
   );
 }
@@ -4136,13 +5212,31 @@ export default function Experience() {
   const [mounted, setMounted] = useState(false);
   const [initStage, setInitStage] = useState(0);
   const [active, setActive] = useState(0);
+  const [activeCardIdx, setActiveCardIdx] = useState(0);
+
+  const activeCardIdxRef = useRef(activeCardIdx);
+  const targetActiveRef = useRef(active);
+
+  useEffect(() => {
+    activeCardIdxRef.current = activeCardIdx;
+  }, [activeCardIdx]);
+
+  useEffect(() => {
+    targetActiveRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    if (active !== 1) {
+      setActiveCardIdx(0);
+    }
+  }, [active]);
 
   // Stage 1: mounted
   useLayoutEffect(() => {
     if (initStage === 0) {
-      console.log("mounted")
-      if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = 'manual';
+      console.log("mounted");
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
       }
       try {
         sessionStorage.removeItem("tsr-scroll-restoration-v1_3");
@@ -4164,7 +5258,7 @@ export default function Experience() {
   // Stage 2: layout ready
   useLayoutEffect(() => {
     if (initStage === 1) {
-      console.log("layout ready")
+      console.log("layout ready");
       setInitStage(2);
     }
   }, [initStage]);
@@ -4172,7 +5266,7 @@ export default function Experience() {
   // Stage 3: gsap initialized
   useLayoutEffect(() => {
     if (initStage === 2) {
-      console.log("gsap initialized")
+      console.log("gsap initialized");
       setInitStage(3);
     }
   }, [initStage]);
@@ -4181,7 +5275,7 @@ export default function Experience() {
   useLayoutEffect(() => {
     if (initStage === 3) {
       ScrollTrigger.refresh();
-      console.log("scrolltrigger initialized")
+      console.log("scrolltrigger initialized");
       setInitStage(4);
     }
   }, [initStage]);
@@ -4189,7 +5283,7 @@ export default function Experience() {
   // Stage 5: camera initialized
   useLayoutEffect(() => {
     if (initStage === 4) {
-      console.log("camera initialized")
+      console.log("camera initialized");
       setInitStage(5);
     }
   }, [initStage]);
@@ -4209,6 +5303,7 @@ export default function Experience() {
   const scrollTween = useRef<gsap.core.Tween | null>(null);
 
   const scrollToScene = (sceneIndex: number) => {
+    targetActiveRef.current = sceneIndex;
     const targetScrollTop = sceneIndex * window.innerHeight;
 
     if (scrollTween.current) {
@@ -4225,21 +5320,56 @@ export default function Experience() {
       },
       onComplete: () => {
         scrollTween.current = null;
-      }
+      },
     });
   };
 
   const handleNextSection = () => {
-    if (active < N - 1) {
-      scrollToScene(active + 1);
+    if (targetActiveRef.current === 1) {
+      if (activeCardIdx < 2) {
+        setActiveCardIdx((prev) => prev + 1);
+      } else if (targetActiveRef.current < N - 1) {
+        targetActiveRef.current += 1;
+        scrollToScene(targetActiveRef.current);
+      }
+    } else {
+      if (targetActiveRef.current < N - 1) {
+        targetActiveRef.current += 1;
+        scrollToScene(targetActiveRef.current);
+      }
     }
   };
 
   const handlePrevSection = () => {
-    if (active > 0) {
-      scrollToScene(active - 1);
+    if (targetActiveRef.current === 1) {
+      if (activeCardIdx > 0) {
+        setActiveCardIdx((prev) => prev - 1);
+      } else if (targetActiveRef.current > 0) {
+        targetActiveRef.current -= 1;
+        scrollToScene(targetActiveRef.current);
+      }
+    } else {
+      if (targetActiveRef.current > 0) {
+        targetActiveRef.current -= 1;
+        scrollToScene(targetActiveRef.current);
+      }
     }
   };
+
+  // Turn off manual scroll events
+  useEffect(() => {
+    const preventDefault = (e: Event) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener("wheel", preventDefault, { passive: false });
+    window.addEventListener("touchmove", preventDefault, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", preventDefault);
+      window.removeEventListener("touchmove", preventDefault);
+    };
+  }, []);
 
   // Keyboard controls
   const activeRef = useRef(active);
@@ -4267,15 +5397,45 @@ export default function Experience() {
       const isUp = key === "ArrowUp" || code === 38;
       const isLeft = key === "ArrowLeft" || code === 37;
 
+      const isSpace = key === " " || code === 32;
+      const isPageUp = key === "PageUp" || code === 33;
+      const isPageDown = key === "PageDown" || code === 34;
+      const isEnd = key === "End" || code === 35;
+      const isHome = key === "Home" || code === 36;
+
+      if (isSpace || isPageUp || isPageDown || isEnd || isHome) {
+        e.preventDefault();
+      }
+
       if (isDown || isRight) {
         e.preventDefault();
-        if (activeRef.current < N - 1) {
-          scrollToScene(activeRef.current + 1);
+        if (targetActiveRef.current === 1) {
+          if (activeCardIdxRef.current < 2) {
+            setActiveCardIdx((prev) => prev + 1);
+          } else if (targetActiveRef.current < N - 1) {
+            targetActiveRef.current += 1;
+            scrollToScene(targetActiveRef.current);
+          }
+        } else {
+          if (targetActiveRef.current < N - 1) {
+            targetActiveRef.current += 1;
+            scrollToScene(targetActiveRef.current);
+          }
         }
       } else if (isUp || isLeft) {
         e.preventDefault();
-        if (activeRef.current > 0) {
-          scrollToScene(activeRef.current - 1);
+        if (targetActiveRef.current === 1) {
+          if (activeCardIdxRef.current > 0) {
+            setActiveCardIdx((prev) => prev - 1);
+          } else if (targetActiveRef.current > 0) {
+            targetActiveRef.current -= 1;
+            scrollToScene(targetActiveRef.current);
+          }
+        } else {
+          if (targetActiveRef.current > 0) {
+            targetActiveRef.current -= 1;
+            scrollToScene(targetActiveRef.current);
+          }
         }
       }
     };
@@ -4287,8 +5447,8 @@ export default function Experience() {
   useEffect(() => {
     setMounted(true);
 
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
 
     // Force scroll to top immediately and reset active section state
@@ -4297,11 +5457,11 @@ export default function Experience() {
 
     // Repeatedly force scroll position at multiple intervals to override asynchronous browser restoration
     const intervals = [50, 150, 300, 500];
-    const timers = intervals.map(delay =>
+    const timers = intervals.map((delay) =>
       setTimeout(() => {
         window.scrollTo(0, 0);
         setActive(0);
-      }, delay)
+      }, delay),
     );
 
     return () => {
@@ -4325,36 +5485,85 @@ export default function Experience() {
       </div>
 
       {/* Top brand bar */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-20 flex items-center justify-between px-6 py-4 md:px-12 max-w-7xl mx-auto w-full left-1/2 -translate-x-1/2">
-        {/* Logo */}
-        <div className="glass-chip pointer-events-auto flex items-center gap-2 rounded-full px-4 py-2 shadow-sm">
-          <div className="size-6 rounded-full bg-[#0EA5E9] flex items-center justify-center text-white">
-            <Sparkles className="size-3.5 text-white" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 py-4 md:px-8 max-w-7xl mx-auto w-full left-1/2 -translate-x-1/2">
+        <div className="pointer-events-auto bg-white/90 backdrop-blur-md border border-slate-200/50 rounded-full px-6 py-3 flex items-center justify-between w-full shadow-sm">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="size-8 rounded-full bg-[#0EA5E9] flex items-center justify-center text-white shadow-sm">
+              <svg className="size-4.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4.5 16.5c1.5-3 4.5-9 9-9s7.5 6 9 9" />
+                <circle cx="4.5" cy="16.5" r="2" fill="currentColor" />
+                <circle cx="13.5" cy="7.5" r="2" fill="currentColor" />
+                <circle cx="22.5" cy="16.5" r="2" fill="currentColor" />
+              </svg>
+            </div>
+            <span className="text-base font-extrabold tracking-tight text-slate-900">Cascade Tech</span>
           </div>
-          <span className="text-sm font-extrabold tracking-tight text-[#0F172A]">
-            Cascade Tech
-          </span>
-        </div>
 
-        {/* Center Links */}
-        <div className="glass-chip pointer-events-auto hidden md:flex items-center gap-6 rounded-full px-6 py-2 shadow-sm text-xs font-bold text-[#475569]">
-          <button className="hover:text-[#0F172A] transition-colors cursor-pointer bg-transparent border-0 p-0">Who We Are</button>
-          <button className="hover:text-[#0F172A] transition-colors cursor-pointer bg-transparent border-0 p-0">Specializations</button>
-          <button className="hover:text-[#0F172A] transition-colors cursor-pointer bg-transparent border-0 p-0">AI Voice</button>
-          <button className="hover:text-[#0F172A] transition-colors cursor-pointer bg-transparent border-0 p-0">Pricing</button>
-          <button className="hover:text-[#0F172A] transition-colors cursor-pointer bg-transparent border-0 p-0">Roadmap</button>
-        </div>
+          {/* Center Links */}
+          <div className="hidden md:flex items-center gap-8 text-xs font-semibold text-[#475569]">
+            <button onClick={() => scrollToScene(1)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
+              Who We Are
+            </button>
+            <button onClick={() => scrollToScene(3)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
+              Specializations
+            </button>
+            <button onClick={() => scrollToScene(6)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
+              AI Voice
+            </button>
+            <button onClick={() => scrollToScene(9)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
+              Pricing
+            </button>
+            <button onClick={() => scrollToScene(11)} className="hover:text-slate-950 transition-colors cursor-pointer bg-transparent border-0 p-0">
+              Roadmap
+            </button>
+          </div>
 
-        {/* Get in touch Button */}
-        <button className="pointer-events-auto bg-[#0EA5E9] hover:bg-[#0284C7] text-white text-xs font-bold py-2.5 px-5 rounded-full shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03]">
-          Get in touch
-        </button>
+          {/* Get in touch Button */}
+          <button className="bg-[#0EA5E9] hover:bg-[#0284C7] text-white text-xs font-bold py-2.5 px-6 rounded-full shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03]">
+            Get in touch
+          </button>
+        </div>
       </div>
 
       {/* Scene overlays */}
       {SCENES.map((scene, i) => (
-        <SceneOverlay key={scene.id} scene={scene} index={i} progress={scrollYProgress} active={active} />
+        <SceneOverlay
+          key={scene.id}
+          scene={scene}
+          index={i}
+          progress={scrollYProgress}
+          active={active}
+          activeCardIdx={activeCardIdx}
+        />
       ))}
+
+      {/* Floating dot navigation on the right side */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3.5 select-none pointer-events-auto hidden sm:flex">
+        {SCENES.map((scene, i) => {
+          const isActive = active === i;
+          return (
+            <button
+              key={scene.id}
+              onClick={() => scrollToScene(i)}
+              className="group relative flex items-center justify-center p-1 bg-transparent border-0 cursor-pointer focus:outline-none"
+              aria-label={`Go to section ${i + 1}: ${scene.kicker}`}
+            >
+              {/* Tooltip on hover */}
+              <span className="absolute right-7 scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 bg-white/95 backdrop-blur-md border border-slate-200/50 rounded-xl px-3 py-1.5 text-[11px] font-bold text-[#03045E] whitespace-nowrap shadow-md pointer-events-none tracking-tight">
+                {scene.kicker}
+              </span>
+
+              {/* Dot visual */}
+              {isActive ? (
+                <span className="size-3.5 rounded-full bg-[#48CAE4] ring-4 ring-[#48CAE4]/20 shadow-[0_0_12px_rgba(72,202,228,0.85)] scale-110 transition-all duration-300" />
+              ) : (
+                <span className="size-2 rounded-full bg-[#03045E]/25 group-hover:bg-[#0077B6] group-hover:scale-125 transition-all duration-300" />
+              )}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Floating global page navigation controls */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-row items-center gap-3 bg-white/70 backdrop-blur-md border border-slate-200/50 rounded-full p-1.5 shadow-lg select-none pointer-events-auto">
@@ -4363,8 +5572,8 @@ export default function Experience() {
           onClick={handlePrevSection}
           disabled={active === 0}
           className={`group/btn w-8.5 h-8.5 rounded-full bg-white flex items-center justify-center border border-slate-200/60 shadow-sm transition-all duration-300 ${active === 0
-              ? "opacity-25 cursor-not-allowed text-slate-400"
-              : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
+            ? "opacity-25 cursor-not-allowed text-slate-400"
+            : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
             }`}
           aria-label="Previous Section"
         >
@@ -4376,8 +5585,8 @@ export default function Experience() {
           onClick={handleNextSection}
           disabled={active === N - 1}
           className={`group/btn w-8.5 h-8.5 rounded-full bg-white flex items-center justify-center border border-slate-200/60 shadow-sm transition-all duration-300 ${active === N - 1
-              ? "opacity-25 cursor-not-allowed text-slate-400"
-              : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
+            ? "opacity-25 cursor-not-allowed text-slate-400"
+            : "cursor-pointer text-slate-600 hover:text-[#0EA5E9] hover:border-[#0EA5E9]/30 hover:scale-110 hover:shadow-[0_0_12px_rgba(14,165,233,0.2)]"
             }`}
           aria-label="Next Section"
         >
