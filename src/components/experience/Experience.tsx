@@ -2870,99 +2870,130 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
 
     return (
       <div
-        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-5 pb-5 px-4 md:px-6 justify-center gap-4 md:gap-5 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
+        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-4.5 pb-4 px-4 md:px-8 justify-between border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
         style={{
           background: "rgba(248, 250, 252, 0.95)",
           backdropFilter: "blur(24px)",
+          backgroundImage: "radial-gradient(circle, rgba(14,165,233,0.03) 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
         }}
       >
-        {/* Soft blue ambient glow */}
-        <div
-          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes float-dot-1 {
+              0%, 100% { transform: translateY(0px) scale(1); }
+              50% { transform: translateY(-6px) scale(1.08); }
+            }
+            @keyframes float-dot-2 {
+              0%, 100% { transform: translateY(0px) scale(1.08); }
+              50% { transform: translateY(6px) scale(0.96); }
+            }
+            .animate-float-dot-1 { animation: float-dot-1 7s ease-in-out infinite; }
+            .animate-float-dot-2 { animation: float-dot-2 9s ease-in-out infinite; }
+          `
+        }} />
+
+        {/* Decorative corner glows */}
+        <div className="absolute top-[-10%] left-[-10%] w-[250px] h-[250px] rounded-full blur-3xl pointer-events-none -z-10 bg-blue-400/6 animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[250px] h-[250px] rounded-full blur-3xl pointer-events-none -z-10 bg-sky-400/6 animate-pulse" />
+
+        {/* Soft radial blue glow behind the heading */}
+        <div 
+          className="absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10"
           style={{
-            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,161,224,0.07) 0%, transparent 70%)",
           }}
         />
-        <div
-          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
-          style={{
-            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
-          }}
-        />
 
-        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto">
-          {/* LEFT COLUMN: 40% width */}
-          <div className="w-full md:w-[38%] flex flex-col justify-between text-left h-full py-1">
-            <div>
-              {/* Badge */}
-              <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-3 py-1 text-[10px] md:text-[11px] font-bold tracking-wider text-[#0284C7] w-fit mb-3">
-                <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-                DISTRICT 10 • CLIENTS
-              </div>
+        {/* Floating gradient dots */}
+        <div className="absolute top-12 left-16 size-3 rounded-full bg-gradient-to-br from-blue-400/20 to-sky-500/20 blur-[0.5px] pointer-events-none animate-float-dot-1" />
+        <div className="absolute bottom-20 left-24 size-4 rounded-full bg-gradient-to-br from-sky-300/25 to-blue-400/15 blur-[0.5px] pointer-events-none animate-float-dot-2" />
+        <div className="absolute top-1/3 right-16 size-2.5 rounded-full bg-gradient-to-br from-indigo-300/20 to-blue-400/20 blur-[1px] pointer-events-none animate-float-dot-1" />
 
-              {/* Title */}
-              <h2 className="text-xl sm:text-2xl md:text-[32px] lg:text-[40px] xl:text-[46px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-3">
-                Organizations That <br />
-                <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
-                  Trust Cascade Tech
-                  <svg
-                    className="absolute -bottom-0.5 left-0 w-full h-[4px]"
-                    viewBox="0 0 200 5"
-                    fill="none"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
-                      stroke="#0EA5E9"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
-              </h2>
+        {/* Very subtle corner geometric wireframe elements */}
+        <svg className="absolute inset-0 size-full pointer-events-none opacity-15 -z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <circle cx="8" cy="18" r="0.4" fill="#0284c7" />
+          <circle cx="92" cy="82" r="0.4" fill="#0284c7" />
+          <rect x="4" y="12" width="6" height="6" stroke="#0284c7" strokeWidth="0.06" fill="none" strokeDasharray="0.5 0.5" />
+          <rect x="90" y="76" width="6" height="6" stroke="#0284c7" strokeWidth="0.06" fill="none" strokeDasharray="0.5 0.5" />
+        </svg>
 
-              {/* Supporting Text */}
-              <p className="text-[11px] md:text-[12.5px] lg:text-[14px] text-slate-500 font-semibold leading-relaxed mb-4">
-                From Mumbai's leading real estate developers to growing enterprise organizations,
-                Cascade Tech powers Salesforce, AI and automation initiatives across multiple
-                industries.
-              </p>
+        {/* MAIN CONTAINER LAYOUT */}
+        <div className="flex flex-col items-center justify-between w-full h-full relative z-10 max-w-[96%] mx-auto py-1 gap-3.5">
+          
+          {/* TOP: Centered Heading Block */}
+          <div className="w-full flex flex-col items-center text-center max-w-3xl relative z-10">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-3 py-0.5 text-[10px] md:text-[11px] font-bold tracking-wider text-[#0284C7] w-fit mb-2">
+              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+              DISTRICT 09 • CLIENTS
             </div>
 
-            {/* Stat Cards */}
-            <div className="grid grid-cols-3 gap-2.5 mt-auto">
-              {[
-                { value: "8+", label: "Clients Served" },
-                { value: "5", label: "Cities" },
-                { value: "5", label: "Industries" },
-              ].map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="premium-glass-card premium-glass-card-hover rounded-2xl p-3 text-left flex flex-col justify-center"
+            {/* Title */}
+            <h2 className="text-xl sm:text-2xl md:text-[26px] lg:text-[32px] xl:text-[36px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-1.5">
+              Organizations That{" "}
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
+                Trust Cascade Tech
+                <svg
+                  className="absolute -bottom-0.5 left-0 w-full h-[4px]"
+                  viewBox="0 0 200 5"
+                  fill="none"
+                  preserveAspectRatio="none"
                 >
-                  <span className="text-lg md:text-xl xl:text-2xl font-[900] text-[#0EA5E9] leading-none">
-                    {stat.value}
-                  </span>
-                  <span className="text-[9px] md:text-[10px] font-bold text-slate-400 mt-1 leading-tight">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+                  <path
+                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
+                    stroke="#0EA5E9"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </h2>
+
+            {/* Supporting Text */}
+            <p className="text-[13px] md:text-[14px] text-slate-500 font-semibold leading-relaxed max-w-2xl">
+              From Mumbai's leading real estate developers to growing enterprise organizations,
+              Cascade Tech powers Salesforce, AI and automation initiatives across multiple industries.
+            </p>
           </div>
 
-          {/* RIGHT COLUMN: 3x4 Grid (60% width) */}
-          <div className="w-full md:w-[60%] flex flex-col justify-center h-full py-1">
-            <div className="grid grid-cols-3 gap-2.5 md:gap-3 w-full">
+          {/* Thin Glowing Divider */}
+          <div className="w-3/5 max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-[#00a1e0]/80 to-transparent relative z-10 mx-auto shadow-[0_0_8px_rgba(0,161,224,0.4)]" />
+
+          {/* MIDDLE: Logo Grid with Center alignment and tighter spacing */}
+          <div className="w-full max-w-5xl md:max-w-6xl px-4 md:px-6 -mt-3.5 md:-mt-5.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-5 md:gap-x-6 gap-y-6 md:gap-y-7.5 justify-center items-center">
               {clients.map((clientName, index) => (
-                <ClientCard key={index} clientName={clientName} />
+                <ClientCard key={index} clientName={clientName} isFeatured={index === 0} />
               ))}
             </div>
 
             {/* Grid Caption */}
-            <span className="text-[8.5px] md:text-[9.5px] text-slate-400 italic mt-3 text-center block">
+            <span className="text-[8px] md:text-[9px] text-slate-400 italic mt-2.5 text-center block">
               Client names shown for reference — official logos applied at brand kit handover.
             </span>
+          </div>
+
+          {/* BOTTOM: Unified horizontal glass panel containing statistics */}
+          <div className="w-full max-w-2xl px-4 mt-0.5">
+            <div className="flex items-center justify-center gap-2 border border-blue-200/30 bg-gradient-to-r from-white/95 via-[#F0F9FF]/90 to-white/95 shadow-[0_4px_20px_rgba(0,112,210,0.05),_inset_0_0_12px_rgba(255,255,255,0.7)] backdrop-blur-md rounded-2xl py-2 px-5 max-w-md mx-auto relative z-10">
+              <div className="flex items-center justify-between w-full px-2">
+                <div className="text-center flex-1">
+                  <span className="text-lg md:text-xl xl:text-2xl font-[950] text-[#0070d2] leading-none tracking-tight block">8+</span>
+                  <span className="text-[9px] font-bold text-slate-500 mt-0.5 uppercase tracking-wider block">Clients Served</span>
+                </div>
+                <div className="w-[1px] h-7 bg-gradient-to-b from-transparent via-blue-200 to-transparent mx-2" />
+                <div className="text-center flex-1">
+                  <span className="text-lg md:text-xl xl:text-2xl font-[950] text-[#0070d2] leading-none tracking-tight block">5</span>
+                  <span className="text-[9px] font-bold text-slate-500 mt-0.5 uppercase tracking-wider block">Cities</span>
+                </div>
+                <div className="w-[1px] h-7 bg-gradient-to-b from-transparent via-blue-200 to-transparent mx-2" />
+                <div className="text-center flex-1">
+                  <span className="text-lg md:text-xl xl:text-2xl font-[950] text-[#0070d2] leading-none tracking-tight block">5</span>
+                  <span className="text-[9px] font-bold text-slate-500 mt-0.5 uppercase tracking-wider block">Industries</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -4854,7 +4885,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
   );
 }
 
-function ClientCard({ clientName }: { clientName: string }) {
+function ClientCard({ clientName, isFeatured }: { clientName: string; isFeatured?: boolean }) {
   const [imgError, setImgError] = useState(false);
 
   const normalizedName = clientName
@@ -4866,16 +4897,20 @@ function ClientCard({ clientName }: { clientName: string }) {
     .replace(/^_+|_+$/g, "");
 
   return (
-    <div className="premium-glass-card premium-glass-card-hover rounded-xl p-1 md:p-1.5 flex items-center justify-center text-center min-h-[58px] md:min-h-[72px] overflow-hidden group/card">
+    <div className={`w-full aspect-[2.6/1] md:aspect-[2.8/1] min-h-[82px] md:min-h-[105px] rounded-[22px] p-1.5 md:p-2 flex items-center justify-center text-center overflow-hidden group/card border transition-all duration-300 hover:-translate-y-1 ${
+      isFeatured 
+        ? "border-blue-400/80 bg-gradient-to-br from-[#E0F2FE]/80 via-[#F0F9FF]/95 to-white shadow-[0_0_18px_rgba(0,112,210,0.16)] hover:shadow-[0_0_28px_rgba(0,112,210,0.24)]" 
+        : "border-blue-200/40 bg-gradient-to-br from-white/95 via-[#F1F8FF] to-white/90 shadow-[0_5px_15px_rgba(0,112,210,0.05)] hover:shadow-[0_10px_28px_rgba(0,112,210,0.16)] hover:border-blue-300/60 hover:bg-white"
+    }`}>
       {!imgError ? (
         <img
           src={`/clients/${normalizedName}.png`}
           alt={clientName}
           onError={() => setImgError(true)}
-          className="w-full h-full max-h-[58px] md:max-h-[72px] max-w-[95%] object-contain scale-[1.3] transition-transform duration-300 group-hover/card:scale-[1.38]"
+          className="w-[82%] h-[82%] object-contain scale-[1.15] transition-transform duration-300 group-hover/card:scale-[1.22]"
         />
       ) : (
-        <span className="text-[9.5px] md:text-[11px] lg:text-[12px] font-black text-slate-700 tracking-wider px-2.5">
+        <span className="text-[10px] md:text-[12px] lg:text-[13px] font-black text-slate-700 tracking-wider px-2.5">
           {clientName}
         </span>
       )}
