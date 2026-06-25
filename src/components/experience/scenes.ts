@@ -164,75 +164,7 @@ export const SCENES: Scene[] = [
       },
     ],
   },
-  {
-    id: 5,
-    kicker: "District 05 · Sales Cloud",
-    title: "Boosting Sales Productivity with Sales Cloud",
-    variant: "flow",
-    items: [
-      {
-        icon: Users,
-        title: "Enhanced Lead Management",
-        body: "Capture, qualify and route leads intelligently.",
-      },
-      {
-        icon: Target,
-        title: "Strategic Opportunity Tracking",
-        body: "Visualize every deal across the pipeline.",
-      },
-      {
-        icon: TrendingUp,
-        title: "Accurate Sales Forecasting",
-        body: "Predict revenue with confidence.",
-      },
-    ],
-    stats: [
-      { label: "Lead", value: "01" },
-      { label: "Opportunity", value: "02" },
-      { label: "Proposal", value: "03" },
-      { label: "Conversion", value: "04" },
-    ],
-  },
-  {
-    id: 6,
-    kicker: "District 06 · Marketing Cloud",
-    title: "Create Personalized Customer Journeys That Convert",
-    subtitle:
-      "Marketing Cloud helps businesses engage customers with personalized campaigns, automated journeys, audience segmentation, and AI-powered engagement across every channel.",
-    variant: "grid",
-    items: [
-      {
-        icon: RouteIcon,
-        title: "Customer Journey Automation",
-        body: "Automated multi-step customer workflows.",
-      },
-      {
-        icon: Users,
-        title: "Audience Segmentation",
-        body: "Precise targeting and audience discovery.",
-      },
-      {
-        icon: LineChart,
-        title: "Email & Campaign Management",
-        body: "Enterprise-grade email delivery.",
-      },
-      {
-        icon: BrainCircuit,
-        title: "AI-Powered Personalization",
-        body: "Intelligent content and timing.",
-      },
-      {
-        icon: Megaphone,
-        title: "Omnichannel Engagement",
-        body: "SMS, email, push, and web channels.",
-      },
-      {
-        icon: TrendingUp,
-        title: "Marketing Analytics & Attribution",
-        body: "Complete attribution and ROI tracking.",
-      },
-    ],
-  },
+
   {
     id: 7,
     kicker: "District 07 · Industries We Serve",
