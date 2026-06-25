@@ -584,7 +584,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     return <WhoWeAreScene scene={scene} isActive={isActive} activeCardIdx={activeCardIdx} />;
   }
 
-  if (scene.id === 12) {
+  if (scene.id === 11) {
     return <EngagementModelScene scene={scene} />;
   }
 
@@ -1343,196 +1343,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 3) {
-    return (
-      <div className="pointer-events-auto who-we-are-glass-panel rounded-[40px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col py-5 px-6 md:px-8 justify-between gap-3 md:gap-4">
-        {/* SECTION HEADER: Centered */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] font-bold tracking-wider text-[#0369A1] w-fit mb-1.5">
-            <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-            District 03 &bull; Principles
-          </div>
-          <h2 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-[900] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-1.5">
-            What we{" "}
-            <span className="bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] bg-clip-text text-transparent">
-              stand for
-            </span>
-          </h2>
-          <p className="text-sm md:text-[17px] text-[#475569] font-medium leading-relaxed max-w-2xl">
-            Our values drive every Salesforce implementation, AI automation initiative, and digital
-            transformation journey we deliver.
-          </p>
-        </div>
 
-        {/* 2x2 Grid of 4 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 h-[71%] md:h-[73%] w-full items-stretch">
-          {/* Card 1: Innovation */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full animate-float-soft">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
-                  <Lightbulb className="size-5 text-[#0284C7]" />
-                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
-                </div>
-                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
-                  Innovation
-                </h3>
-              </div>
-              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We continuously explore AI, automation, and emerging technologies to create smarter
-                business solutions.
-              </p>
-            </div>
-
-            {/* Bottom Widget */}
-            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/40 shadow-sm h-14">
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="size-4.5 text-[#0284C7]" />
-                <span className="text-[10px] font-bold text-slate-600">AI</span>
-              </div>
-              <div className="h-5 w-[1px] bg-slate-200/80" />
-              <div className="flex items-center gap-1.5">
-                <Workflow className="size-4.5 text-[#0284C7]" />
-                <span className="text-[10px] font-bold text-slate-600">Auto</span>
-              </div>
-              <div className="h-5 w-[1px] bg-slate-200/80" />
-              <div className="flex items-center gap-1.5">
-                <LineChart className="size-4.5 text-[#0284C7]" />
-                <span className="text-[10px] font-bold text-slate-600">Data</span>
-              </div>
-              <div className="h-5 w-[1px] bg-slate-200/80" />
-              <div className="flex items-center gap-1.5">
-                <Cloud className="size-4.5 text-[#0284C7]" />
-                <span className="text-[10px] font-bold text-slate-600">CRM</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Client Commitment */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
-                  <HeartHandshake className="size-5 text-[#0284C7]" />
-                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
-                </div>
-                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
-                  Client Commitment
-                </h3>
-              </div>
-              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We build long-term partnerships focused on measurable outcomes, transparency, and
-                growth.
-              </p>
-            </div>
-
-            {/* Bottom Widget */}
-            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/40 shadow-sm h-14">
-              <div className="flex items-center gap-1.5">
-                {["A", "B", "C", "D", "E"].map((letter, index) => (
-                  <div key={letter} className="flex items-center">
-                    <div className="size-6.5 rounded-full bg-gradient-to-r from-[#0ea5e9] to-[#0284C7] text-white flex items-center justify-center text-[10px] font-bold border border-white shadow-sm hover:scale-110 transition-transform duration-300 cursor-default">
-                      {letter}
-                    </div>
-                    {index < 4 && (
-                      <div className="w-2 h-[2px] bg-gradient-to-r from-sky-400 to-sky-300" />
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1 text-[10px] font-bold text-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.1)] animate-pulse">
-                100% Client Focus
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Excellence */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
-                  <Award className="size-5 text-[#0284C7]" />
-                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
-                </div>
-                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
-                  Excellence
-                </h3>
-              </div>
-              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We maintain the highest standards in delivery, architecture, implementation, and
-                support.
-              </p>
-            </div>
-
-            {/* Bottom Widget */}
-            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-sky-100/50 shadow-sm h-14 gap-4">
-              <div className="flex flex-col flex-1 text-left justify-center">
-                <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 mb-0.5">
-                  <span>Quality Score</span>
-                  <span className="text-[#0284C7] font-black">98%</span>
-                </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-sky-400 to-[#0284C7] h-full rounded-full w-[98%]" />
-                </div>
-              </div>
-              <div className="h-6 w-[1px] bg-slate-200 flex-shrink-0" />
-              <div className="flex flex-col flex-1 text-left justify-center">
-                <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 mb-0.5">
-                  <span>Success Rate</span>
-                  <span className="text-emerald-600 font-black">99%</span>
-                </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full rounded-full w-[99%]" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 4: Integrity */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[28px] py-4 px-5 flex flex-col justify-between text-left flex-1 h-full">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="relative flex size-10 items-center justify-center rounded-xl bg-sky-100/80 text-[#0284C7] shadow-[0_0_20px_rgba(14,165,233,0.25)] flex-shrink-0">
-                  <ShieldCheck className="size-5 text-[#0284C7]" />
-                  <span className="absolute inset-0 rounded-xl bg-sky-400/10 blur-sm -z-10" />
-                </div>
-                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-[800] text-[#0F172A] leading-tight">
-                  Integrity
-                </h3>
-              </div>
-              <p className="mt-2 text-xs md:text-[16px] leading-relaxed text-[#475569] font-medium">
-                We operate with honesty, accountability, and trust in every engagement and business
-                decision.
-              </p>
-            </div>
-
-            {/* Bottom Widget */}
-            <div className="mt-auto flex items-center justify-between w-full bg-white/80 p-2.5 rounded-xl border border-slate-200/50 shadow-sm h-14">
-              <div className="flex items-center gap-2.5">
-                <div className="size-8 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm flex-shrink-0">
-                  <ShieldCheck className="size-4.5 text-[#0284C7]" />
-                </div>
-                <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-bold text-slate-800 leading-tight">
-                    Trust & Ethics
-                  </span>
-                  <span className="text-[8px] text-[#0284C7] font-black uppercase tracking-wider mt-0.5 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100/40 w-fit">
-                    Compliance Active
-                  </span>
-                </div>
-              </div>
-              <div className="bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1 text-[9.5px] font-bold text-emerald-600 shadow-[0_0_8px_rgba(16,185,129,0.08)] flex items-center gap-1 animate-pulse">
-                <Check className="size-3 stroke-[3] text-emerald-600" />
-                <span>Secure Delivery</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Bottom Glow reflection element */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
-      </div>
-    );
-  }
 
   if (scene.variant === "duo") {
     return (
@@ -2069,7 +1880,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 7) {
+  if (scene.id === 3) {
     return (
       <div
         className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-2.5 px-4 md:px-6 justify-between gap-2 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
@@ -2091,638 +1902,422 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
             stroke-dasharray: 6, 4;
             animation: pulseFlow 1.2s linear infinite;
           }
-          @keyframes voiceWave {
-            0%, 100% { transform: scaleY(0.3); }
-            50% { transform: scaleY(1.3); }
-          }
-          .voice-bar-1 { animation: voiceWave 0.8s ease-in-out infinite alternate; transform-origin: center; }
-          .voice-bar-2 { animation: voiceWave 1.1s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.15s; }
-          .voice-bar-3 { animation: voiceWave 0.9s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.3s; }
-          .voice-bar-4 { animation: voiceWave 0.7s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.45s; }
-          .voice-bar-5 { animation: voiceWave 1.0s ease-in-out infinite alternate; transform-origin: center; animation-delay: 0.2s; }
         `,
           }}
         />
 
-        {/* Soft blue ambient glow */}
+        {/* Subtle geometric dot grid and blue ambient glows */}
+        <div 
+          className="absolute inset-0 opacity-[0.08] pointer-events-none -z-10"
+          style={{
+            backgroundImage: "radial-gradient(#0077B6 1px, transparent 1px)",
+            backgroundSize: "24px 24px"
+          }}
+        />
         <div
           className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10"
           style={{
-            background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,119,182,0.12) 0%, transparent 70%)",
           }}
         />
         <div
           className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10"
           style={{
-            background: "radial-gradient(circle, rgba(0,161,224,0.06) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(59,169,245,0.06) 0%, transparent 70%)",
           }}
         />
 
-        {/* TOP ROW: Title & Kicker (left) + Description paragraphs (right) */}
-        <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start justify-start w-full h-auto relative z-10 mt-0.5">
-          {/* LEFT SIDE: Title & Kicker */}
-          <div className="w-full md:w-fit flex flex-col justify-start text-left max-w-[500px] flex-shrink-0">
-            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] md:text-[11px] font-bold tracking-wider text-[#0284C7] w-fit mb-1">
-              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-              DISTRICT 07 • PRODUCT ECOSYSTEM
+        {/* 2-Column main content layout */}
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 items-stretch w-full flex-1 min-h-0 relative z-10 my-1 overflow-y-auto lg:overflow-hidden">
+          {/* LEFT SIDE (35% on lg screens) */}
+          <div className="w-full lg:w-[35%] flex flex-col justify-start text-left lg:pr-4 flex-shrink-0 pt-2 lg:pt-6">
+            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-3 py-1 text-[10px] md:text-[11px] font-bold tracking-wider text-[#0077B6] w-fit mb-3">
+              <span className="size-1.5 rounded-full bg-[#0077B6] animate-pulse" />
+              OUR PRODUCT ECOSYSTEM
             </div>
 
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[38px] xl:text-[44px] font-[900] leading-[1.05] tracking-tight text-[#0F172A] font-display">
-              Real Problems. <br />
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
-                Purpose-Built
-                <svg
-                  className="absolute -bottom-0.5 left-0 w-full h-[5px]"
-                  viewBox="0 0 200 5"
-                  fill="none"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
-                    stroke="#0EA5E9"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>{" "}
-              Products.
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[42px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display">
+              Real Problems.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] to-[#3BA9F5]">
+                Purpose-Built Products.
+              </span>
             </h2>
-          </div>
 
-          {/* RIGHT SIDE: Description Paragraphs */}
-          <div className="w-full md:flex-1 flex flex-col justify-start text-left max-w-[620px] pt-0 md:pt-[24px]">
-            <p className="text-[14.5px] md:text-[18px] lg:text-[20px] font-[800] text-[#0F172A] leading-tight mb-1.5">
-              Most Salesforce partners implement what Salesforce sells.
-              <br />
-              We went further.
-            </p>
-            <p className="text-[12.5px] md:text-[15px] lg:text-[16px] text-slate-500 font-semibold leading-relaxed mb-1.5">
-              Working with real estate developers and enterprise teams across India, we found gaps
-              no off-the-shelf tool was solving cleanly — and we built for them.
-            </p>
-            <p className="text-[12.5px] md:text-[15px] lg:text-[16px] text-[#0EA5E9] font-extrabold leading-relaxed">
-              Every product here is live with a paying client. No filler. No vaporware.
+            <p className="mt-4 text-xs md:text-sm text-slate-500 font-medium leading-relaxed max-w-[360px]">
+              Most Salesforce partners implement what Salesforce sells. We went further. Working with real estate developers and enterprise teams, we built products that solve real business problems. Every product is deployed, actively used, and continuously improved with real customers.
             </p>
           </div>
-        </div>
 
-        {/* Divider 1 */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200/80 to-transparent opacity-60 my-0.5 relative z-10" />
-
-        {/* BOTTOM ROW: 3 premium product cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 md:gap-4 w-full max-w-[1240px] mx-auto items-stretch relative z-10 mb-2 justify-center">
-          {/* Card 1: Cascade Connect */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
-            {/* Background brand color glow reflection */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
-
-            <div>
-              {/* Header block */}
-              <div className="flex items-start gap-3 w-full">
-                {/* 1. Large product icon (52px) in wrapper */}
-                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-sky-100 border border-blue-200/60 text-[#0EA5E9] shadow-[0_4px_20px_rgba(14,165,233,0.12)] group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
-                  <MessageSquare className="w-7 h-7 text-[#0EA5E9]" />
-                </div>
-
-                <div className="flex-grow min-w-0">
-                  <div className="flex items-center justify-between w-full gap-2">
-                    {/* 2. Product Name */}
-                    <h3 className="text-lg md:text-xl font-[900] text-[#0F172A] leading-tight tracking-tight truncate">
-                      Cascade Connect
-                    </h3>
-
-                    {/* Status row badge */}
-                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-sky-100 bg-[#F0F9FF] text-[#2563EB] text-[9.5px] font-bold shadow-sm flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0EA5E9] animate-pulse"></span>
+          {/* RIGHT SIDE (65% on lg screens) - 2x2 Grid of Premium Cards */}
+          <div className="w-full lg:w-[65%] flex flex-col min-h-0 justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 md:gap-4 overflow-y-auto max-h-[50vh] lg:max-h-[56vh] xl:max-h-[60vh] pr-1.5 pb-2 scrollbar-thin">
+              
+              {/* Card 1: Cascade Connect */}
+              <div className="bg-white/80 backdrop-blur-md border border-slate-100 hover:border-[#3BA9F5]/40 rounded-[24px] p-4 flex flex-col justify-between h-[250px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(59,169,245,0.08)] group relative overflow-hidden">
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0077B6] shadow-[0_4px_12px_rgba(0,119,182,0.08)] group-hover:scale-105 transition-transform duration-300">
+                        <MessageSquare className="w-5 h-5 text-[#0077B6]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm md:text-base font-[900] text-[#0F172A] leading-none tracking-tight">
+                          Cascade Connect
+                        </h3>
+                        <p className="text-[10px] font-bold text-[#0077B6] mt-0.5 leading-tight">
+                          Omnichannel communication platform inside Salesforce.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-sky-100 bg-[#F0F9FF] text-[#0077B6] text-[9px] font-bold shadow-sm flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0077B6] animate-pulse"></span>
                       Live
                     </div>
                   </div>
 
-                  {/* 3. Colored subtitle */}
-                  <p className="text-[11px] md:text-[12px] font-[800] text-[#0EA5E9] mt-0.5 leading-tight truncate">
-                    Omnichannel communication inside Salesforce
-                  </p>
-                </div>
-              </div>
-
-              {/* 4. Description */}
-              <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                WhatsApp, Email and SMS natively logged in Salesforce. Real-time delivery tracking,
-                read receipts and communication history inside CRM.
-              </p>
-
-              {/* 5. Feature chips */}
-              <div className="grid grid-cols-3 gap-1.5 mt-2.5 pt-2 border-t border-slate-100/60">
-                {[
-                  { text: "Salesforce Native", icon: Cloud },
-                  { text: "Official API", icon: MessageSquare },
-                  { text: "Real-time Tracking", icon: TrendingUp },
-                  { text: "Read Receipts", icon: Check },
-                  { text: "Chat History", icon: Clock },
-                  { text: "Enterprise Ready", icon: ShieldCheck },
-                ].map((item) => (
-                  <span
-                    key={item.text}
-                    className="bg-[#F0F9FF] border border-[#E0F2FE]/40 rounded-md px-2 py-1 flex items-center gap-1 text-[9.5px] font-extrabold text-sky-700 hover:bg-[#0EA5E9]/10 hover:border-[#0EA5E9]/20 transition-all duration-200 truncate"
-                  >
-                    <item.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="truncate">{item.text}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 6. Product illustration (WhatsApp, Email, SMS to Salesforce) */}
-            <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow flex flex-col justify-between">
-              <div className="relative w-full h-[90px] md:h-[105px] flex items-center justify-between">
-                {/* Animated SVG Lines */}
-                <svg
-                  className="absolute inset-0 w-full h-full pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M 30 20 C 40 20, 43 50, 45 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#0EA5E9]"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M 30 50 L 45 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#2563EB]"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M 30 80 C 40 80, 43 50, 45 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#3B82F6]"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M 55 50 L 70 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#2563EB]"
-                    strokeWidth="1.5"
-                  />
-                </svg>
-
-                {/* Left Column: Channels */}
-                <div className="flex flex-col justify-between h-full z-10 relative w-[32%] py-0.5">
-                  {/* WhatsApp Node */}
-                  <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
-                    <MessageSquare className="w-3.5 h-3.5 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">
-                      WhatsApp
-                    </span>
-                  </div>
-                  {/* Email Node */}
-                  <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
-                    <Mail className="w-3.5 h-3.5 text-[#2563EB] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">Email</span>
-                  </div>
-                  {/* SMS Node */}
-                  <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
-                    <Phone className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">SMS</span>
-                  </div>
-                </div>
-
-                {/* Center Node */}
-                <div className="absolute left-[50%] -translate-x-1/2 top-[25px] md:top-[32px] w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shadow-lg shadow-blue-500/10 z-10">
-                  <div className="w-7 h-7 rounded-full bg-[#0EA5E9] flex items-center justify-center text-white shadow-md">
-                    <MessageSquare className="w-4 h-4 text-white" fill="white" />
-                  </div>
-                </div>
-
-                {/* Right Salesforce CRM Node */}
-                <div className="w-[32%] bg-slate-50 border border-slate-200/50 rounded-xl py-1.5 px-2 shadow-sm flex flex-col items-center justify-center text-center z-10 relative">
-                  <Cloud className="w-5 h-5 text-[#2563EB] flex-shrink-0" />
-                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">
-                    Salesforce CRM
-                  </span>
-                </div>
-              </div>
-
-              {/* Bottom Preview Metrics Row */}
-              <div className="grid grid-cols-4 gap-1 border-t border-slate-100 pt-2 mt-2 w-full">
-                {[
-                  { val: "18.4k", label: "Messages", icon: Check },
-                  { val: "842", label: "Active Chat", icon: MessageSquare },
-                  { val: "99.8%", label: "Sync Acc.", icon: CloudCog },
-                  { val: "98%", label: "Delivery", icon: ShieldCheck },
-                ].map((m, idx) => (
-                  <div key={idx} className="flex flex-col text-left">
-                    <div className="flex items-center gap-0.5 font-[900] text-slate-800 text-[10px] md:text-[11px] leading-none">
-                      <m.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
-                      <span className="truncate">{m.val}</span>
+                  {/* Custom visualization for Cascade Connect */}
+                  <div className="border border-slate-100/60 rounded-xl p-1 bg-slate-50/50 mt-2.5 flex items-center justify-center h-[62px] relative overflow-hidden">
+                    <div className="relative w-full h-full flex items-center justify-between px-2">
+                      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M 15 25 C 40 25, 45 50, 50 50" fill="none" className="animated-flow-line stroke-[#0077B6]" strokeWidth="1.5" />
+                        <path d="M 15 50 L 50 50" fill="none" className="animated-flow-line stroke-[#3BA9F5]" strokeWidth="1.5" />
+                        <path d="M 15 75 C 40 75, 45 50, 50 50" fill="none" className="animated-flow-line stroke-[#6EC8FF]" strokeWidth="1.5" />
+                        <path d="M 50 50 L 85 50" fill="none" className="animated-flow-line stroke-[#0077B6]" strokeWidth="1.5" />
+                      </svg>
+                      <div className="flex flex-col justify-between h-full py-0.5 z-10 w-[30%]">
+                        <div className="flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[7px] font-bold text-slate-600">
+                          <MessageSquare className="w-2 h-2 text-[#0077B6]" /> WhatsApp
+                        </div>
+                        <div className="flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[7px] font-bold text-slate-600">
+                          <Mail className="w-2 h-2 text-[#3BA9F5]" /> Email
+                        </div>
+                        <div className="flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[7px] font-bold text-slate-600">
+                          <Phone className="w-2 h-2 text-[#6EC8FF]" /> SMS
+                        </div>
+                      </div>
+                      <div className="w-6 h-6 rounded-full bg-white border border-[#0077B6] flex items-center justify-center shadow-sm z-10">
+                        <div className="w-3 h-3 rounded-full bg-[#0077B6]" />
+                      </div>
+                      <div className="flex flex-col items-center justify-center bg-white border border-slate-100 rounded p-1 shadow-sm z-10 w-[30%]">
+                        <Cloud className="w-3 h-3 text-[#0077B6]" />
+                        <span className="text-[7px] font-bold text-slate-700 mt-0.5">CRM Sync</span>
+                      </div>
                     </div>
-                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">
-                      {m.label}
-                    </span>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          {/* Card 2: CX Prism */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
-            {/* Background brand color glow reflection */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-[#2563EB]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
-
-            <div>
-              {/* Header block */}
-              <div className="flex items-start gap-3 w-full">
-                {/* 1. Large product icon (52px) in wrapper */}
-                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200/60 text-[#2563EB] shadow-[0_4px_20px_rgba(37,99,235,0.12)] group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
-                  <Layers className="w-7 h-7 text-[#2563EB]" />
+                  {/* Feature chips */}
+                  <div className="flex flex-wrap gap-1 mt-2.5">
+                    {["WhatsApp", "Email", "SMS", "History", "Read Receipts"].map((feature) => {
+                      let IconComponent = MessageSquare;
+                      if (feature === "Email") IconComponent = Mail;
+                      if (feature === "SMS") IconComponent = Phone;
+                      if (feature === "History") IconComponent = Clock;
+                      if (feature === "Read Receipts") IconComponent = Check;
+                      return (
+                        <span key={feature} className="inline-flex items-center gap-0.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-1.5 py-0.5 text-[8.5px] font-bold text-[#0077B6]">
+                          <IconComponent className="w-2 h-2 text-[#0077B6]" />
+                          {feature}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <div className="flex-grow min-w-0">
-                  <div className="flex items-center justify-between w-full gap-2">
-                    {/* 2. Product Name */}
-                    <h3 className="text-lg md:text-xl font-[900] text-[#0F172A] leading-tight tracking-tight truncate">
-                      CX Prism™
-                    </h3>
+                {/* Bottom status metrics */}
+                <div className="grid grid-cols-3 gap-1 pt-2 border-t border-slate-100/80 text-left">
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Sync Status</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">100% Native</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Response</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">&lt; 1s Real-time</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Delivery</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">99.9% Acc.</span>
+                  </div>
+                </div>
+              </div>
 
-                    {/* Status row badge */}
-                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-blue-100 bg-[#F0F4FF] text-[#2563EB] text-[9.5px] font-bold shadow-sm flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse"></span>
+              {/* Card 2: CX Prism™ */}
+              <div className="bg-white/80 backdrop-blur-md border border-slate-100 hover:border-[#3BA9F5]/40 rounded-[24px] p-4 flex flex-col justify-between h-[250px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(59,169,245,0.08)] group relative overflow-hidden">
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0077B6] shadow-[0_4px_12px_rgba(0,119,182,0.08)] group-hover:scale-105 transition-transform duration-300">
+                        <LineChart className="w-5 h-5 text-[#0077B6]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm md:text-base font-[900] text-[#0F172A] leading-none tracking-tight">
+                          CX Prism™
+                        </h3>
+                        <p className="text-[10px] font-bold text-[#0077B6] mt-0.5 leading-tight">
+                          AI-powered customer intelligence platform.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-blue-100 bg-[#F0F9FF] text-[#3BA9F5] text-[9px] font-bold shadow-sm flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3BA9F5] animate-pulse"></span>
                       Deployment
                     </div>
                   </div>
 
-                  {/* 3. Colored subtitle */}
-                  <p className="text-[11px] md:text-[12px] font-[800] text-[#2563EB] mt-0.5 leading-tight truncate">
-                    Customer feedback into revenue intelligence
-                  </p>
-                </div>
-              </div>
-
-              {/* 4. Description */}
-              <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                AI-powered NPS analysis, churn prediction, risk alerts, sentiment intelligence and
-                customer health monitoring directly inside Salesforce.
-              </p>
-
-              {/* 5. Feature chips */}
-              <div className="grid grid-cols-3 gap-1.5 mt-2.5 pt-2 border-t border-slate-100/60">
-                {[
-                  { text: "AI Insights", icon: Sparkles },
-                  { text: "Risk Dashboards", icon: AlertTriangle },
-                  { text: "Revenue Intel", icon: TrendingUp },
-                  { text: "Health Score", icon: HeartPulse },
-                  { text: "Leadership rpt", icon: Users },
-                  { text: "Predictive Analytics", icon: LineChart },
-                ].map((item) => (
-                  <span
-                    key={item.text}
-                    className="bg-[#F0F4FF] border border-[#DBEAFE]/40 rounded-md px-2 py-1 flex items-center gap-1 text-[9.5px] font-extrabold text-[#2563EB] hover:bg-[#2563EB]/10 hover:border-[#2563EB]/20 transition-all duration-200 truncate"
-                  >
-                    <item.icon className="w-3 h-3 text-[#2563EB] flex-shrink-0" />
-                    <span className="truncate">{item.text}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 6. Product illustration (NPS arc + Sentiment trend line + indicators column) */}
-            <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow grid grid-cols-3 gap-2 items-stretch h-[115px] md:h-[130px]">
-              {/* Column 1: NPS Score */}
-              <div className="flex flex-col items-center justify-center text-center border-r border-slate-100 pr-1">
-                <span className="text-[8.5px] font-black text-slate-500 mb-0.5 leading-none">
-                  NPS Score
-                </span>
-                <div className="relative w-20 h-11 md:h-13 flex items-center justify-center mt-0.5">
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 60">
-                    <path
-                      d="M 10 50 A 40 40 0 0 1 90 50"
-                      fill="none"
-                      stroke="#F1F5F9"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M 10 50 A 40 40 0 0 1 90 50"
-                      fill="none"
-                      stroke="#2563EB"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      strokeDasharray="125.6"
-                      strokeDashoffset="35.2"
-                    />
-                  </svg>
-                  <div className="absolute top-3.5 md:top-4.5 flex flex-col items-center">
-                    <span className="text-base font-black text-slate-800 leading-none">72</span>
-                    <span className="text-[7px] font-bold text-slate-500 uppercase leading-none mt-0.5">
-                      Good
-                    </span>
-                  </div>
-                </div>
-                <span className="text-[7.5px] font-black text-[#0EA5E9] mt-1 leading-none">
-                  +12 vs 30d
-                </span>
-              </div>
-
-              {/* Column 2: Sentiment Trend */}
-              <div className="flex flex-col justify-between h-full relative border-r border-slate-100 pr-1 pl-0.5">
-                <span className="text-[8.5px] font-black text-slate-500 text-left pl-0.5">
-                  Sentiment
-                </span>
-                <div className="relative w-full h-11 md:h-13 mt-0.5">
-                  <svg
-                    className="w-full h-full"
-                    viewBox="0 0 160 50"
-                    preserveAspectRatio="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="sentiment-prism-gradient"
-                        x1="0%"
-                        y1="0%"
-                        x2="0%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#2563EB" stopOpacity="0.2" />
-                        <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <line x1="0" y1="12.5" x2="160" y2="12.5" stroke="#F1F5F9" strokeWidth="0.5" />
-                    <line x1="0" y1="25" x2="160" y2="25" stroke="#F1F5F9" strokeWidth="0.5" />
-                    <line x1="0" y1="37.5" x2="160" y2="37.5" stroke="#F1F5F9" strokeWidth="0.5" />
-                    <path
-                      d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8"
-                      fill="none"
-                      stroke="#2563EB"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M 0 40 Q 20 20 40 35 T 80 15 T 120 30 T 160 8 L 160 50 L 0 50 Z"
-                      fill="url(#sentiment-prism-gradient)"
-                    />
-                    <circle cx="160" cy="8" r="2.5" fill="#2563EB" />
-                  </svg>
-                </div>
-                <div className="flex justify-between w-full text-[6.5px] font-bold text-slate-400 mt-0.5 px-0.5">
-                  <span>1d</span>
-                  <span>8d</span>
-                  <span>15d</span>
-                  <span>22d</span>
-                  <span>29d</span>
-                </div>
-              </div>
-
-              {/* Column 3: KPI health circle, churn bar, revenue impact */}
-              <div className="flex flex-col justify-between h-full gap-0.5 pt-0.5 pl-0.5">
-                {/* Customer Health */}
-                <div className="flex items-center justify-between gap-1 w-full border-b border-slate-100 pb-0.5">
-                  <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
-                      Health
-                    </span>
-                    <span className="text-[8.5px] font-black text-[#0EA5E9] mt-0.5 leading-none">
-                      Healthy
-                    </span>
-                  </div>
-                  <svg className="w-5.5 h-5.5 flex-shrink-0" viewBox="0 0 32 32">
-                    <circle
-                      cx="16"
-                      cy="16"
-                      r="12"
-                      fill="transparent"
-                      stroke="#E2E8F0"
-                      strokeWidth="3"
-                    />
-                    <circle
-                      cx="16"
-                      cy="16"
-                      r="12"
-                      fill="transparent"
-                      stroke="#0EA5E9"
-                      strokeWidth="3"
-                      strokeDasharray="75"
-                      strokeDashoffset="13.5"
-                      strokeLinecap="round"
-                      transform="rotate(-90 16 16)"
-                    />
-                    <text
-                      x="16"
-                      y="19"
-                      textAnchor="middle"
-                      className="text-[8px] font-black fill-[#0EA5E9]"
-                    >
-                      82
-                    </text>
-                  </svg>
-                </div>
-
-                {/* Churn Risk */}
-                <div className="flex items-center justify-between gap-1 w-full border-b border-slate-100 py-0.5">
-                  <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
-                      Churn
-                    </span>
-                    <span className="text-[8.5px] font-black text-slate-600 mt-0.5 leading-none">
-                      Low
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-0.5">
-                    <span className="text-[8px] font-black text-slate-700">12%</span>
-                    <div className="w-6 h-0.75 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#2563EB] rounded-full" style={{ width: "12%" }} />
+                  {/* Custom visualization for CX Prism */}
+                  <div className="border border-slate-100/60 rounded-xl p-1 bg-slate-50/50 mt-2.5 flex items-center justify-center h-[62px] relative overflow-hidden">
+                    <div className="relative w-full h-full flex items-center justify-between px-2 gap-2">
+                      <div className="flex flex-col items-center justify-center w-[40%] h-full border-r border-slate-100 pr-2">
+                        <span className="text-[6.5px] uppercase font-bold text-slate-400">Health</span>
+                        <div className="relative w-10 h-7 flex items-center justify-center mt-0.5">
+                          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 60">
+                            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#F1F5F9" strokeWidth="12" strokeLinecap="round" />
+                            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#health-gauge-grad)" strokeWidth="12" strokeLinecap="round" strokeDasharray="125.6" strokeDashoffset="22" />
+                            <defs>
+                              <linearGradient id="health-gauge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#3BA9F5" />
+                                <stop offset="100%" stopColor="#0077B6" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                          <div className="absolute top-2 flex flex-col items-center">
+                            <span className="text-[10px] font-extrabold text-[#0F172A]">82</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col justify-between w-[60%] h-full pl-1 py-0.5">
+                        <span className="text-[6.5px] uppercase font-bold text-slate-400 text-left">Sentiment Trend</span>
+                        <div className="relative w-full h-6">
+                          <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                            <path d="M 0 35 Q 20 15 40 28 T 80 10 T 100 5" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeLinecap="round" />
+                            <path d="M 0 35 Q 20 15 40 28 T 80 10 T 100 5 L 100 40 L 0 40 Z" fill="url(#trend-grad)" />
+                            <defs>
+                              <linearGradient id="trend-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.3" />
+                                <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0" />
+                              </linearGradient>
+                            </defs>
+                            <circle cx="100" cy="5" r="2" fill="#0077B6" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Feature chips */}
+                  <div className="flex flex-wrap gap-1 mt-2.5">
+                    {["NPS Analytics", "Churn Predict", "Health Score", "Revenue Intel"].map((feature) => {
+                      let IconComponent = TrendingUp;
+                      if (feature === "Churn Predict") IconComponent = AlertTriangle;
+                      if (feature === "Health Score") IconComponent = HeartPulse;
+                      if (feature === "Revenue Intel") IconComponent = LineChart;
+                      return (
+                        <span key={feature} className="inline-flex items-center gap-0.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-1.5 py-0.5 text-[8.5px] font-bold text-[#0077B6]">
+                          <IconComponent className="w-2 h-2 text-[#0077B6]" />
+                          {feature}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                {/* Revenue Impact */}
-                <div className="flex items-center justify-between gap-1 w-full pt-0.5">
-                  <div className="flex flex-col text-left">
-                    <span className="text-[7px] font-bold text-slate-400 uppercase leading-none">
-                      Revenue
-                    </span>
-                    <span className="text-[8.5px] font-black text-[#2563EB] mt-0.5 leading-none font-sans">
-                      ₹48.7L
-                    </span>
+                {/* Bottom status metrics */}
+                <div className="grid grid-cols-3 gap-1 pt-2 border-t border-slate-100/80 text-left">
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Accuracy</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">94.5% AI Model</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Risk Alerts</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">Real-time Live</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">NPS Score</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">72 Avg. Score</span>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Card 3: AI Voice Platform */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-[24px] p-3.5 md:p-4 flex flex-col justify-between text-left relative overflow-hidden group h-[340px] md:h-[375px] w-full">
-            {/* Background brand color glow reflection */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-[#0EA5E9]/5 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10" />
-
-            <div>
-              {/* Header block */}
-              <div className="flex items-start gap-3 w-full">
-                {/* 1. Large product icon (52px) in wrapper */}
-                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-sky-100 border border-blue-200/60 text-[#0EA5E9] shadow-[0_4px_20px_rgba(14,165,233,0.12)] group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
-                  <PhoneCall className="w-7 h-7 text-[#0EA5E9]" />
-                </div>
-
-                <div className="flex-grow min-w-0">
-                  <div className="flex items-center justify-between w-full gap-2">
-                    {/* 2. Product Name */}
-                    <h3 className="text-lg md:text-xl font-[900] text-[#0F172A] leading-tight tracking-tight truncate">
-                      AI Voice Platform
-                    </h3>
-
-                    {/* Status row badge */}
-                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-sky-100 bg-[#F0F9FF] text-[#2563EB] text-[9.5px] font-bold shadow-sm flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0EA5E9] animate-pulse"></span>
+              {/* Card 3: Case Flow */}
+              <div className="bg-white/80 backdrop-blur-md border border-slate-100 hover:border-[#3BA9F5]/40 rounded-[24px] p-4 flex flex-col justify-between h-[250px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(59,169,245,0.08)] group relative overflow-hidden">
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0077B6] shadow-[0_4px_12px_rgba(0,119,182,0.08)] group-hover:scale-105 transition-transform duration-300">
+                        <Workflow className="w-5 h-5 text-[#0077B6]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm md:text-base font-[900] text-[#0F172A] leading-none tracking-tight">
+                          Case Flow
+                        </h3>
+                        <p className="text-[10px] font-bold text-[#0077B6] mt-0.5 leading-tight">
+                          AI Customer Case Management Platform.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-sky-100 bg-[#F0F9FF] text-[#0077B6] text-[9px] font-bold shadow-sm flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0077B6] animate-pulse"></span>
                       Live
                     </div>
                   </div>
 
-                  {/* 3. Colored subtitle */}
-                  <p className="text-[11px] md:text-[12px] font-[800] text-[#0EA5E9] mt-0.5 leading-tight truncate">
-                    Autonomous voice agents with CRM sync
-                  </p>
-                </div>
-              </div>
-
-              {/* 4. Description */}
-              <p className="mt-2 text-[11px] md:text-[12px] leading-normal text-slate-500 font-semibold">
-                Intelligent inbound and outbound calls. Automatic call transcription, sentiment
-                tagging, CRM updates, and pipelines built for scale.
-              </p>
-
-              {/* 5. Feature chips */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-1.5 mt-2.5 pt-2 border-t border-slate-100/60">
-                {[
-                  { text: "AI-Driven Calls", icon: PhoneCall },
-                  { text: "Auto CRM Update", icon: RefreshCw },
-                  { text: "Real-time Analytics", icon: Gauge },
-                  { text: "Voice Agents", icon: Mic },
-                  { text: "Speech-to-Text", icon: Volume2 },
-                  { text: "Enterprise Ready", icon: ShieldCheck },
-                ].map((item) => (
-                  <span
-                    key={item.text}
-                    className="bg-[#F0F9FF] border border-[#E0F2FE]/40 rounded-md px-2 py-1 flex items-center gap-1 text-[9.5px] font-extrabold text-sky-700 hover:bg-[#0EA5E9]/10 hover:border-[#0EA5E9]/20 transition-all duration-200 truncate"
-                  >
-                    <item.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="truncate">{item.text}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 6. Product illustration (Call Flow with waveform) */}
-            <div className="border border-slate-100 rounded-xl p-2 bg-white shadow-sm mt-3 flex-grow flex flex-col justify-between">
-              <div className="relative w-full h-[90px] md:h-[105px] flex items-center justify-between">
-                {/* Animated SVG Lines */}
-                <svg
-                  className="absolute inset-0 w-full h-full pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M 30 50 L 45 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#0EA5E9]"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M 55 50 L 70 50"
-                    fill="none"
-                    className="animated-flow-line stroke-[#2563EB]"
-                    strokeWidth="1.5"
-                  />
-                </svg>
-
-                {/* Left Column: Customer */}
-                <div className="flex flex-col justify-center h-full z-10 relative w-[32%] py-0.5">
-                  <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/50 rounded-md py-1 px-2 shadow-sm truncate">
-                    <Phone className="w-3.5 h-3.5 text-[#0EA5E9] flex-shrink-0" />
-                    <span className="text-[9.5px] font-black text-slate-700 truncate">
-                      Customer
-                    </span>
-                  </div>
-                </div>
-
-                {/* Center Node (AI Voice Agent with microphone) */}
-                <div className="absolute left-[50%] -translate-x-1/2 top-[12px] md:top-[18px] flex flex-col items-center z-10">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shadow-lg shadow-blue-500/10">
-                    <div className="w-7 h-7 rounded-full bg-[#0EA5E9] flex items-center justify-center text-white shadow-md">
-                      <Mic className="w-4 h-4 text-white" />
+                  {/* Custom visualization for Case Flow */}
+                  <div className="border border-slate-100/60 rounded-xl p-1 bg-slate-50/50 mt-2.5 flex items-center justify-center h-[62px] relative overflow-hidden">
+                    <div className="relative w-full h-full flex items-center justify-between px-1">
+                      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 60" preserveAspectRatio="none">
+                        <path d="M 30 30 L 170 30" fill="none" className="animated-flow-line stroke-[#3BA9F5]" strokeWidth="2" />
+                      </svg>
+                      <div className="flex flex-col items-center bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs z-10 w-[22%]">
+                        <MessageSquare className="w-2.5 h-2.5 text-[#0077B6]" />
+                        <span className="text-[6px] font-bold text-slate-500 uppercase mt-0.5">Inbound</span>
+                      </div>
+                      <div className="flex flex-col items-center bg-white border border-[#0077B6]/30 rounded px-1 py-0.5 shadow-xs z-10 w-[24%] ring-2 ring-[#0077B6]/5">
+                        <Sparkles className="w-2.5 h-2.5 text-[#0077B6] animate-pulse" />
+                        <span className="text-[6px] font-bold text-[#0077B6] uppercase mt-0.5">AI Route</span>
+                      </div>
+                      <div className="flex flex-col items-center bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs z-10 w-[22%]">
+                        <Clock className="w-2.5 h-2.5 text-[#3BA9F5]" />
+                        <span className="text-[6px] font-bold text-slate-500 uppercase mt-0.5">SLA Watch</span>
+                      </div>
+                      <div className="flex flex-col items-center bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs z-10 w-[22%]">
+                        <ShieldCheck className="w-2.5 h-2.5 text-[#6EC8FF]" />
+                        <span className="text-[6px] font-bold text-slate-500 uppercase mt-0.5">Resolve</span>
+                      </div>
                     </div>
                   </div>
-                  {/* Animated Waveform bars */}
-                  <div className="flex items-center gap-[3px] mt-1.5 h-3 justify-center">
-                    <span className="w-[3px] bg-[#0EA5E9] rounded-full voice-bar-1 h-3"></span>
-                    <span className="w-[3px] bg-[#2563EB] rounded-full voice-bar-2 h-4"></span>
-                    <span className="w-[3px] bg-[#0ea5e9] rounded-full voice-bar-3 h-3.5"></span>
-                    <span className="w-[3px] bg-[#2563EB] rounded-full voice-bar-4 h-2"></span>
-                    <span className="w-[3px] bg-[#0ea5e9] rounded-full voice-bar-5 h-3"></span>
+
+                  {/* Feature chips */}
+                  <div className="flex flex-wrap gap-1 mt-2.5">
+                    {["Auto Routing", "SLA Auto", "Escalation", "Resolution"].map((feature) => {
+                      let IconComponent = RefreshCw;
+                      if (feature === "SLA Auto") IconComponent = Clock;
+                      if (feature === "Escalation") IconComponent = AlertTriangle;
+                      if (feature === "Resolution") IconComponent = Check;
+                      return (
+                        <span key={feature} className="inline-flex items-center gap-0.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-1.5 py-0.5 text-[8.5px] font-bold text-[#0077B6]">
+                          <IconComponent className="w-2 h-2 text-[#0077B6]" />
+                          {feature}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Right Salesforce CRM Node */}
-                <div className="w-[32%] bg-slate-50 border border-[#E2E8F0]/50 rounded-xl py-1.5 px-2 shadow-sm flex flex-col items-center justify-center text-center z-10 relative">
-                  <Cloud className="w-5 h-5 text-[#2563EB] flex-shrink-0" />
-                  <span className="text-[9px] font-black text-slate-800 mt-0.5 leading-none">
-                    Salesforce CRM
-                  </span>
+                {/* Bottom status metrics */}
+                <div className="grid grid-cols-3 gap-1 pt-2 border-t border-slate-100/80 text-left">
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Auto-Route</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">92% Classified</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Avg SLA</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">12 min Target</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Resolved</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">98.6% Solved</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Bottom Preview Metrics Row */}
-              <div className="grid grid-cols-4 gap-1 border-t border-slate-100 pt-2 mt-2 w-full">
-                {[
-                  { val: "12.5k", label: "Calls Sync", icon: PhoneCall },
-                  { val: "94.2%", label: "Accuracy", icon: Sparkles },
-                  { val: "1.4s", label: "Latency", icon: Clock },
-                  { val: "99.9%", label: "Sync Rate", icon: BadgeCheck },
-                ].map((m, idx) => (
-                  <div key={idx} className="flex flex-col text-left">
-                    <div className="flex items-center gap-0.5 font-[900] text-slate-800 text-[10px] md:text-[11px] leading-none">
-                      <m.icon className="w-3 h-3 text-[#0EA5E9] flex-shrink-0" />
-                      <span className="truncate">{m.val}</span>
+              {/* Card 4: Nexora */}
+              <div className="bg-white/80 backdrop-blur-md border border-slate-100 hover:border-[#3BA9F5]/40 rounded-[24px] p-4 flex flex-col justify-between h-[250px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(59,169,245,0.08)] group relative overflow-hidden">
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0077B6] shadow-[0_4px_12px_rgba(0,119,182,0.08)] group-hover:scale-105 transition-transform duration-300">
+                        <Users className="w-5 h-5 text-[#0077B6]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm md:text-base font-[900] text-[#0F172A] leading-none tracking-tight">
+                          Nexora
+                        </h3>
+                        <p className="text-[10px] font-bold text-[#0077B6] mt-0.5 leading-tight">
+                          Partner & Sourcing Management Platform.
+                        </p>
+                      </div>
                     </div>
-                    <span className="text-[7.5px] font-bold text-slate-400 mt-0.5 leading-none truncate">
-                      {m.label}
-                    </span>
+                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-sky-100 bg-[#F0F9FF] text-[#0077B6] text-[9px] font-bold shadow-sm flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0077B6] animate-pulse"></span>
+                      Live
+                    </div>
                   </div>
-                ))}
+
+                  {/* Custom visualization for Nexora */}
+                  <div className="border border-slate-100/60 rounded-xl p-1 bg-slate-50/50 mt-2.5 flex items-center justify-center h-[62px] relative overflow-hidden">
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 60" preserveAspectRatio="none">
+                        <path d="M 100 30 L 45 15" className="animated-flow-line stroke-[#0077B6]" strokeWidth="1.5" />
+                        <path d="M 100 30 L 45 45" className="animated-flow-line stroke-[#3BA9F5]" strokeWidth="1.5" />
+                        <path d="M 100 30 L 155 30" className="animated-flow-line stroke-[#6EC8FF]" strokeWidth="1.5" />
+                      </svg>
+                      <div className="absolute left-[88px] top-[18px] w-6 h-6 rounded-full bg-white border border-[#0077B6] flex items-center justify-center shadow-xs z-10">
+                        <Database className="w-3 h-3 text-[#0077B6]" />
+                      </div>
+                      <div className="absolute left-[12px] top-[4px] flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[6.5px] font-bold text-slate-600 z-10">
+                        <Users className="w-2 h-2 text-[#0077B6]" /> Partner A
+                      </div>
+                      <div className="absolute left-[12px] bottom-[4px] flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[6.5px] font-bold text-slate-600 z-10">
+                        <Users className="w-2 h-2 text-[#3BA9F5]" /> Partner B
+                      </div>
+                      <div className="absolute right-[15px] top-[20px] flex items-center gap-0.5 bg-white border border-slate-100 rounded px-1 py-0.5 shadow-xs text-[6.5px] font-bold text-slate-600 z-10">
+                        <Compass className="w-2 h-2 text-[#6EC8FF]" /> Supply Hub
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Feature chips */}
+                  <div className="flex flex-wrap gap-1 mt-2.5">
+                    {["Meeting Plan", "Activity Track", "Partner Mgmt", "Deal Pipeline"].map((feature) => {
+                      let IconComponent = Calendar;
+                      if (feature === "Activity Track") IconComponent = Gauge;
+                      if (feature === "Partner Mgmt") IconComponent = Users;
+                      if (feature === "Deal Pipeline") IconComponent = TrendingUp;
+                      return (
+                        <span key={feature} className="inline-flex items-center gap-0.5 bg-[#F0F9FF] border border-[#E0F2FE] rounded-full px-1.5 py-0.5 text-[8.5px] font-bold text-[#0077B6]">
+                          <IconComponent className="w-2 h-2 text-[#0077B6]" />
+                          {feature}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Bottom status metrics */}
+                <div className="grid grid-cols-3 gap-1 pt-2 border-t border-slate-100/80 text-left">
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Partners</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">120+ Active</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Pipeline</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">₹4.2Cr Sourced</span>
+                  </div>
+                  <div>
+                    <span className="text-[7.5px] uppercase font-bold text-slate-400 block leading-none">Activity</span>
+                    <span className="text-[10px] font-black text-slate-800 leading-tight">High Index</span>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
 
-        {/* Divider 2 */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200/80 to-transparent opacity-60 my-0.5 relative z-10" />
-
         {/* PREMIUM METRIC STRIP: Slim unified glass ribbon */}
-        <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-2.5 md:gap-4 w-full max-w-5xl mx-auto h-[60px] md:h-[90px] mb-1.5 py-1 px-6 rounded-xl premium-glass-card border border-[#0EA5E9]/15 z-10 relative">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-3 md:gap-4 w-full max-w-5xl mx-auto py-2.5 px-6 rounded-2xl bg-white/80 backdrop-blur-md border border-[#0077B6]/15 shadow-[0_10px_30px_rgba(59,169,245,0.04)] z-10 relative">
           {[
-            { value: "3", label: "Proprietary Products", icon: Sparkles, color: "#0EA5E9" },
-            { value: "100%", label: "Live Deployments", icon: BadgeCheck, color: "#2563EB" },
-            { value: "8+", label: "Enterprise Clients", icon: Users, color: "#2563EB" },
-            { value: "In-House", label: "Built In-House", icon: Code, color: "#0EA5E9" },
+            { value: "3+", label: "Live Products", emoji: "🚀" },
+            { value: "100%", label: "Paying Clients", emoji: "✅" },
+            { value: "8+", label: "Enterprise Clients", emoji: "🏢" },
+            { value: "100%", label: "Built In-house", emoji: "🛠" },
           ].map((stat, idx) => (
-            <div key={idx} className="flex items-center gap-3.5 px-2 py-0.5 group cursor-default">
-              <div
-                className="w-9 md:w-11 h-9 md:h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
-                style={{
-                  background: `${stat.color}10`,
-                  color: stat.color,
-                  border: `1px solid ${stat.color}20`,
-                }}
-              >
-                <stat.icon className="w-4.5 h-4.5" />
-              </div>
+            <div key={idx} className="flex items-center gap-3 px-2 py-0.5 group cursor-default">
+              <span className="text-xl md:text-2xl">{stat.emoji}</span>
               <div className="flex flex-col text-left">
-                <span className="text-xl md:text-[28px] font-black text-slate-800 tracking-tight leading-none">
+                <span className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
                   {stat.value}
                 </span>
-                <span className="text-[8px] md:text-[9.5px] uppercase font-bold text-slate-400 mt-1 leading-none">
+                <span className="text-[9px] uppercase font-bold text-slate-400 mt-1 leading-none">
                   {stat.label}
                 </span>
               </div>
@@ -2736,7 +2331,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 8) {
+  if (scene.id === 7) {
     const industries = [
       {
         id: "real-estate",
@@ -2922,7 +2517,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 9) {
+  if (scene.id === 8) {
     const reasons = [
       {
         id: "know-sales",
@@ -3121,7 +2716,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 10) {
+  if (scene.id === 9) {
     const clients = [
       "KOHINOOR",
       "CREATIVE CLOUD",
@@ -3239,7 +2834,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     );
   }
 
-  if (scene.id === 11) {
+  if (scene.id === 10) {
     return <CaseStudiesScene scene={scene} />;
   }
 

@@ -101,19 +101,25 @@ export const SCENES: Scene[] = [
   },
   {
     id: 3,
-    kicker: "District 03 · Principles",
-    title: "Our Values",
-    variant: "duo",
+    kicker: "District 03 · Product Ecosystem",
+    title: "Real Problems. Purpose-Built Products.",
+    subtitle: "Most Salesforce partners implement what Salesforce sells. We went further.",
+    variant: "grid",
     items: [
       {
-        icon: Lightbulb,
-        title: "Innovation",
-        body: "Innovation drives us to develop forward-thinking solutions.",
+        icon: MessageSquare,
+        title: "Cascade Connect",
+        body: "Omnichannel communication, inside Salesforce.",
       },
       {
-        icon: HeartHandshake,
-        title: "Client Commitment",
-        body: "Your success defines our success.",
+        icon: Layers,
+        title: "CX Prism™",
+        body: "Customer feedback into revenue intelligence.",
+      },
+      {
+        icon: PhoneCall,
+        title: "AI Voice Platform",
+        body: "AI-driven conversations and voice intelligence inside CRM.",
       },
     ],
   },
@@ -229,31 +235,7 @@ export const SCENES: Scene[] = [
   },
   {
     id: 7,
-    kicker: "District 07 · Product Ecosystem",
-    title: "Real Problems. Purpose-Built Products.",
-    subtitle: "Most Salesforce partners implement what Salesforce sells. We went further.",
-    variant: "grid",
-    items: [
-      {
-        icon: MessageSquare,
-        title: "Cascade Connect",
-        body: "Omnichannel communication, inside Salesforce.",
-      },
-      {
-        icon: Layers,
-        title: "CX Prism™",
-        body: "Customer feedback into revenue intelligence.",
-      },
-      {
-        icon: PhoneCall,
-        title: "AI Voice Platform",
-        body: "AI-driven conversations and voice intelligence inside CRM.",
-      },
-    ],
-  },
-  {
-    id: 8,
-    kicker: "District 08 · Industries We Serve",
+    kicker: "District 07 · Industries We Serve",
     title: "Built for Real Estate. Ready for Enterprise.",
     variant: "grid",
     items: [
@@ -290,8 +272,8 @@ export const SCENES: Scene[] = [
     ],
   },
   {
-    id: 9,
-    kicker: "District 09 · Why Cascade Tech",
+    id: 8,
+    kicker: "District 08 · Why Cascade Tech",
     title: "Why Developers & Enterprises Choose Cascade",
     subtitle:
       "We combine Salesforce expertise, AI innovation, product thinking and real-world industry execution to deliver measurable business outcomes.",
@@ -331,8 +313,8 @@ export const SCENES: Scene[] = [
   },
 
   {
-    id: 10,
-    kicker: "District 10 · Clients",
+    id: 9,
+    kicker: "District 09 · Clients",
     title: "Organizations That Trust Cascade Tech",
     subtitle:
       "From Mumbai's leading real estate developers to growing enterprise organizations, Cascade Tech powers Salesforce, AI and automation initiatives across multiple industries.",
@@ -356,8 +338,8 @@ export const SCENES: Scene[] = [
     ],
   },
   {
-    id: 11,
-    kicker: "District 11 · Case Studies",
+    id: 10,
+    kicker: "District 10 · Case Studies",
     title: "Work In Production. Outcomes That Compound.",
     subtitle:
       "Real Salesforce implementations, AI automations and marketing transformations delivering measurable business outcomes across real estate organizations.",
@@ -369,8 +351,8 @@ export const SCENES: Scene[] = [
     ],
   },
   {
-    id: 12,
-    kicker: "District 12 · Engagement Model",
+    id: 11,
+    kicker: "District 11 · Engagement Model",
     title: "How We Work With You",
     subtitle:
       "From the first conversation to long-term partnership — here is what working with Cascade looks like.",
@@ -404,11 +386,12 @@ export const SCENES: Scene[] = [
     ],
   },
   {
-    id: 13,
-    kicker: "District 13 · Conclusion",
+    id: 12,
+    kicker: "District 12 · Conclusion",
     title: "Let's Build Something That Actually Works.",
     subtitle:
       "Whether you're implementing Salesforce, building AI-powered automation, launching digital products, or transforming customer operations — let's discuss what success looks like for your business.",
     variant: "final",
   },
 ];
+
