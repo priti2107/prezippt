@@ -204,6 +204,45 @@ export const SCENES: Scene[] = [
     ],
   },
   {
+    id: 5,
+    kicker: "District 05 · Our Services",
+    title: "Our Services",
+    subtitle: "From strategy to go-live to long-term support — we cover the full Salesforce journey.",
+    variant: "grid",
+    items: [
+      {
+        icon: CloudCog,
+        title: "CRM Implementation",
+        body: "Sales Cloud, Service Cloud & custom orgs — config, Apex/LWC, migration, training, full lead-to-booking lifecycle.",
+      },
+      {
+        icon: Megaphone,
+        title: "Marketing Automation",
+        body: "Marketing Cloud journeys across email, SMS & WhatsApp, with live Meta CAPI ad-attribution integrations.",
+      },
+      {
+        icon: Code,
+        title: "Custom Dev & Integrations",
+        body: "Apex, LWC and REST integrations connecting ERP, payment, and broker portals — middleware-free.",
+      },
+      {
+        icon: Layers,
+        title: "Proprietary Products",
+        body: "Deploy Cascade Connect & CX Prism™ — pre-built, tested products that solve gaps Salesforce alone can't.",
+      },
+      {
+        icon: Search,
+        title: "Audit & Optimisation",
+        body: "Full org audits of config, automation, data hygiene & adoption, with a prioritised fix-and-grow roadmap.",
+      },
+      {
+        icon: HeartHandshake,
+        title: "Managed Support & AMC",
+        body: "Post go-live AMC: bug fixes, enhancements, user support and quarterly health check-ins.",
+      },
+    ],
+  },
+  {
     id: 8,
     kicker: "District 08 · Why Cascade Tech",
     title: "Why Developers & Enterprises Choose Cascade",

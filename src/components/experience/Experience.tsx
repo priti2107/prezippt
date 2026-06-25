@@ -191,31 +191,31 @@ function SceneOverlay({
   let scaleOutput: number[];
 
   if (index === 0) {
-    opacityRange = [0, w * 0.45];
+    opacityRange = [0, w * 0.75];
     opacityOutput = [1, 0];
 
-    yRange = [0, w * 0.45];
+    yRange = [0, w * 0.75];
     yOutput = [0, -60];
 
-    scaleRange = [0, w * 0.45];
+    scaleRange = [0, w * 0.75];
     scaleOutput = [1, 1.04];
   } else if (index === N - 1) {
-    opacityRange = [1 - w * 0.45, 1];
+    opacityRange = [1 - w * 0.75, 1];
     opacityOutput = [0, 1];
 
-    yRange = [1 - w * 0.45, 1];
+    yRange = [1 - w * 0.75, 1];
     yOutput = [60, 0];
 
-    scaleRange = [1 - w * 0.45, 1];
+    scaleRange = [1 - w * 0.75, 1];
     scaleOutput = [0.94, 1];
   } else {
-    opacityRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
+    opacityRange = getSafeRange3(center - w * 0.75, center, center + w * 0.75);
     opacityOutput = [0, 1, 0];
 
-    yRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
+    yRange = getSafeRange3(center - w * 0.75, center, center + w * 0.75);
     yOutput = [60, 0, -60];
 
-    scaleRange = getSafeRange3(center - w * 0.45, center, center + w * 0.45);
+    scaleRange = getSafeRange3(center - w * 0.75, center, center + w * 0.75);
     scaleOutput = [0.94, 1, 1.04];
   }
 
@@ -2263,10 +2263,9 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
 
     return (
       <div
-        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-5 pb-5 px-4 md:px-8 justify-between gap-4 border border-slate-100 shadow-[0_30px_90px_rgba(15,23,42,0.04)]"
+        className="pointer-events-auto rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-5 pb-5 px-4 md:px-8 justify-between gap-4 border border-slate-100 shadow-[0_30px_90px_rgba(15,23,42,0.05)] bg-white"
         style={{
-          background: "rgba(255, 255, 255, 0.98)",
-          backdropFilter: "blur(24px)",
+          background: "#ffffff",
         }}
       >
         {/* Soft blue ambient glow */}
@@ -2362,6 +2361,288 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
                   >
                     {ind.desc}
                   </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom Glow reflection element */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95)] opacity-95 rounded-full pointer-events-none" />
+      </div>
+    );
+  }
+
+  if (scene.id === 5) {
+    const services = [
+      {
+        id: "crm-implementation",
+        title: "CRM Implementation",
+        desc: "Sales Cloud, Service Cloud & custom orgs — config, Apex/LWC, migration, training, full lead-to-booking lifecycle.",
+        subtitle: "CRM & SALES CLOUD",
+        chips: ["Sales Cloud", "Apex", "LWC"],
+        gradient: "from-[#00a1e0] to-[#0070d2]",
+        bgStyle: { backgroundColor: "rgba(240, 249, 255, 0.45)", borderColor: "rgba(147, 197, 253, 0.3)" },
+        iconGradient: "from-[#e0f2fe] to-[#bae6fd] text-[#0369a1]",
+        borderColor: "group-hover:border-[#00a1e0]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-2.79-2.54-4.5-5-4.5-.42 0-.83.05-1.22.14A7 7 0 0 0 5 12.5a4.5 4.5 0 0 0 2.5 8.5h10" />
+            <circle cx="12" cy="15" r="1.5" fill="currentColor" />
+            <path d="M12 16.5v2.5" />
+            <circle cx="8" cy="18" r="1" fill="currentColor" />
+            <circle cx="16" cy="18" r="1" fill="currentColor" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M30 65 C18 65 12 53 22 43 C18 30 35 18 50 25 C60 12 85 14 90 30 C100 30 104 42 98 52 C104 63 92 71 80 69" />
+            <circle cx="30" cy="65" r="4" fill="currentColor" />
+            <circle cx="50" cy="25" r="4" fill="currentColor" />
+            <circle cx="90" cy="30" r="4" fill="currentColor" />
+            <circle cx="45" cy="50" r="3" fill="currentColor" />
+            <circle cx="65" cy="45" r="3" fill="currentColor" />
+            <path d="M30 65 L45 50 L65 45 L90 30" strokeDasharray="3 3" />
+            <path d="M50 25 L45 50" strokeDasharray="3 3" />
+          </svg>
+        )
+      },
+      {
+        id: "marketing-automation",
+        title: "Marketing Automation",
+        desc: "Marketing Cloud journeys across email, SMS & WhatsApp, with live Meta CAPI ad-attribution integrations.",
+        subtitle: "AUTOMATION & FLOWS",
+        chips: ["Marketing Cloud", "Meta CAPI", "WhatsApp Flows"],
+        gradient: "from-[#0ea5e9] to-[#2563EB]",
+        bgStyle: { backgroundColor: "rgba(236, 254, 255, 0.45)", borderColor: "rgba(165, 243, 252, 0.3)" },
+        iconGradient: "from-[#cffafe] to-[#a5f3fc] text-[#0891b2]",
+        borderColor: "group-hover:border-[#0ea5e9]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z" />
+            <path d="m22 9-8.53 5.72a2 2 0 0 1-2.94 0L2 9" />
+            <path d="M12 14v5" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="15" y="20" width="40" height="26" rx="4" />
+            <path d="M15 20 L35 34 L55 20" />
+            <path d="M35 46 C35 65 65 60 65 75" strokeDasharray="4 3" />
+            <path d="M62 70 L65 75 L60 77" />
+            <rect x="50" y="65" width="38" height="24" rx="6" />
+            <path d="M50 78 C50 75 52 73 55 73 H83 C86 73 88 75 88 78 V83" />
+            <circle cx="60" cy="77" r="2" fill="currentColor" />
+          </svg>
+        )
+      },
+      {
+        id: "custom-dev",
+        title: "Custom Dev & Integrations",
+        desc: "Apex, LWC and REST integrations connecting ERP, payment, and broker portals — middleware-free.",
+        subtitle: "CUSTOM CODE & APIS",
+        chips: ["REST API", "Apex / LWC", "Integrations"],
+        gradient: "from-[#0284c7] to-[#1d4ed8]",
+        bgStyle: { backgroundColor: "rgba(239, 246, 255, 0.45)", borderColor: "rgba(191, 219, 254, 0.3)" },
+        iconGradient: "from-[#eff6ff] to-[#dbeafe] text-[#1d4ed8]",
+        borderColor: "group-hover:border-[#0284c7]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m18 16 4-4-4-4" />
+            <path d="m6 8-4 4 4 4" />
+            <path d="m14.5 4-5 16" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M25 30 L10 45 L25 60" />
+            <path d="M45 60 L60 45 L45 30" />
+            <line x1="38" y1="25" x2="32" y2="65" />
+            <circle cx="80" cy="45" r="10" />
+            <circle cx="80" cy="45" r="3" fill="currentColor" />
+            <path d="M60 45 L70 45" />
+            <path d="M80 15 L80 35" strokeDasharray="3 3" />
+            <path d="M80 55 L80 75" strokeDasharray="3 3" />
+            <circle cx="80" cy="15" r="3" fill="currentColor" />
+            <circle cx="80" cy="75" r="3" fill="currentColor" />
+          </svg>
+        )
+      },
+      {
+        id: "proprietary-products",
+        title: "Proprietary Products",
+        desc: "Deploy Cascade Connect & CX Prism™ — pre-built, tested products that solve gaps Salesforce alone can't.",
+        subtitle: "CUSTOM PRODUCT MODULES",
+        chips: ["Cascade Connect", "CX Prism™", "Voice AI"],
+        gradient: "from-[#3B82F6] to-[#1e40af]",
+        bgStyle: { backgroundColor: "rgba(245, 243, 255, 0.45)", borderColor: "rgba(224, 231, 255, 0.3)" },
+        iconGradient: "from-[#e0e7ff] to-[#c7d2fe] text-[#4338ca]",
+        borderColor: "group-hover:border-[#3B82F6]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22 2 17V7l10-5 10 5v10l-10 5z" />
+            <path d="M12 22V12" />
+            <path d="m2 7 10 5 10-5" />
+            <path d="M17 14.5l-5 2.5-5-2.5" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" />
+            <path d="M50 10 L50 90" />
+            <path d="M15 30 L50 50 L85 30" />
+            <path d="M15 70 L50 50" />
+            <path d="M85 70 L50 50" />
+            <rect x="25" y="42" width="10" height="10" fill="currentColor" opacity="0.3" />
+            <rect x="65" y="42" width="10" height="10" fill="currentColor" opacity="0.3" />
+            <circle cx="50" cy="30" r="4" fill="currentColor" />
+          </svg>
+        )
+      },
+      {
+        id: "audit-optimisation",
+        title: "Audit & Optimisation",
+        desc: "Full org audits of config, automation, data hygiene & adoption, with a prioritised fix-and-grow roadmap.",
+        subtitle: "ANALYTICS & DIAGNOSTICS",
+        chips: ["Org Audits", "Data Hygiene", "Architecture Map"],
+        gradient: "from-[#6366F1] to-[#2563EB]",
+        bgStyle: { backgroundColor: "rgba(240, 249, 255, 0.55)", borderColor: "rgba(147, 197, 253, 0.3)" },
+        iconGradient: "from-[#e0f2fe] to-[#bfdbfe] text-[#0284c7]",
+        borderColor: "group-hover:border-[#6366F1]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m19 9-5 5-4-4-3 3" />
+            <circle cx="14" cy="14" r="2" fill="currentColor" />
+            <circle cx="10" cy="10" r="2" fill="currentColor" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="10" y="20" width="60" height="45" rx="4" />
+            <path d="M10 32 H70" />
+            <path d="M20 52 L35 40 L50 48 L65 35" strokeWidth="2" />
+            <circle cx="35" cy="40" r="4" fill="currentColor" />
+            <circle cx="50" cy="48" r="4" fill="currentColor" />
+            <circle cx="55" cy="70" r="16" />
+            <line x1="66" y1="81" x2="82" y2="97" strokeWidth="3" />
+            <circle cx="55" cy="70" r="6" strokeDasharray="2 2" />
+          </svg>
+        )
+      },
+      {
+        id: "managed-support",
+        title: "Managed Support & AMC",
+        desc: "Post go-live AMC: bug fixes, enhancements, user support and quarterly health check-ins.",
+        subtitle: "24x7 MONITORING & SUPPORT",
+        chips: ["24×7 Support", "AMC Support", "SLAs"],
+        gradient: "from-[#0070d2] to-[#1d4ed8]",
+        bgStyle: { backgroundColor: "rgba(239, 246, 255, 0.55)", borderColor: "rgba(191, 219, 254, 0.3)" },
+        iconGradient: "from-[#eff6ff] to-[#bfdbfe] text-[#2563eb]",
+        borderColor: "group-hover:border-[#0070d2]/50",
+        customIcon: (
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <path d="M8 21h8" />
+            <path d="M12 17v4" />
+            <path d="m6 10 3-3 3 3" />
+          </svg>
+        ),
+        illustration: (
+          <svg className="absolute -top-6 -right-6 size-48 text-[#0070d2] pointer-events-none transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3" style={{ opacity: 0.11 }} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="15" y="15" width="70" height="50" rx="6" />
+            <path d="M15 28 H85" />
+            <path d="M25 48 H75" strokeDasharray="2 2" />
+            <path d="M20 48 L35 48 L42 35 L50 60 L58 40 L65 48 L80 48" strokeWidth="2" />
+            <circle cx="50" cy="60" r="3" fill="currentColor" />
+            <circle cx="75" cy="21" r="3" fill="#22C55E" />
+          </svg>
+        )
+      },
+    ];
+
+    return (
+      <div
+        className="pointer-events-auto rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-5 pb-5 px-4 md:px-8 justify-between gap-4 border border-slate-100 shadow-[0_30px_90px_rgba(15,23,42,0.05)] bg-white"
+        style={{
+          background: "#ffffff",
+        }}
+      >
+        <div
+          className="absolute right-[-10%] top-[10%] w-[450px] h-[450px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-[-5%] bottom-[-5%] w-[350px] h-[350px] rounded-full blur-3xl pointer-events-none -z-10"
+          style={{
+            background: "radial-gradient(circle, rgba(14,165,233,0.04) 0%, transparent 70%)",
+          }}
+        />
+
+        <div className="w-full flex flex-col justify-start text-left max-w-3xl relative z-10">
+          <div className="text-[10px] md:text-[11px] font-bold tracking-widest text-[#0ea5e9] uppercase mb-1">
+            WHAT WE DELIVER
+          </div>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-2">
+            Our Services
+          </h2>
+          <p className="text-[13.5px] md:text-[14.5px] text-slate-500 font-semibold leading-relaxed max-w-2xl">
+            From strategy to go-live to long-term support — we cover the full Salesforce journey.
+          </p>
+        </div>
+
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200/80 to-transparent opacity-60 relative z-10" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full max-w-6xl mx-auto items-stretch relative z-10 flex-grow py-0.5">
+          {services.map((ser) => {
+            return (
+              <div
+                key={ser.id}
+                className={`group relative rounded-[24px] overflow-hidden flex flex-col justify-between p-4 md:p-4.5 transition-all duration-300 hover:-translate-y-1 cursor-pointer border backdrop-blur-md hover:bg-white/95 shadow-[0_10px_30px_-10px_rgba(37,99,235,0.08)] hover:shadow-[0_0_30px_rgba(0,112,210,0.25),_0_20px_40px_-15px_rgba(0,112,210,0.15)] ${ser.borderColor}`}
+                style={{
+                  ...ser.bgStyle
+                }}
+              >
+                <div className={`absolute top-0 inset-x-0 h-[4px] bg-gradient-to-r ${ser.gradient} opacity-70 group-hover:opacity-100 group-hover:h-[5px] transition-all duration-300`} />
+                
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10"
+                  style={{
+                    background: "radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 70%)"
+                  }}
+                />
+
+                {ser.illustration}
+
+                <div className="flex flex-col gap-2 relative z-10">
+                  <div className="flex items-center gap-2">
+                    <div className={`size-10 rounded-xl bg-gradient-to-br ${ser.iconGradient} flex items-center justify-center shadow-[0_4px_12px_rgba(37,99,235,0.08)] group-hover:scale-110 transition-transform duration-300`}>
+                      {ser.customIcon}
+                    </div>
+                    <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">{ser.subtitle}</span>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-[13.5px] md:text-[14px] lg:text-[15px] font-extrabold text-slate-900 leading-tight tracking-tight">
+                      {ser.title}
+                    </h3>
+                    <p className="text-[11.5px] md:text-[12px] lg:text-[12.5px] leading-relaxed text-slate-500 font-semibold line-clamp-2">
+                      {ser.desc}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1 mt-0.5">
+                    {ser.chips.map((chip, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[9px] font-bold text-slate-500 bg-[#F1F5F9] border border-slate-200/50 rounded-full px-2.5 py-0.5"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
