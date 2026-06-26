@@ -3499,19 +3499,19 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
       logo: "/clients/casecadeconnect.png",
       title: "Cascade Connect",
       tagline: "Omnichannel Communication, Inside Salesforce",
-      problem: "Your team sends WhatsApp from personal phones, follows up by email in Outlook, and logs calls manually — none of it connected to your CRM. Managers can't coach what they can't see.",
-      does: "Cascade Connect brings WhatsApp, Email and SMS natively into Salesforce. Every message is auto-logged against its lead, contact or opportunity, and management gets a real-time, unified view of every touchpoint across every channel.",
-      builtFor: "Sales, tele-calling & marketing teams; CRM managers",
-      architecture: "Salesforce-native, official WhatsApp API — no middleware",
-      pricing: "One-time fee + AMC · no per-message markup",
-      liveWith: "Kohinoor Group · Raunak Group · Naiknavare",
+      problem: "Customer conversations are scattered across WhatsApp, email and calls, leaving no unified CRM visibility or management oversight.",
+      does: "Unifies WhatsApp, Email and SMS inside Salesforce with automatic activity logging and a real-time customer communication timeline.",
+      builtFor: "Sales Teams\nMarketing Teams\nCRM Managers",
+      architecture: "Salesforce Native\nOfficial WhatsApp API\nNo Middleware",
+      pricing: "One-time License\nAMC Support\nNo Per-message Charges",
+      liveWith: "Kohinoor Group\nRaunak Group\nNaiknavare",
       capabilities: [
-        "WhatsApp Business API integration — send, receive & log natively in Salesforce",
-        "Bulk WhatsApp broadcasting personalised with Salesforce field data",
-        "Multi-agent chat routing — auto-assign conversations to the right rep",
-        "Compliance-ready logs with timestamp, sender and channel data",
-        "Automated follow-up sequences triggered by workflow or lead-stage changes",
-        "Real-time delivery & read-receipt tracking inside Salesforce dashboards"
+        "WhatsApp Business API Integration",
+        "Bulk Personalized Messaging",
+        "Smart Conversation Routing",
+        "Compliance & Audit Logs",
+        "Workflow-based Follow-ups",
+        "Delivery & Read Receipt Tracking"
       ]
     },
     "cx-prism": {
@@ -3739,7 +3739,7 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
                     </div>
                     <div className="min-w-0 flex-1">
                       <span className="text-[9px] font-black uppercase tracking-wider text-[#3B82F6]/60 mb-0.5 block">{spec.label}</span>
-                      <p className="text-[11.5px] font-extrabold text-slate-700 leading-tight">{spec.value}</p>
+                      <p className="text-[11px] font-extrabold text-slate-700 leading-tight" style={{ whiteSpace: "pre-line" }}>{spec.value}</p>
                     </div>
                   </div>
                 );
