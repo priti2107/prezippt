@@ -3646,10 +3646,10 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
           <div className="glass-card-hover p-4 rounded-2xl bg-white border border-rose-100/80 shadow-[0_4px_12px_rgba(244,63,94,0.01)] flex flex-col gap-2 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-400" />
             <div className="flex items-center gap-2 text-rose-500">
-              <AlertTriangle className="w-4.5 h-4.5" />
-              <span className="text-[12px] md:text-[13px] font-black uppercase tracking-wider">The Problem It Solves</span>
+              <AlertTriangle className="w-4 h-4" />
+              <span className="text-[10px] font-black uppercase tracking-wider">The Problem It Solves</span>
             </div>
-            <p className="text-[14px] md:text-[15.5px] font-medium leading-relaxed text-slate-500">
+            <p className="text-[12.5px] font-medium leading-relaxed text-slate-500">
               {placeholders.problem}
             </p>
           </div>
@@ -3658,17 +3658,17 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
           <div className="glass-card-hover p-4 rounded-2xl bg-white border border-sky-100/80 shadow-[0_4px_12px_rgba(14,165,233,0.01)] flex flex-col gap-2 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1.5 h-full bg-[#3BA9F5]" />
             <div className="flex items-center gap-2 text-[#0077B6]">
-              <Sparkles className="w-4.5 h-4.5" />
-              <span className="text-[12px] md:text-[13px] font-black uppercase tracking-wider">What It Does</span>
+              <Sparkles className="w-4 h-4" />
+              <span className="text-[10px] font-black uppercase tracking-wider">What It Does</span>
             </div>
-            <p className="text-[14px] md:text-[15.5px] font-medium leading-relaxed text-slate-500">
+            <p className="text-[12.5px] font-medium leading-relaxed text-slate-500">
               {placeholders.does}
             </p>
           </div>
 
           {/* Section 3: 2x2 Specifications Grid */}
           <div className="flex flex-col gap-2">
-            <h4 className="text-[12px] md:text-[13px] font-black text-slate-400 uppercase tracking-widest">Specifications</h4>
+            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Specifications</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { label: "Built For", value: placeholders.builtFor, icon: Users },
@@ -3678,12 +3678,12 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
               ].map((spec, i) => {
                 const Icon = spec.icon;
                 return (
-                  <div key={i} className="glass-card-hover p-3.5 rounded-xl bg-white border border-slate-100 flex flex-col gap-1.5">
+                  <div key={i} className="glass-card-hover p-3 rounded-xl bg-white border border-slate-100 flex flex-col gap-1.5">
                     <div className="flex items-center gap-1.5 text-slate-400">
                       <Icon className="w-3.5 h-3.5" />
-                      <span className="text-[10.5px] md:text-[11.5px] font-black uppercase tracking-wider">{spec.label}</span>
+                      <span className="text-[9px] font-black uppercase tracking-wider">{spec.label}</span>
                     </div>
-                    <p className="text-[13px] md:text-[14.5px] font-extrabold text-slate-700 leading-tight">{spec.value}</p>
+                    <p className="text-[11px] font-extrabold text-slate-700 leading-tight">{spec.value}</p>
                   </div>
                 );
               })}
@@ -3697,7 +3697,7 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
             className="glass-card-hover p-4 rounded-2xl border border-sky-100/60 flex flex-col h-full shadow-[0_4px_20px_rgba(0,119,182,0.04)]"
             style={{ background: "linear-gradient(180deg, #F6FBFF, #EEF7FF)" }}
           >
-            <h3 className="text-[15px] md:text-[16px] font-black text-[#0A1628] uppercase tracking-wider mb-3">Key Capabilities</h3>
+            <h3 className="text-[13px] font-black text-[#0A1628] uppercase tracking-wider mb-3">Key Capabilities</h3>
             <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-2.5">
               {placeholders.capabilities.map((cap, i) => (
                 <div key={i} className="flex flex-col gap-2.5">
@@ -3705,7 +3705,7 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
                     <div className="w-5 h-5 rounded-full bg-[#EFF8FF] border border-[#BFDBFE] flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="w-3 h-3 text-[#0077B6] stroke-[3]" />
                     </div>
-                    <span className="text-[13.5px] md:text-[15px] font-semibold text-slate-500 leading-snug">{cap}</span>
+                    <span className="text-[14.5px] md:text-[16px] font-bold text-slate-600 leading-snug">{cap}</span>
                   </div>
                   {i < placeholders.capabilities.length - 1 && (
                     <div className="h-[1px] bg-slate-100/80" />
