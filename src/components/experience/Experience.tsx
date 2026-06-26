@@ -3610,19 +3610,30 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
         style={{ backgroundImage: "radial-gradient(#0077B6 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
 
       {/* ── HEADER ── */}
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 flex-shrink-0 border-b border-slate-100 pb-3">
-        <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center flex-shrink-0">
-          <img src={placeholders.logo} alt="Logo Placeholder" className="w-10 h-10 object-contain" />
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-5 flex-shrink-0 border-b border-slate-100 pb-4">
+        <div 
+          className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-white border border-sky-100 flex items-center justify-center flex-shrink-0 relative"
+          style={{
+            boxShadow: "0 12px 30px rgba(0,119,182,0.08), 0 0 20px rgba(59,169,245,0.12) inset",
+          }}
+        >
+          {/* Subtle blue glow behind logo */}
+          <div className="absolute inset-0 bg-[#3BA9F5] opacity-[0.04] blur-lg rounded-full" />
+          <img src={placeholders.logo} alt="Logo Placeholder" className="w-14 h-14 md:w-16 md:h-16 object-contain relative z-10" />
         </div>
-        <div className="min-w-0">
-          <div className="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#BFDBFE]/80 rounded-full px-2.5 py-0.5 text-[9px] font-black tracking-widest text-[#0077B6] mb-1">
+        <div className="min-w-0 flex-1">
+          <div className="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#BFDBFE]/80 rounded-full px-2.5 py-0.5 text-[9px] font-black tracking-widest text-[#0077B6] mb-1.5 shadow-[0_2px_6px_rgba(0,119,182,0.05)]">
             <span className="size-1 bg-[#0077B6] rounded-full animate-pulse" />
             PROPRIETARY PRODUCT
           </div>
-          <h2 className="text-[22px] md:text-[26px] font-[900] leading-none tracking-tight text-[#0A1628]">
+          <h2 className="text-[32px] md:text-[48px] lg:text-[52px] font-[950] leading-none tracking-tight text-[#0A1628]">
             {placeholders.title}
           </h2>
-          <p className="text-[12px] text-slate-400 font-semibold truncate mt-1">{placeholders.tagline}</p>
+          <div className="mt-2.5">
+            <span className="inline-flex items-center text-[12px] md:text-[13px] font-extrabold text-[#0077B6] bg-[#EFF8FF] border border-[#BFDBFE]/60 rounded-full px-3.5 py-1 shadow-[0_2px_8px_rgba(0,119,182,0.04)]">
+              {placeholders.tagline}
+            </span>
+          </div>
         </div>
       </div>
 
