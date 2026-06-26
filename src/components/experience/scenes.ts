@@ -322,6 +322,30 @@ export const SCENES: Scene[] = [
     ],
   },
   {
+    id: 14,
+    kicker: "PROPRIETARY PRODUCT",
+    title: "Cascade Connect",
+    subtitle: "Omnichannel Communication, Inside Salesforce",
+  },
+  {
+    id: 15,
+    kicker: "PROPRIETARY PRODUCT",
+    title: "CX Prism",
+    subtitle: "Converting Customer Feedback Into Revenue Intelligence",
+  },
+  {
+    id: 16,
+    kicker: "PROPRIETARY PRODUCT",
+    title: "CaseFlow",
+    subtitle: "Email-to-Case & Customer Ticketing Automation",
+  },
+  {
+    id: 17,
+    kicker: "PROPRIETARY PRODUCT",
+    title: "Nexora",
+    subtitle: "Partner & Sourcing Management Platform",
+  },
+  {
     id: 11,
     kicker: "District 11 · Engagement Model",
     title: "How We Work With You",

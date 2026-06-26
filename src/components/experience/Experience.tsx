@@ -3123,6 +3123,23 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
     return <CaseStudiesScene scene={scene} />;
   }
 
+  if (scene.id === 14) {
+    return <ProductTemplateCard productKey="cascade-connect" />;
+  }
+
+  if (scene.id === 15) {
+    return <ProductTemplateCard productKey="cx-prism" />;
+  }
+
+  if (scene.id === 16) {
+    return <ProductTemplateCard productKey="caseflow" />;
+  }
+
+  if (scene.id === 17) {
+    return <ProductTemplateCard productKey="nexora" />;
+  }
+
+
   if (scene.id === 4) {
     return (
       <div
@@ -3458,6 +3475,238 @@ function CountUpText({ text }: { text: string }) {
       {displayVal}
       {suffix}
     </>
+  );
+}
+
+interface ProductTemplateCardProps {
+  productKey: string;
+}
+
+function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
+  const productData: Record<string, {
+    logo: string;
+    title: string;
+    tagline: string;
+    problem: string;
+    does: string;
+    builtFor: string;
+    architecture: string;
+    pricing: string;
+    liveWith: string;
+    capabilities: string[];
+  }> = {
+    "cascade-connect": {
+      logo: "/clients/casecadeconnect.png",
+      title: "Cascade Connect",
+      tagline: "Omnichannel Communication, Inside Salesforce",
+      problem: "Your team sends WhatsApp from personal phones, follows up by email in Outlook, and logs calls manually — none of it connected to your CRM. Managers can't coach what they can't see.",
+      does: "Cascade Connect brings WhatsApp, Email and SMS natively into Salesforce. Every message is auto-logged against its lead, contact or opportunity, and management gets a real-time, unified view of every touchpoint across every channel.",
+      builtFor: "Sales, tele-calling & marketing teams; CRM managers",
+      architecture: "Salesforce-native, official WhatsApp API — no middleware",
+      pricing: "One-time fee + AMC · no per-message markup",
+      liveWith: "Kohinoor Group · Raunak Group · Naiknavare",
+      capabilities: [
+        "WhatsApp Business API integration — send, receive & log natively in Salesforce",
+        "Bulk WhatsApp broadcasting personalised with Salesforce field data",
+        "Multi-agent chat routing — auto-assign conversations to the right rep",
+        "Compliance-ready logs with timestamp, sender and channel data",
+        "Automated follow-up sequences triggered by workflow or lead-stage changes",
+        "Real-time delivery & read-receipt tracking inside Salesforce dashboards"
+      ]
+    },
+    "cx-prism": {
+      logo: "/clients/cxprism.png",
+      title: "CX Prism",
+      tagline: "Converting Customer Feedback Into Revenue Intelligence",
+      problem: "Most developers send an NPS survey after possession and file it in a spreadsheet no one reads. The detractor about to post a bad review, or the customer quietly unhappy about delays, stays invisible until it's too late.",
+      does: "CX Prism™ is an AI-powered CX intelligence platform built natively in Salesforce. It collects NPS and open-text feedback, runs AI emotion and theme analysis, scores churn probability per account, and surfaces revenue-risk alerts — without any data leaving your org.",
+      builtFor: "CRM heads, CX managers, project directors, leadership",
+      architecture: "100% native Salesforce · Apex, Flow & Einstein AI",
+      pricing: "One-time fee · no recurring AI or per-response cost",
+      liveWith: "Kohinoor Group",
+      capabilities: [
+        "NPS automation triggered by booking, possession or milestone events",
+        "AI open-text analysis — keyword extraction, emotion & negative-theme detection",
+        "Detractor auto-flagging with escalation to the relevant manager",
+        "Health-band classification — Green / Amber / Red — per account",
+        "Churn scoring across Opportunity, Account and Contact data",
+        "Revenue-risk dashboard by project, manager and segment",
+        "AI-generated management summaries — no manual data crunching"
+      ]
+    },
+    "caseflow": {
+      logo: "/clients/caseflow.png",
+      title: "CaseFlow",
+      tagline: "Email-to-Case & Customer Ticketing Automation",
+      problem: "Customer issues arrive in emails from multiple inboxes but get lost, delayed or misassigned. Without a unified system, agents waste time, SLAs get missed and customers experience inconsistent service.",
+      does: "CaseFlow automatically converts customer emails into trackable cases (tickets) inside Salesforce. It routes them to the right team or agent, enforces SLAs, enables seamless collaboration and gives managers complete real-time visibility across the entire case lifecycle.",
+      builtFor: "Customer support teams; IT helpdesk; operations; service departments",
+      architecture: "Salesforce-native, official APIs — no middleware",
+      pricing: "One-time fee + AMC · no per-message markup",
+      liveWith: "Kohinoor Group · Naiknavare (evaluation)",
+      capabilities: [
+        "Email-to-Case automation — capture, create & log cases instantly in Salesforce",
+        "Smart routing & assignment — by rules, skills, queues or round-robin",
+        "Multi-channel support — email, reply tracking and full conversation history",
+        "SLA & escalation management — never miss a committed response",
+        "Rich case collaboration — @mentions, internal notes and team updates",
+        "Real-time tracking of agent response and resolution timelines",
+        "AI-generated management summaries — no manual data crunching"
+      ]
+    },
+    "nexora": {
+      logo: "/clients/nexora.png",
+      title: "Nexora",
+      tagline: "Partner & Sourcing Management Platform",
+      problem: "Managing external partner relations, project sourcing, scheduling partner meetings, and tracking deal pipelines across fragmented systems makes channel-sales coordination inefficient.",
+      does: "Nexora provides a unified portal for partner network collaboration. It automates meeting scheduling, tracks partner activity, handles deal pipelines natively inside Salesforce, and delivers growth dashboards to accelerate channel sales.",
+      builtFor: "Channel sales managers, partnership heads, project sourcing teams",
+      architecture: "Salesforce-native, secure partner portal framework",
+      pricing: "One-time setup fee + active partner licensing",
+      liveWith: "120+ active partners across leading real estate networks",
+      capabilities: [
+        "Automated meeting scheduling & partner availability calendar sync",
+        "Real-time partner network directory with contact management",
+        "Activity tracker monitoring partner engagement and follow-up metrics",
+        "Deal pipeline visualizer showing channel deals stage-by-stage",
+        "Automated commission calculations and brokerage processing",
+        "Growth dashboard mapping partner sourcing trends and historical sales performance"
+      ]
+    }
+  };
+
+  const placeholders = productData[productKey] || {
+    logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23EFF8FF' rx='20'/><circle cx='50' cy='50' r='20' fill='%230077B6' opacity='0.2'/></svg>",
+    title: "Product Title Placeholder",
+    tagline: "Product tagline placeholder",
+    problem: "Problem details placeholder",
+    does: "What it does details placeholder",
+    builtFor: "Built For",
+    architecture: "Architecture",
+    pricing: "Pricing",
+    liveWith: "Live With",
+    capabilities: ["Capability 1", "Capability 2", "Capability 3"]
+  };
+
+  return (
+    <div
+      className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-hidden flex flex-col pt-5 pb-4 px-6 md:px-10 gap-4 border border-white/30"
+      style={{
+        background: "radial-gradient(ellipse at 50% 0%, rgba(0,119,182,0.06) 0%, transparent 60%), rgba(247,250,253,0.98)",
+        backdropFilter: "blur(28px)",
+        boxShadow: "0 32px 80px rgba(0,90,160,0.10), 0 2px 0 rgba(255,255,255,0.8) inset, 0 -1px 0 rgba(0,119,182,0.08) inset",
+      }}
+    >
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes subtlePulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
+        .glass-card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,119,182,0.06); border-color: rgba(14,165,233,0.2) !important; }
+        `
+      }} />
+
+      {/* Grid Pattern Background */}
+      <div className="absolute inset-0 pointer-events-none -z-10 opacity-[0.03]"
+        style={{ backgroundImage: "radial-gradient(#0077B6 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+
+      {/* ── HEADER ── */}
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 flex-shrink-0 border-b border-slate-100 pb-3">
+        <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center flex-shrink-0">
+          <img src={placeholders.logo} alt="Logo Placeholder" className="w-10 h-10 object-contain" />
+        </div>
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#BFDBFE]/80 rounded-full px-2.5 py-0.5 text-[9px] font-black tracking-widest text-[#0077B6] mb-1">
+            <span className="size-1 bg-[#0077B6] rounded-full animate-pulse" />
+            PROPRIETARY PRODUCT
+          </div>
+          <h2 className="text-[22px] md:text-[26px] font-[900] leading-none tracking-tight text-[#0A1628]">
+            {placeholders.title}
+          </h2>
+          <p className="text-[12px] text-slate-400 font-semibold truncate mt-1">{placeholders.tagline}</p>
+        </div>
+      </div>
+
+      {/* ── CONTENT CONTAINER ── */}
+      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-y-auto">
+        
+        {/* Left Column (60%) */}
+        <div className="lg:col-span-7 flex flex-col gap-4">
+          {/* Section 1: The Problem It Solves */}
+          <div className="glass-card-hover p-4 rounded-2xl bg-white border border-rose-100/80 shadow-[0_4px_12px_rgba(244,63,94,0.01)] flex flex-col gap-2 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-400" />
+            <div className="flex items-center gap-2 text-rose-500">
+              <AlertTriangle className="w-4 h-4" />
+              <span className="text-[10px] font-black uppercase tracking-wider">The Problem It Solves</span>
+            </div>
+            <p className="text-[12.5px] font-medium leading-relaxed text-slate-500">
+              {placeholders.problem}
+            </p>
+          </div>
+
+          {/* Section 2: What It Does */}
+          <div className="glass-card-hover p-4 rounded-2xl bg-white border border-sky-100/80 shadow-[0_4px_12px_rgba(14,165,233,0.01)] flex flex-col gap-2 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#3BA9F5]" />
+            <div className="flex items-center gap-2 text-[#0077B6]">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-[10px] font-black uppercase tracking-wider">What It Does</span>
+            </div>
+            <p className="text-[12.5px] font-medium leading-relaxed text-slate-500">
+              {placeholders.does}
+            </p>
+          </div>
+
+          {/* Section 3: 2x2 Specifications Grid */}
+          <div className="flex flex-col gap-2">
+            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Specifications</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { label: "Built For", value: placeholders.builtFor, icon: Users },
+                { label: "Architecture", value: placeholders.architecture, icon: Workflow },
+                { label: "Pricing", value: placeholders.pricing, icon: Wallet },
+                { label: "Live With", value: placeholders.liveWith, icon: Landmark }
+              ].map((spec, i) => {
+                const Icon = spec.icon;
+                return (
+                  <div key={i} className="glass-card-hover p-3 rounded-xl bg-white border border-slate-100 flex flex-col gap-1.5">
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <Icon className="w-3.5 h-3.5" />
+                      <span className="text-[9px] font-black uppercase tracking-wider">{spec.label}</span>
+                    </div>
+                    <p className="text-[11px] font-extrabold text-slate-700 leading-tight">{spec.value}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (40%) */}
+        <div className="lg:col-span-5 flex flex-col h-full">
+          <div className="glass-card-hover p-4 rounded-2xl bg-white border border-slate-100 flex flex-col h-full shadow-[0_4px_20px_rgba(0,119,182,0.02)]">
+            <h3 className="text-[13px] font-black text-[#0A1628] uppercase tracking-wider mb-3">Key Capabilities</h3>
+            <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-2.5">
+              {placeholders.capabilities.map((cap, i) => (
+                <div key={i} className="flex flex-col gap-2.5">
+                  <div className="flex items-start gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#EFF8FF] border border-[#BFDBFE] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-2.5 h-2.5 text-[#0077B6] stroke-[3]" />
+                    </div>
+                    <span className="text-[11.5px] font-semibold text-slate-500 leading-snug">{cap}</span>
+                  </div>
+                  {i < placeholders.capabilities.length - 1 && (
+                    <div className="h-[1px] bg-slate-100" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Bottom Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-6px_30px_rgba(116,203,244,0.9)] opacity-90 rounded-full pointer-events-none" />
+    </div>
   );
 }
 
