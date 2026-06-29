@@ -382,10 +382,18 @@ export const SCENES: Scene[] = [
   },
   {
     id: 13,
-    kicker: "Leadership & Team",
-    title: "The Architects Of Growth & Execution.",
+    kicker: "Leadership",
+    title: "Executive Leadership",
     subtitle:
-      "From strategy and architecture to implementation and client success — meet the team behind every Cascade Tech delivery.",
+      "Direct guidance from founders pairing deep Salesforce expertise with enterprise delivery strategy.",
+    variant: "grid",
+  },
+  {
+    id: 18,
+    kicker: "Meet Our Team",
+    title: "The Execution Team",
+    subtitle:
+      "The PMs and domain experts driving every successful Salesforce implementation and enterprise rollout.",
     variant: "grid",
   },
   {

@@ -64,6 +64,8 @@ import {
   Linkedin,
   Compass,
   Package,
+  Cpu,
+  CheckSquare,
 } from "lucide-react";
 import CityScene from "./CityScene";
 import IndustriesShowcase from "./IndustriesShowcase";
@@ -1359,53 +1361,32 @@ function ProductEcosystemScene() {
 }
 
 function LeadershipScene({ scene: _scene }: { scene: Scene }) {
-  const members = [
+  const leaders = [
     {
       name: "Aashish Yadav",
-      role: "CEO & Founder",
-      desc: "Sets the vision and client strategy at Cascade Tech — pairing deep Salesforce knowledge with how Indian real estate and enterprises actually sell.",
-      image: "/clients/Aashish Yadav.png",
-      linkedin: "https://linkedin.com",
-      tags: ["Salesforce", "CRM Strategy", "Business Growth"],
-      impact: "Led 50+ enterprise rollouts across developers.",
-      imgPos: "[object-position:50%_15%]",
+      role: "CEO & Co-Founder",
+      desc: "Drives business strategy, Salesforce delivery, and enterprise growth — pairing deep CRM expertise with robust execution models to scale developer operations.",
+      image: "/clients/Aashish Yadav.png?v=5",
+      linkedin: "https://www.linkedin.com/in/aashishyadav-ceo/",
+      tags: ["Business Strategy", "Salesforce", "Enterprise Growth"],
+      concept: "VISION",
+      imgPos: "[object-position:50%_32%]",
     },
     {
       name: "Yash Jain",
       role: "CTO & Co-Founder",
-      desc: "Founded Cascade Tech to help businesses unlock the full potential of Salesforce — bridging technology and business growth with scalable, customer-centric solutions.",
-      image: "/clients/Yash Jain.png",
-      linkedin: "https://linkedin.com",
-      tags: ["Product Engineering", "AI & Automation"],
-      impact: "Architected 8+ enterprise-grade Salesforce orgs.",
-      imgPos: "[object-position:50%_15%]",
-    },
-    {
-      name: "Pravesh Prajapati",
-      role: "Project Manager",
-      desc: "Owns delivery end to end — keeping scope, timeline and quality aligned so every implementation lands on time and on budget.",
-      image: "/clients/Pravesh Prajapati.png",
-      linkedin: "https://linkedin.com",
-      tags: ["Project Delivery", "CRM Strategy"],
-      impact: "Managed 5+ concurrent enterprise implementations.",
-      imgPos: "object-top",
-    },
-    {
-      name: "Jainam Jain",
-      role: "Business Development Head",
-      desc: "Leads growth and client partnerships — connecting developers and enterprises with the right Salesforce and product solutions.",
-      image: "/clients/Jainam Jain.png",
-      linkedin: "https://linkedin.com",
-      tags: ["Business Growth", "CRM Strategy"],
-      impact: "Drives E2E client acquisition & partnership.",
-      imgPos: "object-top",
+      desc: "Architects scalable technology solutions and leads AI innovation — bridging cloud systems engineering with customer-centric CRM products.",
+      image: "/clients/Yash Jain.png?v=5",
+      linkedin: "https://www.linkedin.com/in/yashjain-cto/",
+      tags: ["AI Innovation", "Solution Architecture", "Product Engineering"],
+      concept: "TECHNOLOGY",
+      imgPos: "[object-position:50%_32%]",
     },
   ];
 
-
   return (
     <div
-      className="pointer-events-auto rounded-[28px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[84vh] max-w-7xl relative overflow-hidden flex flex-col pt-6 pb-4 px-6 md:px-10 border border-slate-200/70 shadow-[0_24px_80px_rgba(0,55,120,0.13)]"
+      className="pointer-events-auto rounded-[28px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[84vh] max-w-7xl relative overflow-hidden flex flex-col pt-10 pb-10 px-6 md:px-12 border border-slate-200/70 shadow-[0_24px_80px_rgba(0,55,120,0.13)] justify-center"
       style={{
         background: "linear-gradient(160deg, rgba(255,255,255,0.97) 0%, rgba(241,248,255,0.95) 60%, rgba(224,240,255,0.93) 100%)",
         backdropFilter: "blur(32px)",
@@ -1421,31 +1402,151 @@ function LeadershipScene({ scene: _scene }: { scene: Scene }) {
       <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[120px] pointer-events-none opacity-[0.08] bg-[#48CAE4]" />
 
       {/* Header */}
-      <div className="flex flex-col items-start mb-4 max-w-2xl relative z-10">
+      <div className="flex flex-col items-center text-center mb-6 max-w-2xl mx-auto relative z-10">
         <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-[0.25em] text-[#0077B6] uppercase bg-[#E0F2FE] border border-[#BAE6FD] rounded-full px-3 py-1 mb-3">
           <span className="size-1.5 rounded-full bg-[#0077B6] animate-pulse" />
-          Leadership &amp; Team
+          LEADERSHIP
         </span>
         <h2 className="text-[28px] sm:text-[34px] lg:text-[40px] font-[900] tracking-tight text-[#03045E] leading-[1.1]">
-          The Architects Of{" "}
+          The Vision Behind{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] to-[#00B4D8]">
-            Growth &amp; Execution.
+            Cascade Tech
           </span>
         </h2>
-        <p className="text-slate-500 text-[13px] sm:text-sm font-medium leading-relaxed mt-2 max-w-lg">
-          From strategy and architecture to implementation and client success — meet the team behind every Cascade Tech delivery.
+        <p className="text-slate-500 text-[13px] sm:text-sm font-medium leading-relaxed mt-1.5 max-w-xl">
+          From the blueprint to the boardroom — bridging strategy and technology.
         </p>
       </div>
 
-      {/* 4-column card grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full relative z-10">
-        {members.map((m, idx) => (
+      {/* 2-column premium showcase card grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 w-full max-w-6xl mx-auto relative z-10 justify-items-center items-stretch">
+        
+        {/* Center Divider / Partnership Connection (Desktop only) */}
+        <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 pointer-events-none z-20">
+          <span className="text-[10px] font-black text-slate-400 tracking-[0.22em] uppercase text-center max-w-[140px] leading-tight">
+            Business Strategy
+          </span>
+          <div className="h-20 w-[1px] bg-gradient-to-b from-sky-200 via-sky-400 to-sky-200 relative flex items-center justify-center">
+            <div className="size-2 rounded-full bg-sky-500 shadow-[0_0_10px_rgba(56,189,248,0.6)] animate-pulse" />
+          </div>
+          <span className="text-[10px] font-black text-slate-400 tracking-[0.22em] uppercase text-center max-w-[140px] leading-tight">
+            Technology Innovation
+          </span>
+        </div>
+
+        {leaders.map((m) => (
           <div
             key={m.name}
-            className={`group flex flex-col rounded-2xl border overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_36px_rgba(0,119,182,0.18)] cursor-pointer ${idx === 0
-              ? "border-[#0077B6]/40 shadow-[0_4px_24px_rgba(0,119,182,0.15)] bg-white"
-              : "border-slate-200/80 bg-white/80 hover:border-[#0077B6]/30"
-              }`}
+            className="group flex flex-col rounded-[24px] bg-white/85 border border-slate-200/80 shadow-[0_12px_40px_rgba(0,119,182,0.06)] hover:shadow-[0_30px_70px_rgba(0,119,182,0.18)] hover:border-sky-300/80 transition-all duration-500 p-5 md:p-6 w-full max-w-[440px] relative hover:-translate-y-1.5"
+          >
+            {/* Soft Ambient Glow behind each card (hover-triggered) */}
+            <div className="absolute inset-0 rounded-[24px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-sky-400/5 via-transparent to-transparent pointer-events-none" />
+
+            {/* Square/Portrait Image with subtle blue ambient glow behind portrait */}
+            <div className="w-full aspect-[16/10] rounded-xl overflow-hidden border border-slate-200 shadow-sm relative mb-4 bg-slate-50 group-hover:border-sky-200/80 transition-colors duration-300">
+              <div className="absolute inset-0 bg-gradient-to-t from-sky-500/10 via-transparent to-transparent z-10 mix-blend-overlay" />
+              <img
+                src={m.image}
+                alt={m.name}
+                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-103 ${m.imgPos}`}
+                loading="eager"
+              />
+            </div>
+
+            {/* Profile Info */}
+            <div className="flex flex-col flex-grow text-left">
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#03045E] leading-tight tracking-tight">
+                  {m.name}
+                </h3>
+                <a
+                  href={m.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1 rounded-md text-slate-400 hover:text-[#0A66C2] transition-colors"
+                >
+                  <Linkedin className="size-4.5" />
+                </a>
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-[12px] font-bold text-[#0077B6] uppercase tracking-wider leading-none">
+                  {m.role}
+                </span>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded bg-sky-50 text-sky-600 border border-sky-100/60 leading-none">
+                  {m.concept}
+                </span>
+              </div>
+
+              {/* Bio description */}
+              <p className="text-slate-600 text-[13px] leading-relaxed font-medium mb-5">
+                {m.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MeetOurTeamScene({ scene: _scene }: { scene: Scene }) {
+  const team = [
+    {
+      name: "Pravesh Prajapati",
+      role: "Project Manager",
+      responsibility: "Owns delivery end to end — keeping scope, timeline and quality aligned.",
+      image: "/clients/Pravesh Prajapati.png?v=5",
+      imgPos: "object-top",
+    },
+    {
+      name: "Jainam Jain",
+      role: "Business Development Head",
+      responsibility: "Leads growth and client partnerships — connecting clients with solutions.",
+      image: "/clients/Jainam Jain.png?v=5",
+      imgPos: "object-top",
+    },
+  ];
+
+  return (
+    <div
+      className="pointer-events-auto rounded-[28px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[84vh] max-w-7xl relative overflow-hidden flex flex-col pt-8 pb-6 px-6 md:px-12 border border-slate-200/70 shadow-[0_24px_80px_rgba(0,55,120,0.13)] justify-center"
+      style={{
+        background: "linear-gradient(160deg, rgba(255,255,255,0.97) 0%, rgba(241,248,255,0.95) 60%, rgba(224,240,255,0.93) 100%)",
+        backdropFilter: "blur(32px)",
+      }}
+    >
+      {/* Dot grid texture */}
+      <div
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        style={{ backgroundImage: "radial-gradient(circle, #0077B6 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+      />
+      {/* Glow accents */}
+      <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full blur-[100px] pointer-events-none opacity-[0.18] bg-[#0077B6]" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[120px] pointer-events-none opacity-[0.08] bg-[#48CAE4]" />
+
+      {/* Header */}
+      <div className="flex flex-col items-center text-center mb-10 max-w-2xl mx-auto relative z-10">
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-[0.25em] text-[#0077B6] uppercase bg-[#E0F2FE] border border-[#BAE6FD] rounded-full px-3 py-1 mb-3">
+          <span className="size-1.5 rounded-full bg-[#0077B6] animate-pulse" />
+          Meet Our Team
+        </span>
+        <h2 className="text-[28px] sm:text-[34px] lg:text-[40px] font-[900] tracking-tight text-[#03045E] leading-[1.1]">
+          The Execution{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] to-[#00B4D8]">
+            Engine
+          </span>
+        </h2>
+        <p className="text-slate-500 text-[13px] sm:text-sm font-medium leading-relaxed mt-2 max-w-xl">
+          The PMs and domain experts driving every successful Salesforce implementation and enterprise rollout.
+        </p>
+      </div>
+
+      {/* Grid of smaller profile cards (3-4 per row on desktop, centered) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-5xl mx-auto relative z-10">
+        {team.map((m) => (
+          <div
+            key={m.name}
+            className="group flex flex-col rounded-2xl border border-slate-200/80 bg-white/80 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_36px_rgba(0,119,182,0.12)] hover:border-sky-300 cursor-pointer"
           >
             {/* Photo – 4:3 aspect ratio */}
             <div className="w-full overflow-hidden" style={{ aspectRatio: "4/3" }}>
@@ -1458,23 +1559,55 @@ function LeadershipScene({ scene: _scene }: { scene: Scene }) {
             </div>
 
             {/* Info */}
-            <div className="flex flex-col px-4 pt-3 pb-4 gap-1.5">
+            <div className="flex flex-col px-4 pt-3 pb-4 gap-1.5 text-left">
               <h3 className="text-[14px] font-black text-[#03045E] leading-tight">{m.name}</h3>
               <p className="text-[11px] font-bold text-[#0077B6] leading-tight">{m.role}</p>
-              <p className="text-slate-500 text-[11px] leading-relaxed mt-1">{m.desc}</p>
+              <p className="text-slate-500 text-[11px] leading-relaxed mt-1">
+                {m.responsibility}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        {/* 2 empty styled container cards */}
+        {[
+          {
+            title: "Join Our Team",
+            role: "Salesforce Developer",
+            desc: "Always looking for skilled builders to join the Cascade delivery engine.",
+          },
+          {
+            title: "Join Our Team",
+            role: "Consultant / Architect",
+            desc: "Always looking for domain specialists to design high-quality CRM systems.",
+          },
+        ].map((pos, idx) => (
+          <div
+            key={idx}
+            className="group flex flex-col rounded-2xl border border-dashed border-slate-300 bg-white/40 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_36px_rgba(0,119,182,0.06)] hover:border-sky-300/80 cursor-pointer min-h-[220px]"
+          >
+            {/* Aspect ratio matching empty placeholder box */}
+            <div className="w-full bg-slate-50/50 flex items-center justify-center border-b border-dashed border-slate-200" style={{ aspectRatio: "4/3" }}>
+              <Sparkles className="size-6 text-sky-300/85 group-hover:scale-110 transition-transform duration-300" />
+            </div>
+
+            {/* Info */}
+            <div className="flex flex-col px-4 pt-3 pb-4 gap-1.5 text-left">
+              <h3 className="text-[14px] font-black text-[#03045E]/60 leading-tight">{pos.title}</h3>
+              <p className="text-[11px] font-bold text-[#0077B6]/60 leading-tight">{pos.role}</p>
+              <p className="text-slate-400 text-[11px] leading-relaxed mt-1">
+                {pos.desc}
+              </p>
             </div>
           </div>
         ))}
       </div>
-
     </div>
   );
 }
 
-
 function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: Scene; isActive?: boolean; activeCardIdx?: number }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
 
   useEffect(() => {
     if (scene.variant !== "hero") return;
@@ -1497,6 +1630,10 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
 
   if (scene.id === 13) {
     return <LeadershipScene scene={scene} />;
+  }
+
+  if (scene.id === 18) {
+    return <MeetOurTeamScene scene={scene} />;
   }
 
   if (scene.variant === "hero") {
@@ -4246,6 +4383,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
   );
 }
 
+
 function EngagementModelScene({ scene }: { scene: Scene }) {
   const [activeStage, setActiveStage] = useState<number>(0);
   const [expandedStageIdx, setExpandedStageIdx] = useState<number | null>(null);
@@ -4255,17 +4393,34 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       id: "01",
       title: "Discovery",
       duration: "Week 1",
+      iconEmoji: "🔍",
+      teamInvolved: "Lead Consultant, Business Analyst",
       desc: "Aligning operational workflows and requirements with zero assumptions.",
-      challenge:
-        "Fragmented processes, undocumented spreadsheets, and lack of real-time pipeline visibility.",
-      whatWeBuild:
-        "Detailed operational audit, systems map, and technical architecture definition.",
+      challenge: "Fragmented processes, undocumented spreadsheets, and lack of real-time pipeline visibility.",
+      whatWeBuild: "Detailed operational audit, systems map, and technical architecture definition.",
       deliverables: [
         "Lead Flow Audit Map",
         "API/CRM Integration Specs",
         "Success Metric Benchmarks",
       ],
       outcome: "Aligned timeline, budget, and system architecture design document.",
+      challengeBullets: [
+        "Fragmented operational workflows",
+        "Undocumented spreadsheets & tracking",
+        "Lack of real-time pipeline visibility",
+      ],
+      architectureBullets: [
+        "Detailed operational process audit",
+        "Comprehensive systems integration map",
+        "Salesforce technical architecture design",
+      ],
+      outcomeBullets: [
+        "Aligned timeline & phase budget",
+        "Approved system design blueprints",
+        "Defined metrics for project success",
+      ],
+      technologies: ["Jira", "Confluence", "Miro", "Lucidchart"],
+      successCriteria: "100% client sign-off on the final requirements specification document.",
       icon: Search,
       illustration: () => (
         <svg
@@ -4338,16 +4493,34 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       id: "02",
       title: "Blueprint",
       duration: "Week 2",
+      iconEmoji: "📐",
+      teamInvolved: "Technical Architect, Solutions Designer",
       desc: "Designing database schemas and automation workflows.",
       challenge: "Data model conflicts, security schema holes, and duplicate contact profiles.",
-      whatWeBuild:
-        "Custom Entity Relationship Diagram (ERD) and object schema configuration blueprints.",
+      whatWeBuild: "Custom Entity Relationship Diagram (ERD) and object schema configuration blueprints.",
       deliverables: [
         "Entity Relationship Diagrams (ERDs)",
         "Field-Level Security Matrix",
         "Sandbox Initialization Plans",
       ],
       outcome: "Technical blueprint signed off and sandbox environments provisioned.",
+      challengeBullets: [
+        "Data model conflicts & inconsistency",
+        "Security schema vulnerabilities",
+        "Duplicate contact & account profiles",
+      ],
+      architectureBullets: [
+        "Entity Relationship Diagrams (ERDs)",
+        "Field-level security matrices",
+        "Sandbox environment initialization",
+      ],
+      outcomeBullets: [
+        "Approved Salesforce architectural design",
+        "Initialized development sandboxes",
+        "Complete field mappings signed off",
+      ],
+      technologies: ["Salesforce Schema Builder", "draw.io", "ERD Tools"],
+      successCriteria: "Schema design approval and environment deployment checklist sign-off by client.",
       icon: Layers,
       illustration: () => (
         <svg
@@ -4396,9 +4569,10 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       id: "03",
       title: "Build",
       duration: "Weeks 3–10",
+      iconEmoji: "⚙️",
+      teamInvolved: "Apex/LWC Developers, Integration Engineers",
       desc: "Developing custom Apex, LWC, and CRM flow triggers.",
-      challenge:
-        "Unreliable manual actions, sluggish data processing, and lack of automated alerts.",
+      challenge: "Unreliable manual actions, sluggish data processing, and lack of automated alerts.",
       whatWeBuild: "Robust custom apex coding, lightning web components (LWC), and API flows.",
       deliverables: [
         "Apex & Flow Automations",
@@ -4406,6 +4580,23 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
         "Migration scripts & runs",
       ],
       outcome: "Fully integrated and custom-coded CRM platform ready in staging.",
+      challengeBullets: [
+        "Unreliable manual task dependencies",
+        "Sluggish database transaction processing",
+        "Lack of real-time automated alerts",
+      ],
+      architectureBullets: [
+        "Custom Apex controllers & triggers",
+        "Lightning Web Components (LWC) UI",
+        "High-speed automation flows & rules",
+      ],
+      outcomeBullets: [
+        "Fully integrated Apex code base",
+        "Custom WhatsApp API connection",
+        "CRM workflows configured in staging",
+      ],
+      technologies: ["Apex", "LWC", "Flow Builder", "Git", "VS Code"],
+      successCriteria: "75%+ Apex unit test code coverage and successful sandboxed workflow verification.",
       icon: Code,
       illustration: () => (
         <svg
@@ -4439,6 +4630,8 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
       id: "04",
       title: "Train & UAT",
       duration: "Weeks 11–12",
+      iconEmoji: "✅",
+      teamInvolved: "QA Engineer, Enablement Specialist, PM",
       desc: "Enabling teams and addressing feedback loops.",
       challenge: "Low user adoption rates, administrative skill gaps, and transition friction.",
       whatWeBuild: "Custom role-based training programs, UAT cycles, and transition playbooks.",
@@ -4448,6 +4641,23 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
         "Administrator Enablement Guides",
       ],
       outcome: "Stakeholder sign-off and adoption readiness verified.",
+      challengeBullets: [
+        "Low client user adoption rates",
+        "Salesforce admin skill gaps",
+        "Launch transition friction & confusion",
+      ],
+      architectureBullets: [
+        "Customized role-based UAT scenarios",
+        "Live interactive training workshops",
+        "Platform administration playbooks",
+      ],
+      outcomeBullets: [
+        "Official UAT stakeholder sign-off",
+        "Operations team training complete",
+        "Documented transition handbook",
+      ],
+      technologies: ["Salesforce Sandbox", "WalkMe", "Loom", "Trailhead"],
+      successCriteria: "90%+ user pass rate on defined UAT scenarios and administrator training completion.",
       icon: GraduationCap,
       illustration: () => (
         <svg
@@ -4530,18 +4740,36 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
     },
     {
       id: "05",
-      title: "Go-Live & Support",
+      title: "Go Live",
       duration: "Post Week 12",
+      iconEmoji: "🚀",
+      teamInvolved: "DevOps Engineer, Support Lead, AM",
       desc: "Deploying to production and supporting adoption.",
       challenge: "Deployment downtime, cutover synchronization, and post-launch bugs.",
-      whatWeBuild:
-        "Safe production package migration, 30-day hypercare, and ongoing annual maintenance (AMC).",
+      whatWeBuild: "Safe production package migration, 30-day hypercare, and ongoing annual maintenance (AMC).",
       deliverables: [
         "Production Cutover Checklist",
         "30-Day Hypercare Support",
         "Long-term AMC Setup",
       ],
       outcome: "Live system deployed with zero downtime and continuous support.",
+      challengeBullets: [
+        "Production cutover downtime risk",
+        "Multi-system synchronization",
+        "Unresolved post-launch software bugs",
+      ],
+      architectureBullets: [
+        "Safe production package migration",
+        "30-day post-launch hypercare",
+        "Long-term AMC SLA framework setup",
+      ],
+      outcomeBullets: [
+        "Zero-downtime production cutover",
+        "Hypercare monitoring active",
+        "Long-term support SLA active",
+      ],
+      technologies: ["Salesforce DX", "Jenkins", "Copado", "Hypercare Monitoring"],
+      successCriteria: "Production deployment verification completed with zero high-severity issues in 30 days.",
       icon: Rocket,
       illustration: () => (
         <svg
@@ -4596,7 +4824,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
   return (
     <div
-      className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-5 pb-5 px-4 md:px-6 justify-center gap-4 md:gap-5 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
+      className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-4 pb-4 px-4 md:px-5 justify-center gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
       style={{
         background: "rgba(248, 250, 252, 0.95)",
         backdropFilter: "blur(24px)",
@@ -4628,286 +4856,348 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
         </svg>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch justify-between w-full h-full relative z-10 max-w-[1280px] mx-auto">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-between w-full h-full relative z-10 max-w-[1340px] mx-auto px-1">
         {/* LEFT COLUMN: 30% width */}
-        <div className="w-full md:w-[30%] flex flex-col justify-between text-left h-full py-1">
-          <div>
-            {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider text-[#0284C7] w-fit mb-2 md:mb-3">
-              <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-              ENGAGEMENT MODEL
-            </div>
-
-            {/* Title */}
-            <h2 className="text-2xl sm:text-3xl md:text-[34px] lg:text-[40px] xl:text-[46px] font-[800] leading-[1.08] tracking-tight text-[#0F172A] font-display mb-2 md:mb-3">
-              How We{" "}
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
-                Work With You
-                <svg
-                  className="absolute -bottom-0.5 left-0 w-full h-[4px]"
-                  viewBox="0 0 200 5"
-                  fill="none"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M2 3.5 C 60 1.5, 140 1.5, 198 3.5"
-                    stroke="#0EA5E9"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </h2>
-
-            {/* Supporting Text */}
-            <p className="text-[10.5px] md:text-[12.5px] lg:text-[13.5px] text-slate-500 font-semibold leading-relaxed mb-3 md:mb-4 pr-2">
-              We believe in structured delivery, complete alignment, and deep operational
-              understanding. From the initial discovery to production launch, here is our roadmap
-              for your project.
-            </p>
+        <div className="w-full md:w-[28%] flex flex-col text-left h-full py-2 flex-shrink-0">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider text-[#0284C7] w-fit mb-3">
+            <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+            ENGAGEMENT MODEL
           </div>
 
-          {/* Timeline Summary Card */}
-          <div className="premium-glass-card premium-glass-card-hover rounded-2xl p-3.5 md:p-4 flex items-start gap-3.5 mt-auto">
-            <div className="size-9 rounded-xl bg-sky-50 flex items-center justify-center text-[#0284C7] border border-sky-100 flex-shrink-0 mt-0.5">
-              <Clock className="size-5" />
-            </div>
+          {/* Title */}
+          <h2 className="text-2xl sm:text-3xl md:text-[34px] lg:text-[38px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] mb-3">
+            How We Work With You
+          </h2>
+
+          {/* Supporting Text */}
+          <p className="text-[12.5px] text-slate-500 font-semibold leading-relaxed mb-4">
+            We believe in structured delivery, complete alignment, and deep operational understanding. From initial discovery to production launch, here is our roadmap.
+          </p>
+
+          {/* Divider */}
+          <div className="border-t border-slate-200/80 my-4" />
+
+          {/* Metadata Stack */}
+          <div className="flex flex-col gap-4">
             <div>
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">
-                TYPICAL TIMELINE
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                Typical Duration
               </span>
-              <span className="text-base md:text-lg lg:text-xl font-[900] text-slate-900 leading-tight block mt-0.5">
+              <span className="text-[14.5px] font-black text-slate-800 block mt-0.5">
                 8–14 Weeks
               </span>
-              <p className="text-[9.5px] md:text-[11px] text-slate-500 font-semibold leading-relaxed mt-1">
-                Complex multi-module projects for India's top developers — delivered on time and on
-                budget.
-              </p>
+            </div>
+
+            <div>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                Engagement Type
+              </span>
+              <span className="text-[14.5px] font-black text-slate-800 block mt-0.5">
+                Fixed Scope
+              </span>
+            </div>
+
+            <div>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                Dedicated Team
+              </span>
+              <span className="text-[14.5px] font-black text-[#0284C7] block mt-0.5">
+                Architect • PM • DevOps
+              </span>
             </div>
           </div>
+
+          {/* Divider */}
+          <div className="border-t border-slate-200/80 my-4" />
+
+          {/* View Full Implementation Guide Text Link */}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setExpandedStageIdx(activeStage);
+            }}
+            className="inline-flex items-center gap-1.5 text-xs font-black text-[#0284C7] hover:text-[#2563EB] transition-colors w-fit pointer-events-auto"
+          >
+            <span>View Full Implementation Guide →</span>
+          </a>
         </div>
 
-        {/* RIGHT COLUMN / CENTER: 68% width */}
-        <div className="w-full md:w-[68%] flex flex-col justify-center h-full py-1 relative">
-          {/* Background Visual Roadmap Illustration */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.06] md:opacity-[0.08] select-none z-0 overflow-hidden">
-            <svg
-              className="w-full h-full"
-              viewBox="0 0 800 500"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+        {/* RIGHT COLUMN: 72% width */}
+        <div className="w-full md:w-[72%] flex flex-col justify-between h-full py-1 relative z-10">
+          
+          {/* Detail Panel */}
+          <div className="w-full bg-white/95 border border-slate-200/60 rounded-2xl flex flex-col justify-between flex-grow shadow-[0_12px_45px_rgba(0,0,0,0.04)] relative z-10 overflow-hidden min-h-[360px]">
+            
+            {/* Timeline Stage Navigation Header (Spacious with equal widths, no icons) */}
+            <div className="relative w-full border-b border-slate-100 bg-slate-50/40 py-5 px-6 flex flex-col gap-2">
+              
+              {/* Thin animated progress line behind the cards */}
+              <div className="absolute left-[10%] right-[10%] top-[50%] -translate-y-1/2 h-[2px] pointer-events-none hidden md:block z-0">
+                <div className="absolute inset-0 bg-slate-200/70 rounded-full h-full w-full" />
+                <div
+                  className="absolute left-0 top-0 bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] h-full rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(14,165,233,0.8)]"
+                  style={{ width: `${(activeStage / 4) * 100}%` }}
+                />
+                <div
+                  className="absolute size-2.5 bg-white border-2 border-[#0EA5E9] rounded-full shadow-[0_0_10px_rgba(14,165,233,1)] pointer-events-none -translate-y-[4.5px] -translate-x-[5px] transition-all duration-500"
+                  style={{
+                    left: `${(activeStage / 4) * 100}%`,
+                  }}
+                />
+              </div>
+
+              {/* Desktop Stage Pills Flex */}
+              <div className="hidden md:flex flex-row items-center justify-between gap-4 w-full relative z-10">
+                {stages.map((stage, idx) => {
+                  const isActive = activeStage === idx;
+                  
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveStage(idx)}
+                      className={`flex-1 flex flex-col items-center justify-center py-2.5 px-4 rounded-xl transition-all duration-300 pointer-events-auto border outline-none ${isActive
+                        ? "bg-white border-[#0EA5E9] shadow-[0_8px_25px_rgba(14,165,233,0.12)] scale-[1.03] z-20"
+                        : "bg-white border-slate-200/60 hover:border-slate-300 hover:scale-[1.01] z-10"
+                        }`}
+                    >
+                      <span className={`text-[9.5px] font-black uppercase tracking-wider ${isActive ? "text-[#0EA5E9]" : "text-slate-400"}`}>
+                        Stage {stage.id}
+                      </span>
+                      <span className="text-[13.5px] font-black text-slate-800 mt-0.5">
+                        {stage.title}
+                      </span>
+                      <span className={`text-[8.5px] font-bold mt-1 px-2 py-0.5 rounded-full border ${isActive ? "text-[#0EA5E9] bg-sky-50 border-sky-100" : "text-slate-500 bg-slate-50 border-slate-100"}`}>
+                        {stage.duration}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Active Content Grid wrapped in Framer Motion for smooth transitions */}
+            <motion.div
+              key={activeStage}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col flex-grow text-left p-5 md:p-6 justify-between gap-4"
             >
-              {/* Circuit board pathways in background connecting nodes */}
-              <path
-                d="M120,180 Q250,80 400,150 T680,120"
-                stroke="#0284C7"
-                strokeWidth="2.5"
-                strokeDasharray="5,5"
-              />
-              <path
-                d="M120,320 Q250,420 400,350 T680,380"
-                stroke="#0EA5E9"
-                strokeWidth="2"
-                strokeDasharray="5,5"
-              />
-              <path
-                d="M280,120 L280,380"
-                stroke="#10B981"
-                strokeWidth="1.5"
-                strokeDasharray="4,4"
-              />
-              <path
-                d="M520,120 L520,380"
-                stroke="#6366F1"
-                strokeWidth="1.5"
-                strokeDasharray="4,4"
-              />
+              {/* Header Title Row */}
+              <div className="flex items-center justify-between gap-4 w-full border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-[24px] md:text-[28px] font-[900] text-slate-900 leading-tight tracking-tight">
+                    {stages[activeStage].title}
+                  </h3>
+                  <p className="text-slate-500 text-[13.5px] font-semibold mt-0.5">
+                    {stages[activeStage].desc}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setExpandedStageIdx(activeStage)}
+                  className="flex-shrink-0 inline-flex items-center gap-1.5 py-2 px-3.5 rounded-xl bg-[#F0F9FF] border border-[#E0F2FE] text-[11.5px] font-black text-[#0284C7] hover:bg-[#E0F2FE] hover:scale-[1.02] active:scale-[0.98] transition-all pointer-events-auto"
+                >
+                  <span>Explore Case Study →</span>
+                </button>
+              </div>
 
-              {/* Node definitions */}
-              <g transform="translate(120, 180)">
-                <circle r="22" fill="#F0F9FF" stroke="#0EA5E9" strokeWidth="1.5" />
-                <text fill="#0284C7" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  Salesforce
-                </text>
-              </g>
-              <g transform="translate(280, 120)">
-                <circle r="22" fill="#ECFDF5" stroke="#10B981" strokeWidth="1.5" />
-                <text fill="#047857" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  AI Engine
-                </text>
-              </g>
-              <g transform="translate(280, 380)">
-                <circle r="22" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.5" />
-                <text fill="#475569" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  CRM
-                </text>
-              </g>
-              <g transform="translate(420, 200)">
-                <circle r="22" fill="#FFF1F2" stroke="#F43F5E" strokeWidth="1.5" />
-                <text fill="#BE123C" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  WhatsApp
-                </text>
-              </g>
-              <g transform="translate(520, 120)">
-                <circle r="22" fill="#F5F3FF" stroke="#8B5CF6" strokeWidth="1.5" />
-                <text fill="#6D28D9" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  Integrations
-                </text>
-              </g>
-              <g transform="translate(520, 380)">
-                <circle r="22" fill="#EFF6FF" stroke="#3B82F6" strokeWidth="1.5" />
-                <text fill="#1D4ED8" fontSize="8" fontWeight="bold" textAnchor="middle" y="3">
-                  Deployment
-                </text>
-              </g>
-            </svg>
+              {/* Dashboard Content Grid (Row 1 & Row 2 & Row 3) */}
+              <div className="grid grid-cols-12 gap-3.5 flex-grow">
+                {/* ROW 1: Challenge (50%) & Deliverables (50%) */}
+                <div className="col-span-12 md:col-span-6 bg-gradient-to-br from-red-50/40 to-rose-50/30 border border-red-100/50 rounded-xl p-5 flex flex-col justify-between hover:shadow-sm transition-all duration-200">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <div className="size-5 rounded-lg bg-red-100/80 flex items-center justify-center text-red-600">
+                        <AlertTriangle className="size-3" />
+                      </div>
+                      <span className="text-[9.5px] font-black text-red-600/70 uppercase tracking-widest">
+                        Business Challenge
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 text-slate-600 text-[13px] font-semibold">
+                      {stages[activeStage].challengeBullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="size-1.5 rounded-full bg-red-400" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-6 bg-gradient-to-br from-emerald-50/40 to-emerald-50/30 border border-emerald-100/50 rounded-xl p-5 flex flex-col justify-between hover:shadow-sm transition-all duration-200">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <div className="size-5 rounded-lg bg-emerald-100/80 flex items-center justify-center text-emerald-600">
+                        <CheckSquare className="size-3" />
+                      </div>
+                      <span className="text-[9.5px] font-black text-emerald-600/70 uppercase tracking-widest">
+                        Key Deliverables
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 text-slate-700 text-[13px] font-bold">
+                      {stages[activeStage].deliverables.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="size-1.5 rounded-full bg-emerald-400" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* ROW 2: Architecture (50%) & Outcomes (50%) */}
+                <div className="col-span-12 md:col-span-6 bg-gradient-to-br from-sky-50/40 to-blue-50/30 border border-sky-100/50 rounded-xl p-5 flex flex-col justify-between hover:shadow-sm transition-all duration-200">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <div className="size-5 rounded-lg bg-sky-100/80 flex items-center justify-center text-[#0EA5E9]">
+                        <Cpu className="size-3" />
+                      </div>
+                      <span className="text-[9.5px] font-black text-sky-600/70 uppercase tracking-widest">
+                        Solution Architecture
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 text-slate-600 text-[13px] font-semibold">
+                      {stages[activeStage].architectureBullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="size-1.5 rounded-full bg-sky-400" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-6 bg-gradient-to-br from-violet-50/40 to-violet-50/30 border border-violet-100/50 rounded-xl p-5 flex flex-col justify-between hover:shadow-sm transition-all duration-200">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <div className="size-5 rounded-lg bg-violet-100/80 flex items-center justify-center text-violet-600">
+                        <Target className="size-3" />
+                      </div>
+                      <span className="text-[9.5px] font-black text-violet-600/70 uppercase tracking-widest">
+                        Expected Outcomes
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 text-slate-700 text-[13px] font-extrabold">
+                      {stages[activeStage].outcomeBullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="size-1.5 rounded-full bg-violet-400" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* ROW 3: Compact Metadata Row */}
+                <div className="col-span-12 md:col-span-6 bg-slate-50/80 border border-slate-100 rounded-xl p-3.5 flex items-center gap-3">
+                  <div className="size-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-[#0EA5E9] flex-shrink-0">
+                    <Clock className="size-4" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Duration</span>
+                    <span className="text-[13px] font-extrabold text-slate-700 mt-0.5 block">{stages[activeStage].duration}</span>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-6 bg-slate-50/80 border border-slate-100 rounded-xl p-3.5 flex items-center gap-3">
+                  <div className="size-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0">
+                    <Users className="size-4" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Team Involved</span>
+                    <span className="text-[12px] font-extrabold text-slate-700 mt-0.5 block leading-tight">{stages[activeStage].teamInvolved}</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Horizontal connecting line (Desktop only) */}
-          <div className="absolute left-[10%] right-[10%] top-5 h-[2px] pointer-events-none hidden md:block z-10">
-            {/* Background trace line */}
-            <div className="absolute inset-0 bg-slate-200/80 rounded-full h-full w-full" />
-            {/* Active filled line */}
-            <div
-              className="absolute left-0 top-0 bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] h-full rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(14,165,233,0.8)]"
-              style={{ width: `${(activeStage / 4) * 100}%` }}
-            />
-            {/* Pulsing indicator dot */}
-            <div
-              className="absolute size-2 bg-white border-2 border-[#0EA5E9] rounded-full shadow-[0_0_10px_rgba(14,165,233,1)] pointer-events-none -translate-y-[3px] -translate-x-[4px] transition-all duration-500"
-              style={{
-                left: `${(activeStage / 4) * 100}%`,
-              }}
-            />
-          </div>
-
-          {/* Desktop milestone cards flex (md and up) */}
-          <div className="hidden md:flex flex-row items-stretch justify-between gap-3.5 w-full h-[66%] py-1 relative z-10">
+          {/* Mobile Navigation List (renders preview lists vertically) */}
+          <div className="md:hidden flex flex-col gap-3.5 w-full max-h-[52vh] overflow-y-auto pr-1 relative z-10">
             {stages.map((stage, idx) => {
               const Icon = stage.icon;
               const isActive = activeStage === idx;
 
               return (
-                <div
-                  key={idx}
-                  className="flex-1 min-w-0 flex flex-col items-center text-center cursor-pointer group"
-                  onMouseEnter={() => setActiveStage(idx)}
-                  onClick={() => setExpandedStageIdx(idx)}
-                >
-                  {/* Icon Node wrapper */}
+                <div key={idx} className="flex flex-col gap-2">
                   <div
-                    className={`size-10 rounded-full flex items-center justify-center border transition-all duration-500 z-20 bg-white relative ${isActive
-                      ? "border-[#0EA5E9] text-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110"
-                      : "border-slate-200 text-slate-400 group-hover:border-[#0EA5E9]/50 group-hover:text-[#0EA5E9]/70"
+                    onClick={() => setActiveStage(idx)}
+                    className={`flex gap-3.5 p-3.5 rounded-2xl cursor-pointer transition-all duration-300 ${isActive
+                      ? "bg-white border border-[#0EA5E9] shadow-sm"
+                      : "premium-glass-card"
                       }`}
                   >
-                    <Icon
-                      className={`size-4.5 transition-transform duration-500 ${isActive ? "scale-110 rotate-3" : "group-hover:scale-105"}`}
-                    />
-                    {isActive && (
-                      <span className="absolute inset-0 rounded-full bg-[#0EA5E9]/10 animate-ping pointer-events-none" />
-                    )}
-                  </div>
+                    {/* Icon Node */}
+                    <div
+                      className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${isActive
+                        ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50"
+                        : "border-slate-200 text-slate-400"
+                        }`}
+                    >
+                      <Icon className="size-4" />
+                    </div>
 
-                  {/* Card Container */}
-                  <div
-                    className={`mt-4 rounded-2xl p-4 flex-1 flex flex-col justify-between transition-all duration-500 w-full relative z-10 ${isActive
-                      ? "premium-glass-card-active -translate-y-1.5"
-                      : "premium-glass-card premium-glass-card-hover"
-                      }`}
-                  >
-                    <div>
-                      {/* Step & Duration */}
-                      <div className="flex flex-col items-center">
-                        <span
-                          className={`text-[8.5px] font-bold tracking-widest uppercase transition-colors duration-300 ${isActive ? "text-[#0EA5E9]" : "text-slate-400"
-                            }`}
-                        >
-                          STAGE {stage.id}
-                        </span>
-
-                        <span className="mt-0.5 text-xs lg:text-[13px] font-[800] text-slate-800 leading-tight">
-                          {stage.title}
-                        </span>
-
-                        <span
-                          className={`mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[8.5px] font-extrabold border transition-all ${isActive
-                            ? "text-[#0EA5E9] bg-sky-50 border-sky-100"
-                            : "text-slate-500 bg-slate-50 border-slate-100/80"
-                            }`}
-                        >
+                    {/* Content */}
+                    <div className="flex-1 text-left">
+                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[8px] font-bold text-[#0EA5E9] uppercase tracking-wider">
+                            STAGE {stage.id}
+                          </span>
+                          <h4 className="text-xs sm:text-sm font-[800] text-slate-800 leading-tight">
+                            {stage.title}
+                          </h4>
+                        </div>
+                        <span className="inline-flex px-1.5 py-0.5 rounded-full text-[8px] font-bold text-slate-500 bg-slate-50 border border-slate-100">
                           {stage.duration}
                         </span>
                       </div>
-
-                      {/* Description */}
-                      <p className="mt-2.5 text-[10px] xl:text-[10.5px] leading-relaxed text-slate-500 font-semibold px-0.5">
+                      <p className="text-[10px] leading-relaxed text-slate-500 font-semibold mt-1">
                         {stage.desc}
                       </p>
                     </div>
-
-                    {/* Action Link */}
-                    <div className="mt-3 text-[9px] font-bold text-[#0EA5E9] flex items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span>Explore stage</span>
-                      <ChevronRight className="size-3" />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Mobile/Tablet Stacked timeline (hidden on md and up) */}
-          <div className="md:hidden flex flex-col gap-3 w-full max-h-[50vh] overflow-y-auto pr-1 relative z-10">
-            {stages.map((stage, idx) => {
-              const Icon = stage.icon;
-              const isActive = activeStage === idx;
-
-              return (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    setActiveStage(idx);
-                    setExpandedStageIdx(idx);
-                  }}
-                  className={`flex gap-3.5 p-3.5 rounded-2xl cursor-pointer ${isActive
-                    ? "premium-glass-card-active scale-[1.01]"
-                    : "premium-glass-card premium-glass-card-hover"
-                    }`}
-                >
-                  {/* Icon Node */}
-                  <div
-                    className={`size-9 rounded-full flex items-center justify-center border flex-shrink-0 mt-0.5 transition-all ${isActive
-                      ? "border-[#0EA5E9] text-[#0EA5E9] bg-sky-50"
-                      : "border-slate-200 text-slate-400"
-                      }`}
-                  >
-                    <Icon className="size-4" />
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 text-left">
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[8.5px] font-bold text-[#0EA5E9] uppercase tracking-wider">
-                          STAGE {stage.id}
-                        </span>
-                        <h4 className="text-xs sm:text-sm font-[800] text-slate-800 leading-tight">
-                          {stage.title}
-                        </h4>
+                  {/* Inline detailed UAT previews on Mobile */}
+                  {isActive && (
+                    <div className="p-4 rounded-2xl bg-white/97 border border-slate-200/60 shadow-sm flex flex-col gap-3.5 text-left animate-in fade-in slide-in-from-top duration-300">
+                      <div className="bg-red-50/50 border border-red-100/60 rounded-xl p-3">
+                        <span className="text-[8px] font-extrabold text-red-500 uppercase tracking-widest block mb-0.5">Business Challenge</span>
+                        <p className="text-slate-600 text-[11px] font-semibold leading-normal">{stage.challenge}</p>
                       </div>
-                      <span className="inline-flex px-1.5 py-0.5 rounded-full text-[8px] font-bold text-slate-500 bg-slate-50 border border-slate-100">
-                        {stage.duration}
-                      </span>
+                      <div className="bg-sky-50/50 border border-sky-100/60 rounded-xl p-3">
+                        <span className="text-[8px] font-extrabold text-[#0EA5E9] uppercase tracking-widest block mb-0.5">Solution Architecture</span>
+                        <p className="text-slate-600 text-[11px] font-semibold leading-normal">{stage.whatWeBuild}</p>
+                      </div>
+                      <div className="bg-emerald-50/50 border border-emerald-100/60 rounded-xl p-3">
+                        <span className="text-[8px] font-extrabold text-emerald-600 uppercase tracking-widest block mb-1">Key Deliverables</span>
+                        <div className="flex flex-col gap-1.5">
+                          {stage.deliverables.map((item, i) => (
+                            <div key={i} className="flex items-start gap-2">
+                              <span className="size-3.5 rounded-full bg-emerald-100/60 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
+                                <Check className="size-2" />
+                              </span>
+                              <span className="text-slate-700 text-[11px] font-bold mt-0.5">{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="bg-violet-50/50 border border-violet-100/60 rounded-xl p-3">
+                        <span className="text-[8px] font-extrabold text-violet-600 uppercase tracking-widest block mb-0.5">Expected Outcomes</span>
+                        <p className="text-slate-700 text-[11px] font-extrabold leading-normal">{stage.outcome}</p>
+                      </div>
+                      <button
+                        onClick={() => setExpandedStageIdx(idx)}
+                        className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-gradient-to-r from-[#0EA5E9] to-[#2563EB] text-white font-extrabold text-[11px] transition-all"
+                      >
+                        <span>Explore Complete Stage</span>
+                        <ArrowRight className="size-3" />
+                      </button>
                     </div>
-                    <p className="text-[10px] leading-relaxed text-slate-500 font-semibold mt-1">
-                      {stage.desc}
-                    </p>
-                    <div className="mt-2 text-[9px] font-bold text-[#0EA5E9] flex items-center gap-0.5">
-                      <span>Tap to view details</span>
-                      <ChevronRight className="size-2.5" />
-                    </div>
-                  </div>
+                  )}
                 </div>
               );
             })}
@@ -4915,114 +5205,148 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
         </div>
       </div>
 
-      {/* Slide-over details panel */}
+      {/* Centered Large Modal (Detailed Case Study View) */}
       {expandedStageIdx !== null && currentStage && (
-        <div className="fixed inset-0 z-[150] pointer-events-auto">
-          {/* Overlay */}
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6 md:p-10 pointer-events-auto">
+          {/* Backdrop Blur Overlay */}
           <div
-            className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-slate-950/40 backdrop-blur-md transition-opacity duration-300"
             onClick={() => setExpandedStageIdx(null)}
           />
 
-          {/* Drawer Container */}
-          <div className="absolute inset-y-0 right-0 w-full sm:w-[460px] bg-white border-l border-slate-200/80 shadow-[0_0_80px_rgba(15,23,42,0.15)] flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300">
+          {/* Modal Container */}
+          <div className="bg-white rounded-[32px] border border-slate-200/80 shadow-[0_30px_100px_rgba(15,23,42,0.25)] w-full max-w-5xl h-[85vh] md:h-[80vh] flex flex-col overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between p-5 border-b border-slate-100">
+            <div className="flex items-center justify-between p-6 md:p-8 border-b border-slate-100 bg-slate-50/50">
               <div>
-                <span className="text-[9px] font-bold tracking-widest text-[#0EA5E9] uppercase">
-                  STAGE {currentStage.id}
+                <span className="text-[10px] font-black tracking-widest text-[#0EA5E9] uppercase block">
+                  STAGE {currentStage.id} • IMPLEMENTATION CASE STUDY
                 </span>
-                <h3 className="text-xl font-[900] text-slate-800 leading-tight mt-0.5">
+                <h3 className="text-2xl md:text-3xl font-[900] text-slate-900 leading-tight mt-1">
                   {currentStage.title}
                 </h3>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold text-[#0EA5E9] bg-sky-50 border border-sky-100/50">
+              <div className="flex items-center gap-4">
+                <span className="inline-flex px-3 py-1 rounded-full text-xs font-black text-[#0EA5E9] bg-sky-50 border border-sky-100/50">
                   {currentStage.duration}
                 </span>
                 <button
                   onClick={() => setExpandedStageIdx(null)}
-                  className="size-8 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors"
+                  className="size-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 flex items-center justify-center transition-colors pointer-events-auto"
                 >
-                  <X className="size-4" />
+                  <X className="size-5" />
                 </button>
               </div>
             </div>
 
-            {/* Content Area (Scrollable) */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-5 text-left">
-              {/* Visual Illustration */}
-              <div className="premium-glass-card rounded-2xl p-4 flex items-center justify-center min-h-[120px] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-                  <svg width="100%" height="100%">
-                    <pattern id="grid-ill" width="16" height="16" patternUnits="userSpaceOnUse">
-                      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
-                    </pattern>
-                    <rect width="100%" height="100%" fill="url(#grid-ill)" />
-                  </svg>
-                </div>
-                <div className="relative z-10 w-full max-w-[240px]">
-                  {currentStage.illustration()}
-                </div>
-              </div>
-
-              {/* Challenge Block */}
-              <div>
-                <span className="text-[9px] font-extrabold tracking-wider uppercase text-rose-500 block mb-1.5">
-                  The Challenge
-                </span>
-                <div className="bg-rose-50/40 border border-rose-100/60 rounded-xl p-3.5">
-                  <p className="text-slate-600 text-[11.5px] font-semibold leading-relaxed">
-                    {currentStage.challenge}
+            {/* Scrollable Content: 2 columns */}
+            <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col md:flex-row gap-8 text-left">
+              {/* Main Reading Column (70%) */}
+              <div className="w-full md:w-2/3 space-y-6">
+                <div>
+                  <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Stage Overview</h4>
+                  <p className="text-slate-600 text-[15px] font-medium leading-relaxed">
+                    {currentStage.desc}
                   </p>
                 </div>
-              </div>
 
-              {/* What We Build Block */}
-              <div>
-                <span className="text-[9px] font-extrabold tracking-wider uppercase text-[#0EA5E9] block mb-1.5">
-                  What We Build
-                </span>
-                <div className="bg-sky-50/40 border border-sky-100/60 rounded-xl p-3.5">
-                  <p className="text-slate-600 text-[11.5px] font-semibold leading-relaxed">
-                    {currentStage.whatWeBuild}
-                  </p>
+                <div className="grid grid-cols-1 gap-6">
+                  {/* Challenge */}
+                  <div className="bg-rose-50/30 border border-rose-100/50 rounded-2xl p-5">
+                    <h5 className="text-[11px] font-black text-red-500 uppercase tracking-widest mb-2">Business Challenge</h5>
+                    <p className="text-slate-600 text-[13.5px] font-semibold leading-relaxed">
+                      {currentStage.challenge}
+                    </p>
+                  </div>
+
+                  {/* Solution Architecture */}
+                  <div className="bg-sky-50/30 border border-sky-100/50 rounded-2xl p-5">
+                    <h5 className="text-[11px] font-black text-[#0EA5E9] uppercase tracking-widest mb-2">Solution Architecture</h5>
+                    <p className="text-slate-600 text-[13.5px] font-semibold leading-relaxed">
+                      {currentStage.whatWeBuild}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Key Deliverables */}
+                <div>
+                  <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Key Deliverables</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentStage.deliverables.map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 bg-slate-50 border border-slate-100 rounded-xl p-3">
+                        <span className="size-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
+                          <Check className="size-3" />
+                        </span>
+                        <span className="text-slate-700 text-[13px] font-bold mt-0.5">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Expected Outcomes */}
+                <div>
+                  <h4 className="text-[11px] font-black text-emerald-600 uppercase tracking-widest mb-2">Expected Outcomes</h4>
+                  <div className="bg-emerald-50/20 border border-emerald-100/50 rounded-2xl p-5">
+                    <p className="text-slate-700 text-[14px] font-extrabold leading-relaxed">
+                      {currentStage.outcome}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Deliverables Checklist */}
-              <div>
-                <span className="text-[9px] font-extrabold tracking-wider uppercase text-slate-400 block mb-2">
-                  Key Deliverables
-                </span>
-                <div className="flex flex-col gap-2 premium-glass-card rounded-xl p-3.5">
-                  {currentStage.deliverables.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2.5">
-                      <span className="size-4.5 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
-                        <Check className="size-2.5" />
-                      </span>
-                      <span className="text-slate-600 text-[11px] font-bold mt-0.5">{item}</span>
+              {/* Sidebar Info Column (30%) */}
+              <div className="w-full md:w-1/3 space-y-6 border-t md:border-t-0 md:border-l border-slate-100 pt-6 md:pt-0 md:pl-8">
+                {/* Visual Illustration */}
+                <div className="premium-glass-card rounded-2xl p-4 flex items-center justify-center min-h-[140px] relative overflow-hidden bg-slate-50/50 border border-slate-100">
+                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+                    <svg width="100%" height="100%">
+                      <pattern id="grid-ill-modal" width="16" height="16" patternUnits="userSpaceOnUse">
+                        <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
+                      </pattern>
+                      <rect width="100%" height="100%" fill="url(#grid-ill-modal)" />
+                    </svg>
+                  </div>
+                  <div className="relative z-10 w-full max-w-[200px]">
+                    {currentStage.illustration()}
+                  </div>
+                </div>
+
+                {/* Metadata details */}
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Duration</span>
+                    <span className="text-[13px] font-extrabold text-slate-800 mt-1 block">{currentStage.duration}</span>
+                  </div>
+
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Team Involved</span>
+                    <span className="text-[13px] font-extrabold text-slate-800 mt-1 block leading-relaxed">{currentStage.teamInvolved}</span>
+                  </div>
+
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Technologies Used</span>
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
+                      {currentStage.technologies.map((tech, i) => (
+                        <span key={i} className="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200/60 rounded-md px-2 py-0.5">
+                          {tech}
+                        </span>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Expected Outcome */}
-              <div>
-                <span className="text-[9px] font-extrabold tracking-wider uppercase text-emerald-600 block mb-1.5">
-                  Expected Outcome
-                </span>
-                <div className="bg-emerald-50/40 border border-emerald-100/60 rounded-xl p-3.5">
-                  <p className="text-slate-700 text-[11.5px] font-extrabold leading-relaxed">
-                    {currentStage.outcome}
-                  </p>
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Success Criteria</span>
+                    <span className="text-[12.5px] font-bold text-[#0EA5E9] bg-sky-50 border border-sky-100/50 rounded-xl p-3.5 mt-1.5 block leading-normal">
+                      {currentStage.successCriteria}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Footer Navigation */}
-            <div className="p-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
+            <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
               <button
                 onClick={() => {
                   if (expandedStageIdx > 0) {
@@ -5032,13 +5356,13 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                   }
                 }}
                 disabled={expandedStageIdx === 0}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-black text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors pointer-events-auto"
               >
-                <ChevronLeft className="size-3.5" />
-                <span>Previous</span>
+                <ChevronLeft className="size-4" />
+                <span>Previous Stage</span>
               </button>
 
-              <span className="text-[10px] font-extrabold text-slate-400">
+              <span className="text-xs font-black text-slate-400">
                 Stage {expandedStageIdx + 1} of 5
               </span>
 
@@ -5051,10 +5375,10 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
                   }
                 }}
                 disabled={expandedStageIdx === 4}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-black text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-colors pointer-events-auto"
               >
                 <span>Next Stage</span>
-                <ChevronRight className="size-3.5" />
+                <ChevronRight className="size-4" />
               </button>
             </div>
           </div>
@@ -5063,15 +5387,6 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
       {/* Bottom Glow reflection element */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[3px] bg-gradient-to-r from-transparent via-[#74CBF4] to-transparent shadow-[0_-4px_30px_rgba(116,203,244,0.95),0_0_15px_rgba(116,203,244,1)] opacity-95 rounded-full pointer-events-none" />
-
-      {/* Inline styles for connection dash animations */}
-      <style>{`
-        @keyframes dash {
-          to {
-            stroke-dashoffset: -32;
-          }
-        }
-      `}</style>
     </div>
   );
 }
