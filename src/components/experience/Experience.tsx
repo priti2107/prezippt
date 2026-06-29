@@ -1420,7 +1420,7 @@ function LeadershipScene({ scene: _scene }: { scene: Scene }) {
 
       {/* 2-column premium showcase card grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 w-full max-w-6xl mx-auto relative z-10 justify-items-center items-stretch">
-        
+
         {/* Center Divider / Partnership Connection (Desktop only) */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 pointer-events-none z-20">
           <span className="text-[10px] font-black text-slate-400 tracking-[0.22em] uppercase text-center max-w-[140px] leading-tight">
@@ -2271,14 +2271,14 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
                       } : {})}
                       className={`flex items-center gap-3.5 p-3 min-h-[64px] rounded-2xl premium-glass-card bg-sky-50/50 border border-sky-100/50 shadow-sm transition-all duration-300 ${isLink ? 'premium-glass-card-hover hover:bg-sky-100/40 hover:border-sky-300/60 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(14,165,233,0.06)] group/chip cursor-pointer' : 'cursor-default'}`}
                     >
-                      <motion.div 
+                      <motion.div
                         animate={{ scale: [1, 1.03, 1] }}
                         transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
                         className="size-[42px] rounded-xl bg-sky-50 flex items-center justify-center border border-sky-100/40 text-[#0EA5E9] flex-shrink-0"
                       >
                         <Icon className="size-5 text-[#0EA5E9]" />
                       </motion.div>
-                      
+
                       <div className="min-w-0 flex-grow">
                         <span className="text-[9.5px] font-bold text-sky-600 uppercase tracking-widest block leading-none mb-1">
                           {chip.label}
@@ -2580,7 +2580,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
 
     return (
       <div
-        className="pointer-events-auto rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-5 pb-5 px-4 md:px-8 justify-between gap-4 border border-slate-100 shadow-[0_30px_90px_rgba(15,23,42,0.05)] bg-white"
+        className="pointer-events-auto rounded-[32px] w-[92vw] md:w-[90vw] h-[88vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-5 pb-5 px-4 md:px-8 justify-between gap-4 border border-slate-100 shadow-[0_30px_90px_rgba(15,23,42,0.05)] bg-white"
         style={{
           background: "#ffffff",
         }}
@@ -4926,13 +4926,13 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
         {/* RIGHT COLUMN: 72% width */}
         <div className="w-full md:w-[72%] flex flex-col justify-between h-full py-1 relative z-10">
-          
+
           {/* Detail Panel */}
           <div className="w-full bg-white/95 border border-slate-200/60 rounded-2xl flex flex-col justify-between flex-grow shadow-[0_12px_45px_rgba(0,0,0,0.04)] relative z-10 overflow-hidden min-h-[360px]">
-            
+
             {/* Timeline Stage Navigation Header (Spacious with equal widths, no icons) */}
             <div className="relative w-full border-b border-slate-100 bg-slate-50/40 py-5 px-6 flex flex-col gap-2">
-              
+
               {/* Thin animated progress line behind the cards */}
               <div className="absolute left-[10%] right-[10%] top-[50%] -translate-y-1/2 h-[2px] pointer-events-none hidden md:block z-0">
                 <div className="absolute inset-0 bg-slate-200/70 rounded-full h-full w-full" />
@@ -4952,7 +4952,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
               <div className="hidden md:flex flex-row items-center justify-between gap-4 w-full relative z-10">
                 {stages.map((stage, idx) => {
                   const isActive = activeStage === idx;
-                  
+
                   return (
                     <button
                       key={idx}
@@ -5621,7 +5621,7 @@ export default function Experience() {
           }
         }
       }
-      
+
       e.preventDefault();
 
       // Check cooldown and active tween state
@@ -5769,7 +5769,8 @@ export default function Experience() {
       ))}
 
       {/* Custom Styles for Nav pulsing glow and arrow bounce */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes nav-glow-pulse {
           0%, 100% {
             box-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
@@ -5809,7 +5810,7 @@ export default function Experience() {
           {SCENES.map((scene, i) => {
             const isActive = active === i;
             const isPast = i < active;
-            
+
             return (
               <button
                 key={scene.id}
@@ -5826,11 +5827,10 @@ export default function Experience() {
                 {isActive ? (
                   <span className="size-3 rounded-full bg-[#0EA5E9] shadow-[0_0_10px_rgba(14,165,233,0.8)] nav-active-pulse z-10" />
                 ) : (
-                  <span className={`size-2 rounded-full transition-all duration-300 z-10 ${
-                    isPast
+                  <span className={`size-2 rounded-full transition-all duration-300 z-10 ${isPast
                       ? "bg-slate-500 group-hover:scale-125"
                       : "bg-slate-300 group-hover:scale-125"
-                  }`} />
+                    }`} />
                 )}
               </button>
             );
@@ -5871,13 +5871,12 @@ export default function Experience() {
                       scrollToScene(i);
                       setIsMobileNavExpanded(false);
                     }}
-                    className={`size-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all ${
-                      isActive
+                    className={`size-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all ${isActive
                         ? "bg-[#0EA5E9] text-white shadow-md shadow-sky-500/10"
                         : isPast
-                        ? "bg-sky-50 text-[#0284C7] border border-sky-100"
-                        : "bg-slate-50 text-slate-400 border border-slate-100"
-                    }`}
+                          ? "bg-sky-50 text-[#0284C7] border border-sky-100"
+                          : "bg-slate-50 text-slate-400 border border-slate-100"
+                      }`}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </button>
