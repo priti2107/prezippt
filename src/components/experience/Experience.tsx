@@ -3816,7 +3816,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
         <div className="w-full md:max-w-[55%] flex flex-col justify-start text-left">
           <div className="inline-flex items-center gap-1.5 bg-[#F0F9FF] border border-[#E0F2FE]/80 rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider text-[#0284C7] w-fit mb-2">
             <span className="size-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-            DISTRICT 11 • SHOWCASE
+            SHOWCASE
           </div>
           <h2 className="text-lg sm:text-xl md:text-[26px] lg:text-[30px] xl:text-[34px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display">
             Work In Production. <br />
@@ -4885,31 +4885,31 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
           {/* Divider */}
           <div className="border-t border-slate-200/80 my-4" />
 
-          {/* Metadata Stack */}
-          <div className="flex flex-col gap-4">
+          {/* Metadata Stack Card */}
+          <div className="flex flex-col gap-4 bg-[#E0F2FE]/45 border border-[#BAE6FD]/80 rounded-2xl p-4.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_30px_rgba(14,165,233,0.02)] backdrop-blur-sm">
             <div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+              <span className="text-[9.5px] font-black text-slate-400 uppercase tracking-wider block">
                 Typical Duration
               </span>
-              <span className="text-[14.5px] font-black text-slate-800 block mt-0.5">
+              <span className="text-[14px] font-black text-slate-800 block mt-0.5">
                 8–14 Weeks
               </span>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+              <span className="text-[9.5px] font-black text-slate-400 uppercase tracking-wider block">
                 Engagement Type
               </span>
-              <span className="text-[14.5px] font-black text-slate-800 block mt-0.5">
+              <span className="text-[14px] font-black text-slate-800 block mt-0.5">
                 Fixed Scope
               </span>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+              <span className="text-[9.5px] font-black text-slate-400 uppercase tracking-wider block">
                 Dedicated Team
               </span>
-              <span className="text-[14.5px] font-black text-[#0284C7] block mt-0.5">
+              <span className="text-[14px] font-black text-[#0284C7] block mt-0.5">
                 Architect • PM • DevOps
               </span>
             </div>
@@ -4934,8 +4934,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
         {/* RIGHT COLUMN: 72% width */}
         <div className="w-full md:w-[72%] flex flex-col justify-between h-full py-1 relative z-10">
 
-          {/* Detail Panel */}
-          <div className="w-full bg-white/95 border border-slate-200/60 rounded-2xl flex flex-col justify-between flex-grow shadow-[0_12px_45px_rgba(0,0,0,0.04)] relative z-10 overflow-hidden min-h-[360px]">
+          <div className="w-full bg-[#E0F2FE]/95 border border-[#BAE6FD] rounded-2xl flex flex-col justify-between flex-grow shadow-[0_12px_45px_rgba(14,165,233,0.06)] relative z-10 overflow-hidden min-h-[360px]">
 
             {/* Timeline Stage Navigation Header (Spacious with equal widths, no icons) */}
             <div className="relative w-full border-b border-slate-100 bg-slate-50/40 py-5 px-6 flex flex-col gap-2">
