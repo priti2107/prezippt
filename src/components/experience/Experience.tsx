@@ -1971,15 +1971,14 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
             background: "radial-gradient(circle, rgba(1,118,211,0.12) 0%, transparent 70%)",
           }}
         />
-
         {/* Headline Spotlight Glow */}
         <div className="absolute left-[30%] top-[30%] -translate-x-1/2 -translate-y-1/2 w-[400px] h-[180px] bg-gradient-to-r from-sky-400/8 to-blue-500/8 rounded-full blur-3xl pointer-events-none -z-10" />
 
         {/* Split Screen Container - Centered and Contained within 1080px to close column gap */}
         <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-center justify-between w-full h-full relative z-10 max-w-[1080px] mx-auto py-2">
-          {/* LEFT COLUMN: Narrative & CTAs (54% width) */}
-          <div className="w-full md:w-[54%] flex flex-col justify-center items-start text-left h-full py-2">
-            <div className="flex flex-col items-start gap-3.5 w-full">
+          {/* LEFT COLUMN: Narrative & CTAs (40% width) */}
+          <div className="w-full md:w-[40%] flex flex-col justify-center items-start text-left h-full py-2 md:-mt-12">
+            <div className="flex flex-col items-start gap-2.5 w-full">
               {/* Kicker Badge */}
               <motion.div
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
@@ -1994,11 +1993,11 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
               <motion.h2
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-2xl sm:text-3xl md:text-[34px] lg:text-[42px] xl:text-[46px] font-[900] leading-[1.12] tracking-tight text-[#0F172A] font-display max-w-2xl"
+                className="text-2xl sm:text-3xl md:text-[34px] lg:text-[42px] xl:text-[46px] font-[900] leading-[1.12] tracking-tight text-[#0F172A] font-display max-w-2xl animate-in"
               >
-                Let's Build Something <br className="hidden md:inline" />
+                Let's Build Something That <br className="hidden md:inline" />
                 <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0EA5E9] to-[#2563EB]">
-                  That Actually Works.
+                  Actually Works.
                   <svg
                     className="absolute -bottom-1.5 left-0 w-full h-[4px]"
                     viewBox="0 0 200 5"
@@ -2019,7 +2018,7 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
               <motion.p
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-2 text-xs sm:text-sm md:text-sm lg:text-[14.5px] text-[#475569] font-medium leading-relaxed max-w-2xl"
+                className="mt-1 text-xs sm:text-sm md:text-sm lg:text-[14.5px] text-[#475569] font-medium leading-relaxed max-w-2xl"
               >
                 Whether you're implementing Salesforce, building AI-powered automation, launching
                 digital products, or transforming customer operations — let's discuss what success
@@ -2030,145 +2029,131 @@ function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { scene: S
               <motion.div
                 animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="relative flex flex-row items-center gap-2.5 mt-4 w-full"
+                className="relative flex flex-col items-start gap-2 mt-1.5 w-full"
               >
                 {/* Subtle blue glow behind button */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/20 via-blue-500/20 to-indigo-500/20 blur-xl rounded-full -z-10 pointer-events-none group-hover:scale-105 transition-all duration-300" />
+                <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/20 via-blue-500/20 to-indigo-500/20 blur-xl rounded-full -z-10 pointer-events-none transition-all duration-300" />
 
                 <a
-                  href="mailto:hello@cascadetech.ventures"
-                  className="group relative bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs md:text-sm font-extrabold py-3 px-6.5 rounded-full inline-flex items-center gap-2 shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03]"
+                  href="mailto:info@cascadetechventures.com"
+                  className="group relative bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs md:text-base font-extrabold py-4 px-9 rounded-full inline-flex items-center gap-2 shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(3,105,161,0.25)] overflow-hidden border border-white/10"
                 >
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0EA5E9]/25 to-[#2563EB]/25 blur-md group-hover:blur-lg transition-all duration-300 -z-10 animate-pulse" />
                   <span>Schedule a Discovery Call</span>
-                  <ArrowUpRight className="size-4.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="size-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
+
+                <span className="text-[10px] md:text-[11px] text-slate-400 font-bold leading-normal mt-1 cursor-default">
+                  Trusted by Real Estate Developers, Enterprises & Growing Businesses.
+                </span>
               </motion.div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Premium Contact Drawer Card (41% width) - Centered and Larger */}
+          {/* RIGHT COLUMN: Premium Contact Drawer Card (57% width) - Centered and Larger */}
           <motion.div
             animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 15 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="w-full md:w-[41%] flex flex-col justify-center h-full py-2"
+            className="w-full md:w-[57%] flex flex-col justify-center h-full py-2 relative md:-mt-6"
           >
-            <div className="premium-glass-card rounded-3xl p-5 md:p-6 flex flex-col gap-4.5 text-left relative overflow-hidden w-full max-w-[420px] mx-auto md:mx-0">
-              {/* Subtle grid pattern in background */}
-              <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
+            {/* Soft ambient glow behind contact panel */}
+            <div className="absolute -inset-4 bg-gradient-to-tr from-sky-400/6 via-blue-500/4 to-indigo-500/6 blur-3xl rounded-[40px] -z-10 pointer-events-none" />
+
+            <div className="premium-glass-card rounded-3xl p-5 md:p-6.5 flex flex-col gap-4 text-left relative overflow-hidden w-full max-w-[620px] mx-auto md:mx-0">
+              {/* Subtle animated grid texture (low opacity: 2-4%) */}
+              <div className="absolute inset-0 opacity-[0.035] pointer-events-none">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                   <pattern
-                    id="grid-card-contact-refined"
-                    width="16"
-                    height="16"
+                    id="grid-card-contact-refined-noise"
+                    width="20"
+                    height="20"
                     patternUnits="userSpaceOnUse"
                   >
-                    <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#000" strokeWidth="0.5" />
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#000" strokeWidth="0.5" />
                   </pattern>
-                  <rect width="100%" height="100%" fill="url(#grid-card-contact-refined)" />
+                  <rect width="100%" height="100%" fill="url(#grid-card-contact-refined-noise)" />
                 </svg>
               </div>
 
               {/* Headline inside card */}
               <div className="border-b border-slate-200/40 pb-2">
                 <span className="text-[11px] md:text-[12px] font-extrabold text-[#0284C7] uppercase tracking-widest block">
-                  Talk To Our Team
+                  GET IN TOUCH
                 </span>
               </div>
 
-              {/* Leadership Profiles - Compact side-by-side row */}
-              <div className="grid grid-cols-2 gap-2.5">
-                {/* Aashish */}
-                <div className="flex items-center gap-2.5 premium-glass-card rounded-xl p-1.5 px-2.5">
-                  <img
-                    src="/clients/Aashish Yadav.png"
-                    className="w-10 h-10 rounded-full border border-sky-100 object-cover shadow-sm flex-shrink-0"
-                    alt="Aashish Yadav"
-                  />
-                  <div className="min-w-0">
-                    <h4 className="text-[12px] font-black text-slate-800 leading-none truncate">
-                      Aashish Yadav
-                    </h4>
-                    <p className="text-[8px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none truncate">
-                      CEO & Founder
-                    </p>
-                  </div>
-                </div>
-
-                {/* Yash */}
-                <div className="flex items-center gap-2.5 premium-glass-card rounded-xl p-1.5 px-2.5">
-                  <img
-                    src="/clients/Yash Jain.png"
-                    className="w-10 h-10 rounded-full border border-sky-100 object-cover shadow-sm flex-shrink-0"
-                    alt="Yash Jain"
-                  />
-                  <div className="min-w-0">
-                    <h4 className="text-[12px] font-black text-slate-800 leading-none truncate">
-                      Yash Jain
-                    </h4>
-                    <p className="text-[8px] font-extrabold text-slate-400 uppercase tracking-wider mt-1.5 leading-none truncate">
-                      CTO & Co-Founder
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Subtle divider */}
-              <div className="border-t border-slate-200/40 my-0.5" />
-
-              {/* Direct Action Chips - Compact premium pills */}
-              <div className="flex flex-col gap-2.5">
+              {/* Contact Hub Vertical List (1 column) */}
+              <div className="flex flex-col gap-2 mt-1.5 w-full">
                 {[
+                  {
+                    label: "Business Email",
+                    icon: Mail,
+                    val: "info@cascadetechventures.com",
+                    href: "mailto:info@cascadetechventures.com",
+                  },
+                  {
+                    label: "Sales & Consulting",
+                    icon: Phone,
+                    val: "Sales: +91 91366 36953  |  Support: +91 77385 58929",
+                    href: "tel:+919136636953",
+                  },
+                  {
+                    label: "Mumbai Office",
+                    icon: MapPin,
+                    val: "2/11 Ram Niwas Society, Sakinaka, Mumbai",
+                    href: "https://www.google.com/maps/search/?api=1&query=Ram+Niwas+Building+Ahimsa+Marg+Sakinaka+Mumbai",
+                  },
+                  {
+                    label: "Business Hours",
+                    icon: Clock,
+                    val: "Mon–Fri | 10 AM–6 PM",
+                  },
                   {
                     label: "Website",
                     icon: Globe,
-                    val: "cascadetech.ventures",
-                    href: "https://cascadetech.ventures",
-                  },
-                  {
-                    label: "Email",
-                    icon: Mail,
-                    val: "hello@cascadetech.ventures",
-                    href: "mailto:hello@cascadetech.ventures",
-                  },
-                  {
-                    label: "Phone",
-                    icon: Phone,
-                    val: "+91 98765 43210",
-                    href: "tel:+919876543210",
+                    val: "cascadetechventures.com",
+                    href: "https://cascadetechventures.com",
                   },
                   {
                     label: "LinkedIn",
                     icon: Linkedin,
-                    val: "linkedin.com/company/cascade-tech",
-                    href: "https://linkedin.com",
+                    val: "Cascade Tech Ventures",
+                    href: "https://www.linkedin.com/company/cascadetechventures/?originalSubdomain=in",
                   },
                 ].map((chip) => {
                   const Icon = chip.icon;
+                  const isLink = !!chip.href;
+                  const CardElement = isLink ? "a" : "div";
                   return (
-                    <a
+                    <CardElement
                       key={chip.label}
-                      href={chip.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between px-4 py-2.5 rounded-2xl premium-glass-card premium-glass-card-hover bg-white/70 hover:bg-[#F8FAFC] border border-slate-100/60 hover:border-sky-100/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md group/chip"
+                      {...(isLink ? {
+                        href: chip.href,
+                        target: "_blank",
+                        rel: "noopener noreferrer"
+                      } : {})}
+                      className={`flex items-center gap-3.5 p-3 min-h-[64px] rounded-2xl premium-glass-card bg-sky-50/50 border border-sky-100/50 shadow-sm transition-all duration-300 ${isLink ? 'premium-glass-card-hover hover:bg-sky-100/40 hover:border-sky-300/60 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(14,165,233,0.06)] group/chip cursor-pointer' : 'cursor-default'}`}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <Icon className="size-4.5 text-[#0EA5E9] transition-transform duration-300 group-hover/chip:scale-110" />
-                        <span className="text-xs md:text-[13px] font-bold text-slate-600 group-hover/chip:text-[#0EA5E9]">
+                      <motion.div 
+                        animate={{ scale: [1, 1.03, 1] }}
+                        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                        className="size-[42px] rounded-xl bg-sky-50 flex items-center justify-center border border-sky-100/40 text-[#0EA5E9] flex-shrink-0"
+                      >
+                        <Icon className="size-5 text-[#0EA5E9]" />
+                      </motion.div>
+                      
+                      <div className="min-w-0 flex-grow">
+                        <span className="text-[9.5px] font-bold text-sky-600 uppercase tracking-widest block leading-none mb-1">
+                          {chip.label}
+                        </span>
+                        <span className="text-[13px] font-bold text-slate-700 block leading-tight break-keep whitespace-nowrap overflow-hidden text-ellipsis hover:text-[#0EA5E9] transition-colors">
                           {chip.val}
                         </span>
                       </div>
-                      <ChevronRight className="size-3.5 text-slate-300 group-hover/chip:text-[#0EA5E9] transition-transform duration-300 group-hover/chip:translate-x-0.5" />
-                    </a>
+                    </CardElement>
                   );
                 })}
               </div>
-
-              {/* Card Trust Statement Footer */}
-              <p className="text-[10px] md:text-[11px] text-slate-400 font-bold leading-normal text-center border-t border-slate-100/60 pt-3 px-1.5">
-                Trusted by leading developers, enterprise teams & businesses across India.
-              </p>
             </div>
           </motion.div>
         </div>
