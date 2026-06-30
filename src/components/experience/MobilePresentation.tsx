@@ -139,30 +139,21 @@ function usePinchPan(baseScale: number) {
 const ScaledSlide = React.memo(function ScaledSlide({
   scene,
   isActive,
-  isPreloaded,
+  isVisited,
   baseScale,
   onSwipeLeft,
   onSwipeRight,
 }: {
   scene: any;
   isActive: boolean;
-  isPreloaded: boolean;
+  isVisited: boolean;
   baseScale: number;
   onSwipeLeft: () => void;
   onSwipeRight: () => void;
 }) {
   const { transform, reset, handlePointerDown, handlePointerMove, handlePointerUp, handleDoubleTap } = usePinchPan(baseScale);
-  const [loaded, setLoaded] = useState(false);
   const swipeStartX = useRef<number | null>(null);
   const swipeStartY = useRef<number | null>(null);
-
-  // Lazy-load with a small delay for smoother transitions
-  useEffect(() => {
-    if (isActive || isPreloaded) {
-      const t = setTimeout(() => setLoaded(true), 50);
-      return () => clearTimeout(t);
-    }
-  }, [isActive, isPreloaded]);
 
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     swipeStartX.current = e.touches[0].clientX;
@@ -212,7 +203,7 @@ const ScaledSlide = React.memo(function ScaledSlide({
         }}
         className="flex-shrink-0 flex items-center justify-center"
       >
-        {loaded ? (
+        {isVisited ? (
           <DesktopFrame width={DESIGN_WIDTH} height={DESIGN_HEIGHT}>
             <div className="w-full h-full flex items-center justify-center p-4">
               <SceneContent scene={scene} isActive={isActive} activeCardIdx={0} />
@@ -236,11 +227,10 @@ const ScaledSlide = React.memo(function ScaledSlide({
     </div>
   );
 }, (prev, next) => {
-  // Memoization rule: only re-render if key properties change
   return (
     prev.scene.id === next.scene.id &&
     prev.isActive === next.isActive &&
-    prev.isPreloaded === next.isPreloaded &&
+    prev.isVisited === next.isVisited &&
     prev.baseScale === next.baseScale
   );
 });
@@ -250,8 +240,22 @@ const ScaledSlide = React.memo(function ScaledSlide({
 export default function MobilePresentation() {
   const [current, setCurrent] = useState(0);
   const [showSlideMenu, setShowSlideMenu] = useState(false);
+  const [visitedSlides, setVisitedSlides] = useState<Set<number>>(() => new Set([0, 1]));
   const prefersReducedMotion = useReducedMotion();
   const total = SCENES.length;
+
+  useEffect(() => {
+    setVisitedSlides((prev) => {
+      if (prev.has(current) && (current === 0 || prev.has(current - 1)) && (current === total - 1 || prev.has(current + 1))) {
+        return prev;
+      }
+      const next = new Set(prev);
+      next.add(current);
+      if (current > 0) next.add(current - 1);
+      if (current < total - 1) next.add(current + 1);
+      return next;
+    });
+  }, [current, total]);
 
   // Precompute scale once on mount
   const baseScale = useMemo(() => {
@@ -364,6 +368,7 @@ export default function MobilePresentation() {
           const isActive = i === current;
           const isPreloaded = Math.abs(i - current) === 1;
 
+          const isVisited = visitedSlides.has(i);
           return (
             <motion.div
               key={scene.id}
@@ -381,7 +386,7 @@ export default function MobilePresentation() {
               <ScaledSlide
                 scene={scene}
                 isActive={isActive}
-                isPreloaded={isPreloaded}
+                isVisited={isVisited}
                 baseScale={baseScale}
                 onSwipeLeft={goNext}
                 onSwipeRight={goPrev}

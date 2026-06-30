@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, type ReactNode } from "react";
+import React, { useState, useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 interface FrameProps {
@@ -9,7 +9,23 @@ interface FrameProps {
   className?: string;
 }
 
-export function DesktopFrame({
+// Global cache for style clones to prevent DOM querying/thrashing on each slide transition
+let cachedStyleNodes: Node[] | null = null;
+
+function getCachedStyleNodes(): Node[] {
+  if (cachedStyleNodes !== null) {
+    return cachedStyleNodes;
+  }
+  const nodes: Node[] = [];
+  const parentStyles = document.querySelectorAll("style, link[rel='stylesheet']");
+  parentStyles.forEach((style) => {
+    nodes.push(style.cloneNode(true));
+  });
+  cachedStyleNodes = nodes;
+  return nodes;
+}
+
+export const DesktopFrame = React.memo(function DesktopFrame({
   children,
   title = "Desktop Preview",
   width = 1280,
@@ -24,14 +40,18 @@ export function DesktopFrame({
     const doc = contentRef.contentWindow?.document;
     if (!doc) return;
 
-    // 1. Copy all stylesheets and style tags from the parent document
+    // Apply cached styles to prevent layout thrashing
     const head = doc.head;
-    const parentStyles = document.querySelectorAll("style, link[rel='stylesheet']");
-    parentStyles.forEach((style) => {
-      head.appendChild(style.cloneNode(true));
+    const styles = getCachedStyleNodes();
+    
+    // Batch style injection
+    const fragment = doc.createDocumentFragment();
+    styles.forEach((node) => {
+      fragment.appendChild(node.cloneNode(true));
     });
+    head.appendChild(fragment);
 
-    // 2. Set background transparent and hide scrollbars inside the iframe
+    // Apply body layout parameters
     if (doc.body) {
       doc.body.style.margin = "0";
       doc.body.style.padding = "0";
@@ -52,11 +72,11 @@ export function DesktopFrame({
         border: "none",
         background: "transparent",
         overflow: "hidden",
-        pointerEvents: "none", // Prevent iframe from capturing touch/drag gestures
+        pointerEvents: "none",
       }}
       className={className}
     >
       {mountNode && createPortal(children, mountNode)}
     </iframe>
   );
-}
+});
