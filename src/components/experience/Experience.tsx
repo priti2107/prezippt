@@ -281,7 +281,7 @@ function WhoWeAreScene({ scene, isActive = false, activeCardIdx = 0 }: { scene: 
   ];
 
   return (
-    <div className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-4 pb-4 px-4 md:px-8 justify-start md:justify-center gap-3 md:gap-4">
+    <div className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-4 pb-4 px-4 md:px-8 justify-start md:justify-center gap-3 md:gap-4">
       {/* Scoped CSS classes for District 02 foundations scene styling */}
       <style>{`
         .who-we-are-glass-panel {
@@ -547,7 +547,7 @@ function ProductEcosystemScene() {
 
   return (
     <div
-      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-4 border border-white/30"
+      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-4 border border-white/30"
       style={{
         background: "radial-gradient(ellipse at 60% 0%, rgba(0,119,182,0.07) 0%, transparent 55%), radial-gradient(ellipse at 10% 100%, rgba(59,169,245,0.05) 0%, transparent 50%), rgba(247,250,253,0.98)",
         backdropFilter: "blur(28px)",
@@ -2681,7 +2681,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
 
     return (
       <div
-        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-6 justify-start md:justify-center gap-2.5 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
+        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-6 justify-start md:justify-center gap-2.5 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
         style={{
           background: "rgba(248, 250, 252, 0.95)",
           backdropFilter: "blur(24px)",
@@ -2846,7 +2846,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
 
     return (
       <div
-        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-8 justify-start md:justify-between border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
+        className="pointer-events-auto who-we-are-glass-panel rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-8 justify-start md:justify-between border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)]"
         style={{
           background: "rgba(248, 250, 252, 0.95)",
           backdropFilter: "blur(24px)",
@@ -3003,7 +3003,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
   if (scene.id === 4) {
     return (
       <div
-        className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-5"
+        className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-5"
         style={{
           background: "radial-gradient(ellipse at 60% 0%, rgba(0,119,182,0.07) 0%, transparent 55%), radial-gradient(ellipse at 10% 100%, rgba(59,169,245,0.05) 0%, transparent 50%), rgba(247,250,253,0.98)",
           backdropFilter: "blur(28px)",
@@ -3451,7 +3451,7 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
 
   return (
     <div
-      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-4 border border-white/30"
+      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-10 gap-3 md:gap-4 border border-white/30"
       style={{
         background: "radial-gradient(ellipse at 50% 0%, rgba(0,119,182,0.06) 0%, transparent 60%), rgba(247,250,253,0.98)",
         backdropFilter: "blur(28px)",
@@ -3612,7 +3612,7 @@ function ProductTemplateCard({ productKey }: ProductTemplateCardProps) {
             <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#0077B6 1px, transparent 1px)", backgroundSize: "16px 16px" }} />
 
             <h3 className="text-[11px] font-black text-[#0A1628] uppercase tracking-wider mb-2 relative z-10">Key Capabilities</h3>
-            <div className="flex-1 overflow-y-auto pr-1 flex flex-col relative z-10 justify-between">
+            <div className="flex-1 overflow-hidden pr-1 flex flex-col relative z-10 justify-between">
               {placeholders.capabilities.map((cap, i) => (
                 <div key={i} className="flex flex-col">
                   <div className="flex items-start gap-2.5 py-2 px-2.5 rounded-lg transition-all duration-200 hover:bg-[#F4F9FF]">
@@ -3749,7 +3749,7 @@ function CaseStudiesScene({ scene }: { scene: Scene }) {
 
   return (
     <div
-      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 md:pt-5 pb-3 md:pb-5 px-3 md:px-6 justify-start gap-2.5 md:gap-3.5 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
+      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 md:pt-5 pb-3 md:pb-5 px-3 md:px-6 justify-start gap-2.5 md:gap-3.5 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
       style={{
         background: "rgba(248, 250, 252, 0.95)",
         backdropFilter: "blur(24px)",
@@ -4789,7 +4789,7 @@ function EngagementModelScene({ scene }: { scene: Scene }) {
 
   return (
     <div
-      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto flex flex-col pt-3 pb-3 px-3 md:px-5 justify-start md:justify-center gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
+      className="pointer-events-auto who-we-are-glass-panel rounded-[24px] md:rounded-[32px] w-[95vw] md:w-[90vw] h-[92vh] md:h-[82vh] max-w-7xl relative overflow-y-auto md:overflow-hidden flex flex-col pt-3 pb-3 px-3 md:px-5 justify-start md:justify-center gap-3 md:gap-4 border border-white/20 shadow-[0_30px_100px_rgba(1,118,211,0.08)] shadow-[inset_0_0_20px_rgba(255,255,255,0.75)] animate-in fade-in duration-500"
       style={{
         background: "rgba(248, 250, 252, 0.95)",
         backdropFilter: "blur(24px)",
