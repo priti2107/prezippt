@@ -2518,7 +2518,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "crm-implementation",
         title: "CRM Implementation",
-        desc: "Sales Cloud, Service Cloud & custom orgs — config, Apex/LWC, migration, training, full lead-to-booking lifecycle.",
+        desc: "We build a single system to manage every customer, lead, and deal — giving your team complete visibility into who to follow up with, and when, from first enquiry through to final sale.",
         subtitle: "CRM & SALES CLOUD",
         chips: ["Sales Cloud", "Apex", "LWC"],
         customIcon: (
@@ -2546,7 +2546,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "marketing-automation",
         title: "Marketing Automation",
-        desc: "Marketing Cloud journeys across email, SMS & WhatsApp, with live Meta CAPI ad-attribution integrations.",
+        desc: "We set up automated email, SMS, and WhatsApp communication that reaches customers at the right moment, while giving you clear visibility into which campaigns are actually driving results.",
         subtitle: "AUTOMATION & FLOWS",
         chips: ["Marketing Cloud", "Meta CAPI", "WhatsApp Flows"],
         customIcon: (
@@ -2571,7 +2571,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "custom-dev",
         title: "Custom Dev & Integrations",
-        desc: "Apex, LWC and REST integrations connecting ERP, payment, and broker portals — middleware-free.",
+        desc: "We connect your Salesforce system with the other tools your business relies on — accounting, payments, or partner platforms — so data moves automatically, without manual entry or duplication.",
         subtitle: "CUSTOM CODE & APIS",
         chips: ["REST API", "Apex / LWC", "Integrations"],
         customIcon: (
@@ -2599,7 +2599,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "proprietary-products",
         title: "Proprietary Products",
-        desc: "Deploy Cascade Connect & CX Prism™ — pre-built, tested products that solve gaps Salesforce alone can't.",
+        desc: "We deploy Cascade Connect and CX Prism™, our own ready-built solutions designed to close the gaps a standard Salesforce setup leaves behind — reducing both implementation time and cost.",
         subtitle: "CUSTOM PRODUCT MODULES",
         chips: ["Cascade Connect", "CX Prism™", "Voice AI"],
         customIcon: (
@@ -2626,7 +2626,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "audit-optimisation",
         title: "Audit & Optimisation",
-        desc: "Full org audits of config, automation, data hygiene & adoption, with a prioritised fix-and-grow roadmap.",
+        desc: "We conduct a comprehensive review of your existing setup — configuration, data quality, and team adoption — and deliver a clear, prioritized roadmap of what to address first.",
         subtitle: "ANALYTICS & DIAGNOSTICS",
         chips: ["Org Audits", "Data Hygiene", "Architecture Map"],
         customIcon: (
@@ -2653,8 +2653,8 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       {
         id: "managed-support",
         title: "Managed Support & AMC",
-        desc: "Post go-live AMC: bug fixes, enhancements, user support and quarterly health check-ins.",
-        subtitle: "24x7 MONITORING & SUPPORT",
+        desc: "Once you're live, we remain your ongoing partner — resolving issues, delivering enhancements, and conducting quarterly reviews to keep your system running at its best.",
+        subtitle: "24X7 MONITORING & SUPPORT",
         chips: ["24×7 Support", "AMC Support", "SLAs"],
         customIcon: (
           <svg className="size-6 text-[#0077B6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -2747,20 +2747,9 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
                     <h3 className="text-[13.5px] md:text-[14px] lg:text-[15px] font-extrabold text-slate-900 leading-tight tracking-tight">
                       {ser.title}
                     </h3>
-                    <p className="text-[11.5px] md:text-[12px] lg:text-[12.5px] leading-relaxed text-slate-500 font-semibold line-clamp-2">
+                    <p className="text-[11.5px] md:text-[12px] lg:text-[12.5px] leading-relaxed text-slate-500 font-semibold">
                       {ser.desc}
                     </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 mt-0.5">
-                    {ser.chips.map((chip, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[9px] font-bold text-slate-500 bg-[#F1F5F9] border border-slate-200/50 rounded-full px-2.5 py-0.5"
-                      >
-                        {chip}
-                      </span>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -3379,8 +3368,8 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
         <div className="flex-shrink-0 z-10 rounded-[16px] px-6 py-3 flex items-center justify-between gap-4"
           style={{ background: "linear-gradient(135deg, rgba(0,119,182,0.10) 0%, rgba(59,169,245,0.07) 100%)", border: "1px solid rgba(0,119,182,0.18)", boxShadow: "0 2px 10px rgba(0,119,182,0.07)" }}>
           {[
-            { value: "Salesforce Partner", label: "Official Program", dot: "#0077B6" },
-            { value: "AppExchange", label: "5-Star Listed", dot: "#F59E0B" },
+            { value: "Salesforce Partner", label: "", dot: "#0077B6" },
+            { value: "AppExchange Rating", label: "5-Star Rated", dot: "#F59E0B" },
             { value: "9 Certs", label: "Across the team", dot: "#10B981" },
             { value: "100%", label: "On-time delivery", dot: "#3BA9F5" },
           ].map(({ value, label, dot }) => (
@@ -3388,7 +3377,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
               <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: dot, boxShadow: `0 0 6px ${dot}` }} />
               <div className="flex flex-col">
                 <span className="text-[15px] font-[900] text-[#0A1628] leading-tight">{value}</span>
-                <span className="text-[11.5px] text-[#64748B] font-medium">{label}</span>
+                {label && <span className="text-[11.5px] text-[#64748B] font-medium">{label}</span>}
               </div>
             </div>
           ))}
