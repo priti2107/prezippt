@@ -727,42 +727,59 @@ function ProductEcosystemScene() {
         </div>
         {/* Slide nav */}
         <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-5 bg-[#F0F9FF]/85 border border-[#BAE6FD]/80 shadow-[0_8px_30px_rgba(0,119,182,0.05)] rounded-full px-5 py-2.5 backdrop-blur-md z-10">
-            <button 
-              onClick={() => setProductSlide(p => Math.max(0, p - 1))} 
+          <div className="flex items-center gap-4 md:gap-6 bg-[#F0F9FF]/85 border border-[#BAE6FD]/80 shadow-[0_8px_30px_rgba(0,119,182,0.05)] rounded-full px-5 md:px-7 py-3 backdrop-blur-md z-10 font-bold text-[11px] md:text-[13px] tracking-wide text-slate-400">
+            {/* Left triangle button */}
+            <button
+              onClick={() => setProductSlide(p => Math.max(0, p - 1))}
               disabled={productSlide === 0}
-              className={`w-11 h-11 rounded-full flex items-center justify-center border border-slate-200/80 bg-white/90 text-[#0077B6] hover:border-[#0077B6] hover:bg-[#EFF8FF] hover:shadow-[0_4px_16px_rgba(0,119,182,0.18)] disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 shadow-sm backdrop-blur active:scale-90 ${productSlide > 0 ? "bounce-left-btn" : ""}`}
+              className="text-[#0077B6] hover:scale-110 disabled:opacity-25 transition-all duration-200 select-none cursor-pointer pr-1"
             >
-              <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+              ◀
             </button>
-            <div className="flex items-center gap-3 relative px-1">
-              {Array.from({ length: totalProductSlides }).map((_, i) => (
-                <button 
-                  key={i} 
-                  onClick={() => setProductSlide(i)}
-                  className={`rounded-full transition-all duration-300 relative ${
-                    i === productSlide 
-                      ? "w-9.5 h-3.5 bg-gradient-to-r from-[#3BA9F5] to-[#7DD3FC] active-nav-dot" 
-                      : "w-2.5 h-2.5 bg-slate-200 hover:bg-slate-300"
-                  }`} 
-                >
-                  {i === productSlide && (
-                    <span className="absolute inset-0 rounded-full blur-[8px] bg-[#3BA9F5]/30 -z-10" />
-                  )}
-                </button>
-              ))}
+            
+            {/* Product labels list */}
+            <div className="flex items-center gap-2 md:gap-3.5 select-none font-extrabold">
+              <span 
+                onClick={() => setProductSlide(0)}
+                className={`cursor-pointer transition-all duration-300 ${productSlide === 0 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
+              >
+                Cascade Connect
+              </span>
+              <span className="text-[#BAE6FD]">•</span>
+              <span 
+                onClick={() => setProductSlide(0)}
+                className={`cursor-pointer transition-all duration-300 ${productSlide === 0 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
+              >
+                CX Prism
+              </span>
+              <span className="text-[#BAE6FD]">•</span>
+              <span 
+                onClick={() => setProductSlide(1)}
+                className={`cursor-pointer transition-all duration-300 ${productSlide === 1 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
+              >
+                AI Voice
+              </span>
+              <span className="text-[#BAE6FD]">•</span>
+              <span 
+                onClick={() => setProductSlide(1)}
+                className={`cursor-pointer transition-all duration-300 ${productSlide === 1 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
+              >
+                CRM Suite
+              </span>
             </div>
-            <button 
-              onClick={() => setProductSlide(p => Math.min(totalProductSlides - 1, p + 1))} 
+
+            {/* Right triangle button */}
+            <button
+              onClick={() => setProductSlide(p => Math.min(totalProductSlides - 1, p + 1))}
               disabled={productSlide === totalProductSlides - 1}
-              className={`w-11 h-11 rounded-full flex items-center justify-center border border-slate-200/80 bg-white/90 text-[#0077B6] hover:border-[#0077B6] hover:bg-[#EFF8FF] hover:shadow-[0_4px_16px_rgba(0,119,182,0.18)] disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300 shadow-sm backdrop-blur active:scale-90 ${productSlide < totalProductSlides - 1 ? "bounce-right-btn" : ""}`}
+              className="text-[#0077B6] hover:scale-110 disabled:opacity-25 transition-all duration-200 select-none cursor-pointer pl-1"
             >
-              <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+              ▶
             </button>
           </div>
           {showSwipeHint && (
             <div className="text-[10px] font-black text-[#0077B6]/70 uppercase tracking-widest animate-pulse mt-1 select-none transition-opacity duration-1000">
-              Swipe or Click to Explore Products →
+              Click on labels to switch products
             </div>
           )}
         </div>
@@ -1788,26 +1805,24 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
               >
                 <button
                   onClick={() =>
-                    window.scrollTo({
-                      top: (1.5 / N) * (document.body.scrollHeight - window.innerHeight),
-                      behavior: "smooth",
-                    })
+                    window.open("https://calendar.app.google/7YgtL9ALiEoS4uJw5", "_blank")
                   }
                   className="bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold py-2.5 px-6 rounded-full inline-flex items-center gap-2 shadow-lg shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(2,132,199,0.2)] cursor-pointer"
                 >
-                  Book a 30-min consult
+                  Schedule a demo
                   <ArrowRight className="size-3.5" />
                 </button>
                 <button
                   onClick={() =>
                     window.scrollTo({
-                      top: (6.5 / N) * (document.body.scrollHeight - window.innerHeight),
+                      top: (SCENES.findIndex(s => s.id === 3) / N) * (document.body.scrollHeight - window.innerHeight),
                       behavior: "smooth",
                     })
                   }
-                  className="border border-slate-200 bg-white hover:bg-slate-50 text-[#0284C7] text-xs font-bold py-2.5 px-6 rounded-full inline-flex items-center gap-2 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer"
+                  className="bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold py-2.5 px-6 rounded-full inline-flex items-center gap-2 shadow-lg shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(2,132,199,0.2)] cursor-pointer"
                 >
                   Explore our products
+                  <ArrowRight className="size-3.5" />
                 </button>
               </motion.div>
             </div>
@@ -2049,7 +2064,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
                 playsInline
                 className="w-full h-full object-cover rounded-[inherit]"
               >
-                <source src="/Create_a_premium_second_sea.mp4" type="video/mp4" />
+                <source src="/Create_a_premium_second_sea (2).mp4" type="video/mp4" />
               </video>
             </div>
           </div>
@@ -2601,13 +2616,13 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
         />
 
         <div className="w-full flex flex-col justify-start text-left max-w-3xl relative z-10">
-          <div className="text-[10px] md:text-[11px] font-bold tracking-widest text-[#0ea5e9] uppercase mb-1">
+          <div className="text-[12px] md:text-[13px] font-black tracking-widest text-[#0ea5e9] uppercase mb-1.5">
             WHAT WE DELIVER
           </div>
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-[900] leading-[1.1] tracking-tight text-[#0F172A] font-display mb-2">
             Our Services
           </h2>
-          <p className="text-[13.5px] md:text-[14.5px] text-slate-500 font-semibold leading-relaxed max-w-2xl">
+          <p className="text-[15px] md:text-[16px] text-slate-500 font-semibold leading-relaxed max-w-2xl">
             From strategy to go-live to long-term support — we cover the full Salesforce journey.
           </p>
         </div>
@@ -2619,16 +2634,16 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
             return (
               <div
                 key={ser.id}
-                className="group relative rounded-[24px] overflow-hidden flex flex-col justify-between p-4 md:p-4.5 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md bg-white/70 border-slate-200/60 hover:border-[#0077B6]/30 shadow-[0_8px_30px_rgba(0,119,182,0.04)] hover:shadow-[0_0_30px_rgba(0,112,210,0.18),_0_20px_40px_-15px_rgba(0,112,210,0.1)]"
+                className="group relative rounded-[24px] overflow-hidden flex flex-col justify-between p-4 md:p-4.5 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md bg-[#F0F9FF]/85 border-[#BAE6FD]/80 hover:border-[#0077B6]/40 shadow-[0_12px_40px_rgba(0,119,182,0.12)] hover:shadow-[0_0_35px_rgba(0,119,182,0.35),_0_20px_50px_-15px_rgba(0,119,182,0.22)]"
               >
                 {/* Refined blue gradient top accent line */}
                 <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-[#0077B6] to-[#3BA9F5] opacity-70 group-hover:opacity-100 group-hover:h-[4.5px] transition-all duration-300" />
 
-                {/* Soft blue glow on hover */}
+                {/* Darker blue glow, intensifies on hover */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10"
+                  className="absolute inset-0 opacity-40 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10"
                   style={{
-                    background: "radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 70%)"
+                    background: "radial-gradient(circle at 50% 50%, rgba(0, 119, 182, 0.28) 0%, transparent 75%)"
                   }}
                 />
 
@@ -2665,11 +2680,6 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
                       </span>
                     ))}
                   </div>
-                </div>
-
-                {/* Explore Solution CTA at bottom */}
-                <div className="flex items-center gap-1.5 text-[9.5px] font-black text-[#0077B6] uppercase tracking-wider mt-3 relative z-10 transition-transform duration-300 group-hover:translate-x-1">
-                  Explore Solution <ArrowRight className="w-3 h-3 stroke-[2.5]" />
                 </div>
               </div>
             );
@@ -2824,7 +2834,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
         </div>
 
         {/* BOTTOM ROW: 2 Featured Cards (1.5x wider, centered) */}
-        <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full max-w-[1280px] mx-auto items-stretch relative z-10 mt-1">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full max-w-[1280px] mx-auto items-stretch justify-center relative z-10 mt-1">
           {reasons
             .filter((r) => r.isLarge)
             .map((r) => {
@@ -2887,6 +2897,8 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
       "AUTOMATENHANDEL24",
       "NANDIVARDHAN",
       "ASHWIN SHETH",
+      "RAUNAKGROUP",
+      "PSJ",
     ];
 
     return (
@@ -2983,7 +2995,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
 
           {/* MIDDLE: Logo Grid with Center alignment and tighter spacing */}
           <div className="w-full max-w-5xl md:max-w-6xl px-4 md:px-6 -mt-3.5 md:-mt-5.5">
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-3 md:gap-x-6 gap-y-4 md:gap-y-7 justify-center items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-4 md:gap-y-8 justify-center items-center">
               {clients.map((clientName, index) => (
                 <ClientCard key={index} clientName={clientName} isFeatured={index === 0} />
               ))}
@@ -5427,7 +5439,11 @@ function ClientCard({ clientName, isFeatured }: { clientName: string; isFeatured
           src={`/clients/${normalizedName}.png?v=4`}
           alt={clientName}
           onError={() => setImgError(true)}
-          className="w-full h-full object-contain p-2 bg-white transition-transform duration-300 group-hover/card:scale-105"
+          className={`w-full h-full object-contain bg-white transition-transform duration-300 ${
+            normalizedName === "ashwin_sheth" || normalizedName === "psj"
+              ? "p-0.5 scale-[1.38] group-hover/card:scale-[1.44]"
+              : "p-2 group-hover/card:scale-105"
+          }`}
         />
       ) : (
         <span className={`${fontSizeClass} font-black text-[#03045E]/90 tracking-wider px-1.5 select-none`}>
