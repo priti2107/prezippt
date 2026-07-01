@@ -736,31 +736,31 @@ function ProductEcosystemScene() {
             >
               ◀
             </button>
-            
+
             {/* Product labels list */}
             <div className="flex items-center gap-2 md:gap-3.5 select-none font-extrabold">
-              <span 
+              <span
                 onClick={() => setProductSlide(0)}
                 className={`cursor-pointer transition-all duration-300 ${productSlide === 0 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
               >
                 Cascade Connect
               </span>
               <span className="text-[#BAE6FD]">•</span>
-              <span 
+              <span
                 onClick={() => setProductSlide(0)}
                 className={`cursor-pointer transition-all duration-300 ${productSlide === 0 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
               >
                 CX Prism
               </span>
               <span className="text-[#BAE6FD]">•</span>
-              <span 
+              <span
                 onClick={() => setProductSlide(1)}
                 className={`cursor-pointer transition-all duration-300 ${productSlide === 1 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
               >
                 Case Flow
               </span>
               <span className="text-[#BAE6FD]">•</span>
-              <span 
+              <span
                 onClick={() => setProductSlide(1)}
                 className={`cursor-pointer transition-all duration-300 ${productSlide === 1 ? "text-[#0077B6] font-black scale-105 filter drop-shadow-[0_0_12px_rgba(0,119,182,0.4)]" : "hover:text-[#0077B6]/70"}`}
               >
@@ -958,9 +958,9 @@ function ProductEcosystemScene() {
                     WhatsApp &middot; Email &middot; SMS, natively logged in your CRM
                   </span>
                 </div>
-                <button 
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (typeof (window as any).__experienceNavigateToScene === 'function') {
                       (window as any).__experienceNavigateToScene(9);
                     }
@@ -1156,9 +1156,9 @@ function ProductEcosystemScene() {
                     AI-powered NPS, churn scoring &amp; risk alerts in Salesforce
                   </span>
                 </div>
-                <button 
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (typeof (window as any).__experienceNavigateToScene === 'function') {
                       (window as any).__experienceNavigateToScene(10);
                     }
@@ -1301,9 +1301,9 @@ function ProductEcosystemScene() {
                     From Customer Query to Resolution, Seamlessly
                   </span>
                 </div>
-                <button 
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (typeof (window as any).__experienceNavigateToScene === 'function') {
                       (window as any).__experienceNavigateToScene(11);
                     }
@@ -1453,9 +1453,9 @@ function ProductEcosystemScene() {
                     The Digital Command Center for Sourcing Teams
                   </span>
                 </div>
-                <button 
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (typeof (window as any).__experienceNavigateToScene === 'function') {
                       (window as any).__experienceNavigateToScene(12);
                     }
@@ -1482,11 +1482,11 @@ function LeadershipScene({ scene: _scene }: { scene: Scene }) {
       name: "Aashish Yadav",
       role: "CEO & Co-Founder",
       desc: "Drives business strategy, Salesforce delivery, and enterprise growth — pairing deep CRM expertise with robust execution models to scale developer operations.",
-      image: "/clients/Aashish Yadav.png?v=5",
+      image: "/clients/Aashish Yadav.png?v=8",
       linkedin: "https://www.linkedin.com/in/aashishyadav-ceo/",
       tags: ["Business Strategy", "Salesforce", "Enterprise Growth"],
       concept: "VISION",
-      imgPos: "[object-position:50%_32%]",
+      imgPos: "[object-position:50%_15%]",
     },
     {
       name: "Yash Jain",
@@ -5510,11 +5510,10 @@ function ClientCard({ clientName, isFeatured }: { clientName: string; isFeatured
           src={`/clients/${normalizedName}.png?v=4`}
           alt={clientName}
           onError={() => setImgError(true)}
-          className={`w-full h-full object-contain bg-white transition-transform duration-300 ${
-            normalizedName === "ashwin_sheth" || normalizedName === "psj"
+          className={`w-full h-full object-contain bg-white transition-transform duration-300 ${normalizedName === "ashwin_sheth" || normalizedName === "psj"
               ? "p-0.5 scale-[1.38] group-hover/card:scale-[1.44]"
               : "p-2 group-hover/card:scale-105"
-          }`}
+            }`}
         />
       ) : (
         <span className={`${fontSizeClass} font-black text-[#03045E]/90 tracking-wider px-1.5 select-none`}>
