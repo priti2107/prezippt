@@ -2298,7 +2298,9 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
                 <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/20 via-blue-500/20 to-indigo-500/20 blur-xl rounded-full -z-10 pointer-events-none transition-all duration-300" />
 
                 <a
-                  href="mailto:info@cascadetechventures.com"
+                  href="https://calendar.app.google/7YgtL9ALiEoS4uJw5"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs md:text-base font-extrabold py-4 px-9 rounded-full inline-flex items-center gap-2 shadow-md shadow-sky-500/10 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(3,105,161,0.25)] overflow-hidden border border-white/10"
                 >
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0EA5E9]/25 to-[#2563EB]/25 blur-md group-hover:blur-lg transition-all duration-300 -z-10 animate-pulse" />
