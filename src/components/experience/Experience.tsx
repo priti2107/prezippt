@@ -942,10 +942,8 @@ function ProductEcosystemScene() {
                   {/* NODE 2: Cascade Connect (Primary) */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_101px] cursor-pointer cc-node-2">
                     <rect x="145" y="75" width="250" height="52" rx="12" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
-                    <g transform="translate(158, 88) scale(1.35)">
-                      <rect x="0" y="0" width="20" height="15" rx="2" fill="none" stroke="#0077B6" strokeWidth="1.6" />
-                      <path d="M 0 2 L 10 9 L 20 2" fill="none" stroke="#0077B6" strokeWidth="1.6" strokeLinecap="round" />
-                    </g>
+                    {/* Cascade Connect Logo Image */}
+                    <image href="/clients/cascade.png" x="156" y="86" width="30" height="30" />
                     <text x="288" y="107" fontSize="17.5" fontWeight="950" fill="#0077B6" textAnchor="middle">Cascade Connect</text>
                   </g>
 
