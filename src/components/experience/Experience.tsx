@@ -2937,10 +2937,10 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
         <div className="w-full max-w-[1280px] mx-auto mt-6 mb-1 relative z-10 select-none">
           {/* Connecting Line (Thinner, glow-backed, starts at Step 1 center and ends at Step 4 center) */}
           <div className="absolute top-[38px] left-[12.5%] right-[12.5%] h-[1.5px] bg-gradient-to-r from-sky-400 via-sky-500 to-sky-400 shadow-[0_0_8px_rgba(14,165,233,0.4)] z-0" />
-          
+
           {/* Traveling glow particle */}
           <div className="absolute top-[38px] -translate-y-1/2 h-2 w-2 rounded-full bg-[#00A1E0] blur-[0.5px] shadow-[0_0_8px_#00A1E0,0_0_15px_#00A1E0] z-20 animate-travel-particle" />
-          
+
           {/* Grid Layout of the 4 steps */}
           <div className="grid grid-cols-4 gap-4 relative z-10">
             {reasons
@@ -2957,7 +2957,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
                       <div className="bg-[#EFF8FF] border border-[#BFDBFE]/60 rounded-full px-1.5 py-[0.5px] text-[7.5px] font-black text-[#0284C7] shadow-sm leading-none z-10">
                         {stepNum}
                       </div>
-                      
+
                       {/* Circle Node */}
                       <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white border border-[#BAE6FD] flex items-center justify-center shadow-[0_4px_12px_rgba(14,165,233,0.08)] group-hover:scale-105 group-hover:border-sky-400 transition-all duration-300 relative z-10">
                         <IconComp className="w-4.5 h-4.5 text-[#0EA5E9]" />
@@ -2966,7 +2966,7 @@ export function SceneContent({ scene, isActive = false, activeCardIdx = 0 }: { s
 
                     {/* Short vertical connector line */}
                     <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#BAE6FD]/80 to-[#E2E8F0]/30 z-10" />
-                    
+
                     {/* Card Container */}
                     <div className={`w-full bg-white border border-slate-200/50 rounded-2xl p-3 transition-all duration-300 flex-grow flex flex-col justify-start min-h-[110px] md:min-h-[125px] ${cardAnimClass}`}>
                       <h4 className="text-[12.5px] md:text-[13.5px] font-black text-[#0F172A] leading-tight">
@@ -5578,7 +5578,18 @@ function ClientCard({ clientName, isFeatured }: { clientName: string; isFeatured
     fontSizeClass = "text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px]";
   }
 
-  const isWideLogo = normalizedName === "nandivardhan" || normalizedName === "ashwin_sheth";
+  const hasBlackBorder = [
+    "kohinoor",
+    "creative_cloud",
+    "cannext",
+    "eka_life",
+    "clearpack",
+    "naiknavare",
+    "gayatri_constructors",
+    "automatenhandel24",
+    "nandivardhan",
+    "ashwin_sheth"
+  ].includes(normalizedName);
 
   return (
     <div className={`w-full aspect-[2.6/1] md:aspect-[2.8/1] min-h-[82px] md:min-h-[105px] rounded-[22px] p-0 flex items-center justify-center text-center overflow-hidden group/card border transition-all duration-300 hover:-translate-y-1 ${isFeatured
@@ -5586,15 +5597,25 @@ function ClientCard({ clientName, isFeatured }: { clientName: string; isFeatured
       : "border-slate-200 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_25px_rgba(0,0,0,0.08)] hover:border-slate-300"
       }`}>
       {!imgError ? (
-        <img
-          src={`/clients/${normalizedName}.png?v=4`}
-          alt={clientName}
-          onError={() => setImgError(true)}
-          className={`w-full h-full object-contain bg-white transition-transform duration-300 ${normalizedName === "ashwin_sheth" || normalizedName === "psj"
-              ? "p-0.5 scale-[1.38] group-hover/card:scale-[1.44]"
-              : "p-2 group-hover/card:scale-105"
-            }`}
-        />
+        hasBlackBorder ? (
+          <div className={`h-full overflow-hidden relative flex items-center justify-center bg-white ${normalizedName === "kohinoor" ? "aspect-[2.0/1]" : normalizedName === "eka_life" ? "aspect-[1.8/1]" : "aspect-[2.2/1]"}`}>
+            <img
+              src={`/clients/${normalizedName}.png?v=17`}
+              alt={clientName}
+              onError={() => setImgError(true)}
+              className={`w-full h-full object-contain transition-transform duration-300 ${normalizedName === "creative_cloud" ? "scale-[2.0] group-hover/card:scale-[2.08]" : normalizedName === "cannext" ? "scale-[1.82] group-hover/card:scale-[1.88]" : "scale-[1.75] group-hover/card:scale-[1.81]"}`}
+            />
+          </div>
+        ) : (
+          <div className={`h-full overflow-hidden relative flex items-center justify-center bg-white ${normalizedName === "psj" ? "aspect-[2.8/1]" : "w-full h-full p-2"}`}>
+            <img
+              src={`/clients/${normalizedName}.png?v=17`}
+              alt={clientName}
+              onError={() => setImgError(true)}
+              className={`max-h-full max-w-full object-contain w-auto h-auto transition-transform duration-300 ${normalizedName === "psj" ? "scale-[1.85] group-hover/card:scale-[1.92]" : "group-hover/card:scale-105"}`}
+            />
+          </div>
+        )
       ) : (
         <span className={`${fontSizeClass} font-black text-[#03045E]/90 tracking-wider px-1.5 select-none`}>
           {clientName}
