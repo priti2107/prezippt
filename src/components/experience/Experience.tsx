@@ -721,7 +721,7 @@ function ProductEcosystemScene() {
               Purpose-Built Products.
             </span>
           </h2>
-          <p className="mt-2.5 text-[14px] md:text-[16px] text-slate-500 font-medium leading-relaxed max-w-[760px]">
+          <p className="mt-2.5 text-[14px] md:text-[16px] text-slate-500 font-medium leading-relaxed max-w-none">
             Most Salesforce partners implement what Salesforce sells. We built products that solve real business problems for enterprise real estate teams. Every product is actively deployed and continuously improved with real customers.
           </p>
         </div>
@@ -821,7 +821,7 @@ function ProductEcosystemScene() {
               {/* Illustration */}
               <div className="flex-1 min-h-0 rounded-[16px] overflow-hidden relative flex items-center justify-center"
                 style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(0,119,182,0.01) 0%, rgba(248,252,255,0.99) 100%)", border: "1px solid rgba(186,230,253,0.35)" }}>
-                <svg viewBox="0 0 540 260" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
+                <svg viewBox="0 0 540 395" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
                     <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.06" />
@@ -837,115 +837,203 @@ function ProductEcosystemScene() {
                   </defs>
 
                   {/* Soft blue glow behind Cascade Connect */}
-                  <circle cx="375" cy="50" r="90" fill="url(#node-glow)" pointerEvents="none" />
+                  <circle cx="270" cy="101" r="90" fill="url(#node-glow)" pointerEvents="none" />
 
-                  {/* CONNECTING LINES */}
-                  {/* Line 1: Salesforce -> Cascade Connect (Horizontal) */}
-                  <path d="M 200 50 L 250 50" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 200 50 L 250 50" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.8">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+                  {/* CONNECTING LINES (Straight connectors with 90° turns) */}
+                  {/* Salesforce -> Cascade Connect */}
+                  <path d="M 270 61 L 270 75" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 61 L 270 75" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* S-Curve Link: Cascade Connect (Row 1 Right) -> Multi-Channel (Row 2 Left) */}
-                  <path d="M 375 82 C 375 125, 105 125, 105 151" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 375 82 C 375 125, 105 125, 105 151" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="6 6" opacity="0.7">
-                    <animate attributeName="stroke-dashoffset" values="24;0" dur="1.5s" repeatCount="indefinite" />
+                  {/* Cascade Connect -> Channels (WhatsApp, Email, SMS) */}
+                  {/* Fork base */}
+                  <path d="M 270 127 L 270 137" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 127 L 270 137" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  {/* Horizontal fork line */}
+                  <path d="M 102.5 137 L 437.5 137" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  {/* WhatsApp Drop */}
+                  <path d="M 102.5 137 L 102.5 145" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 137 L 102.5 137 L 102.5 145" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  {/* Email Drop */}
+                  <path d="M 270 137 L 270 145" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  {/* SMS Drop */}
+                  <path d="M 437.5 137 L 437.5 145" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 137 L 437.5 137 L 437.5 145" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* Line 3: Multi-Channel -> Customer (Horizontal) */}
-                  <path d="M 190 175 L 215 175" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 190 175 L 215 175" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.8">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+                  {/* Channels -> Customer */}
+                  {/* WhatsApp -> Merge */}
+                  <path d="M 102.5 191 L 102.5 203 L 270 203" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 102.5 191 L 102.5 203 L 270 203" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  {/* SMS -> Merge */}
+                  <path d="M 437.5 191 L 437.5 203 L 270 203" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 437.5 191 L 437.5 203 L 270 203" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  {/* Email -> Merge */}
+                  <path d="M 270 191 L 270 215" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 191 L 270 215" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  {/* Merge to Customer */}
+                  <path d="M 270 203 L 270 215" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+
+                  {/* Customer -> SF Timeline */}
+                  <path d="M 270 261 L 270 280" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 261 L 270 280" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* Line 4: Customer -> Salesforce Timeline (Horizontal) */}
-                  <path d="M 345 175 L 360 175" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 345 175 L 360 175" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.8">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+                  {/* SF Timeline -> Outputs (Read Receipts, History Log) */}
+                  <path d="M 270 326 L 270 334" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 326 L 270 334" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 145 334 L 395 334" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  {/* Drops */}
+                  <path d="M 145 334 L 145 340" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 334 L 145 334 L 145 340" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 395 334 L 395 340" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 334 L 395 334 L 395 340" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* Vertical lines connecting timeline outputs */}
-                  <line x1="395" y1="197" x2="395" y2="220" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="485" y1="197" x2="485" y2="220" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 3" />
-
-                  {/* ANIMATED DATA PARTICLES */}
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 200 50 L 250 50" />
+                  {/* TRAVELING DATA GLOW DOTS */}
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 61 L 270 75" />
                   </circle>
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 375 82 C 375 125, 105 125, 105 151" begin="0.4s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 127 L 270 137 L 102.5 137 L 102.5 145" begin="0.8s" />
                   </circle>
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 190 175 L 215 175" begin="0.8s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 127 L 270 145" begin="0.8s" />
                   </circle>
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.7s" repeatCount="indefinite" path="M 345 175 L 360 175" begin="1.1s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 127 L 270 137 L 437.5 137 L 437.5 145" begin="0.8s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 102.5 191 L 102.5 203 L 270 203 L 270 215" begin="1.8s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 191 L 270 215" begin="1.8s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 437.5 191 L 437.5 203 L 270 203 L 270 215" begin="1.8s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 261 L 270 280" begin="2.6s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 326 L 270 334 L 145 334 L 145 340" begin="3.4s" />
+                  </circle>
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 326 L 270 334 L 395 334 L 395 340" begin="3.4s" />
                   </circle>
 
-                  {/* ROW 1: NODE 1: Salesforce */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[120px_50px] cursor-pointer">
-                    <rect x="40" y="26" width="160" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Cloud Icon */}
-                    <path d="M 52 51.5 C 52 49.5 53.5 48 55.5 48 C 56 46.5 57.5 45.5 59 45.5 C 61 45.5 62.5 47 62.5 49 C 63.5 49.2 64 50 64 51 C 64 52.2 63 53 61.5 53 L 53.5 53 C 52.5 53 52 52.5 52 51.5 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="135" y="55" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">Salesforce</text>
+                  {/* ROW 1: Salesforce (SF) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_38px] cursor-pointer">
+                    <rect x="210" y="15" width="120" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    <g transform="translate(222, 28) scale(1.3)">
+                      <path d="M 5 8.5 A 2.5 2.5 0 0 1 7.5 6 A 3.5 3.5 0 0 1 14 7 A 2.5 2.5 0 0 1 14.5 12 L 5.5 12 A 2 2 0 0 1 5 8.5 Z" fill="none" stroke="#0077B6" strokeWidth="1.6" />
+                    </g>
+                    <text x="282" y="44" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">SF</text>
                   </g>
 
-                  {/* ROW 1: NODE 2: Cascade Connect (Core Focal Point - Sized Up) */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[375px_50px] cursor-pointer">
-                    <rect x="250" y="18" width="250" height="64" rx="12" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
-                    {/* Envelope Icon */}
-                    <rect x="270" y="38" width="20" height="16" rx="2" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 270 40 L 280 47 L 290 40" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <text x="385" y="57" fontSize="18" fontWeight="955" fill="#0077B6" textAnchor="middle">Cascade Connect</text>
+                  {/* ROW 2: Cascade Connect (Focal Point) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_101px] cursor-pointer">
+                    <rect x="145" y="75" width="250" height="52" rx="12" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
+                    <g transform="translate(162, 91) scale(1.3)">
+                      <rect x="0" y="0" width="20" height="15" rx="2" fill="none" stroke="#0077B6" strokeWidth="1.6" />
+                      <path d="M 0 2 L 10 9 L 20 2" fill="none" stroke="#0077B6" strokeWidth="1.6" strokeLinecap="round" />
+                    </g>
+                    <text x="288" y="107" fontSize="16.5" fontWeight="900" fill="#0077B6" textAnchor="middle">Cascade Connect</text>
                   </g>
 
-                  {/* ROW 2: NODE 3: Multi-Channel */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[105px_175px] cursor-pointer">
-                    <rect x="20" y="151" width="170" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Share icon */}
-                    <circle cx="38" cy="175" r="2.2" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <circle cx="46" cy="170.5" r="2.2" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <circle cx="46" cy="179.5" r="2.2" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <line x1="40" y1="174" x2="44" y2="172" stroke="#0077B6" strokeWidth="1.8" />
-                    <line x1="40" y1="176" x2="44" y2="178" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="120" y="180" fontSize="14" fontWeight="800" fill="#0F172A" textAnchor="middle">Multi-Channel</text>
+                  {/* ROW 3: Channel 1: WhatsApp */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[102.5px_168px] cursor-pointer">
+                    <rect x="30" y="145" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* WhatsApp Official Green/White Handset Logo */}
+                    <g transform="translate(42, 157) scale(1.3)">
+                      <circle cx="8" cy="8" r="8" fill="#25D366" />
+                      <path d="M 8 4.2 C 5.9 4.2 4.2 5.9 4.2 8 C 4.2 8.7 4.4 9.3 4.7 9.8 L 4.2 11.8 L 6.3 11.3 C 6.8 11.6 7.4 11.8 8 11.8 C 10.1 11.8 11.8 10.1 11.8 8 C 11.8 5.9 10.1 4.2 8 4.2 Z" fill="#ffffff" />
+                      <path d="M 6.8 6.4 C 6.7 6.4 6.6 6.5 6.6 6.7 C 6.6 7.1 6.9 7.7 7.4 8.2 C 7.9 8.7 8.5 9 8.9 9 C 9.1 9 9.2 8.9 9.2 8.8 L 9.6 8.3 L 8.9 7.6 L 8.6 7.9 C 8.4 8.1 8.2 8.1 8 7.9 C 7.7 7.6 7.5 7.4 7.3 7.1 C 7.1 6.9 7.1 6.7 7.3 6.5 L 7.6 6.2 L 6.9 5.5 L 6.8 6.4 Z" fill="#25D366" />
+                    </g>
+                    <text x="122.5" y="173" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">WhatsApp</text>
                   </g>
 
-                  {/* ROW 2: NODE 4: Customer */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[280px_175px] cursor-pointer">
-                    <rect x="215" y="153" width="130" height="44" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* User Icon */}
-                    <circle cx="232" cy="170" r="3.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 226 180 C 226 177 229 175.5 232 175.5 C 235 175.5 238 177 238 180" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="290" y="179" fontSize="14" fontWeight="800" fill="#0F172A" textAnchor="middle">Customer</text>
+                  {/* ROW 3: Channel 2: Email (Gmail) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_168px] cursor-pointer">
+                    <rect x="197.5" y="145" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* Gmail Multicolor Logo */}
+                    <g transform="translate(208, 157) scale(1.3)">
+                      <circle cx="8" cy="8" r="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="0.8" />
+                      <path d="M 4 5 L 4 11 A 1 1 0 0 0 5 12 L 6 12 L 6 5.5 Z" fill="#4285F4" />
+                      <path d="M 12 5 L 12 11 A 1 1 0 0 1 11 12 L 10 12 L 10 5.5 Z" fill="#34A853" />
+                      <path d="M 6 12 L 10 12 L 10 9 L 8 10.5 L 6 9 Z" fill="#FBBC05" opacity="0.9" />
+                      <path d="M 4 5 L 8 8.5 L 12 5 L 10 5.5 L 8 7 L 6 5.5 Z" fill="#EA4335" />
+                    </g>
+                    <text x="290" y="173" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">Gmail</text>
                   </g>
 
-                  {/* ROW 2: NODE 5: Salesforce Timeline */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[445px_175px] cursor-pointer">
-                    <rect x="360" y="153" width="170" height="44" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Clock Icon */}
-                    <circle cx="378" cy="175" r="5.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 378 171.5 L 378 175 L 381.5 175" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <text x="460" y="179" fontSize="13.5" fontWeight="800" fill="#0F172A" textAnchor="middle">SF Timeline</text>
+                  {/* ROW 3: Channel 3: SMS */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[437.5px_168px] cursor-pointer">
+                    <rect x="365" y="145" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    <g transform="translate(378, 157) scale(1.3)">
+                      <circle cx="8" cy="8" r="8" fill="#0EA5E9" />
+                      <path d="M 5.5 5.5 H 10.5 C 11.3 5.5 12 6.2 12 7 V 10 C 12 10.8 11.3 11.5 10.5 11.5 H 6.5 L 4 12.5 V 11 C 4 10.2 4.7 9.5 5.5 9.5 Z" fill="none" stroke="#ffffff" strokeWidth="0.8" />
+                    </g>
+                    <text x="457" y="173" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">SMS</text>
                   </g>
 
-                  {/* ROW 2: OUTPUT CHIPS */}
-                  {/* Read Receipts */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[385px_233px] cursor-pointer">
-                    <rect x="335" y="220" width="100" height="26" rx="13" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
-                    {/* Check icon */}
-                    <path d="M 345 233 L 348 236 L 354 229" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <text x="395" y="237" fontSize="11" fontWeight="850" fill="#0077B6" textAnchor="middle">Read Receipts</text>
+                  {/* ROW 4: Customer */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_238px] cursor-pointer">
+                    <rect x="195" y="215" width="150" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    <g transform="translate(208, 226) scale(1.35)">
+                      <circle cx="6" cy="5" r="3.5" fill="none" stroke="#0077B6" strokeWidth="1.6" />
+                      <path d="M 1 12 C 1 9 4 7.5 6 7.5 C 8 7.5 11 9 11 12" fill="none" stroke="#0077B6" strokeWidth="1.6" />
+                    </g>
+                    <text x="285" y="244" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">Customer</text>
                   </g>
 
-                  {/* Communication History */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[490px_233px] cursor-pointer">
-                    <rect x="445" y="220" width="90" height="26" rx="13" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
-                    {/* List icon */}
-                    <line x1="454" y1="230" x2="459" y2="230" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <line x1="454" y1="233" x2="459" y2="233" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <line x1="454" y1="236" x2="459" y2="236" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <text x="495" y="237" fontSize="11" fontWeight="850" fill="#0077B6" textAnchor="middle">History Log</text>
+                  {/* ROW 5: Salesforce Timeline (Timeline) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_303px] cursor-pointer">
+                    <rect x="190" y="280" width="160" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    <g transform="translate(203, 291) scale(1.35)">
+                      <circle cx="6" cy="6" r="5.5" fill="none" stroke="#0077B6" strokeWidth="1.6" />
+                      <path d="M 6 2.5 L 6 6 L 8.5 6" fill="none" stroke="#0077B6" strokeWidth="1.6" strokeLinecap="round" />
+                    </g>
+                    <text x="280" y="309" fontSize="15.5" fontWeight="700" fill="#0F172A" textAnchor="middle">Timeline</text>
+                  </g>
+
+                  {/* Row 6: Outputs */}
+                  {/* Receipts */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[145px_357px] cursor-pointer">
+                    <rect x="65" y="340" width="150" height="34" rx="17" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
+                    <g transform="translate(77, 347) scale(1.2)">
+                      <path d="M 2 8 L 5 11 L 11 4" fill="none" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" />
+                    </g>
+                    <text x="148" y="362" fontSize="13.5" fontWeight="800" fill="#0077B6" textAnchor="middle">Receipts</text>
+                  </g>
+
+                  {/* History */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[395px_357px] cursor-pointer">
+                    <rect x="325" y="340" width="150" height="34" rx="17" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
+                    <g transform="translate(337, 347) scale(1.2)">
+                      <line x1="2" y1="4" x2="10" y2="4" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="2" y1="8" x2="10" y2="8" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="2" y1="12" x2="10" y2="12" stroke="#0077B6" strokeWidth="2" strokeLinecap="round" />
+                    </g>
+                    <text x="408" y="362" fontSize="13.5" fontWeight="800" fill="#0077B6" textAnchor="middle">History</text>
                   </g>
                 </svg>
               </div>
@@ -1001,7 +1089,7 @@ function ProductEcosystemScene() {
 
               <div className="flex-1 min-h-0 rounded-[16px] overflow-hidden relative flex items-center justify-center"
                 style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(59,169,245,0.07) 0%, rgba(240,249,255,0.6) 55%, rgba(248,252,255,0.8) 100%)", border: "1px solid rgba(186,230,253,0.35)" }}>
-                <svg viewBox="0 0 540 380" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
+                <svg viewBox="0 0 540 340" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
                     <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.08" />
@@ -1017,133 +1105,159 @@ function ProductEcosystemScene() {
                   </defs>
 
                   {/* Soft blue glow behind CX AI Engine */}
-                  <circle cx="380" cy="165" r="120" fill="url(#node-glow)" pointerEvents="none" />
+                  <circle cx="270" cy="191" r="100" fill="url(#node-glow)" pointerEvents="none" />
 
-                  {/* CONNECTING LINES */}
-                  {/* Project Milestone -> NPS Trigger (Horizontal) */}
-                  <path d="M 220 45 L 330 45" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 220 45 L 330 45" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.8">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+                  {/* CONNECTING LINES (Straight orthogonal flow) */}
+                  {/* Milestone -> Customer Feedback */}
+                  <path d="M 125 61 L 125 75 L 270 75 L 270 90" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 125 61 L 125 75 L 270 75 L 270 90" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* NPS Trigger -> Customer Feedback (S-Curve) */}
-                  <path d="M 420 69 C 420 110, 110 110, 110 139" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 420 69 C 420 110, 110 110, 110 139" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="6 6" opacity="0.7">
-                    <animate attributeName="stroke-dashoffset" values="24;0" dur="1.5s" repeatCount="indefinite" />
+                  {/* NPS Trigger -> Customer Feedback */}
+                  <path d="M 415 61 L 415 75 L 270 75 L 270 90" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 415 61 L 415 75 L 270 75 L 270 90" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* Customer Feedback -> CX AI Engine (Horizontal) */}
-                  <path d="M 205 165 L 255 165" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 205 165 L 255 165" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.8">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+                  {/* Customer Feedback -> CX AI Engine */}
+                  <path d="M 270 138 L 270 165" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 138 L 270 165" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* CX AI Engine -> Health Score (Curve) */}
-                  <path d="M 380 205 C 380 250, 95 250, 95 285" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 380 205 C 380 250, 95 250, 95 285" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.6">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.4s" repeatCount="indefinite" />
+                  {/* CX AI Engine -> Outputs (Health Score, CRM, Management) */}
+                  <path d="M 270 217 L 270 228" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 217 L 270 228" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 102.5 228 L 437.5 228" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  {/* Drops */}
+                  <path d="M 102.5 228 L 102.5 275" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 228 L 102.5 228 L 102.5 275" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 270 228 L 270 275" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 228 L 270 275" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 437.5 228 L 437.5 275" fill="none" stroke="#BAE6FD" strokeWidth="2.5" />
+                  <path d="M 270 228 L 437.5 228 L 437.5 275" fill="none" stroke="#0077B6" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.8">
+                    <animate attributeName="stroke-dashoffset" values="16;0" dur="1.2s" repeatCount="indefinite" />
                   </path>
 
-                  {/* CX AI Engine -> Sales CRM (Curve) */}
-                  <path d="M 380 205 C 380 250, 270 250, 270 285" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 380 205 C 380 250, 270 250, 270 285" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.6">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.4s" repeatCount="indefinite" />
-                  </path>
-
-                  {/* CX AI Engine -> Management (Curve) */}
-                  <path d="M 380 205 C 380 250, 445 250, 445 285" fill="none" stroke="#BAE6FD" strokeWidth="2" />
-                  <path d="M 380 205 C 380 250, 445 250, 445 285" fill="none" stroke="#0077B6" strokeWidth="2" strokeDasharray="5 5" opacity="0.6">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="1.4s" repeatCount="indefinite" />
-                  </path>
-
-                  {/* CX AI Engine -> Revenue Intelligence Chip (Subtle vertical line) */}
-                  <line x1="380" y1="205" x2="380" y2="225" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 3" />
-
-                  {/* ANIMATED PARTICLES */}
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 220 45 L 330 45" />
+                  {/* TRAVELING FLOW PARTICLES */}
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 125 61 L 125 75 L 270 75 L 270 90" />
                   </circle>
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 420 69 C 420 110, 110 110, 110 139" begin="0.4s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 415 61 L 415 75 L 270 75 L 270 90" />
                   </circle>
-                  <circle r="3.5" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 205 165 L 255 165" begin="0.8s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 138 L 270 165" begin="1.2s" />
                   </circle>
-                  <circle r="3" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.9s" repeatCount="indefinite" path="M 380 205 C 380 250, 95 250, 95 285" begin="1.1s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 217 L 270 228 L 102.5 228 L 102.5 275" begin="2.4s" />
                   </circle>
-                  <circle r="3" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.7s" repeatCount="indefinite" path="M 380 205 C 380 250, 270 250, 270 285" begin="1.3s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 217 L 270 275" begin="2.4s" />
                   </circle>
-                  <circle r="3" fill="#0ea5e9" filter="url(#svg-glow)">
-                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 380 205 C 380 250, 445 250, 445 285" begin="1.5s" />
+                  <circle r="4.5" fill="#0ea5e9" filter="url(#svg-glow)">
+                    <animateMotion dur="4.5s" repeatCount="indefinite" path="M 270 217 L 270 228 L 437.5 228 L 437.5 275" begin="2.4s" />
                   </circle>
 
-                  {/* TOP ROW: Project Milestone */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[125px_45px] cursor-pointer">
-                    <rect x="30" y="21" width="190" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Trophy/Milestone icon */}
-                    <path d="M 44 36 L 56 36 L 56 43 C 56 46 53 49 50 49 L 50 52 L 54 52 L 54 54 L 38 54 L 38 52 L 42 52 L 42 49 C 39 49 36 46 36 43 L 36 36 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="135" y="50" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">Project Milestone</text>
+                  {/* TOP ROW: Milestone */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[125px_38px] cursor-pointer">
+                    <rect x="30" y="15" width="190" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    <g transform="translate(42, 28) scale(1.2)">
+                      <path d="M 2 16 L 2 2 M 2 2 L 14 5 L 2 8" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </g>
+                    <text x="135" y="44" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">Milestone</text>
                   </g>
 
                   {/* TOP ROW: NPS Trigger */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[420px_45px] cursor-pointer">
-                    <rect x="330" y="21" width="180" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Mail/Trigger icon */}
-                    <rect x="344" y="39" width="16" height="12" rx="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 344 41 L 352 46.5 L 360 41" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
-                    <text x="430" y="50" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">NPS Trigger</text>
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[415px_38px] cursor-pointer">
+                    <rect x="320" y="15" width="190" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* Survey Checklist Form Icon */}
+                    <g transform="translate(332, 26) scale(1.2)">
+                      <rect x="0" y="0" width="14" height="18" rx="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <line x1="3" y1="5" x2="11" y2="5" stroke="#0077B6" strokeWidth="1.5" />
+                      <line x1="3" y1="9" x2="11" y2="9" stroke="#0077B6" strokeWidth="1.5" />
+                      <line x1="3" y1="13" x2="8" y2="13" stroke="#0077B6" strokeWidth="1.5" />
+                    </g>
+                    <text x="425" y="44" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">NPS Trigger</text>
                   </g>
 
-                  {/* MIDDLE: Customer Feedback */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[110px_165px] cursor-pointer">
-                    <rect x="15" y="139" width="190" height="52" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Chat bubble icon */}
-                    <path d="M 30 159 L 42 159 C 45 159 47 161 47 164 C 47 167 45 169 42 169 L 36 169 L 32 173 L 32 169 C 30 169 28 167 28 164 C 28 161 30 159 30 159 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="120" y="171" fontSize="15" fontWeight="800" fill="#0F172A" textAnchor="middle">Customer Feedback</text>
+                  {/* ROW 2: Customer Feedback */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_114px] cursor-pointer">
+                    <rect x="165" y="90" width="210" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* Survey Form checklist icon */}
+                    <g transform="translate(178, 102) scale(1.2)">
+                      <rect x="0" y="0" width="14" height="18" rx="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <line x1="3" y1="5" x2="11" y2="5" stroke="#0077B6" strokeWidth="1.5" />
+                      <line x1="3" y1="9" x2="11" y2="9" stroke="#0077B6" strokeWidth="1.5" />
+                      <line x1="3" y1="13" x2="8" y2="13" stroke="#0077B6" strokeWidth="1.5" />
+                    </g>
+                    <text x="282" y="120" fontSize="15.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Customer Feedback</text>
                   </g>
 
-                  {/* CENTER: CX AI Engine (Largest Highlighted Node) */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[380px_165px] cursor-pointer">
-                    <rect x="255" y="125" width="250" height="80" rx="14" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
-                    {/* Sparkles/Processor icon */}
-                    <path d="M 273 160 L 276 164 L 280 165 L 276 166 L 273 170 L 270 166 L 266 165 L 270 164 Z" fill="#0077B6" />
-                    <text x="390" y="172" fontSize="20" fontWeight="955" fill="#0077B6" textAnchor="middle">CX AI Engine</text>
+                  {/* ROW 3: CX AI Engine */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_191px] cursor-pointer">
+                    <rect x="145" y="165" width="250" height="52" rx="12" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
+                    {/* Brain AI icon */}
+                    <g transform="translate(158, 178) scale(1.3)">
+                      <path d="M 8 13 C 4.5 13 2.5 10 2.5 7 C 2.5 2.5 6 2.5 8 4 C 10 2.5 13.5 2.5 13.5 7 C 13.5 10 11.5 13 8 13 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <path d="M 13.5 13 C 17 13 19 10 19 7 C 19 2.5 15.5 2.5 13.5 4 C 11.5 2.5 8 2.5 8 7 C 8 10 10 13 13.5 13 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <line x1="11" y1="4" x2="11" y2="14" stroke="#0077B6" strokeWidth="1.8" />
+                    </g>
+                    <text x="290" y="197" fontSize="18.5" fontWeight="955" fill="#0077B6" textAnchor="middle">CX AI Engine</text>
                   </g>
 
-                  {/* REVENUE INTELLIGENCE INSIGHT CHIP */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[380px_239px] cursor-pointer">
-                    <rect x="280" y="225" width="200" height="28" rx="14" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
-                    {/* Chart Up icon */}
-                    <path d="M 292 241 L 297 236 L 300 239 L 305 233 M 301 233 L 306 233 L 306 238" fill="none" stroke="#0077B6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <text x="392" y="243" fontSize="12" fontWeight="850" fill="#0077B6" textAnchor="middle">Revenue Intel Alert</text>
+                  {/* REVENUE INTELLIGENCE INSIGHT CHIP (Notifications / Bell Icon) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_248px] cursor-pointer">
+                    <rect x="180" y="235" width="180" height="26" rx="13" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1.2" />
+                    {/* Bell notification icon */}
+                    <g transform="translate(192, 240) scale(1.1)">
+                      <path d="M 6 12 C 6 9 8 7 11 7 C 14 7 16 9 16 12 M 3 16 H 19 L 17 14 V 12 C 17 9.5 15 8.5 13 8 V 6 H 9 V 8 C 7 8.5 5 9.5 5 12 V 14 Z" fill="none" stroke="#0077B6" strokeWidth="1.5" />
+                      <path d="M 9 18 C 9 19.5 10 20 11 20 C 12 20 13 19.5 13 18" fill="none" stroke="#0077B6" strokeWidth="1.5" />
+                    </g>
+                    <text x="278" y="252" fontSize="12" fontWeight="850" fill="#0077B6" textAnchor="middle">Revenue Intel Alert</text>
                   </g>
 
-                  {/* BOTTOM ROW: Health Score */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[95px_309px] cursor-pointer">
-                    <rect x="20" y="285" width="150" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Heart/Shield Icon */}
-                    <path d="M 34 300 C 31 297 27 300 27 304 C 27 309 34 313 34 313 C 34 313 41 309 41 304 C 41 300 37 297 34 300 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="105" y="314" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Health Score</text>
+                  {/* BOTTOM ROW: Health Score (Shield Analytics Icon) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[102.5px_298px] cursor-pointer">
+                    <rect x="30" y="275" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* Shield Analytics Icon */}
+                    <g transform="translate(42, 287) scale(1.3)">
+                      <path d="M 2 4 V 9 C 2 13.5 7 16 7 16 C 7 16 12 13.5 12 9 V 4 L 7 2 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </g>
+                    <text x="115" y="304" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Health Score</text>
                   </g>
 
-                  {/* BOTTOM ROW: Sales CRM */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_309px] cursor-pointer">
-                    <rect x="195" y="285" width="150" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* Database icon */}
-                    <ellipse cx="209" cy="303" rx="5" ry="2.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 204 303 L 204 308.5 C 204 310 206 311 209 311 C 212 311 214 310 214 308.5 L 214 303" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="280" y="314" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Sales CRM</text>
+                  {/* BOTTOM ROW: Sales CRM (CRM cylinders Stack) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_298px] cursor-pointer">
+                    <rect x="197.5" y="275" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* CRM Stack Cylinders Icon */}
+                    <g transform="translate(209, 287) scale(1.3)">
+                      <ellipse cx="6" cy="3" rx="5" ry="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <ellipse cx="6" cy="8" rx="5" ry="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <ellipse cx="6" cy="13" rx="5" ry="1.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
+                      <line x1="1" y1="3" x2="1" y2="13" stroke="#0077B6" strokeWidth="1.8" />
+                      <line x1="11" y1="3" x2="11" y2="13" stroke="#0077B6" strokeWidth="1.8" />
+                    </g>
+                    <text x="282" y="304" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Sales CRM</text>
                   </g>
 
-                  {/* BOTTOM ROW: Management */}
-                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[445px_309px] cursor-pointer">
-                    <rect x="370" y="285" width="150" height="48" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    {/* User Group icon */}
-                    <circle cx="384" cy="303" r="2.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <path d="M 379 310.5 C 379 308 381 307 384 307 C 387 307 389 308 389 310.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                    <text x="455" y="314" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Management</text>
+                  {/* BOTTOM ROW: Management (Dashboard / Analytics speedometer Gauge icon) */}
+                  <g className="transition-transform duration-300 hover:scale-[1.02] origin-[437.5px_298px] cursor-pointer">
+                    <rect x="365" y="275" width="145" height="46" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
+                    {/* speedometer gauge icon */}
+                    <g transform="translate(376, 287) scale(1.3)">
+                      <path d="M 2 12 C 2 6.5 6.5 2 12 2 C 17.5 2 22 6.5 22 12" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
+                      <line x1="12" y1="12" x2="17" y2="7" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
+                      <circle cx="12" cy="12" r="2" fill="#0077B6" />
+                    </g>
+                    <text x="450" y="304" fontSize="14.5" fontWeight="800" fill="#0F172A" textAnchor="middle">Management</text>
                   </g>
                 </svg>
               </div>
