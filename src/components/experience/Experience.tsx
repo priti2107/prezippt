@@ -1201,11 +1201,8 @@ function ProductEcosystemScene() {
                   {/* NODE 4: CX AI Engine */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_220px] cursor-pointer prism-node-engine">
                     <rect x="145" y="195" width="250" height="50" rx="12" fill="#F0F9FF" stroke="#0077B6" strokeWidth="2" className="filter drop-shadow-[0_4px_16px_rgba(0,119,182,0.18)]" />
-                    <g transform="translate(158, 206) scale(1.3)">
-                      <path d="M 8 13 C 4.5 13 2.5 10 2.5 7 C 2.5 2.5 6 2.5 8 4 C 10 2.5 13.5 2.5 13.5 7 C 13.5 10 11.5 13 8 13 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                      <path d="M 13.5 13 C 17 13 19 10 19 7 C 19 2.5 15.5 2.5 13.5 4 C 11.5 2.5 8 2.5 8 7 C 8 10 10 13 13.5 13 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" />
-                      <line x1="11" y1="4" x2="11" y2="14" stroke="#0077B6" strokeWidth="1.8" />
-                    </g>
+                    {/* CX Prism Logo Image */}
+                    <image href="/clients/cxprism.png" x="156" y="205" width="30" height="30" />
                     <text x="290" y="226" fontSize="17.5" fontWeight="955" fill="#0077B6" textAnchor="middle">CX AI Engine</text>
 
                     {/* FLOATING STATUS BADGE: Revenue Risk Alert */}
