@@ -950,7 +950,7 @@ function ProductEcosystemScene() {
                   {/* NODE 3-1: WhatsApp */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[95px_166px] cursor-pointer cc-node-3-1">
                     <rect x="20" y="145" width="150" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(28, 154) scale(1.5)">
+                    <g transform="translate(25, 151) scale(1.8)">
                       <circle cx="8" cy="8" r="8" fill="#25D366" />
                       <path d="M 8 4.2 C 5.9 4.2 4.2 5.9 4.2 8 C 4.2 8.7 4.4 9.3 4.7 9.8 L 4.2 11.8 L 6.3 11.3 C 6.8 11.6 7.4 11.8 8 11.8 C 10.1 11.8 11.8 10.1 11.8 8 C 11.8 5.9 10.1 4.2 8 4.2 Z" fill="#ffffff" />
                       <path d="M 6.8 6.4 C 6.7 6.4 6.6 6.5 6.6 6.7 C 6.6 7.1 6.9 7.7 7.4 8.2 C 7.9 8.7 8.5 9 8.9 9 C 9.1 9 9.2 8.9 9.2 8.8 L 9.6 8.3 L 8.9 7.6 L 8.6 7.9 C 8.4 8.1 8.2 8.1 8 7.9 C 7.7 7.6 7.5 7.4 7.3 7.1 C 7.1 6.9 7.1 6.7 7.3 6.5 L 7.6 6.2 L 6.9 5.5 L 6.8 6.4 Z" fill="#25D366" />
@@ -961,7 +961,7 @@ function ProductEcosystemScene() {
                   {/* NODE 3-2: Gmail */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_166px] cursor-pointer cc-node-3-2">
                     <rect x="195" y="145" width="150" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(203, 154) scale(1.5)">
+                    <g transform="translate(200, 151) scale(1.8)">
                       <circle cx="8" cy="8" r="8" fill="#ffffff" stroke="#e2e8f0" strokeWidth="0.8" />
                       <path d="M 4 5 L 4 11 A 1 1 0 0 0 5 12 L 6 12 L 6 5.5 Z" fill="#4285F4" />
                       <path d="M 12 5 L 12 11 A 1 1 0 0 1 11 12 L 10 12 L 10 5.5 Z" fill="#34A853" />
@@ -974,7 +974,7 @@ function ProductEcosystemScene() {
                   {/* NODE 3-3: SMS */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[445px_166px] cursor-pointer cc-node-3-3">
                     <rect x="370" y="145" width="150" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(378, 154) scale(1.5)">
+                    <g transform="translate(375, 151) scale(1.8)">
                       <circle cx="8" cy="8" r="8" fill="#0EA5E9" />
                       <path d="M 5.5 5.5 H 10.5 C 11.3 5.5 12 6.2 12 7 V 10 C 12 10.8 11.3 11.5 10.5 11.5 H 6.5 L 4 12.5 V 11 C 4 10.2 4.7 9.5 5.5 9.5 Z" fill="none" stroke="#ffffff" strokeWidth="0.8" />
                     </g>
@@ -1204,7 +1204,7 @@ function ProductEcosystemScene() {
                   {/* BOTTOM ROW: Health Score */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[87.5px_311px] cursor-pointer prism-node-out">
                     <rect x="15" y="290" width="145" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(23, 299) scale(1.5)">
+                    <g transform="translate(20, 296) scale(1.8)">
                       <path d="M 2 4 V 9 C 2 13.5 7 16 7 16 C 7 16 12 13.5 12 9 V 4 L 7 2 Z" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </g>
                     <text x="102" y="316" fontSize="14.5" fontWeight="700" fill="#0F172A" textAnchor="middle">Health Score</text>
@@ -1213,7 +1213,7 @@ function ProductEcosystemScene() {
                   {/* BOTTOM ROW: Sales CRM */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[270px_311px] cursor-pointer prism-node-out">
                     <rect x="197.5" y="290" width="145" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(205, 299) scale(1.5)">
+                    <g transform="translate(203, 296) scale(1.8)">
                       <ellipse cx="6" cy="4.5" rx="3.5" ry="3.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
                       <path d="M 1 14 C 1 11.5 3.2 10.5 6 10.5 C 8.8 10.5 11 11.5 11 14" fill="none" stroke="#0077B6" strokeWidth="1.8" strokeLinecap="round" />
                     </g>
@@ -1223,7 +1223,7 @@ function ProductEcosystemScene() {
                   {/* BOTTOM ROW: Management */}
                   <g className="transition-transform duration-300 hover:scale-[1.02] origin-[452.5px_311px] cursor-pointer prism-node-out">
                     <rect x="380" y="290" width="145" height="42" rx="10" fill="#ffffff" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <g transform="translate(388, 299) scale(1.5)">
+                    <g transform="translate(385, 296) scale(1.8)">
                       <rect x="1" y="8" width="3" height="7" rx="0.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
                       <rect x="6" y="3" width="3" height="12" rx="0.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
                       <rect x="11" y="6" width="3" height="9" rx="0.5" fill="none" stroke="#0077B6" strokeWidth="1.8" />
