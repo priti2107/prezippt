@@ -823,33 +823,7 @@ function ProductEcosystemScene() {
                 style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(0,119,182,0.01) 0%, rgba(248,252,255,0.99) 100%)", border: "1px solid rgba(186,230,253,0.35)" }}>
                 <svg viewBox="0 0 540 395" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
-                    <style dangerouslySetInnerHTML={{ __html: `
-                      .cc-node-1 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
-                      .cc-conn-1 { stroke-dasharray: 20; stroke-dashoffset: 20; animation: drawStroke 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.4s; }
-                      .cc-node-2 { animation: scaleInEngine 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: 0.8s; }
-                      .cc-conn-2 { stroke-dasharray: 380; stroke-dashoffset: 380; animation: drawStroke 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 1.3s; }
-                      .cc-node-3-1 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 1.8s; }
-                      .cc-node-3-2 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 2.0s; }
-                      .cc-node-3-3 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 2.2s; }
-                      .cc-conn-3 { stroke-dasharray: 220; stroke-dashoffset: 220; animation: drawStroke 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 2.5s; }
-                      .cc-node-4 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 3.0s; }
-                      .cc-conn-4 { stroke-dasharray: 20; stroke-dashoffset: 20; animation: drawStroke 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 3.4s; }
-                      .cc-node-5 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 3.8s; }
-                      .cc-conn-5 { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawStroke 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 4.2s; }
-                      .cc-node-6 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 4.6s; }
-                      
-                      @keyframes prismFadeIn {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                      }
-                      @keyframes scaleInEngine {
-                        0% { opacity: 0; transform: scale(0.85) translateY(5px); }
-                        100% { opacity: 1; transform: scale(1) translateY(0); }
-                      }
-                      @keyframes drawStroke {
-                        to { stroke-dashoffset: 0; }
-                      }
-                    ` }} />
+
                     <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.06" />
                       <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0" />
@@ -1076,29 +1050,7 @@ function ProductEcosystemScene() {
                 style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(59,169,245,0.07) 0%, rgba(240,249,255,0.6) 55%, rgba(248,252,255,0.8) 100%)", border: "1px solid rgba(186,230,253,0.35)" }}>
                 <svg viewBox="0 0 540 350" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" style={{ maxHeight: "100%" }}>
                   <defs>
-                    <style dangerouslySetInnerHTML={{ __html: `
-                      .prism-node-1 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
-                      .prism-conn-1 { stroke-dasharray: 20; stroke-dashoffset: 20; animation: drawStroke 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.4s; }
-                      .prism-node-2 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.8s; }
-                      .prism-conn-2 { stroke-dasharray: 20; stroke-dashoffset: 20; animation: drawStroke 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 1.2s; }
-                      .prism-node-3 { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 1.6s; }
-                      .prism-conn-3 { stroke-dasharray: 20; stroke-dashoffset: 20; animation: drawStroke 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 2.0s; }
-                      .prism-node-engine { animation: scaleInEngine 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: 2.4s; }
-                      .prism-conn-fork { stroke-dasharray: 450; stroke-dashoffset: 450; animation: drawStroke 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 2.9s; }
-                      .prism-node-out { animation: prismFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 3.4s; }
-                      
-                      @keyframes prismFadeIn {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                      }
-                      @keyframes scaleInEngine {
-                        0% { opacity: 0; transform: scale(0.85) translateY(5px); }
-                        100% { opacity: 1; transform: scale(1) translateY(0); }
-                      }
-                      @keyframes drawStroke {
-                        to { stroke-dashoffset: 0; }
-                      }
-                    ` }} />
+
                     <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#3BA9F5" stopOpacity="0.08" />
                       <stop offset="100%" stopColor="#3BA9F5" stopOpacity="0" />
